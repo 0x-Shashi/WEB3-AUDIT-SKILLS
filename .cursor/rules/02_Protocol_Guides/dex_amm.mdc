@@ -1,0 +1,248 @@
+---
+description: DEX and AMM security audit guide
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# 🔄 DEX/AMM Security Guide
+
+## Core Components
+
+1. **Liquidity Pools** - Token reserves and pricing
+2. **Swaps** - Token exchanges
+3. **Liquidity Provision** - Adding/removing liquidity
+4. **Price Oracles** - TWAP and spot prices
+5. **Fees** - Trading and protocol fees
+
+---
+
+## Critical Vulnerabilities
+
+### 1. Price Manipulation
+
+```solidity
+// VULNERABLE - using spot price
+function getPrice() public view returns (uint256) {
+    return reserve0 * 1e18 / reserve1;  // Manipulable in single tx
+}
+
+// SECURE - use TWAP
+function getPrice() public view returns (uint256) {
+    uint256 timeElapsed = block.timestamp - lastObservation;
+    require(timeElapsed >= MIN_TWAP_PERIOD, "TWAP too short");
+    return (priceCumulativeLast - priceCumulativeOld) / timeElapsed;
+}
+```
+
+### 2. Sandwich Attacks
+
+```solidity
+// VULNERABLE - no slippage protection
+function swap(uint256 amountIn) external {
+    uint256 amountOut = getAmountOut(amountIn);
+    // Attacker front-runs with buy, user gets worse rate
+    token.transfer(msg.sender, amountOut);
+}
+
+// SECURE - require minimum output
+function swap(uint256 amountIn, uint256 minAmountOut, uint256 deadline) external {
+    require(block.timestamp <= deadline, "Expired");
+    uint256 amountOut = getAmountOut(amountIn);
+    require(amountOut >= minAmountOut, "Slippage");
+    token.transfer(msg.sender, amountOut);
+}
+```
+
+### 3. First Liquidity Provider Attack
+
+```solidity
+// VULNERABLE - LP can set arbitrary initial price
+function addLiquidity(uint256 amount0, uint256 amount1) external {
+    if (totalSupply == 0) {
+        liquidity = sqrt(amount0 * amount1);  // Any ratio accepted
+    }
+}
+
+// SECURE - require price within expected bounds
+function addLiquidity(uint256 amount0, uint256 amount1) external {
+    if (totalSupply == 0) {
+        uint256 price = amount0 * 1e18 / amount1;
+        require(price >= minInitialPrice && price <= maxInitialPrice);
+        liquidity = sqrt(amount0 * amount1);
+        // Also: mint dead shares to prevent donation attacks
+        _mint(address(0), MINIMUM_LIQUIDITY);
+    }
+}
+```
+
+### 4. Reentrancy on Remove Liquidity
+
+```solidity
+// VULNERABLE - burns LP before transfer
+function removeLiquidity(uint256 liquidity) external {
+    uint256 amount0 = liquidity * reserve0 / totalSupply;
+    uint256 amount1 = liquidity * reserve1 / totalSupply;
+    
+    _burn(msg.sender, liquidity);
+    
+    token0.transfer(msg.sender, amount0);  // Callback here
+    token1.transfer(msg.sender, amount1);
+    
+    _update();  // Stale reserves during callback
+}
+
+// SECURE - CEI pattern + reentrancy guard
+function removeLiquidity(uint256 liquidity) external nonReentrant {
+    uint256 amount0 = liquidity * reserve0 / totalSupply;
+    uint256 amount1 = liquidity * reserve1 / totalSupply;
+    
+    _burn(msg.sender, liquidity);
+    _update(reserve0 - amount0, reserve1 - amount1);  // Update BEFORE
+    
+    token0.transfer(msg.sender, amount0);
+    token1.transfer(msg.sender, amount1);
+}
+```
+
+### 5. K Value Manipulation
+
+```solidity
+// VULNERABLE - K not verified after swap
+function swap(uint256 amount0Out, uint256 amount1Out) external {
+    require(amount0Out > 0 || amount1Out > 0);
+    
+    token0.transfer(msg.sender, amount0Out);
+    token1.transfer(msg.sender, amount1Out);
+    
+    // Missing K invariant check!
+}
+
+// SECURE - verify K maintained
+function swap(uint256 amount0Out, uint256 amount1Out) external {
+    uint256 balance0After = token0.balanceOf(address(this));
+    uint256 balance1After = token1.balanceOf(address(this));
+    
+    // Verify K invariant (with fee adjustment)
+    uint256 balance0Adjusted = balance0After * 1000 - amount0In * 3;
+    uint256 balance1Adjusted = balance1After * 1000 - amount1In * 3;
+    
+    require(balance0Adjusted * balance1Adjusted >= reserve0 * reserve1 * 1000000);
+}
+```
+
+---
+
+## Uniswap V3/V4 Specific
+
+### Concentrated Liquidity Issues
+
+```solidity
+// Tick spacing vulnerabilities
+// Wrong tick initialization
+// Price range calculation errors
+
+// CRITICAL - verify tick math
+function validatePosition(int24 tickLower, int24 tickUpper) internal view {
+    require(tickLower < tickUpper);
+    require(tickLower >= TickMath.MIN_TICK);
+    require(tickUpper <= TickMath.MAX_TICK);
+    require(tickLower % tickSpacing == 0);
+    require(tickUpper % tickSpacing == 0);
+}
+```
+
+### V4 Hook Security
+
+```solidity
+// Hook callback validation
+interface IHooks {
+    function beforeSwap(address, PoolKey, SwapParams, bytes) external returns (bytes4);
+    function afterSwap(address, PoolKey, SwapParams, BalanceDelta, bytes) external returns (bytes4);
+}
+
+// CRITICAL - hooks can manipulate pool state
+// Review: reentrancy through hooks
+// Review: price manipulation in hooks
+// Review: denial of service via reverting hooks
+```
+
+---
+
+## Curve-Specific Issues
+
+### Read-Only Reentrancy
+
+```solidity
+// VULNERABLE - using virtual_price during callback
+function getCollateralValue() view returns (uint256) {
+    return balance * curve.get_virtual_price() / 1e18;
+    // During remove_liquidity callback, this is STALE!
+}
+
+// SECURE - check for ongoing operations
+function getCollateralValue() view returns (uint256) {
+    require(!curve.is_locked(), "Pool locked");
+    return balance * curve.get_virtual_price() / 1e18;
+}
+```
+
+---
+
+## Balancer-Specific Issues
+
+### Flash Loan + Pool Manipulation
+
+```solidity
+// Balancer pools can be exploited via flash loans
+// Attack: borrow from pool, manipulate, interact with dependent protocol
+
+// SECURE - use last block price or multiple sources
+function getPoolPrice() view returns (uint256) {
+    uint256 balancerPrice = getBalancerSpotPrice();
+    uint256 chainlinkPrice = getChainlinkPrice();
+    
+    require(
+        balancerPrice > chainlinkPrice * 95 / 100 &&
+        balancerPrice < chainlinkPrice * 105 / 100,
+        "Price deviation"
+    );
+}
+```
+
+---
+
+## DEX Audit Checklist
+
+### Swap Security
+- [ ] Slippage protection enforced (minAmountOut)
+- [ ] Deadline parameter checked
+- [ ] K invariant verified
+- [ ] No reentrancy during swap
+- [ ] Fee calculation correct
+- [ ] Proper handling of fee-on-transfer tokens
+
+### Liquidity
+- [ ] First depositor attack mitigated (dead shares)
+- [ ] LP token minting correct
+- [ ] Remove liquidity reentrancy safe
+- [ ] Correct share calculation
+- [ ] No donation attacks
+
+### Price Oracle
+- [ ] TWAP window sufficient (>30 min)
+- [ ] Manipulation resistance verified
+- [ ] Stale price protection
+- [ ] No read-only reentrancy
+
+### Access Control
+- [ ] Admin functions protected
+- [ ] Fee changes bounded/timelocked
+- [ ] Pause mechanisms appropriate
+
+### Token Compatibility  
+- [ ] Fee-on-transfer tokens handled
+- [ ] Rebasing tokens considered
+- [ ] Low decimal tokens work correctly
+- [ ] tokens with callback (ERC777) safe
+</Parameter>
+<parameter name="Complexity">5

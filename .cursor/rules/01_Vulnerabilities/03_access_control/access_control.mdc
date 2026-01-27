@@ -1,0 +1,422 @@
+---
+description: Access control vulnerability patterns
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# 🔐 Access Control Vulnerabilities
+
+## 1. Missing Access Control
+
+### Unprotected Critical Functions
+
+```solidity
+// VULNERABLE - anyone can call
+contract Vulnerable {
+    address public owner;
+    
+    function setOwner(address _owner) external {
+        owner = _owner;  // No protection!
+    }
+    
+    function withdrawAll() external {
+        payable(msg.sender).transfer(address(this).balance);  // Anyone can drain!
+    }
+}
+
+// SECURE
+contract Secure {
+    address public owner;
+    
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+    
+    function setOwner(address _owner) external onlyOwner {
+        owner = _owner;
+    }
+    
+    function withdrawAll() external onlyOwner {
+        payable(owner).transfer(address(this).balance);
+    }
+}
+```
+
+### OpenZeppelin Access Control
+
+```solidity
+import "@openzeppelin/contracts/access/AccessControl.sol";
+
+contract SecureProtocol is AccessControl {
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+    bytes32 public constant OPERATOR_ROLE = keccak256("OPERATOR_ROLE");
+    
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(ADMIN_ROLE, msg.sender);
+    }
+    
+    function criticalAction() external onlyRole(ADMIN_ROLE) {
+        // Only admins
+    }
+    
+    function operatorAction() external onlyRole(OPERATOR_ROLE) {
+        // Operators and above
+    }
+}
+```
+
+---
+
+## 2. tx.origin Authentication
+
+```solidity
+// VULNERABLE - phishing attack
+contract VulnerableWallet {
+    address public owner;
+    
+    function transfer(address to, uint256 amount) external {
+        require(tx.origin == owner, "Not owner");  // WRONG!
+        payable(to).transfer(amount);
+    }
+}
+
+// ATTACK: Attacker deploys malicious contract, tricks owner to call it
+contract Attacker {
+    VulnerableWallet wallet;
+    
+    function attack() external {
+        // Owner calls this thinking it's safe
+        // But tx.origin is still the owner!
+        wallet.transfer(address(this), address(wallet).balance);
+    }
+}
+
+// SECURE - use msg.sender
+contract SecureWallet {
+    address public owner;
+    
+    function transfer(address to, uint256 amount) external {
+        require(msg.sender == owner, "Not owner");
+        payable(to).transfer(amount);
+    }
+}
+```
+
+---
+
+## 3. Incorrect Modifier Logic
+
+```solidity
+// VULNERABLE - modifier doesn't protect
+contract Vulnerable {
+    address public owner;
+    
+    modifier onlyOwner() {
+        if (msg.sender == owner) {
+            _;
+        }
+        // Missing revert for non-owners - function still executes!
+    }
+}
+
+// SECURE
+modifier onlyOwner() {
+    require(msg.sender == owner, "Not owner");
+    _;
+}
+
+// ALSO SECURE
+modifier onlyOwner() {
+    if (msg.sender != owner) revert NotOwner();
+    _;
+}
+```
+
+---
+
+## 4. Privilege Escalation
+
+### Role Inheritance Issues
+
+```solidity
+// VULNERABLE - operator can become admin
+contract Vulnerable {
+    mapping(address => bool) public isOperator;
+    mapping(address => bool) public isAdmin;
+    
+    function setOperator(address user, bool status) external {
+        require(isOperator[msg.sender], "Not operator");
+        isOperator[user] = status;  // Operators can add other operators
+    }
+    
+    // If there's any path where operator can set isAdmin...
+}
+
+// SECURE - strict role hierarchy
+contract Secure is AccessControl {
+    bytes32 constant ADMIN = keccak256("ADMIN");
+    bytes32 constant OPERATOR = keccak256("OPERATOR");
+    
+    function setOperator(address user, bool status) external onlyRole(ADMIN) {
+        // Only admins can modify operator roles
+        if (status) {
+            grantRole(OPERATOR, user);
+        } else {
+            revokeRole(OPERATOR, user);
+        }
+    }
+}
+```
+
+---
+
+## 5. Signature-Based Access Control Issues
+
+### Missing Signer Validation
+
+```solidity
+// VULNERABLE - doesn't verify signer is authorized
+contract Vulnerable {
+    function execute(bytes calldata data, bytes calldata signature) external {
+        address signer = recoverSigner(data, signature);
+        // Execute without checking if signer is authorized!
+        _execute(data);
+    }
+}
+
+// SECURE
+contract Secure {
+    mapping(address => bool) public authorizedSigners;
+    
+    function execute(bytes calldata data, bytes calldata signature) external {
+        address signer = recoverSigner(data, signature);
+        require(authorizedSigners[signer], "Unauthorized signer");
+        _execute(data);
+    }
+}
+```
+
+### Signature Replay
+
+```solidity
+// VULNERABLE - no nonce/expiry
+contract Vulnerable {
+    function executeWithSig(
+        address to,
+        uint256 amount,
+        bytes calldata signature
+    ) external {
+        bytes32 hash = keccak256(abi.encodePacked(to, amount));
+        address signer = ECDSA.recover(hash, signature);
+        require(signer == owner, "Invalid signature");
+        _transfer(to, amount);  // Can replay same signature!
+    }
+}
+
+// SECURE - include nonce and chain ID
+contract Secure {
+    mapping(address => uint256) public nonces;
+    
+    function executeWithSig(
+        address to,
+        uint256 amount,
+        uint256 deadline,
+        bytes calldata signature
+    ) external {
+        require(block.timestamp <= deadline, "Expired");
+        
+        bytes32 hash = keccak256(abi.encodePacked(
+            to, 
+            amount, 
+            nonces[owner]++,  // Increment nonce
+            block.chainid,    // Chain ID for cross-chain protection
+            deadline
+        ));
+        
+        address signer = ECDSA.recover(hash.toEthSignedMessageHash(), signature);
+        require(signer == owner, "Invalid signature");
+        _transfer(to, amount);
+    }
+}
+```
+
+---
+
+## 6. Default Visibility (Pre-0.8)
+
+```solidity
+// VULNERABLE (Solidity < 0.8)
+contract Vulnerable {
+    function sensitiveAction() {  // Defaults to PUBLIC!
+        // ...
+    }
+}
+
+// SECURE - always explicit
+contract Secure {
+    function sensitiveAction() internal {
+        // ...
+    }
+}
+```
+
+---
+
+## 7. Unprotected Initialize Functions
+
+```solidity
+// VULNERABLE - can be re-initialized
+contract VulnerableUpgradeable {
+    address public owner;
+    
+    function initialize(address _owner) external {
+        owner = _owner;  // No protection, can be called again
+    }
+}
+
+// SECURE
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+contract SecureUpgradeable is Initializable {
+    address public owner;
+    
+    function initialize(address _owner) external initializer {
+        owner = _owner;
+    }
+}
+
+// ALSO SECURE - manual flag
+contract SecureUpgradeable {
+    address public owner;
+    bool private initialized;
+    
+    function initialize(address _owner) external {
+        require(!initialized, "Already initialized");
+        initialized = true;
+        owner = _owner;
+    }
+}
+```
+
+---
+
+## 8. Delegatecall Access Control
+
+```solidity
+// VULNERABLE - delegatecall to arbitrary address
+contract Vulnerable {
+    function execute(address target, bytes calldata data) external {
+        (bool success,) = target.delegatecall(data);  // Can overwrite storage!
+        require(success);
+    }
+}
+
+// SECURE - whitelist or restrict to owner
+contract Secure {
+    address public owner;
+    mapping(address => bool) public allowedTargets;
+    
+    function execute(address target, bytes calldata data) external {
+        require(msg.sender == owner, "Not owner");
+        require(allowedTargets[target], "Target not allowed");
+        (bool success,) = target.delegatecall(data);
+        require(success);
+    }
+}
+```
+
+---
+
+## 9. Two-Step Ownership Transfer
+
+```solidity
+// RISKY - single step transfer
+contract Risky {
+    address public owner;
+    
+    function transferOwnership(address newOwner) external {
+        require(msg.sender == owner);
+        owner = newOwner;  // Typo = lost forever
+    }
+}
+
+// SECURE - two step with acceptance
+import "@openzeppelin/contracts/access/Ownable2Step.sol";
+
+contract Secure is Ownable2Step {
+    // transferOwnership() sets pendingOwner
+    // acceptOwnership() must be called by new owner
+}
+
+// Manual implementation
+contract SecureManual {
+    address public owner;
+    address public pendingOwner;
+    
+    function transferOwnership(address newOwner) external {
+        require(msg.sender == owner);
+        pendingOwner = newOwner;
+    }
+    
+    function acceptOwnership() external {
+        require(msg.sender == pendingOwner);
+        owner = pendingOwner;
+        pendingOwner = address(0);
+    }
+}
+```
+
+---
+
+## 10. Time-Lock Bypass
+
+```solidity
+// VULNERABLE - emergency bypass defeats timelock
+contract Vulnerable {
+    uint256 public constant TIMELOCK = 2 days;
+    
+    function scheduleAction(bytes32 actionId) external onlyOwner {
+        scheduledTime[actionId] = block.timestamp + TIMELOCK;
+    }
+    
+    function executeAction(bytes32 actionId) external onlyOwner {
+        require(block.timestamp >= scheduledTime[actionId]);
+        _execute(actionId);
+    }
+    
+    // Defeats the purpose of timelock!
+    function emergencyExecute(bytes32 actionId) external onlyOwner {
+        _execute(actionId);
+    }
+}
+
+// SECURE - no bypasses, or emergency requires multisig
+contract Secure {
+    uint256 public constant TIMELOCK = 2 days;
+    address public guardian;  // Multisig for emergencies
+    
+    function emergencyExecute(bytes32 actionId) external {
+        require(msg.sender == guardian, "Only guardian");
+        // Guardian should be high-threshold multisig
+        _execute(actionId);
+    }
+}
+```
+
+---
+
+## Audit Checklist
+
+- [ ] Are all state-changing functions protected?
+- [ ] Is tx.origin avoided for authentication?
+- [ ] Do modifiers properly revert on failure?
+- [ ] Are role hierarchies correctly enforced?
+- [ ] Are signatures protected against replay?
+- [ ] Are visibility modifiers explicit on all functions?
+- [ ] Are upgradeable contracts properly protected from re-init?
+- [ ] Is delegatecall restricted to trusted targets?
+- [ ] Is ownership transfer two-step?
+- [ ] Can timelocks be bypassed?
+- [ ] Are privileged addresses EOAs or multisigs/timelocks?

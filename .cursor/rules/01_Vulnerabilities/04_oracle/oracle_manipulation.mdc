@@ -1,0 +1,378 @@
+---
+description: Oracle manipulation vulnerabilities and secure price feed patterns
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# 🔮 Oracle Vulnerabilities
+
+## Overview
+
+Oracles provide external data (prices, randomness, off-chain events) to smart contracts. Manipulating oracle data is one of the most profitable attack vectors in DeFi.
+
+---
+
+## 1. Spot Price Manipulation
+
+### Using AMM Reserves Directly
+
+```solidity
+// VULNERABLE - spot price from Uniswap
+contract VulnerableLending {
+    IUniswapV2Pair public pair;
+    
+    function getCollateralValue(uint256 amount) public view returns (uint256) {
+        (uint112 reserve0, uint112 reserve1,) = pair.getReserves();
+        uint256 price = (reserve0 * 1e18) / reserve1;  // MANIPULABLE!
+        return amount * price / 1e18;
+    }
+}
+
+// ATTACK:
+// 1. Flash loan massive amount of token0
+// 2. Swap to manipulate reserves → price spikes
+// 3. Borrow against inflated collateral
+// 4. Repay flash loan with borrowed funds
+// 5. Profit when price returns to normal
+
+// SECURE - use Chainlink or TWAP
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+
+contract SecureLending {
+    AggregatorV3Interface public priceFeed;
+    
+    function getCollateralValue(uint256 amount) public view returns (uint256) {
+        (, int256 price,,,) = priceFeed.latestRoundData();
+        require(price > 0, "Invalid price");
+        return amount * uint256(price) / 1e8;
+    }
+}
+```
+
+---
+
+## 2. Stale Oracle Data
+
+```solidity
+// VULNERABLE - no freshness check
+contract Vulnerable {
+    AggregatorV3Interface public oracle;
+    
+    function getPrice() public view returns (uint256) {
+        (, int256 price,,,) = oracle.latestRoundData();
+        return uint256(price);  // Could be hours/days old!
+    }
+}
+
+// SECURE - comprehensive validation
+contract Secure {
+    AggregatorV3Interface public oracle;
+    uint256 public constant STALENESS_THRESHOLD = 1 hours;
+    
+    function getPrice() public view returns (uint256) {
+        (
+            uint80 roundId,
+            int256 price,
+            ,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        ) = oracle.latestRoundData();
+        
+        // Check for stale data
+        require(updatedAt > 0, "Round not complete");
+        require(block.timestamp - updatedAt < STALENESS_THRESHOLD, "Stale price");
+        
+        // Check for valid round
+        require(answeredInRound >= roundId, "Stale round");
+        
+        // Check for valid price
+        require(price > 0, "Invalid price");
+        
+        return uint256(price);
+    }
+}
+```
+
+---
+
+## 3. Oracle Decimal Mismatch
+
+```solidity
+// VULNERABLE - assumes all oracles have same decimals
+contract Vulnerable {
+    function getValue(uint256 tokenAmount, int256 price) public pure returns (uint256) {
+        // ETH/USD is 8 decimals, some are 18
+        return tokenAmount * uint256(price) / 1e18;  // WRONG if price is 8 decimals
+    }
+}
+
+// SECURE - always check decimals
+contract Secure {
+    function getValue(
+        uint256 tokenAmount,
+        uint8 tokenDecimals,
+        AggregatorV3Interface oracle
+    ) public view returns (uint256) {
+        (, int256 price,,,) = oracle.latestRoundData();
+        uint8 priceDecimals = oracle.decimals();
+        
+        // Normalize to 18 decimals
+        uint256 normalizedPrice = uint256(price) * 10**(18 - priceDecimals);
+        uint256 normalizedAmount = tokenAmount * 10**(18 - tokenDecimals);
+        
+        return normalizedAmount * normalizedPrice / 1e18;
+    }
+}
+```
+
+---
+
+## 4. TWAP Manipulation
+
+### Short TWAP Windows
+
+```solidity
+// VULNERABLE - 10 minute TWAP is still manipulable
+function getTWAP() external view returns (uint256) {
+    uint32[] memory secondsAgos = new uint32[](2);
+    secondsAgos[0] = 600;  // 10 minutes - too short!
+    secondsAgos[1] = 0;
+    
+    (int56[] memory tickCumulatives,) = pool.observe(secondsAgos);
+    // ... calculate TWAP
+}
+
+// SECURE - longer window, multiple sources
+function getTWAP() external view returns (uint256) {
+    uint32[] memory secondsAgos = new uint32[](2);
+    secondsAgos[0] = 1800;  // 30 minutes minimum
+    secondsAgos[1] = 0;
+    
+    // Also validate against Chainlink as backup
+    uint256 twapPrice = calculateTWAP(...);
+    uint256 chainlinkPrice = getChainlinkPrice();
+    
+    require(
+        twapPrice > chainlinkPrice * 95 / 100 &&
+        twapPrice < chainlinkPrice * 105 / 100,
+        "Price deviation too high"
+    );
+    
+    return twapPrice;
+}
+```
+
+---
+
+## 5. Oracle DoS / Unavailability
+
+```solidity
+// VULNERABLE - reverts if oracle fails
+contract Vulnerable {
+    function getPrice() public view returns (uint256) {
+        (, int256 price,,,) = oracle.latestRoundData();  // Reverts on failure
+        return uint256(price);
+    }
+}
+
+// SECURE - fallback oracles
+contract Secure {
+    AggregatorV3Interface public primaryOracle;
+    AggregatorV3Interface public fallbackOracle;
+    
+    function getPrice() public view returns (uint256) {
+        try primaryOracle.latestRoundData() returns (
+            uint80, int256 price, uint256, uint256 updatedAt, uint80
+        ) {
+            if (price > 0 && block.timestamp - updatedAt < 1 hours) {
+                return uint256(price);
+            }
+        } catch {}
+        
+        // Fallback to secondary oracle
+        (, int256 fallbackPrice,,,) = fallbackOracle.latestRoundData();
+        require(fallbackPrice > 0, "All oracles failed");
+        return uint256(fallbackPrice);
+    }
+}
+```
+
+---
+
+## 6. LP Token Price Manipulation
+
+```solidity
+// VULNERABLE - LP token price from reserves
+function getLPValue(uint256 lpAmount) public view returns (uint256) {
+    uint256 totalSupply = lpToken.totalSupply();
+    (uint256 reserve0, uint256 reserve1) = pool.getReserves();
+    
+    // Attacker can flash loan to inflate reserves
+    uint256 lpShare = lpAmount * 1e18 / totalSupply;
+    uint256 value0 = reserve0 * lpShare / 1e18 * price0;
+    uint256 value1 = reserve1 * lpShare / 1e18 * price1;
+    
+    return value0 + value1;  // Manipulable!
+}
+
+// SECURE - use fair LP pricing (Alpha Homora method)
+function getFairLPValue(uint256 lpAmount) public view returns (uint256) {
+    uint256 totalSupply = lpToken.totalSupply();
+    (uint256 reserve0, uint256 reserve1) = pool.getReserves();
+    
+    // Fair reserve based on external prices
+    uint256 sqrtK = sqrt(reserve0 * reserve1);
+    uint256 sqrtP = sqrt(price0 * price1);
+    
+    // Fair value resistant to reserve manipulation
+    uint256 fairValue = 2 * sqrtK * sqrtP / totalSupply;
+    return fairValue * lpAmount;
+}
+```
+
+---
+
+## 7. Curve Virtual Price Manipulation
+
+```solidity
+// VULNERABLE - using virtual_price during reentrancy
+contract Vulnerable {
+    ICurvePool public curvePool;
+    
+    function getVaultValue() public view returns (uint256) {
+        // During remove_liquidity callback, this returns STALE value
+        uint256 virtualPrice = curvePool.get_virtual_price();
+        return balance * virtualPrice / 1e18;
+    }
+}
+
+// SECURE - check for reentrancy
+contract Secure {
+    function getVaultValue() public view returns (uint256) {
+        // Try to detect if we're in a Curve callback
+        // Some Curve pools expose locked() function
+        if (address(curvePool).code.length > 0) {
+            try ICurveWithLock(address(curvePool)).locked() returns (bool isLocked) {
+                require(!isLocked, "Pool locked");
+            } catch {}
+        }
+        
+        uint256 virtualPrice = curvePool.get_virtual_price();
+        return balance * virtualPrice / 1e18;
+    }
+}
+```
+
+---
+
+## 8. Composable Oracle Risks
+
+### Derived Asset Pricing
+
+```solidity
+// VULNERABLE - stETH priced as ETH
+contract Vulnerable {
+    function getstETHValue(uint256 amount) public view returns (uint256) {
+        // Assumes stETH = ETH (it's not always!)
+        return amount * getETHPrice();
+    }
+}
+
+// SECURE - use stETH-specific oracle
+contract Secure {
+    AggregatorV3Interface public stETHOracle;  // stETH/ETH feed
+    AggregatorV3Interface public ethOracle;    // ETH/USD feed
+    
+    function getstETHValue(uint256 amount) public view returns (uint256) {
+        (, int256 stethRatio,,,) = stETHOracle.latestRoundData();  // stETH/ETH
+        (, int256 ethPrice,,,) = ethOracle.latestRoundData();       // ETH/USD
+        
+        return amount * uint256(stethRatio) * uint256(ethPrice) / 1e26;
+    }
+}
+```
+
+---
+
+## 9. Flash Loan + Oracle Attack Pattern
+
+```solidity
+// Attack sequence for price manipulation
+
+contract OracleAttack {
+    IFlashLoan flashLoan;
+    IVulnerableProtocol protocol;
+    IUniswap uniswap;
+    
+    function attack() external {
+        // 1. Flash loan large amount
+        flashLoan.flashLoan(address(WETH), 10000 ether, "");
+    }
+    
+    function executeOperation(uint256 amount, uint256 fee, bytes calldata) external {
+        // 2. Manipulate spot price
+        WETH.approve(address(uniswap), amount);
+        uniswap.swap(WETH, USDC, amount);  // Dumps price
+        
+        // 3. Interact with protocol at manipulated price
+        protocol.liquidate(victim);  // Now appears undercollateralized
+        
+        // 4. Reverse the swap
+        USDC.approve(address(uniswap), usdcBalance);
+        uniswap.swap(USDC, WETH, usdcBalance);
+        
+        // 5. Repay flash loan + fee
+        WETH.transfer(msg.sender, amount + fee);
+    }
+}
+```
+
+---
+
+## 10. Cross-Chain Oracle Issues
+
+```solidity
+// VULNERABLE - no sequencer uptime check on L2
+contract VulnerableL2 {
+    function getPrice() public view returns (uint256) {
+        (, int256 price,,,) = oracle.latestRoundData();
+        return uint256(price);  // Stale if sequencer was down!
+    }
+}
+
+// SECURE - check L2 sequencer uptime (Arbitrum/Optimism)
+contract SecureL2 {
+    AggregatorV3Interface public sequencerUptimeFeed;
+    uint256 public constant GRACE_PERIOD = 1 hours;
+    
+    function getPrice() public view returns (uint256) {
+        // Check sequencer is up
+        (, int256 answer, uint256 startedAt,,) = sequencerUptimeFeed.latestRoundData();
+        
+        bool isSequencerUp = answer == 0;
+        require(isSequencerUp, "Sequencer down");
+        
+        uint256 timeSinceUp = block.timestamp - startedAt;
+        require(timeSinceUp > GRACE_PERIOD, "Grace period not passed");
+        
+        // Now safe to use price oracle
+        (, int256 price,,,) = priceOracle.latestRoundData();
+        return uint256(price);
+    }
+}
+```
+
+---
+
+## Oracle Audit Checklist
+
+- [ ] Are spot prices (AMM reserves) used for critical operations?
+- [ ] Is oracle data validated for staleness?
+- [ ] Are oracle decimals handled correctly?
+- [ ] Is there protection against TWAP manipulation (>30 min window)?
+- [ ] Are there fallback oracles for DoS protection?
+- [ ] Is LP token pricing manipulation-resistant?
+- [ ] Is virtual_price used safely (no read-only reentrancy)?
+- [ ] Are derived assets priced correctly (stETH, wrapped tokens)?
+- [ ] On L2: Is sequencer uptime checked?
+- [ ] Are multiple price sources compared for deviation?

@@ -1,0 +1,302 @@
+---
+description: AI prompts for LLM-assisted smart contract auditing
+globs: ["**/*.sol", "**/*.rs"]
+alwaysApply: false
+---
+
+# 🤖 AI Audit Prompts
+
+## 1. Protocol Mapper
+
+Use this prompt to understand a codebase before auditing.
+
+```
+You are a smart contract security researcher. Analyze this codebase and provide:
+
+1. **Architecture Overview**
+   - Main contracts and their purposes
+   - Key state variables and their roles
+   - External dependencies and integrations
+
+2. **User Flows**
+   - Primary user interactions
+   - Token flows (deposits, withdrawals, swaps)
+   - Permission levels and access patterns
+
+3. **Trust Assumptions**
+   - What must be trusted (admin, oracle, etc.)
+   - External dependencies that could fail
+   - Centralization risks
+
+4. **Attack Surface**
+   - Entry points for external actors
+   - Value at risk
+   - Most security-critical functions
+
+Format as markdown with code references.
+```
+
+---
+
+## 2. Hypothesis Generator
+
+Use this to identify potential vulnerabilities.
+
+```
+You are an expert smart contract auditor. Given this contract code, generate security hypotheses:
+
+For each hypothesis provide:
+1. **Vulnerability Title**: Brief description
+2. **Location**: Contract and function
+3. **Attack Scenario**: How it could be exploited
+4. **Impact**: What could go wrong
+5. **Likelihood**: Based on preconditions needed
+
+Focus on:
+- Reentrancy (classic, cross-function, read-only)
+- Access control bypasses
+- Integer overflow/underflow
+- Oracle manipulation
+- Flash loan attacks
+- Logic errors
+- Token handling issues
+
+Prioritize high-impact, high-likelihood issues.
+```
+
+---
+
+## 3. Code Path Explorer
+
+Use this to trace specific flows.
+
+```
+Trace the execution path for [FUNCTION_NAME]:
+
+1. **Entry Conditions**
+   - What checks are performed on entry?
+   - What parameters are validated?
+
+2. **State Changes**
+   - What storage variables are modified?
+   - In what order do changes occur?
+
+3. **External Calls**
+   - What external contracts are called?
+   - What's the call order relative to state changes?
+   - Are return values checked?
+
+4. **Exit Conditions**
+   - What does the function return?
+   - What events are emitted?
+
+5. **Edge Cases**
+   - What happens with zero inputs?
+   - What happens at boundary values?
+   - What if external calls fail?
+```
+
+---
+
+## 4. Vulnerability Validator
+
+Use this to verify a potential finding.
+
+```
+I suspect there's a vulnerability in this code:
+
+[PASTE CODE]
+
+My hypothesis: [DESCRIBE POTENTIAL ISSUE]
+
+Please analyze:
+
+1. **Is this actually exploitable?**
+   - What preconditions are needed?
+   - Are there mitigating factors?
+
+2. **Attack Path**
+   - Step-by-step exploitation
+   - Required attacker capabilities
+
+3. **Impact Assessment**
+   - What's the worst case?
+   - Who is affected?
+   - Financial impact
+
+4. **Similar Patterns**
+   - Known exploits with similar issues
+   - CVE references if applicable
+
+5. **Fix Recommendation**
+   - How to remediate
+   - Code example of fix
+```
+
+---
+
+## 5. PoC Generator
+
+Use this to create proof of concept tests.
+
+```
+Create a Foundry test that demonstrates this vulnerability:
+
+**Vulnerability**: [DESCRIPTION]
+**Contract**: [CONTRACT_NAME]
+**Function**: [FUNCTION_NAME]
+**Attack Scenario**: [HOW IT'S EXPLOITED]
+
+Provide:
+1. Complete test file with setup
+2. Attack contract if needed
+3. Step-by-step comments explaining the exploit
+4. Assertions proving the attack succeeded
+5. Console logs showing key values
+
+Use this format:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "forge-std/Test.sol";
+import "../src/VulnerableContract.sol";
+
+contract ExploitTest is Test {
+    // ... complete test
+}
+\```
+```
+
+---
+
+## 6. Report Drafter
+
+Use this to write up findings.
+
+```
+Write a security finding report for:
+
+**Issue**: [BRIEF DESCRIPTION]
+**Code**: [PASTE VULNERABLE CODE]
+**Impact**: [WHAT COULD GO WRONG]
+
+Format as:
+
+## [H/M/L-XX] Title
+
+### Summary
+One paragraph describing the issue
+
+### Vulnerability Detail
+Technical explanation with code references
+
+### Impact
+What can go wrong, who is affected
+
+### Code Snippet
+```solidity
+// Vulnerable code
+\```
+
+### Tool Used
+Manual Review / Slither / Foundry
+
+### Recommendation
+How to fix with code example
+
+### References
+Related exploits or documentation
+```
+
+---
+
+## 7. Invariant Generator
+
+Use this for fuzzing test design.
+
+```
+Analyze this protocol and identify invariants that should ALWAYS hold:
+
+**Contract**: [CONTRACT_NAME]
+**Purpose**: [WHAT IT DOES]
+
+Provide invariants in these categories:
+
+1. **Balance Invariants**
+   - Token balances that should match
+   - Sum relationships
+
+2. **State Invariants**
+   - Valid state ranges
+   - Relationship between variables
+
+3. **Access Invariants**
+   - Who can call what
+   - Permission relationships
+
+4. **Economic Invariants**
+   - Exchange rates
+   - Fee calculations
+
+For each invariant provide:
+- Description in plain English
+- Mathematical formulation
+- Echidna/Foundry property function
+
+```solidity
+function invariant_totalSupplyMatches() public {
+    assertEq(token.totalSupply(), sumOfAllBalances);
+}
+\```
+```
+
+---
+
+## 8. Cross-Reference Checker
+
+Use this to compare with known vulnerabilities.
+
+```
+Compare this code against known vulnerability patterns:
+
+[PASTE CODE]
+
+Check for:
+1. The DAO reentrancy pattern
+2. Fei Protocol flash loan governance
+3. Mango Markets oracle manipulation
+4. Nomad bridge signature issues
+5. Curve read-only reentrancy
+6. First depositor ERC4626 attack
+7. SushiSwap MISO msg.value in loop
+
+For each pattern that might apply:
+- Explain the similarity
+- Explain any differences
+- Assess if protection exists
+```
+
+---
+
+## Usage Tips
+
+1. **Provide Context**: Include relevant imports, interfaces, and state variables
+2. **Be Specific**: Point to exact functions and line numbers
+3. **Iterate**: Use follow-up prompts to dig deeper
+4. **Verify**: Always manually verify AI suggestions
+5. **Combine**: Use multiple prompts for thorough analysis
+
+---
+
+## Warning
+
+⚠️ **AI is an assistant, not a replacement for manual review**
+
+- May miss subtle vulnerabilities
+- Can produce false positives
+- Doesn't understand full context
+- Cannot execute code to verify
+- Should be used alongside traditional auditing
+</Parameter>
+<parameter name="Complexity">4

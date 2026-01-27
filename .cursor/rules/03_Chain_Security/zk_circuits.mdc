@@ -1,0 +1,348 @@
+---
+description: Zero-Knowledge circuit and proof security patterns
+globs: ["**/*.circom", "**/*.cairo", "**/*.rs"]
+alwaysApply: false
+---
+
+# 🔐 ZK Security Guide
+
+## Overview
+
+Zero-Knowledge systems enable proving knowledge without revealing secrets. Vulnerabilities can occur at:
+- **Circuit arithmetization** - constraint design errors
+- **Compilation** - incorrect transformations
+- **Proof generation/verification** - cryptographic flaws
+- **System integration** - boundary condition issues
+
+Key properties at risk:
+- **Soundness** - false proofs accepted
+- **Completeness** - valid proofs rejected
+- **Zero-Knowledge** - secret information leaked
+
+---
+
+## 1. Missing Range Checks
+
+```javascript
+// VULNERABLE - o1js example
+// Limbs not constrained to valid range
+static check(signature: EcdsaSignature) {
+    // Missing range check on r, s components
+    // Value could be split incorrectly: 1 + 1*2 + 1*4 == 1 + 3*2
+}
+
+// SECURE - enforce range on each limb
+static check(signature: EcdsaSignature) {
+    // Ensure each limb is within [0, 2^88 - 1]
+    this.Curve.Scalar.assertAlmostReduced(signature.r, signature.s);
+}
+
+// Circom example - missing range check
+template BadMul() {
+    signal input a;
+    signal input b;
+    signal output c;
+    c <== a * b;  // a, b could be any value in field!
+}
+
+// SECURE
+template GoodMul(n) {
+    signal input a;
+    signal input b;
+    signal output c;
+    
+    // Constrain inputs to n bits
+    component rangeA = Num2Bits(n);
+    component rangeB = Num2Bits(n);
+    rangeA.in <== a;
+    rangeB.in <== b;
+    
+    c <== a * b;
+}
+```
+
+---
+
+## 2. Under-Constrained Circuits
+
+Variables not adequately constrained can be set to any value by malicious prover.
+
+```circom
+// VULNERABLE - unused intermediate value
+template BadHash() {
+    signal input preimage;
+    signal output hash;
+    
+    signal intermediate;
+    intermediate <-- someComputation(preimage);  // <-- not <==
+    // intermediate is UNCONSTRAINED - prover can set arbitrarily
+    
+    hash <== poseidon(preimage);
+}
+
+// SECURE - all signals constrained
+template GoodHash() {
+    signal input preimage;
+    signal output hash;
+    
+    signal intermediate;
+    intermediate <== someComputation(preimage);  // <== constrains
+    
+    hash <== poseidon(preimage);
+}
+```
+
+### Assignment vs Constraint
+```circom
+// <-- is witness assignment (no constraint)
+// <== is constrained assignment (adds constraint)
+// === is constraint only
+
+a <-- b;     // a gets value b, NO constraint
+a <== b;     // a gets value b AND constraint: a === b
+a === b;     // constraint only: a must equal b
+```
+
+---
+
+## 3. Non-Deterministic Circuits
+
+Multiple valid witnesses for same public inputs enable forgery.
+
+```circom
+// VULNERABLE - ZK Email regex could match invalid characters
+// UTF-8 \xff character bypasses regex validation
+template EmailRegex(msgBytes) {
+    signal input msg[msgBytes];
+    signal output match;
+    
+    // Missing: range check on input characters
+    // Attacker injects \xff to break DFA state machine
+}
+
+// SECURE - validate input range
+template EmailRegex(msgBytes) {
+    signal input msg[msgBytes];
+    signal output match;
+    
+    // Ensure all characters are valid ASCII
+    for (var i = 0; i < msgBytes; i++) {
+        assert(msg[i] < 128);  // Valid ASCII only
+    }
+    // ... rest of regex logic
+}
+```
+
+---
+
+## 4. Memory Operation Issues (zkVM)
+
+```rust
+// VULNERABLE - zkSync memory write without constraint
+// Higher 128 bits unconstrained in MemoryWriteQuery
+impl RawMemoryQuery {
+    fn from_key_and_value_witness(...) {
+        let mut lc = LinearCombination::zero();
+        // Constraint not enforced!
+        // Attacker can manipulate high bits
+    }
+}
+
+// ATTACK:
+// 1. Value 0x1337 written to memory
+// 2. Attacker modifies to 0x152d0000133713371337 (100K ETH)
+// 3. Proof passes verification
+// 4. Attacker withdraws inflated amount
+
+// SECURE - enforce constraint
+fn from_key_and_value_witness(...) {
+    let mut lc = LinearCombination::zero();
+    lc.enforce_zero(cs)?;  // Actually apply constraint
+}
+```
+
+---
+
+## 5. Instruction Operation Vulnerabilities
+
+```rust
+// VULNERABLE - LOAD operation doesn't verify register value
+// SP1/Jolt VM example
+builder.when(local.selectors.is_load).assert_block_eq(
+    *memory_cols.memory.prev_value(),
+    *memory_cols.memory.value(),  // Only checks memory unchanged
+);
+// Missing: verify local.a == memory value!
+
+// SECURE - verify loaded value matches memory
+builder.when(local.selectors.is_load).assert_block_eq(
+    *local.a.value(),            // Register must equal
+    *memory_cols.memory.value(), // memory value
+);
+```
+
+---
+
+## 6. Compilation/Polynomial Issues
+
+```go
+// VULNERABLE - Linea PLONK prover
+// Quotient polynomial sub-polynomials not blinded
+func commitToQuotient(h1, h2, h3 []fr.Element, proof *Proof, ...) {
+    // h1, h2, h3 committed without blinding
+    // Attacker can analyze commitments to recover witness
+}
+
+// SECURE - blind polynomials
+func commitToQuotient(h1, h2, h3 []fr.Element, proof *Proof, ...) {
+    if StatisticalZK {
+        h1 = blindPolynomial(h1)
+        h2 = blindPolynomial(h2)
+        h3 = blindPolynomial(h3)
+    }
+    // Now safe to commit
+}
+```
+
+---
+
+## 7. Recursive Verification Issues
+
+```rust
+// VULNERABLE - SP1 recursive verifier
+// 1. committed_value_digest unconstrained if COMMIT not called
+// 2. next_pc == 0 not checked on first layer
+
+// Attack:
+// 1. Abort program before COMMIT syscall
+// 2. committed_value_digest defaults to zero (unconstrained)
+// 3. Modify to any arbitrary value
+// 4. Mark is_complete = true to bypass next_pc check
+// 5. Generate "valid" proof for invalid execution
+
+// SECURE
+// 1. Always constrain committed_value_digest
+// 2. Check next_pc == 0 on ALL layers of recursive tree
+```
+
+---
+
+## 8. Forging ZK Proofs
+
+```rust
+// VULNERABLE - zkWasm LoadN instruction constraints
+// Load8 should zero upper 56 bits, but only checks bits 9-16
+constraint_builder.push(
+    "op_load pick value size check",
+    vec![
+        is_one_byte.expr(meta) * load_picked_leading_u16_u8_high.expr(meta),
+        // Only constrains bits 9-16 to zero!
+        // Bits 17-64 can be anything
+    ]
+);
+
+// ATTACK:
+// Memory contains: 0x1122334455667788
+// Valid Load8 should return: 0x0000000000000088
+// Attacker crafts: 0xAAAAAAAABBBB0088
+// System accepts as valid Load8 result!
+
+// SECURE - constrain ALL upper bits
+is_one_byte.expr(meta) * (
+    load_picked.u16_cells_le[1].expr(meta) +  // bits 17-32
+    load_picked.u16_cells_le[2].expr(meta) +  // bits 33-48
+    load_picked.u16_cells_le[3].expr(meta)    // bits 49-64
+)
+```
+
+---
+
+## 9. Input/Output Validation
+
+```rust
+// VULNERABLE - Jolt validator uses proof-derived addresses
+// Attacker can set output address = input address
+io_device.memory_layout.output_start = io_device.memory_layout.input_start;
+io_device.memory_layout.termination = io_device.memory_layout.input_start;
+
+// Result: output and termination values forged from input!
+
+// SECURE - validator constructs addresses independently
+fn verify(preprocessing: Preprocessing, proof: Proof) {
+    // Compute expected memory layout from preprocessing
+    let expected_layout = compute_memory_layout(&preprocessing);
+    
+    // Verify proof uses correct layout
+    assert_eq!(proof.memory_layout, expected_layout);
+}
+```
+
+---
+
+## 10. Algebraic Attacks (Cryptographic)
+
+### FreeLunch Attack on ZK Hash Functions
+
+Affects: Griffin, Anemoi, ArionHash, XHash8
+
+```
+Attack Complexity Reductions:
+- Griffin: 2^128 → 2^64
+- Arion: 2^128 → 2^98  
+- Anemoi: 2^128 → 2^118
+```
+
+**Mitigation**: Increase rounds, require multiple outputs to be zero
+
+---
+
+## Cairo-Specific Issues
+
+```cairo
+// VULNERABLE - division doesn't revert on zero
+let result = a / b;  // If b = 0, silently returns 0
+
+// SECURE - explicit check
+assert b != 0;
+let result = a / b;
+
+// VULNERABLE - felt252 overflow wraps
+let x: felt252 = PRIME - 1;
+let y = x + 2;  // Wraps, y = 1
+
+// SECURE - use bounded integers
+use core::integer::u256;
+```
+
+---
+
+## ZK Audit Checklist
+
+### Circuit Design
+- [ ] All signals properly constrained (no <-- without <==)
+- [ ] Range checks on all inputs
+- [ ] No under-constrained variables
+- [ ] No non-deterministic paths
+
+### Polynomial/Proof System
+- [ ] Polynomial blinding applied where needed
+- [ ] Commitments don't leak witness information
+- [ ] Fiat-Shamir transcript includes all public inputs
+
+### VM/Execution
+- [ ] Memory operations fully constrained
+- [ ] All opcodes correctly implemented
+- [ ] I/O addresses validated independently
+- [ ] Termination conditions checked
+
+### Recursive Proofs
+- [ ] All layers check completion criteria
+- [ ] Public inputs properly propagated
+- [ ] No unconstrained intermediate values
+
+### Integration
+- [ ] Verifier rejects malformed proofs
+- [ ] Public inputs correctly extracted
+- [ ] Cross-system boundaries validated
+</Parameter>
+<parameter name="Complexity">7

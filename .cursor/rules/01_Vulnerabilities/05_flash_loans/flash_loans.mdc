@@ -1,0 +1,371 @@
+---
+description: Flash loan attack patterns and mitigations
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# ⚡ Flash Loan Vulnerabilities
+
+## Overview
+
+Flash loans enable borrowing unlimited funds without collateral, as long as they're repaid within the same transaction. This creates novel attack vectors where attackers can temporarily control massive capital.
+
+---
+
+## 1. Governance Flash Loan Attacks
+
+### Token-Weighted Voting
+
+```solidity
+// VULNERABLE - voting power from current balance
+contract VulnerableGovernance {
+    IERC20 public governanceToken;
+    
+    function vote(uint256 proposalId, bool support) external {
+        uint256 votingPower = governanceToken.balanceOf(msg.sender);  // Current balance!
+        votes[proposalId] += support ? int256(votingPower) : -int256(votingPower);
+    }
+}
+
+// ATTACK:
+// 1. Flash loan 10M tokens
+// 2. Vote on proposal with massive weight
+// 3. Return tokens in same tx
+// Proposal passes with borrowed voting power!
+
+// SECURE - snapshot-based voting
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+
+contract SecureGovernance {
+    ERC20Votes public governanceToken;
+    mapping(uint256 => uint256) public proposalSnapshots;
+    
+    function createProposal() external returns (uint256 proposalId) {
+        proposalId = proposalCount++;
+        proposalSnapshots[proposalId] = block.number;  // Snapshot at creation
+    }
+    
+    function vote(uint256 proposalId, bool support) external {
+        uint256 snapshot = proposalSnapshots[proposalId];
+        // Use PAST balance, not current
+        uint256 votingPower = governanceToken.getPastVotes(msg.sender, snapshot);
+        // ...
+    }
+}
+```
+
+---
+
+## 2. Collateral Inflation Attack
+
+```solidity
+// VULNERABLE lending protocol
+contract VulnerableLending {
+    mapping(address => uint256) public deposits;
+    mapping(address => uint256) public borrows;
+    IERC20 public collateralToken;
+    
+    function borrow(uint256 amount) external {
+        uint256 collateralValue = getCollateralValue(msg.sender);
+        uint256 maxBorrow = collateralValue * 75 / 100;  // 75% LTV
+        require(borrows[msg.sender] + amount <= maxBorrow);
+        borrows[msg.sender] += amount;
+        // ... transfer borrowed assets
+    }
+    
+    // Uses manipulable spot price
+    function getCollateralValue(address user) public view returns (uint256) {
+        return deposits[user] * getSpotPrice() / 1e18;
+    }
+}
+
+// ATTACK:
+// 1. Flash loan massive amount
+// 2. Swap to inflate collateral token price
+// 3. Deposit small collateral, borrow max at inflated price
+// 4. Swap back, repay flash loan
+// 5. Keep borrowed assets, default on worthless loan
+```
+
+---
+
+## 3. Reward/Yield Farming Attack
+
+```solidity
+// VULNERABLE - rewards based on current stake
+contract VulnerableStaking {
+    function claimRewards() external {
+        uint256 pending = (balances[msg.sender] * rewardRate * timePassed) / totalStaked;
+        rewardToken.transfer(msg.sender, pending);
+    }
+}
+
+// ATTACK:
+// 1. Flash loan tokens
+// 2. Stake flash loaned tokens (become 99% of pool)
+// 3. Claim rewards (get 99% of all pending rewards)
+// 4. Unstake and return flash loan
+
+// SECURE - time-based vesting
+contract SecureStaking {
+    mapping(address => uint256) public stakeTimestamp;
+    uint256 public constant MIN_STAKE_DURATION = 1 hours;
+    
+    function stake(uint256 amount) external {
+        require(stakeTimestamp[msg.sender] == 0 || 
+                block.timestamp - stakeTimestamp[msg.sender] >= MIN_STAKE_DURATION);
+        stakeTimestamp[msg.sender] = block.timestamp;
+        // ... stake
+    }
+    
+    function claimRewards() external {
+        require(block.timestamp - stakeTimestamp[msg.sender] >= MIN_STAKE_DURATION);
+        // ... claim
+    }
+}
+```
+
+---
+
+## 4. Liquidation Manipulation
+
+```solidity
+// Flash loan to manipulate liquidation
+contract LiquidationAttack {
+    function attack(address victim, ILending lending, IOracle oracle) external {
+        // 1. Flash loan massive amount
+        uint256 amount = flashLoan.maxFlashLoan(WETH);
+        flashLoan.flashLoan(this, WETH, amount, abi.encode(victim, lending));
+    }
+    
+    function onFlashLoan(
+        address initiator,
+        address token,
+        uint256 amount,
+        uint256 fee,
+        bytes calldata data
+    ) external returns (bytes32) {
+        (address victim, ILending lending) = abi.decode(data, (address, ILending));
+        
+        // 2. Swap to crash collateral price
+        WETH.approve(address(dex), amount);
+        dex.swap(WETH, VICTIM_COLLATERAL, amount);
+        
+        // 3. Liquidate victim at crashed price
+        lending.liquidate(victim);  // Get collateral at discount
+        
+        // 4. Swap back at profit
+        VICTIM_COLLATERAL.approve(address(dex), collateralReceived);
+        dex.swap(VICTIM_COLLATERAL, WETH, collateralReceived);
+        
+        // 5. Repay flash loan
+        WETH.approve(msg.sender, amount + fee);
+        return keccak256("ERC3156FlashBorrower.onFlashLoan");
+    }
+}
+```
+
+---
+
+## 5. Share/Token Ratio Manipulation
+
+```solidity
+// VULNERABLE vault (first depositor attack)
+contract VulnerableVault {
+    function deposit(uint256 assets) external returns (uint256 shares) {
+        if (totalSupply == 0) {
+            shares = assets;
+        } else {
+            shares = assets * totalSupply / totalAssets;
+        }
+        _mint(msg.sender, shares);
+    }
+}
+
+// ATTACK using flash loan:
+// 1. Attacker deposits 1 wei, gets 1 share
+// 2. Flash loan large amount
+// 3. "Donate" (transfer directly) to vault
+// 4. Victim deposits → gets 0 shares due to rounding
+// 5. Attacker withdraws → gets victim's deposit too
+// 6. Repay flash loan with profit
+
+// SECURE - virtual offset
+contract SecureVault {
+    uint256 internal constant OFFSET = 10 ** 3;  // Virtual shares/assets
+    
+    function deposit(uint256 assets) external returns (uint256 shares) {
+        shares = assets * (totalSupply + OFFSET) / (totalAssets + OFFSET);
+        require(shares > 0, "Zero shares");
+        _mint(msg.sender, shares);
+    }
+}
+```
+
+---
+
+## 6. Arbitrage Sandwich
+
+```solidity
+// User submits swap with low slippage protection
+// Attacker front-runs and back-runs
+
+// Block execution:
+// 1. Attacker: Buy token (raises price)
+// 2. Victim: Swap at higher price (slippage eaten)
+// 3. Attacker: Sell token (profits from victim's worse price)
+
+// PROTECTION: Proper slippage settings
+function swap(
+    uint256 amountIn,
+    uint256 minAmountOut,  // Must be set properly!
+    uint256 deadline
+) external {
+    require(block.timestamp <= deadline, "Expired");
+    uint256 amountOut = router.swap(amountIn);
+    require(amountOut >= minAmountOut, "Slippage");
+}
+```
+
+---
+
+## 7. Cross-Protocol Flash Loan Attack
+
+```solidity
+// Exploiting price discrepancy across protocols
+contract CrossProtocolAttack {
+    function attack() external {
+        // 1. Flash loan from Aave
+        aave.flashLoan(this, USDC, 10_000_000e6, "");
+    }
+    
+    function executeOperation(
+        address[] calldata assets,
+        uint256[] calldata amounts,
+        uint256[] calldata premiums,
+        address initiator,
+        bytes calldata params
+    ) external returns (bool) {
+        // 2. Protocol A prices ETH at $2000 (outdated)
+        protocolA.depositCollateral(USDC, amounts[0]);
+        protocolA.borrow(ETH, 5000e18);  // Borrow at $2000
+        
+        // 3. Protocol B prices ETH at $2100 (current)
+        ETH.approve(address(protocolB), 5000e18);
+        protocolB.depositCollateral(ETH, 5000e18);
+        protocolB.borrow(USDC, 10_500_000e6);  // Borrow at $2100
+        
+        // 4. Repay flash loan + fee, keep difference
+        USDC.approve(address(aave), amounts[0] + premiums[0]);
+        
+        return true;
+    }
+}
+```
+
+---
+
+## 8. Flash Loan Fee-on-Transfer Issues
+
+```solidity
+// VULNERABLE - doesn't account for fee-on-transfer
+function executeFlashLoan(IERC20 token, uint256 amount) external {
+    uint256 balanceBefore = token.balanceOf(address(this));
+    
+    // Flash loan amount
+    flashLender.flashLoan(token, amount);
+    
+    // Execute callback
+    _doOperation();
+    
+    // Repay (but received less due to fee!)
+    token.transfer(address(flashLender), amount);  // FAILS - not enough!
+    
+    require(token.balanceOf(address(this)) >= balanceBefore);
+}
+
+// SECURE - measure actual received
+function executeFlashLoan(IERC20 token, uint256 amount) external {
+    uint256 balanceBefore = token.balanceOf(address(this));
+    
+    flashLender.flashLoan(token, amount);
+    
+    uint256 received = token.balanceOf(address(this)) - balanceBefore;
+    
+    _doOperation(received);  // Work with actual received amount
+    
+    // Repay what we actually need to
+    uint256 repayAmount = flashLender.flashFee(token, amount) + received;
+    token.transfer(address(flashLender), repayAmount);
+}
+```
+
+---
+
+## Flash Loan Protection Patterns
+
+### 1. Same-Block Price Check
+
+```solidity
+mapping(uint256 => uint256) public blockPrices;
+
+function getPrice() public returns (uint256) {
+    if (blockPrices[block.number] == 0) {
+        blockPrices[block.number] = oracle.getPrice();
+    }
+    return blockPrices[block.number];
+}
+```
+
+### 2. Cooldown/Timelock
+
+```solidity
+mapping(address => uint256) public lastAction;
+uint256 public constant COOLDOWN = 1;  // 1 block minimum
+
+modifier withCooldown() {
+    require(block.number > lastAction[msg.sender] + COOLDOWN);
+    lastAction[msg.sender] = block.number;
+    _;
+}
+```
+
+### 3. Snapshot Balances
+
+```solidity
+// Use past block snapshot for calculations
+uint256 pastBalance = token.balanceOfAt(user, block.number - 1);
+```
+
+### 4. Flash Loan Detection
+
+```solidity
+// Detect if called during flash loan callback
+modifier noFlashLoan() {
+    require(msg.sender == tx.origin);  // WARNING: breaks composability
+    _;
+}
+
+// Better: check if balance changed in same block
+modifier flashLoanGuard() {
+    require(lastDepositBlock[msg.sender] < block.number);
+    _;
+}
+```
+
+---
+
+## Audit Checklist
+
+- [ ] Does the protocol use spot prices that can be manipulated with flash loans?
+- [ ] Is governance voting weight based on current or past balances?
+- [ ] Are deposits/withdrawals time-locked to prevent same-block abuse?
+- [ ] Do liquidations use manipulation-resistant pricing?
+- [ ] Is the first depositor attack mitigated?
+- [ ] Are fee-on-transfer tokens handled in flash loan flows?
+- [ ] Are rewards/yields calculated with time-weighted mechanisms?
+- [ ] Is there proper slippage protection on swaps?
+- [ ] Are cross-protocol price discrepancies possible?
+- [ ] Can flash loans be used to manipulate share/token ratios?
+</Parameter>
+<parameter name="Complexity">5

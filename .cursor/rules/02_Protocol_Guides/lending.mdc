@@ -1,0 +1,302 @@
+---
+description: Lending protocol security audit guide
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# 🏦 Lending Protocol Security Guide
+
+## Core Components
+
+1. **Collateral Management** - Deposits, withdrawals
+2. **Borrowing** - Loan origination, interest
+3. **Liquidation** - Unhealthy position handling
+4. **Interest Rates** - Rate models
+5. **Oracle Integration** - Price feeds
+
+---
+
+## Critical Vulnerabilities
+
+### 1. Oracle Manipulation → Bad Debt
+
+```solidity
+// VULNERABLE - spot price for liquidation
+function isLiquidatable(address user) public view returns (bool) {
+    uint256 collateralValue = getUserCollateral(user) * getSpotPrice();
+    uint256 borrowValue = getUserDebt(user);
+    return collateralValue * 100 < borrowValue * ltv;
+}
+
+// ATTACK:
+// 1. Flash loan to crash collateral price
+// 2. Liquidate healthy positions at discount
+// 3. Restore price, profit
+
+// SECURE - manipulation-resistant oracle
+function isLiquidatable(address user) public view returns (bool) {
+    uint256 price = getChainlinkPrice();
+    validatePriceFreshness(price);
+    
+    uint256 collateralValue = getUserCollateral(user) * price;
+    uint256 borrowValue = getUserDebt(user);
+    return collateralValue * 100 < borrowValue * ltv;
+}
+```
+
+### 2. Interest Rate Accrual Issues
+
+```solidity
+// VULNERABLE - interest not accrued before state change
+function borrow(uint256 amount) external {
+    require(amount <= getAvailableToBorrow(msg.sender));
+    
+    userDebt[msg.sender] += amount;  // Added to stale debt!
+    
+    accrueInterest();  // Accrual AFTER borrow
+    
+    token.transfer(msg.sender, amount);
+}
+
+// SECURE - accrue first
+function borrow(uint256 amount) external {
+    accrueInterest();  // Update interest FIRST
+    
+    require(amount <= getAvailableToBorrow(msg.sender));
+    userDebt[msg.sender] += amount;
+    
+    token.transfer(msg.sender, amount);
+}
+
+// Every external function should accrue interest first
+modifier accrues() {
+    accrueInterest();
+    _;
+}
+```
+
+### 3. Liquidation Incentive Arbitrage
+
+```solidity
+// VULNERABLE - fixed liquidation bonus
+uint256 constant LIQUIDATION_BONUS = 110;  // 10% bonus
+
+// If collateral drops fast, liquidator can profit too much
+// If bonus too small, no incentive to liquidate
+
+// SECURE - dynamic liquidation incentive
+function getLiquidationBonus(address user) public view returns (uint256) {
+    uint256 healthFactor = getHealthFactor(user);
+    
+    // Higher bonus for more underwater positions
+    if (healthFactor < 0.8e18) return 115;  // 15%
+    if (healthFactor < 0.9e18) return 110;  // 10%
+    return 105;  // 5%
+}
+```
+
+### 4. Bad Debt Socialization
+
+```solidity
+// VULNERABLE - bad debt not handled
+function liquidate(address user) external {
+    // Liquidator takes collateral
+    // But if debt > collateral value, who pays?
+}
+
+// SECURE - bad debt reserve
+function liquidate(address user) external {
+    uint256 collateralValue = getCollateralValue(user);
+    uint256 debtValue = getDebtValue(user);
+    
+    if (debtValue > collateralValue) {
+        // Socialize bad debt across all depositors
+        uint256 badDebt = debtValue - collateralValue;
+        totalBadDebt += badDebt;
+        // Or use protocol reserves
+        protocolReserves -= min(badDebt, protocolReserves);
+    }
+}
+```
+
+### 5. Collateral Factor Manipulation
+
+```solidity
+// VULNERABLE - immediate collateral factor change
+function setCollateralFactor(address token, uint256 newFactor) external onlyOwner {
+    collateralFactors[token] = newFactor;  // Instant liquidation possible!
+}
+
+// SECURE - gradual factor change
+function setCollateralFactor(address token, uint256 newFactor) external onlyOwner {
+    require(newFactor >= collateralFactors[token] * 90 / 100, "Max 10% decrease");
+    
+    // Or use timelock
+    pendingFactorChange[token] = FactorChange({
+        newFactor: newFactor,
+        effectiveTime: block.timestamp + TIMELOCK_DELAY
+    });
+}
+```
+
+### 6. Borrow/Repay Atomicity Issues
+
+```solidity
+// VULNERABLE - borrow and repay in same block
+function borrow(uint256 amount) external {
+    userBorrows[msg.sender] += amount;
+    lastBorrowBlock[msg.sender] = block.number;
+    token.transfer(msg.sender, amount);
+}
+
+// Attacker: borrow, use in flash loan, repay - zero interest!
+
+// SECURE - minimum borrow duration or same-block fee
+function repay(uint256 amount) external {
+    if (block.number == lastBorrowBlock[msg.sender]) {
+        // Apply minimum interest or block same-block repay
+        uint256 minInterest = amount * MIN_INTEREST_RATE / 1e18;
+        amount += minInterest;
+    }
+    
+    userBorrows[msg.sender] -= amount;
+    token.transferFrom(msg.sender, address(this), amount);
+}
+```
+
+### 7. Utilization Rate Exploitation
+
+```solidity
+// VULNERABLE - extreme interest at high utilization
+function getInterestRate(uint256 utilization) public pure returns (uint256) {
+    if (utilization > 90e16) {
+        return BASE_RATE + utilization * STEEP_SLOPE;  // Could be 1000%+ APR
+    }
+}
+
+// Attacker can manipulate utilization to force high rates
+
+// SECURE - rate caps
+function getInterestRate(uint256 utilization) public pure returns (uint256) {
+    uint256 rate = BASE_RATE + utilization * SLOPE;
+    return min(rate, MAX_RATE);  // Cap at reasonable maximum
+}
+```
+
+### 8. Liquidation Reentrancy
+
+```solidity
+// VULNERABLE - callback during liquidation
+function liquidate(address user, address collateral) external {
+    uint256 seized = calculateSeizedCollateral(user);
+    
+    // Transfer collateral (potential callback)
+    IERC721(collateral).safeTransferFrom(address(this), msg.sender, tokenId);
+    
+    // Update state after callback
+    userCollateral[user] -= seized;  // User can withdraw during callback!
+}
+
+// SECURE - CEI pattern
+function liquidate(address user, address collateral) external nonReentrant {
+    uint256 seized = calculateSeizedCollateral(user);
+    
+    // Update state FIRST
+    userCollateral[user] -= seized;
+    
+    // Then transfer
+    IERC721(collateral).safeTransferFrom(address(this), msg.sender, tokenId);
+}
+```
+
+---
+
+## Compound/Aave Specific Patterns
+
+### cToken Exchange Rate
+
+```solidity
+// Exchange rate can be manipulated by donation
+// First depositor attack:
+// 1. Deposit 1 wei
+// 2. Donate large amount directly
+// 3. Exchange rate inflated
+// 4. Victim deposits, gets 0 cTokens
+
+// SECURE - virtual shares
+function exchangeRate() public view returns (uint256) {
+    uint256 totalCash = getCash();
+    uint256 totalBorrows = totalBorrows;
+    uint256 totalSupply = totalSupply;
+    
+    if (totalSupply == 0) {
+        return initialExchangeRate;
+    }
+    
+    // Use virtual reserves
+    return (totalCash + totalBorrows + VIRTUAL_OFFSET) * 1e18 / (totalSupply + VIRTUAL_OFFSET);
+}
+```
+
+### Flash Loan Integration
+
+```solidity
+// Lending protocols often provide flash loans
+// Ensure borrowing doesn't affect lending health factor in same tx
+
+function flashLoan(uint256 amount, bytes calldata data) external {
+    uint256 balanceBefore = token.balanceOf(address(this));
+    
+    token.transfer(msg.sender, amount);
+    IFlashBorrower(msg.sender).onFlashLoan(amount, data);
+    
+    uint256 balanceAfter = token.balanceOf(address(this));
+    require(balanceAfter >= balanceBefore + flashFee, "Not repaid");
+    
+    // Don't allow flash loan to affect borrow positions
+    require(getHealthFactor(msg.sender) >= 1e18, "Unhealthy after flash");
+}
+```
+
+---
+
+## Lending Audit Checklist
+
+### Oracle Security
+- [ ] Chainlink or manipulation-resistant oracle used
+- [ ] Price staleness checked
+- [ ] Fallback oracle available
+- [ ] Decimal handling correct
+
+### Interest Accrual
+- [ ] Interest accrued before every state change
+- [ ] Rate model bounds reasonable
+- [ ] No same-block borrow/repay exploitation
+- [ ] Utilization calculation correct
+
+### Liquidation
+- [ ] Liquidation threshold properly set
+- [ ] Liquidation bonus incentivizes liquidators
+- [ ] Bad debt handling implemented
+- [ ] No reentrancy during liquidation
+- [ ] Partial liquidation works correctly
+
+### Collateral Management
+- [ ] Collateral factors appropriate per asset
+- [ ] Factor changes timelocked
+- [ ] Withdrawal checks health factor
+- [ ] First depositor attack mitigated
+
+### Access Control
+- [ ] Admin functions protected
+- [ ] Parameter changes bounded
+- [ ] Emergency pause available
+- [ ] Upgrade mechanism secure
+
+### Token Compatibility
+- [ ] Fee-on-transfer tokens handled
+- [ ] Rebasing tokens considered
+- [ ] Different decimals work
+- [ ] Non-standard tokens reviewed
+</Parameter>
+<parameter name="Complexity">5

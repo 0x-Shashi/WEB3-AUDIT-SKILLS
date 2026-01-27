@@ -1,0 +1,306 @@
+---
+description: Math and arithmetic vulnerability patterns for smart contracts
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# 🔢 Math Vulnerabilities
+
+## 1. Integer Overflow/Underflow
+
+### Pre-Solidity 0.8 (No Built-in Protection)
+
+```solidity
+// VULNERABLE (Solidity < 0.8)
+uint256 balance = 0;
+balance -= 1;  // Underflows to 2^256 - 1
+
+uint8 small = 255;
+small += 1;  // Overflows to 0
+
+// MITIGATION: Use SafeMath library
+using SafeMath for uint256;
+balance = balance.sub(1);  // Reverts on underflow
+```
+
+### Solidity 0.8+ with Unchecked Blocks
+
+```solidity
+// VULNERABLE - unchecked bypasses protection
+function dangerous(uint256 a, uint256 b) external pure returns (uint256) {
+    unchecked {
+        return a - b;  // Can underflow!
+    }
+}
+
+// SECURE - only use unchecked when provably safe
+function safe(uint256 i) external pure returns (uint256) {
+    unchecked {
+        return i + 1;  // Safe if i is bounded by loop
+    }
+}
+```
+
+---
+
+## 2. Precision Loss
+
+### Division Before Multiplication
+
+```solidity
+// VULNERABLE - loses precision
+function calculateReward(uint256 amount, uint256 rate, uint256 time) 
+    public pure returns (uint256) 
+{
+    return (amount / 1000) * rate * time;  // Division first loses decimals
+}
+
+// SECURE - multiply first
+function calculateReward(uint256 amount, uint256 rate, uint256 time) 
+    public pure returns (uint256) 
+{
+    return (amount * rate * time) / 1000;  // Division last preserves precision
+}
+```
+
+### Decimal Handling
+
+```solidity
+// Common pattern with 18 decimals
+uint256 constant PRECISION = 1e18;
+
+function calculateShares(uint256 assets, uint256 totalShares, uint256 totalAssets) 
+    public pure returns (uint256) 
+{
+    if (totalAssets == 0) return assets;
+    return (assets * totalShares) / totalAssets;  // May lose dust
+}
+```
+
+---
+
+## 3. Rounding Direction Attacks
+
+### Share Price Manipulation (First Depositor Attack)
+
+```solidity
+// VULNERABLE vault
+contract VulnerableVault {
+    function deposit(uint256 assets) external returns (uint256 shares) {
+        if (totalSupply == 0) {
+            shares = assets;
+        } else {
+            // Attacker: deposit 1 wei, donate massive amount
+            // Next depositor gets 0 shares due to rounding
+            shares = (assets * totalSupply) / totalAssets();
+        }
+        _mint(msg.sender, shares);
+    }
+}
+
+// ATTACK:
+// 1. Attacker deposits 1 wei → gets 1 share
+// 2. Attacker donates 10 ETH directly to vault
+// 3. totalAssets = 10 ETH + 1 wei, totalShares = 1
+// 4. Victim deposits 5 ETH → gets (5e18 * 1) / 10e18 = 0 shares!
+
+// SECURE: Virtual shares offset
+contract SecureVault {
+    uint256 constant OFFSET = 1e3;
+    
+    function deposit(uint256 assets) external returns (uint256 shares) {
+        shares = (assets * (totalSupply + OFFSET)) / (totalAssets() + OFFSET);
+        require(shares > 0, "Zero shares");
+        _mint(msg.sender, shares);
+    }
+}
+```
+
+### Favor Protocol in Rounding
+
+```solidity
+// Rule: Round in favor of the protocol to prevent exploitation
+
+// Deposits: Round DOWN shares (user gets less)
+shares = (assets * totalShares) / totalAssets;  // Rounds down
+
+// Withdrawals: Round DOWN assets (user gets less)
+assets = (shares * totalAssets) / totalShares;  // Rounds down
+
+// For ceiling division (when protocol should round up):
+function divCeil(uint256 a, uint256 b) pure returns (uint256) {
+    return (a + b - 1) / b;
+}
+```
+
+---
+
+## 4. Unsafe Type Casting
+
+### Signed/Unsigned Conversion
+
+```solidity
+// VULNERABLE
+function dangerous(int256 signedValue) external pure returns (uint256) {
+    return uint256(signedValue);  // -1 becomes 2^256 - 1!
+}
+
+// SECURE
+function safe(int256 signedValue) external pure returns (uint256) {
+    require(signedValue >= 0, "Negative value");
+    return uint256(signedValue);
+}
+```
+
+### Downcasting
+
+```solidity
+// VULNERABLE
+uint256 big = 300;
+uint8 small = uint8(big);  // Truncates to 44 (300 % 256)
+
+// SECURE - use SafeCast
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
+uint8 small = SafeCast.toUint8(big);  // Reverts if > 255
+```
+
+---
+
+## 5. Division by Zero
+
+```solidity
+// VULNERABLE
+function getPrice(uint256 reserve0, uint256 reserve1) external pure returns (uint256) {
+    return reserve0 / reserve1;  // Reverts if reserve1 == 0
+}
+
+// SECURE
+function getPrice(uint256 reserve0, uint256 reserve1) external pure returns (uint256) {
+    require(reserve1 > 0, "Zero reserves");
+    return reserve0 / reserve1;
+}
+```
+
+---
+
+## 6. Phantom Overflow (Assembly)
+
+```solidity
+// In assembly, no overflow protection
+function assemblyAdd(uint256 a, uint256 b) external pure returns (uint256 result) {
+    assembly {
+        result := add(a, b)  // Silently overflows!
+    }
+}
+
+// SECURE - manual check
+function safeAssemblyAdd(uint256 a, uint256 b) external pure returns (uint256 result) {
+    assembly {
+        result := add(a, b)
+        if lt(result, a) { revert(0, 0) }  // Check for overflow
+    }
+}
+```
+
+---
+
+## 7. Percentage/Basis Point Errors
+
+```solidity
+// Common mistake: confusing percentage vs basis points
+uint256 constant PERCENTAGE_BASE = 100;        // 1% = 1
+uint256 constant BASIS_POINTS_BASE = 10000;    // 1% = 100
+
+// VULNERABLE - wrong base
+function calculateFee(uint256 amount, uint256 feePercent) external pure returns (uint256) {
+    return (amount * feePercent) / 100;  // If feePercent is meant to be bps, this is 100x off!
+}
+
+// SECURE - clear naming and consistent usage
+uint256 public feeBps = 30;  // 0.3% = 30 bps
+
+function calculateFee(uint256 amount) external view returns (uint256) {
+    return (amount * feeBps) / BASIS_POINTS_BASE;
+}
+```
+
+---
+
+## 8. Token Decimal Mismatches
+
+```solidity
+// VULNERABLE - assumes 18 decimals
+function getUsdValue(uint256 tokenAmount, uint256 tokenPrice) external pure returns (uint256) {
+    return (tokenAmount * tokenPrice) / 1e18;
+}
+
+// SECURE - handle different decimals
+function getUsdValue(
+    uint256 tokenAmount, 
+    uint8 tokenDecimals,
+    uint256 tokenPrice,
+    uint8 priceDecimals
+) external pure returns (uint256) {
+    // Normalize to 18 decimals
+    uint256 normalized = tokenAmount * tokenPrice;
+    uint8 combinedDecimals = tokenDecimals + priceDecimals;
+    
+    if (combinedDecimals > 18) {
+        return normalized / (10 ** (combinedDecimals - 18));
+    } else {
+        return normalized * (10 ** (18 - combinedDecimals));
+    }
+}
+```
+
+---
+
+## 9. Accumulator Overflow
+
+```solidity
+// VULNERABLE - accumulator can overflow over time
+contract Staking {
+    uint256 public rewardPerTokenStored;  // Accumulates continuously
+    
+    function updateReward() internal {
+        // Can overflow if running for years with high rewards
+        rewardPerTokenStored += (reward * 1e18) / totalSupply;
+    }
+}
+
+// SECURE - use uint256 generously, monitor for realistic bounds
+// Or implement periodic resets with proper accounting
+```
+
+---
+
+## 10. Multiplication Overflow Before Division
+
+```solidity
+// VULNERABLE - intermediate overflow
+function calculate(uint256 a, uint256 b, uint256 c) external pure returns (uint256) {
+    return (a * b) / c;  // a * b might overflow before dividing
+}
+
+// SECURE - use mulDiv for large numbers
+import "@openzeppelin/contracts/utils/math/Math.sol";
+
+function calculate(uint256 a, uint256 b, uint256 c) external pure returns (uint256) {
+    return Math.mulDiv(a, b, c);  // Handles overflow correctly
+}
+```
+
+---
+
+## Audit Checklist for Math Issues
+
+- [ ] Are all arithmetic operations checked for overflow/underflow?
+- [ ] Is `unchecked` used only where provably safe?
+- [ ] Is multiplication done before division?
+- [ ] Are rounding directions favorable to the protocol?
+- [ ] Are type casts validated (especially signed→unsigned)?
+- [ ] Are all divisions protected against zero divisors?
+- [ ] Are decimal differences between tokens handled correctly?
+- [ ] Is the first depositor attack mitigated in vaults/pools?
+- [ ] Are basis points vs percentages used consistently?
+- [ ] Can accumulators overflow over the contract lifetime?

@@ -1,0 +1,169 @@
+---
+description: Governance and DAO security patterns
+globs: ["**/*.sol"]
+alwaysApply: false
+---
+
+# 🏛️ Governance Vulnerabilities
+
+## 1. Flash Loan Governance Attack
+
+```solidity
+// VULNERABLE - current balance for voting power
+function getVotes(address account) public view returns (uint256) {
+    return token.balanceOf(account);  // Flashloanable!
+}
+
+// SECURE - snapshot-based voting
+function getVotes(address account, uint256 snapshotId) public view returns (uint256) {
+    return token.balanceOfAt(account, snapshotId);
+}
+```
+
+---
+
+## 2. Proposal Frontrunning
+
+```solidity
+// VULNERABLE - can vote immediately
+function propose(bytes calldata data) external returns (uint256) {
+    proposals[proposalCount] = Proposal({
+        startBlock: block.number,  // Starts immediately
+        endBlock: block.number + VOTING_PERIOD
+    });
+}
+
+// SECURE - voting delay
+function propose(bytes calldata data) external returns (uint256) {
+    proposals[proposalCount] = Proposal({
+        startBlock: block.number + VOTING_DELAY,  // Delay before voting
+        endBlock: block.number + VOTING_DELAY + VOTING_PERIOD
+    });
+}
+```
+
+---
+
+## 3. Quorum Manipulation
+
+```solidity
+// VULNERABLE - quorum based on current supply
+function quorum() public view returns (uint256) {
+    return token.totalSupply() * 4 / 100;  // 4% of current supply
+}
+// If supply suddenly increases, past proposals become harder to pass
+
+// SECURE - snapshot quorum
+function quorum(uint256 proposalId) public view returns (uint256) {
+    uint256 snapshot = proposals[proposalId].snapshot;
+    return token.totalSupplyAt(snapshot) * 4 / 100;
+}
+```
+
+---
+
+## 4. Timelock Bypass
+
+```solidity
+// VULNERABLE - emergency execution without timelock
+function emergencyExecute(bytes calldata data) external onlyGuardian {
+    Address.functionCall(target, data);  // Bypasses timelock!
+}
+
+// SECURE - guardian can only cancel, not execute
+function cancelProposal(uint256 proposalId) external onlyGuardian {
+    proposals[proposalId].cancelled = true;
+}
+```
+
+---
+
+## 5. Delegation Issues
+
+```solidity
+// VULNERABLE - circular delegation
+function delegate(address to) external {
+    delegates[msg.sender] = to;
+    // No check if `to` delegates back
+}
+
+// VULNERABLE - delegation after snapshot
+function delegate(address to) external {
+    // If delegation happens after proposal creation,
+    // snapshot doesn't reflect new delegation
+}
+```
+
+---
+
+## 6. Voting Threshold Manipulation
+
+```solidity
+// VULNERABLE - proposal threshold can be changed mid-vote
+function setProposalThreshold(uint256 newThreshold) external onlyAdmin {
+    proposalThreshold = newThreshold;  // Affects existing proposals
+}
+
+// SECURE - threshold locked at proposal creation
+struct Proposal {
+    uint256 threshold;  // Stored at creation
+}
+```
+
+---
+
+## 7. Double Voting
+
+```solidity
+// VULNERABLE - no vote tracking
+function vote(uint256 proposalId, bool support) external {
+    uint256 votes = getVotes(msg.sender);
+    if (support) {
+        proposals[proposalId].forVotes += votes;
+    }
+    // Can vote multiple times!
+}
+
+// SECURE - track voters
+mapping(uint256 => mapping(address => bool)) public hasVoted;
+
+function vote(uint256 proposalId, bool support) external {
+    require(!hasVoted[proposalId][msg.sender], "Already voted");
+    hasVoted[proposalId][msg.sender] = true;
+    // ...
+}
+```
+
+---
+
+## 8. Griefing via Spam Proposals
+
+```solidity
+// VULNERABLE - no proposal cost
+function propose(bytes calldata data) external returns (uint256) {
+    // Anyone can create proposals
+}
+
+// SECURE - require minimum token threshold
+function propose(bytes calldata data) external returns (uint256) {
+    require(getVotes(msg.sender) >= proposalThreshold);
+    // Or require stake that's slashed if proposal fails badly
+}
+```
+
+---
+
+## Governance Audit Checklist
+
+- [ ] Voting power uses snapshots, not current balance
+- [ ] Voting delay prevents frontrunning
+- [ ] Quorum calculated at proposal snapshot
+- [ ] Timelock cannot be bypassed
+- [ ] Delegation is acyclic and snapshot-aware
+- [ ] Double voting prevented
+- [ ] Proposal spam mitigated
+- [ ] Admin parameter changes don't affect active proposals
+- [ ] Vote counting handles edge cases correctly
+- [ ] Proposal execution validates proposal passed
+</Parameter>
+<parameter name="Complexity">4
