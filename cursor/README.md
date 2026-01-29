@@ -1,154 +1,299 @@
-# Web3 Security Audit Plugin - Cursor
+# Web3 Audit Skills - Cursor IDE
 
-The most comprehensive Web3 security audit assistant for **Cursor IDE**.
+This guide shows you how to use the Web3 Audit Skills with Cursor IDE.
 
-## 🚀 Installation
+---
 
-### Method 1: Project-Level Rules
-1. Copy `.cursorrules` to your project root
-2. Cursor will automatically load the rules
+## Table of Contents
 
-### Method 2: Global Rules
+- [Installation](#installation)
+- [How It Works](#how-it-works)
+- [Configuration](#configuration)
+- [Using the Skills](#using-the-skills)
+- [Example Prompts](#example-prompts)
+- [Skills Reference](#skills-reference)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## Installation
+
+### Option 1: Clone to Your Project (Recommended)
+
+Clone the repository into your project folder:
+
+```bash
+cd your-smart-contract-project/
+git clone https://github.com/0x-Shashi/WEB3-AUDIT-SKILLS.git
+```
+
+Your folder structure will look like:
+
+```
+your-project/
+|-- contracts/
+|-- src/
+|-- WEB3-AUDIT-SKILLS/
+    |-- cursor/
+        |-- .cursorrules
+        |-- skills/
+```
+
+### Option 2: Clone Separately
+
+Clone anywhere and open both folders in Cursor:
+
+```bash
+git clone https://github.com/0x-Shashi/WEB3-AUDIT-SKILLS.git
+```
+
+Then open your project and add the WEB3-AUDIT-SKILLS folder to your workspace.
+
+---
+
+## How It Works
+
+Cursor AI reads the `.cursorrules` file and the `skills/` folder when you open the workspace. This gives the AI knowledge of:
+
+| What It Learns | Count |
+|----------------|-------|
+| Vulnerability patterns | 147 files |
+| Severity classifications | 4 files |
+| Audit firm knowledge | 15 files |
+| Total findings | 50,530 |
+
+When you ask Cursor to audit code, it uses this knowledge to find vulnerabilities.
+
+---
+
+## Configuration
+
+### Using .cursorrules
+
+The `.cursorrules` file in this folder tells Cursor how to behave. You can either:
+
+**Option A: Copy to project root**
+
+Copy `.cursorrules` to your project root:
+
+```bash
+cp WEB3-AUDIT-SKILLS/cursor/.cursorrules ./
+```
+
+**Option B: Reference in Cursor settings**
+
 1. Open Cursor Settings
 2. Go to "Rules for AI"
-3. Paste the contents of `.cursorrules`
+3. Add a reference to the skills folder
 
-### Method 3: Full Plugin (with skills)
-1. Copy entire `cursor/` folder to your workspace
-2. Reference skills in your conversations
+---
 
-## 📚 Features
+## Using the Skills
 
-### Multi-Chain Support (6 Blockchains)
-| Chain | Language | Detection |
-|-------|----------|-----------|
-| Ethereum | Solidity | `pragma solidity` |
-| Solana | Rust/Anchor | `use anchor_lang` |
-| StarkNet | Cairo | `#[starknet::contract]` |
-| Aptos/Sui | Move | `module address::` |
-| Cosmos | CosmWasm | `cosmos-sdk` |
-| TON | FunC/Tact | `recv_internal` |
+### Step 1: Tell the AI to Load Skills
 
-### Comprehensive Knowledge Base (NEW!)
-- **250+ vulnerability patterns** with detection rules
-- **50+ protocol-specific patterns** (GMX, Synthetix, etc.)
-- **L2 security patterns** (Arbitrum, Optimism, zkSync, Base)
-- **Bridge security patterns** (Ronin, Wormhole, Nomad references)
-- **50+ audit checklist items** with SWC codes
-- **5-phase LLM audit workflow** with SCAN modes
-- **Foundry invariant test templates**
+Start your conversation with:
 
-### Security Analysis Features
-- Automatic platform detection
-- Vulnerability pattern matching
-- Severity classification (CVSS-like 0-10 scale)
-- Finding documentation format
-- Remediation suggestions
+```
+Read the security skills from WEB3-AUDIT-SKILLS/cursor/skills/ folder. 
+Use this knowledge for all security analysis.
+```
 
-## 🔧 Commands
+### Step 2: Audit Your Code
 
-Use these commands in Cursor chat:
+Now ask for an audit:
 
-| Command | Description |
-|---------|-------------|
-| `/audit-scan` | Scan current file |
-| `/audit-search <query>` | Search vulnerabilities |
-| `/check-reentrancy` | Check reentrancy |
-| `/check-access` | Check access control |
-| `/check-tokens` | Check token safety |
-| `/checklist` | Run comprehensive audit checklist |
-| `/l2-check` | Check L2-specific vulnerabilities |
-| `/defi-check` | Check DeFi-specific vulnerabilities |
-| `/finding` | Format as finding |
+```
+Audit contracts/MyContract.sol for security vulnerabilities.
+```
 
-## 📁 Structure
+### Step 3: Get Detailed Findings
+
+The AI will return findings like:
+
+```
+[HIGH] Reentrancy in withdraw function
+- Description: The function sends ETH before updating state
+- Impact: Attacker can drain all funds
+- Recommendation: Move state update before external call
+```
+
+---
+
+## Example Prompts
+
+### Full Contract Audit
+
+```
+Using the skills from the skills/ folder, perform a complete 
+security audit of all contracts in my contracts/ directory.
+
+Check for all vulnerability patterns and generate a report.
+```
+
+---
+
+### Check Specific Vulnerability
+
+```
+Check my Vault.sol contract for first-depositor attack vulnerability.
+Reference skills/patterns/first-depositor-issue-patterns.md for the pattern.
+```
+
+---
+
+### DeFi Protocol Audit
+
+```
+This is a lending protocol. Using the relevant DeFi patterns from the skills folder:
+- Check oracle integration
+- Check liquidation logic
+- Check for flash loan attacks
+- Check for precision loss in interest calculations
+```
+
+---
+
+### Generate Audit Report
+
+```
+Create a professional security audit report for this codebase.
+
+Include:
+- Executive summary
+- Findings organized by severity
+- Code references
+- Recommendations
+
+Use the format from skills/MASTER_CHECKLIST.md
+```
+
+---
+
+### Compare to Known Exploits
+
+```
+I am using Chainlink price feeds.
+Check skills/patterns/chainlink-patterns.md and skills/patterns/oracle-patterns.md
+to see if my implementation matches any known vulnerability patterns.
+```
+
+---
+
+### Token Security Review
+
+```
+Audit my ERC20 token implementation.
+
+Check against:
+- skills/patterns/erc20-patterns.md
+- skills/patterns/weird-erc20-patterns.md
+- skills/patterns/fee-on-transfer-patterns.md
+- skills/patterns/rebasing-tokens-patterns.md
+```
+
+---
+
+## Skills Reference
+
+### Patterns Folder
+
+Contains 147 vulnerability pattern files. Key files:
+
+| File | Description |
+|------|-------------|
+| reentrancy-patterns.md | Classic, read-only, cross-function reentrancy |
+| access-control-patterns.md | Missing modifiers, privilege issues |
+| oracle-patterns.md | Price manipulation, stale prices |
+| flash-loan-patterns.md | Flash loan attack vectors |
+| first-depositor-issue-patterns.md | Vault share inflation |
+| precision-loss-patterns.md | Rounding and truncation errors |
+
+See [skills/INDEX.md](skills/INDEX.md) for the complete list.
+
+---
+
+### Severity Folder
+
+| File | When To Use |
+|------|-------------|
+| high-severity.md | Direct fund loss, protocol insolvency |
+| medium-severity.md | Conditional exploits, limited damage |
+| low-severity.md | Edge cases, informational |
+| gas-optimizations.md | Efficiency improvements |
+
+---
+
+### Sources Folder
+
+Patterns from specific audit firms:
+
+| File | Firm |
+|------|------|
+| code4rena.md | Code4rena contests |
+| sherlock.md | Sherlock contests |
+| openzeppelin.md | OpenZeppelin audits |
+| trailofbits.md | Trail of Bits audits |
+| spearbit.md | Spearbit audits |
+
+---
+
+## Folder Structure
 
 ```
 cursor/
-├── .cursorrules          # Main Cursor rules file
-├── README.md
-└── skills/               # Comprehensive skill library
-    ├── INDEX.md          # Master navigation (START HERE)
-    ├── patterns/         # 250+ vulnerability patterns
-    │   ├── vulnerability-patterns.md
-    │   ├── defi-vulnerabilities.md
-    │   ├── l2-security.md
-    │   ├── bridge-security.md
-    │   └── protocol-specific-patterns.md
-    ├── checklists/       # Audit checklists
-    │   └── comprehensive-checklist.md
-    ├── methodology/      # Audit workflows
-    │   ├── llm-audit-workflow.md
-    │   └── learning-path-attack-vectors.md
-    ├── cyfrin-findings/  # Solodit patterns
-    ├── solidity-scanner/ # Ethereum patterns
-    ├── solana-scanner/   # Solana patterns
-    └── ...               # More scanners
+|-- .cursorrules              # Cursor configuration
+|-- README.md                 # This file
+|-- skills/
+    |-- INDEX.md              # Navigation guide
+    |-- MASTER_CHECKLIST.md   # Complete audit checklist
+    |-- STATISTICS.md         # Data analysis
+    |-- patterns/             # 147 vulnerability patterns
+    |-- severity/             # 4 severity files
+    |-- sources/              # 15 audit firm files
+    |-- checklists/           # Audit checklists
+    |-- methodology/          # Audit workflows
 ```
 
-## 🎯 Quick Start
+---
 
-### Scan a File
-```
-Scan this contract for security vulnerabilities
-```
+## Troubleshooting
 
-### Search for Patterns
-```
-/audit-search "flash loan oracle manipulation"
-```
+### AI does not seem to know the patterns
 
-### Get Finding Format
+Make sure you tell the AI to read the skills folder first:
+
 ```
-/finding - format this issue as a professional finding
+Read all files in WEB3-AUDIT-SKILLS/cursor/skills/ before auditing.
 ```
 
-### Check Specific Patterns
+---
+
+### AI gives generic security advice
+
+Be specific about which pattern file to use:
+
 ```
-/check-reentrancy - check this function for reentrancy
-```
-
-## ⚙️ Customization
-
-Edit `.cursorrules` to:
-- Add custom vulnerability patterns
-- Modify severity thresholds
-- Add project-specific rules
-- Customize response format
-
-### Example Custom Rule
-```markdown
-## Project-Specific Rules
-
-This project uses:
-- Custom access control via AccessManager
-- Time-locked operations require 48h delay
-- All token transfers use SafeERC20
+Using skills/patterns/reentrancy-patterns.md, check my withdraw function.
 ```
 
-## 📋 Severity Levels
+---
 
-| Level | Description | Color |
-|-------|-------------|-------|
-| CRITICAL | Direct fund loss | 🔴 |
-| HIGH | Significant damage | 🟠 |
-| MEDIUM | Limited impact | 🟡 |
-| LOW | Minor issues | 🟢 |
-| INFO | Suggestions | ℹ️ |
+### Skills folder is not being read
 
-## 🔗 Skills Reference
+Check that Cursor can see the folder:
+- The folder should be in your workspace
+- Try referencing the full path
 
-The `skills/` folder contains detailed documentation:
-- Vulnerability patterns with code examples
-- Detection methodologies
-- Remediation strategies
-- Tool integration guides
+---
 
-Reference these in conversations:
-```
-Using the patterns from skills/solidity-scanner, analyze this contract
-```
+## Back to Main
 
-## 📄 License
+See the [main README](../README.md) for general information.
 
-MIT License
+---
+
+## Other Platforms
+
+- [Antigravity Setup](../antigravity/README.md)
+- [Claude Code Setup](../claude-code/README.md)

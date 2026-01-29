@@ -1,129 +1,380 @@
-# Web3 Security Audit Plugin - Claude Code
+# Web3 Audit Skills - Claude Code
 
-The most comprehensive Web3 security audit assistant for **Claude Code IDE**.
+This guide shows you how to use the Web3 Audit Skills with Claude Code IDE.
 
-## 🚀 Installation
+---
 
-1. Copy this folder to your Claude Code plugins directory
-2. Set your Cyfrin API key:
-   ```bash
-   export CYFRIN_API_KEY="your_api_key"
-   ```
-3. Restart Claude Code
+## Table of Contents
 
-## 📚 Features
+- [Installation](#installation)
+- [How It Works](#how-it-works)
+- [Configuration](#configuration)
+- [Using the Skills](#using-the-skills)
+- [Example Prompts](#example-prompts)
+- [Skills Reference](#skills-reference)
+- [Troubleshooting](#troubleshooting)
 
-### Multi-Chain Support (6 Blockchains)
-| Chain | Language | Skill |
-|-------|----------|-------|
-| Ethereum | Solidity | `solidity-scanner` |
-| Solana | Rust/Anchor | `solana-scanner` |
-| StarkNet | Cairo | `cairo-scanner` |
-| Aptos/Sui | Move | `move-scanner` |
-| Cosmos | CosmWasm | `cosmos-scanner` |
-| TON | FunC/Tact | `ton-scanner` |
+---
 
-### Integrated Vulnerability Database
-- **50,000+** real audit findings from Cyfrin Solodit
-- Searchable by pattern, category, protocol type
-- Attack vectors with proof-of-concepts
+## Installation
 
-### 📚 Comprehensive Knowledge Base (NEW)
-| Category | Content |
-|----------|---------|
-| **Vulnerability Patterns** | 30+ Solidity patterns, DeFi exploits, protocol-specific |
-| **Protocol-Specific** | GMX, Synthetix, MIMSwap, Orderly patterns |
-| **L2 Security** | Arbitrum, Optimism, zkSync, Base-specific checks |
-| **Bridge Security** | Cross-chain vulnerabilities, message passing |
-| **Checklists** | 50+ audit items, severity rubrics, SWC mappings |
-| **Methodology** | 5-phase workflow, SCAN modes, learning paths |
+### Option 1: Clone to Your Project (Recommended)
 
-### Professional Audit Workflows
-- Context Building & Threat Modeling
-- Vulnerability Scanning (100+ patterns)
-- Token Analysis (30+ weird ERC20 behaviors)
-- Spec Compliance (EIP/ERC verification)
-- Static Analysis (Slither/Mythril)
-- Fix Review & Differential Analysis
-- Professional Report Generation
+Clone the repository into your project folder:
 
-## 🔧 Commands
+```bash
+cd your-smart-contract-project/
+git clone https://github.com/0x-Shashi/WEB3-AUDIT-SKILLS.git
+```
 
-| Command | Description |
-|---------|-------------|
-| `/audit-start <name>` | Initialize new audit |
-| `/audit-scan` | Scan current file |
-| `/audit-search <query>` | Search Solodit |
-| `/audit-report` | Generate report |
-| `/check-reentrancy` | Check reentrancy |
-| `/check-access` | Check access control |
-| `/check-tokens` | Check token safety |
-| `/checklist [category]` | Run comprehensive checklist |
-| `/l2-check <chain>` | L2-specific security check |
-| `/defi-check` | DeFi vulnerability patterns |
-| `/finding <severity> <title>` | Log finding |
-| `/findings` | List findings |
-| `/slither` | Run Slither |
-| `/diff <v1> <v2>` | Compare versions |
+Your folder structure will look like:
 
-## 📁 Structure
+```
+your-project/
+|-- contracts/
+|-- src/
+|-- WEB3-AUDIT-SKILLS/
+    |-- claude-code/
+        |-- plugin.json
+        |-- skills/
+```
+
+### Option 2: Clone Separately
+
+Clone anywhere and open both folders in Claude Code:
+
+```bash
+git clone https://github.com/0x-Shashi/WEB3-AUDIT-SKILLS.git
+```
+
+Then open your project and add the WEB3-AUDIT-SKILLS folder to your workspace.
+
+---
+
+## How It Works
+
+Claude Code reads the `plugin.json` file and the `skills/` folder when you open the workspace. This gives Claude knowledge of:
+
+| What It Learns | Count |
+|----------------|-------|
+| Vulnerability patterns | 147 files |
+| Severity classifications | 4 files |
+| Audit firm knowledge | 15 files |
+| Total findings | 50,530 |
+
+When you ask Claude to audit code, it uses this knowledge to find vulnerabilities.
+
+---
+
+## Configuration
+
+The `plugin.json` file in this folder configures the plugin. Claude Code will automatically detect it when you open the folder.
+
+Current configuration:
+
+```json
+{
+  "name": "web3-security-audit",
+  "version": "1.0.0",
+  "description": "Web3 Security Audit Skills for Claude Code",
+  "skills": {
+    "directory": "./skills",
+    "auto_load": true
+  }
+}
+```
+
+---
+
+## Using the Skills
+
+### Step 1: Tell Claude to Load Skills
+
+Start your conversation with:
+
+```
+Read the security skills from WEB3-AUDIT-SKILLS/claude-code/skills/ folder. 
+Use this knowledge for all security analysis.
+```
+
+### Step 2: Audit Your Code
+
+Now ask for an audit:
+
+```
+Audit contracts/MyContract.sol for security vulnerabilities.
+```
+
+### Step 3: Get Detailed Findings
+
+Claude will return findings like:
+
+```
+[HIGH] Reentrancy in withdraw function
+
+Description: The function sends ETH before updating state
+
+Impact: Attacker can drain all funds
+
+Pattern Reference: skills/patterns/reentrancy-patterns.md (Example 6)
+
+Recommendation: Move _burn() before the external call
+```
+
+---
+
+## Example Prompts
+
+### Full Contract Audit
+
+```
+Using the skills from the skills/ folder, perform a complete 
+security audit of all contracts in my contracts/ directory.
+
+Check for all vulnerability patterns and generate a report.
+```
+
+---
+
+### Check Specific Vulnerability
+
+```
+Check my Vault.sol contract for first-depositor attack vulnerability.
+Reference skills/patterns/first-depositor-issue-patterns.md for the pattern.
+```
+
+---
+
+### DeFi Protocol Audit
+
+```
+This is a lending protocol. Using the relevant DeFi patterns from the skills folder:
+- Check oracle integration
+- Check liquidation logic
+- Check for flash loan attacks
+- Check for precision loss in interest calculations
+```
+
+---
+
+### Generate Audit Report
+
+```
+Create a professional security audit report for this codebase.
+
+Include:
+- Executive summary
+- Findings organized by severity
+- Code references  
+- Recommendations
+
+Use the format from skills/MASTER_CHECKLIST.md
+```
+
+---
+
+### Compare to Known Exploits
+
+```
+I am using Chainlink price feeds.
+Check skills/patterns/chainlink-patterns.md and skills/patterns/oracle-patterns.md
+to see if my implementation matches any known vulnerability patterns.
+```
+
+---
+
+### Token Security Review
+
+```
+Audit my ERC20 token implementation.
+
+Check against:
+- skills/patterns/erc20-patterns.md
+- skills/patterns/weird-erc20-patterns.md
+- skills/patterns/fee-on-transfer-patterns.md
+- skills/patterns/rebasing-tokens-patterns.md
+```
+
+---
+
+### Cross-Chain Security
+
+```
+My contract uses LayerZero for cross-chain messaging.
+
+Check skills/patterns/layerzero-patterns.md and skills/patterns/bridge-patterns.md
+for cross-chain vulnerabilities.
+```
+
+---
+
+### Upgradeable Contract Review
+
+```
+My contract uses the UUPS proxy pattern.
+
+Check skills/patterns/upgradable-patterns.md and skills/patterns/initializer-patterns.md
+for upgrade-related vulnerabilities.
+```
+
+---
+
+## Skills Reference
+
+### Patterns Folder
+
+Contains 147 vulnerability pattern files. Key files:
+
+| File | Description |
+|------|-------------|
+| reentrancy-patterns.md | Classic, read-only, cross-function reentrancy |
+| access-control-patterns.md | Missing modifiers, privilege issues |
+| oracle-patterns.md | Price manipulation, stale prices |
+| flash-loan-patterns.md | Flash loan attack vectors |
+| first-depositor-issue-patterns.md | Vault share inflation |
+| precision-loss-patterns.md | Rounding and truncation errors |
+| front-running-patterns.md | MEV and sandwich attacks |
+| liquidation-patterns.md | Liquidation logic bugs |
+| bridge-patterns.md | Cross-chain vulnerabilities |
+
+See [skills/INDEX.md](skills/INDEX.md) for the complete list.
+
+---
+
+### Severity Folder
+
+| File | When To Use |
+|------|-------------|
+| high-severity.md | Direct fund loss, protocol insolvency |
+| medium-severity.md | Conditional exploits, limited damage |
+| low-severity.md | Edge cases, informational |
+| gas-optimizations.md | Efficiency improvements |
+
+---
+
+### Sources Folder
+
+Patterns from specific audit firms:
+
+| File | Firm |
+|------|------|
+| code4rena.md | Code4rena contests |
+| sherlock.md | Sherlock contests |
+| openzeppelin.md | OpenZeppelin audits |
+| trailofbits.md | Trail of Bits audits |
+| spearbit.md | Spearbit audits |
+| cyfrin.md | Cyfrin audits |
+| consensys.md | Consensys Diligence |
+| quantstamp.md | Quantstamp audits |
+
+---
+
+## Folder Structure
 
 ```
 claude-code/
-├── plugin.json           # Claude Code manifest
-├── README.md
-├── SKILL.md              # Main plugin skill
-└── skills/
-    ├── INDEX.md              # 📚 Master navigation (NEW)
-    ├── patterns/             # 📚 Vulnerability patterns (NEW)
-    │   ├── vulnerability-patterns.md
-    │   ├── vulnerability-taxonomy.md
-    │   ├── severity-scoring.md
-    │   ├── defi-vulnerabilities.md
-    │   ├── protocol-specific-patterns.md
-    │   ├── l2-security.md
-    │   ├── bridge-security.md
-    │   ├── evm-gas-dos.md
-    │   └── invariant-testing.md
-    ├── checklists/           # 📚 Comprehensive checklists (NEW)
-    │   └── comprehensive-checklist.md
-    ├── methodology/          # 📚 Audit methodology (NEW)
-    │   ├── llm-audit-workflow.md
-    │   └── learning-path-attack-vectors.md
-    ├── cyfrin-findings/      # Solodit API integration
-    ├── audit-context/        # Protocol analysis
-    ├── solidity-scanner/     # Ethereum security
-    ├── solana-scanner/       # Solana security
-    ├── cairo-scanner/        # StarkNet security
-    ├── move-scanner/         # Aptos/Sui security
-    ├── cosmos-scanner/       # Cosmos security
-    ├── ton-scanner/          # TON security
-    ├── token-analyzer/       # Weird tokens
-    ├── spec-compliance/      # EIP/ERC verification
-    ├── static-analysis/      # Tool integration
-    ├── variant-analysis/     # Similar bugs
-    ├── fix-review/           # Fix verification
-    ├── differential-review/  # Version comparison
-    ├── report-writer/        # Report templates
-    └── commands/             # Plugin commands
+|-- plugin.json               # Claude Code configuration
+|-- README.md                 # This file
+|-- skills/
+    |-- INDEX.md              # Navigation guide
+    |-- MASTER_CHECKLIST.md   # Complete audit checklist
+    |-- STATISTICS.md         # Data analysis
+    |-- patterns/             # 147 vulnerability patterns
+    |-- severity/             # 4 severity files
+    |-- sources/              # 15 audit firm files
+    |-- checklists/           # Audit checklists
+    |-- methodology/          # Audit workflows
 ```
 
-## 🎯 Quick Start
+---
+
+## Claude-Specific Tips
+
+### Use Claude's Strength with Long Context
+
+Claude can read all the pattern files at once. Take advantage of this:
 
 ```
-# Start a new audit
-/audit-start my-protocol
-
-# Scan for vulnerabilities
-/audit-scan --deep
-
-# Search known vulnerabilities
-/audit-search "flash loan oracle"
-
-# Generate report
-/audit-report --format=md
+Read ALL files in the patterns/ folder, then audit my contract.
+Cross-reference multiple patterns to find complex vulnerabilities.
 ```
 
-## 📄 License
+---
 
-MIT License
+### Ask for Detailed Analysis
+
+Claude excels at detailed explanations:
+
+```
+For each vulnerability you find:
+1. Quote the vulnerable code
+2. Explain the attack step by step
+3. Reference the pattern file that matches
+4. Show the fixed code
+5. Explain why the fix works
+```
+
+---
+
+### Chain Multiple Audits
+
+```
+First, audit contracts/Token.sol
+Then, audit contracts/Vault.sol  
+Finally, check if there are any cross-contract vulnerabilities 
+between the two contracts.
+```
+
+---
+
+## Troubleshooting
+
+### Claude does not seem to know the patterns
+
+Make sure you tell Claude to read the skills folder first:
+
+```
+Read all files in WEB3-AUDIT-SKILLS/claude-code/skills/ before auditing.
+```
+
+---
+
+### Claude gives generic security advice
+
+Be specific about which pattern file to use:
+
+```
+Using skills/patterns/reentrancy-patterns.md, check my withdraw function.
+```
+
+---
+
+### Skills folder is not being read
+
+Check that Claude can see the folder:
+- The folder should be in your workspace
+- Try referencing the full path
+
+---
+
+### Claude is not referencing pattern files
+
+Explicitly ask it to:
+
+```
+When you find a vulnerability, reference the specific pattern file 
+from skills/patterns/ that matches the issue. Include the example number.
+```
+
+---
+
+## Back to Main
+
+See the [main README](../README.md) for general information.
+
+---
+
+## Other Platforms
+
+- [Cursor Setup](../cursor/README.md)
+- [Antigravity Setup](../antigravity/README.md)

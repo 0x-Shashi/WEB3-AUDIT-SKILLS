@@ -1,112 +1,96 @@
-# 🚀 Quick Start Guide
+# Quick Start Guide
 
-## Step 1: Clone This Repo
+Get your AI auditing smart contracts in under 2 minutes.
+
+---
+
+## Step 1: Clone This Repository
 
 ```bash
-# In your project directory
-git clone https://github.com/YOUR_USERNAME/web3-audit-skills.git
-```
-
-Your folder structure:
-```
-your-project/
-├── contracts/           # Your smart contracts
-└── web3-audit-skills/   # This repo
+git clone https://github.com/0x-Shashi/WEB3-AUDIT-SKILLS.git
 ```
 
 ---
 
-## Step 2: Tell Your AI
+## Step 2: Open in Your IDE
 
-### Claude Code
-```
-Use the skills from ./web3-audit-skills/claude-code folder to audit my 
-smart contracts in contracts/. Apply all security patterns and checklists.
-```
+Open the folder for your platform:
 
-### Cursor
-```
-Read .cursorrules from ./web3-audit-skills/cursor and use those skills 
-to analyze my Solidity contracts for security vulnerabilities.
-```
+| Platform | Folder |
+|----------|--------|
+| Cursor | `WEB3-AUDIT-SKILLS/cursor/` |
+| Antigravity | `WEB3-AUDIT-SKILLS/antigravity/` |
+| Claude Code | `WEB3-AUDIT-SKILLS/claude-code/` |
 
-### Antigravity
+---
+
+## Step 3: Load the Skills
+
+Copy and paste this into your AI chat:
+
 ```
-Load the skills from ./web3-audit-skills/antigravity and perform a 
-security audit of my project.
+Read the security skills from the skills/ folder.
+These contain 50,000+ vulnerability patterns from real audits.
+Use this knowledge for all security analysis.
+Confirm when ready.
 ```
 
 ---
 
-## Step 3: Solodit API (Optional)
+## Step 4: Audit Your Code
 
-Get your API key from [solodit.xyz](https://solodit.xyz), then:
+Now ask for an audit:
 
 ```
-My Solodit API key is: sk_your_key_here
-
-Search Solodit for vulnerabilities similar to my Vault.sol contract.
+Audit contracts/MyContract.sol for security vulnerabilities.
+Format findings as [SEVERITY] with description, impact, and fix.
 ```
+
+---
+
+## Done
+
+Your AI now has access to:
+
+- 50,530 real vulnerability findings
+- 207 vulnerability types
+- 147 pattern files
+- 15 audit firm methodologies
 
 ---
 
 ## Example Prompts
 
 ### Full Audit
+
 ```
-Using web3-audit-skills, perform a complete security audit of all 
-contracts in my contracts/ folder. Check for reentrancy, access control, 
-oracle manipulation, and all common vulnerabilities. Generate a report 
-with findings by severity.
+Perform a complete security audit of all contracts in contracts/.
+Check all vulnerability patterns from the skills folder.
+Generate a professional report.
 ```
 
 ### Specific Check
+
 ```
-Use the solidity-scanner skill from web3-audit-skills to check my 
-Staking.sol for reentrancy vulnerabilities.
+Check my withdraw function for reentrancy vulnerabilities.
+Reference skills/patterns/reentrancy-patterns.md
 ```
 
-### Token Analysis
-```
-Apply the token-analyzer skill to check if the external token at 
-0x123... has any weird ERC20 behaviors that could break my integration.
-```
+### DeFi Audit
 
-### Compare Versions
 ```
-Using differential-review skill, compare contracts/v1/Vault.sol with 
-contracts/v2/Vault.sol and identify any security regressions.
+This is a lending protocol. Check for:
+- Oracle manipulation
+- Liquidation bugs
+- Flash loan attacks
+- Precision loss
 ```
 
 ---
 
-## What Happens
+## Need More Help?
 
-1. AI reads the skills from this repo
-2. AI learns vulnerability patterns, checklists, methodologies
-3. AI applies these to YOUR project
-4. AI reports findings with severity, impact, and fixes
-5. (Optional) AI searches Solodit for similar real-world vulnerabilities
-
----
-
-## Supported Blockchains
-
-| Your Code | AI Uses |
-|-----------|---------|
-| `.sol` files | solidity-scanner |
-| Rust/Anchor | solana-scanner |
-| Cairo | cairo-scanner |
-| Move | move-scanner |
-| CosmWasm | cosmos-scanner |
-| FunC/Tact | ton-scanner |
-
----
-
-## Need Help?
-
-Tell your AI:
-```
-Read the AI-INSTRUCTIONS.md in web3-audit-skills for guidance on 
-how to use these audit skills.
-```
+- [Full README](README.md)
+- [Cursor Guide](cursor/README.md)
+- [Antigravity Guide](antigravity/README.md)
+- [Claude Code Guide](claude-code/README.md)
