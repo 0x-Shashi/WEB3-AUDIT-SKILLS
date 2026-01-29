@@ -199,6 +199,37 @@ Skills work together seamlessly:
 
 ---
 
+## 📚 Comprehensive Knowledge Base (NEW)
+
+### Master Index
+Start here for all patterns: [INDEX.md](INDEX.md)
+
+### Vulnerability Patterns (250+)
+| Skill File | Use For |
+|------------|---------|
+| [patterns/vulnerability-patterns.md](patterns/vulnerability-patterns.md) | 30+ Solidity patterns with regex |
+| [patterns/vulnerability-taxonomy.md](patterns/vulnerability-taxonomy.md) | SWC/CWE classification |
+| [patterns/severity-scoring.md](patterns/severity-scoring.md) | CVSS-like 0-10 scoring |
+| [patterns/defi-vulnerabilities.md](patterns/defi-vulnerabilities.md) | Pool, oracle, lending, token |
+| [patterns/protocol-specific-patterns.md](patterns/protocol-specific-patterns.md) | GMX, Synthetix, AMM, vault |
+| [patterns/l2-security.md](patterns/l2-security.md) | Arbitrum, Optimism, zkSync, Base |
+| [patterns/bridge-security.md](patterns/bridge-security.md) | Cross-chain, replay attacks |
+| [patterns/evm-gas-dos.md](patterns/evm-gas-dos.md) | Gas, DoS, L1↔L2 |
+| [patterns/invariant-testing.md](patterns/invariant-testing.md) | Foundry fuzz/invariant templates |
+
+### Checklists
+| Skill File | Use For |
+|------------|---------|
+| [checklists/comprehensive-checklist.md](checklists/comprehensive-checklist.md) | 50+ items with SWC codes |
+
+### Methodology
+| Skill File | Use For |
+|------------|---------|
+| [methodology/llm-audit-workflow.md](methodology/llm-audit-workflow.md) | 5-phase LLM audit, SCAN modes |
+| [methodology/learning-path-attack-vectors.md](methodology/learning-path-attack-vectors.md) | Top 10 attack vectors |
+
+---
+
 ## Best Practices
 
 ### DO:

@@ -32,6 +32,16 @@ The most comprehensive Web3 security audit assistant for **Antigravity**.
 - Searchable by pattern, category, protocol type
 - Attack vectors with proof-of-concepts
 
+### 📚 Comprehensive Knowledge Base (NEW)
+| Category | Content |
+|----------|---------|
+| **Vulnerability Patterns** | 30+ Solidity patterns, DeFi exploits, protocol-specific |
+| **Protocol-Specific** | GMX, Synthetix, MIMSwap, Orderly patterns |
+| **L2 Security** | Arbitrum, Optimism, zkSync, Base-specific checks |
+| **Bridge Security** | Cross-chain vulnerabilities, message passing |
+| **Checklists** | 50+ audit items, severity rubrics, SWC mappings |
+| **Methodology** | 5-phase workflow, SCAN modes, learning paths |
+
 ### Professional Audit Workflows
 - Context Building & Threat Modeling
 - Vulnerability Scanning (100+ patterns)
@@ -52,6 +62,9 @@ The most comprehensive Web3 security audit assistant for **Antigravity**.
 | `/check-reentrancy` | Check reentrancy |
 | `/check-access` | Check access control |
 | `/check-tokens` | Check token safety |
+| `/checklist [category]` | Run comprehensive checklist |
+| `/l2-check <chain>` | L2-specific security check |
+| `/defi-check` | DeFi vulnerability patterns |
 | `/finding <severity> <title>` | Log finding |
 | `/findings` | List findings |
 | `/slither` | Run Slither |
@@ -64,20 +77,36 @@ antigravity/
 ├── antigravity.yaml      # Antigravity configuration
 ├── README.md
 └── skills/
-    ├── cyfrin-findings/  # Solodit API integration
-    ├── audit-context/    # Protocol analysis
-    ├── solidity-scanner/ # Ethereum security
-    ├── solana-scanner/   # Solana security
-    ├── cairo-scanner/    # StarkNet security
-    ├── move-scanner/     # Aptos/Sui security
-    ├── cosmos-scanner/   # Cosmos security
-    ├── ton-scanner/      # TON security
-    ├── token-analyzer/   # Weird tokens
-    ├── spec-compliance/  # EIP/ERC verification
-    ├── static-analysis/  # Tool integration
-    ├── variant-analysis/ # Similar bugs
-    ├── fix-review/       # Fix verification
-    ├── differential-review/ # Version comparison
+    ├── INDEX.md              # 📚 Master navigation (NEW)
+    ├── patterns/             # 📚 Vulnerability patterns (NEW)
+    │   ├── vulnerability-patterns.md
+    │   ├── vulnerability-taxonomy.md
+    │   ├── severity-scoring.md
+    │   ├── defi-vulnerabilities.md
+    │   ├── protocol-specific-patterns.md
+    │   ├── l2-security.md
+    │   ├── bridge-security.md
+    │   ├── evm-gas-dos.md
+    │   └── invariant-testing.md
+    ├── checklists/           # 📚 Comprehensive checklists (NEW)
+    │   └── comprehensive-checklist.md
+    ├── methodology/          # 📚 Audit methodology (NEW)
+    │   ├── llm-audit-workflow.md
+    │   └── learning-path-attack-vectors.md
+    ├── cyfrin-findings/      # Solodit API integration
+    ├── audit-context/        # Protocol analysis
+    ├── solidity-scanner/     # Ethereum security
+    ├── solana-scanner/       # Solana security
+    ├── cairo-scanner/        # StarkNet security
+    ├── move-scanner/         # Aptos/Sui security
+    ├── cosmos-scanner/       # Cosmos security
+    ├── ton-scanner/          # TON security
+    ├── token-analyzer/       # Weird tokens
+    ├── spec-compliance/      # EIP/ERC verification
+    ├── static-analysis/      # Tool integration
+    ├── variant-analysis/     # Similar bugs
+    ├── fix-review/           # Fix verification
+    ├── differential-review/  # Version comparison
     └── report-writer/    # Report templates
 ```
 

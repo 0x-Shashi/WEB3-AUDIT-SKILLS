@@ -29,15 +29,19 @@ The most comprehensive Web3 security audit assistant for **Cursor IDE**.
 | Cosmos | CosmWasm | `cosmos-sdk` |
 | TON | FunC/Tact | `recv_internal` |
 
-### Integrated Vulnerability Patterns
-- **100+** vulnerability patterns across platforms
-- Real-world exploit methodologies
-- Platform-specific security checks
+### Comprehensive Knowledge Base (NEW!)
+- **250+ vulnerability patterns** with detection rules
+- **50+ protocol-specific patterns** (GMX, Synthetix, etc.)
+- **L2 security patterns** (Arbitrum, Optimism, zkSync, Base)
+- **Bridge security patterns** (Ronin, Wormhole, Nomad references)
+- **50+ audit checklist items** with SWC codes
+- **5-phase LLM audit workflow** with SCAN modes
+- **Foundry invariant test templates**
 
 ### Security Analysis Features
 - Automatic platform detection
 - Vulnerability pattern matching
-- Severity classification
+- Severity classification (CVSS-like 0-10 scale)
 - Finding documentation format
 - Remediation suggestions
 
@@ -52,6 +56,9 @@ Use these commands in Cursor chat:
 | `/check-reentrancy` | Check reentrancy |
 | `/check-access` | Check access control |
 | `/check-tokens` | Check token safety |
+| `/checklist` | Run comprehensive audit checklist |
+| `/l2-check` | Check L2-specific vulnerabilities |
+| `/defi-check` | Check DeFi-specific vulnerabilities |
 | `/finding` | Format as finding |
 
 ## 📁 Structure
@@ -60,18 +67,23 @@ Use these commands in Cursor chat:
 cursor/
 ├── .cursorrules          # Main Cursor rules file
 ├── README.md
-└── skills/               # Reference documentation
+└── skills/               # Comprehensive skill library
+    ├── INDEX.md          # Master navigation (START HERE)
+    ├── patterns/         # 250+ vulnerability patterns
+    │   ├── vulnerability-patterns.md
+    │   ├── defi-vulnerabilities.md
+    │   ├── l2-security.md
+    │   ├── bridge-security.md
+    │   └── protocol-specific-patterns.md
+    ├── checklists/       # Audit checklists
+    │   └── comprehensive-checklist.md
+    ├── methodology/      # Audit workflows
+    │   ├── llm-audit-workflow.md
+    │   └── learning-path-attack-vectors.md
     ├── cyfrin-findings/  # Solodit patterns
     ├── solidity-scanner/ # Ethereum patterns
     ├── solana-scanner/   # Solana patterns
-    ├── cairo-scanner/    # StarkNet patterns
-    ├── move-scanner/     # Aptos/Sui patterns
-    ├── cosmos-scanner/   # Cosmos patterns
-    ├── ton-scanner/      # TON patterns
-    ├── token-analyzer/   # Weird tokens
-    ├── spec-compliance/  # EIP/ERC
-    ├── static-analysis/  # Tool guides
-    └── report-writer/    # Report templates
+    └── ...               # More scanners
 ```
 
 ## 🎯 Quick Start

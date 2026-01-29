@@ -164,6 +164,33 @@ skills:
       - "write finding"
       - "audit report"
 
+  # NEW: Comprehensive extracted skills
+  vulnerability-patterns:
+    path: skills/patterns/
+    description: "250+ vulnerability patterns including DeFi, L2, bridges"
+    triggers:
+      - "vulnerability patterns"
+      - "defi vulnerabilities"
+      - "l2 security"
+      - "bridge security"
+  
+  checklists:
+    path: skills/checklists/
+    description: "50+ audit checklist items with SWC codes"
+    triggers:
+      - "checklist"
+      - "audit checklist"
+      - "comprehensive check"
+  
+  methodology:
+    path: skills/methodology/
+    description: "LLM audit workflow, 5-phase approach, SCAN modes"
+    triggers:
+      - "audit workflow"
+      - "llm methodology"
+      - "scan mode"
+      - "attack vectors"
+
 # Commands
 commands:
   audit-start:

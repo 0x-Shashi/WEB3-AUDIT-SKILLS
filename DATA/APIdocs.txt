@@ -1,0 +1,644 @@
+# **Cyfrin Solodit Findings API Specification**
+
+## **Overview**
+
+The Solodit Findings API provides programmatic access to search and filter security findings from audits across multiple platforms (Code4rena, Sherlock, Cyfrin, etc.). This API endpoint offers the same powerful filtering capabilities as the Solodit web interface but optimized for API consumers with higher pagination limits.
+
+**Base URL:** `https://solodit.cyfrin.io/api/v1/solodit`
+
+**Endpoint:** `/findings`
+
+**Method:** `POST`
+
+**Authentication:** API Key required
+
+---
+
+## **Authentication**
+
+All requests require an API key passed via the `X-Cyfrin-API-Key` header.
+
+### **Obtaining an API Key**
+
+1. Create an account on solodit.cyfrin.io
+2. Open the dropdown menu in the top right corner of the nav
+3. Open API Keys modal and generate a API Key
+
+![CleanShot 2025-12-10 at 21.08.08@2x.png](attachment:da92ee6a-1c05-47b2-a8d3-0db965490448:CleanShot_2025-12-10_at_21.08.082x.png)
+
+### **Using Your API Key**
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{"page": 1, "pageSize": 10}'
+
+```
+
+---
+
+## **Rate Limiting**
+
+- **Default Rate Limit:** 20 requests per 60-second window
+- Rate limit information is returned in response headers:
+    - `X-RateLimit-Limit`: Maximum requests allowed in the window
+    - `X-RateLimit-Remaining`: Remaining requests in current window
+    - `X-RateLimit-Reset`: Unix timestamp when the window resets
+
+If you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
+
+---
+
+## **Request**
+
+### **Endpoint**
+
+```
+POST /api/v1/solodit/findings
+
+```
+
+### **Headers**
+
+| **Header** | **Required** | **Description** |
+| --- | --- | --- |
+| `Content-Type` | Yes | Must be `application/json` |
+| `X-Cyfrin-API-Key` | Yes | Your API key |
+
+### **Request Body**
+
+```tsx
+{
+  page?: number;        // Page number (default: 1, min: 1)
+  pageSize?: number;    // Results per page (default: 50, min: 1, max: 100)
+  filters?: {
+    // Text search
+    keywords?: string;  // Search in title and content
+
+    // Impact filtering
+    impact?: Array<"HIGH" | "MEDIUM" | "LOW" | "GAS">;  // Default: all
+
+    // Audit firm filtering
+    firms?: Array<{
+      value: string;    // Firm name (e.g., "Cyfrin", "Sherlock")
+      label?: string;
+    }>;
+
+    // Tags filtering
+    tags?: Array<{
+      value: string;    // Tag name (e.g., "Reentrancy", "Oracle")
+      label?: string;
+    }>;
+
+    // Protocol filtering
+    protocol?: string;           // Protocol name (partial match)
+    protocolCategory?: Array<{   // Protocol categories
+      value: string;
+      label?: string;
+    }>;
+
+    // Forked protocols
+    forked?: Array<{
+      value: string;
+      label?: string;
+    }>;
+
+    // Programming language filtering
+    languages?: Array<{
+      value: string;    // e.g., "Solidity", "Rust", "Cairo"
+      label?: string;
+    }>;
+
+    // Finder (auditor/researcher) filtering
+    user?: string;      // Finder handle (partial match)
+    minFinders?: string; // Minimum number of finders
+    maxFinders?: string; // Maximum number of finders
+
+    // Date filtering
+    reported?: {
+      value: "30" | "60" | "90" | "after" | "alltime";  // Default: "alltime"
+      label?: string;
+    };
+    reportedAfter?: string;  // ISO date string (used when reported.value = "after")
+
+    // Quality/Rarity scoring
+    qualityScore?: number;  // Minimum quality score (0-5, default: 1)
+    rarityScore?: number;   // Minimum rarity score (0-5, default: 1)
+
+    // Sorting
+    sortField?: "Recency" | "Quality" | "Rarity";  // Default: "Recency"
+    sortDirection?: "Desc" | "Asc";                 // Default: "Desc"
+  }
+}
+
+```
+
+---
+
+## **Response**
+
+### **Success Response (200 OK)**
+
+```tsx
+{
+  findings: Array<{
+    // Basic Information
+    id: string;
+    slug: string;
+    title: string;
+    content: string;          // Full markdown content
+    summary: string | null;
+    kind: string;             // e.g., "MARKDOWN"
+
+    // Classification
+    impact: "HIGH" | "MEDIUM" | "LOW" | "GAS";
+    quality_score: number;    // 0-5
+    general_score: number;    // 0-5 (rarity)
+
+    // Dates
+    report_date: string | null;
+
+    // Audit Firm
+    auditfirm_id: string | null;
+    firm_name: string | null;
+    firm_logo_square: string | null;
+    auditfirms_auditfirm: {
+      name: string | null;
+      logo_square: string | null;
+    };
+
+    // Protocol
+    protocol_id: string | null;
+    protocol_name: string | null;
+    protocols_protocol: {
+      name: string | null;
+      protocols_protocolcategoryscore: Array<{
+        protocols_protocolcategory: {
+          title: string;
+        };
+        score: number;
+      }>;
+    };
+
+    // Contest Information (for competitive audits)
+    contest_id: string | null;
+    contest_link: string | null;
+    contest_prize_txt: string | null;
+    sponsor_name: string | null;
+    sponsor_link: string | null;
+
+    // Finders (auditors/researchers)
+    finders_count: number;
+    issues_issue_finders: Array<{
+      wardens_warden: {
+        handle: string;
+      };
+    }>;
+
+    // Tags
+    issues_issuetagscore: Array<{
+      tags_tag: {
+        title: string;
+      };
+    }>;
+
+    // Links
+    source_link: string | null;
+    github_link: string | null;
+    pdf_link: string | null;
+    pdf_page_from: number | null;
+
+    // User-specific (always false for API)
+    bookmarked: false;
+    read: false;
+  }>;
+
+  metadata: {
+    totalResults: number;    // Total findings matching filters
+    currentPage: number;     // Current page number
+    pageSize: number;        // Results per page
+    totalPages: number;      // Total pages available
+    elapsed: number;         // Query execution time (seconds)
+  };
+
+  rateLimit: {
+    limit: number;           // Max requests per window
+    remaining: number;       // Remaining requests
+    reset: number;           // Unix timestamp of window reset
+  };
+}
+
+```
+
+### **Error Responses**
+
+### **400 Bad Request**
+
+```json
+{
+	"message": "Invalid request parameters"
+}
+
+```
+
+### **401 Unauthorized**
+
+```json
+{
+	"message": "Missing API key"
+}
+
+```
+
+or
+
+```json
+{
+	"message": "Invalid API key"
+}
+
+```
+
+### **429 Too Many Requests**
+
+```json
+{
+	"message": "Rate limit exceeded"
+}
+
+```
+
+---
+
+## **Examples**
+
+### **Basic Request**
+
+Get the first 10 findings:
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{
+    "page": 1,
+    "pageSize": 10
+  }'
+
+```
+
+### **Filter by Impact**
+
+Get HIGH severity findings only:
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{
+    "page": 1,
+    "pageSize": 20,
+    "filters": {
+      "impact": ["HIGH"]
+    }
+  }'
+
+```
+
+### **Keyword Search**
+
+Search for reentrancy vulnerabilities:
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{
+    "page": 1,
+    "pageSize": 50,
+    "filters": {
+      "keywords": "reentrancy",
+      "impact": ["HIGH", "MEDIUM"],
+      "sortField": "Quality",
+      "sortDirection": "Desc"
+    }
+  }'
+
+```
+
+### **Filter by Audit Firm**
+
+Get findings from specific audit firms:
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{
+    "page": 1,
+    "pageSize": 25,
+    "filters": {
+      "firms": [
+        {"value": "Cyfrin"},
+        {"value": "Sherlock"}
+      ],
+      "impact": ["HIGH"]
+    }
+  }'
+
+```
+
+### **Filter by Tags and Protocol Category**
+
+Find oracle-related issues in DeFi protocols:
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{
+    "page": 1,
+    "pageSize": 30,
+    "filters": {
+      "tags": [{"value": "Oracle"}],
+      "protocolCategory": [{"value": "DeFi"}],
+      "qualityScore": 3
+    }
+  }'
+
+```
+
+### **Recent Findings**
+
+Get findings from the last 30 days:
+
+```bash
+curl -X POST https://solodit.cyfrin.io/api/v1/solodit/findings \
+  -H "Content-Type: application/json" \
+  -H "X-Cyfrin-API-Key: sk_your_api_key_here" \
+  -d '{
+    "page": 1,
+    "pageSize": 50,
+    "filters": {
+      "reported": {"value": "30"},
+      "sortField": "Recency",
+      "sortDirection": "Desc"
+    }
+  }'
+
+```
+
+### **JavaScript/TypeScript Example**
+
+```tsx
+const API_KEY = 'sk_your_api_key_here';
+const BASE_URL = 'https://solodit.cyfrin.io/api/v1/solodit';
+
+async function searchFindings(filters = {}, page = 1, pageSize = 50) {
+  const response = await fetch(`${BASE_URL}/findings`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Cyfrin-API-Key': API_KEY,
+    },
+    body: JSON.stringify({
+      page,
+      pageSize,
+      filters,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'API request failed');
+  }
+
+  const data = await response.json();
+
+  console.log(`Found ${data.metadata.totalResults} findings`);
+  console.log(`Rate limit: ${data.rateLimit.remaining}/${data.rateLimit.limit}`);
+
+  return data;
+}
+
+// Example usage
+searchFindings({
+  impact: ['HIGH'],
+  keywords: 'reentrancy',
+  sortField: 'Quality',
+  sortDirection: 'Desc'
+}, 1, 20)
+  .then(data => {
+    data.findings.forEach(finding => {
+      console.log(`[${finding.impact}] ${finding.title}`);
+      console.log(`  Firm: ${finding.firm_name}`);
+      console.log(`  Quality: ${finding.quality_score}/5`);
+      console.log('---');
+    });
+  })
+  .catch(error => console.error('Error:', error));
+
+```
+
+### **Python Example**
+
+```python
+import requests
+import json
+
+API_KEY = 'sk_your_api_key_here'
+BASE_URL = 'https://solodit.cyfrin.io/api/v1/solodit'
+
+def search_findings(filters=None, page=1, page_size=50):
+    """Search Solodit findings with filters"""
+    url = f'{BASE_URL}/findings'
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Cyfrin-API-Key': API_KEY
+    }
+    payload = {
+        'page': page,
+        'pageSize': page_size,
+        'filters': filters or {}
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+    response.raise_for_status()
+
+    data = response.json()
+    print(f"Found {data['metadata']['totalResults']} findings")
+    print(f"Rate limit: {data['rateLimit']['remaining']}/{data['rateLimit']['limit']}")
+
+    return data
+
+# Example usage
+findings_data = search_findings(
+    filters={
+        'impact': ['HIGH'],
+        'keywords': 'oracle',
+        'qualityScore': 3,
+        'sortField': 'Quality',
+        'sortDirection': 'Desc'
+    },
+    page=1,
+    page_size=20
+)
+
+for finding in findings_data['findings']:
+    print(f"[{finding['impact']}] {finding['title']}")
+    print(f"  Firm: {finding['firm_name']}")
+    print(f"  Quality: {finding['quality_score']}/5")
+    print(f"  Link: {finding['source_link']}")
+    print('---')
+
+```
+
+---
+
+## **Pagination**
+
+The API supports pagination with configurable page sizes:
+
+- **Default page size:** 50 results
+- **Maximum page size:** 100 results
+- **Page numbering:** Starts at 1
+
+To paginate through all results:
+
+```tsx
+async function getAllFindings(filters) {
+  let page = 1;
+  let allFindings = [];
+
+  while (true) {
+    const response = await searchFindings(filters, page, 100);
+    allFindings.push(...response.findings);
+
+    if (page >= response.metadata.totalPages) {
+      break;
+    }
+
+    page++;
+
+    // Respect rate limits
+    await new Promise(resolve => setTimeout(resolve, 3000));
+  }
+
+  return allFindings;
+}
+
+```
+
+---
+
+## **Available Filters**
+
+> 📋 Complete Filter Options List
+> 
+> 
+> For a comprehensive, up-to-date list of ALL available filter values with counts and examples, see:
+> 
+> [**Solodit Findings API - Filter Options Reference**](https://www.notion.so/Solodit-Findings-API-Filter-Options-Reference-299f46a1865c80bf91b1e238a7b40660?pvs=21)
+> 
+
+### **Audit Firms**
+
+Popular audit firms you can filter by (examples):
+
+- Cyfrin
+- Sherlock
+- Code4rena
+- Trail of Bits
+- OpenZeppelin
+- Consensys Diligence
+- Pashov Audit Group
+- Spearbit
+- Hacken
+- Chainsecurity
+- And many more...
+
+### **Tags**
+
+Common vulnerability tags (examples):
+
+- Reentrancy
+- Oracle
+- Access Control
+- Integer Overflow/Underflow
+- Front-running
+- Logic Error
+- DOS
+- Price Manipulation
+- Flash Loan
+- Griefing
+- And many more...
+
+### **Protocol Categories**
+
+Examples:
+
+- DeFi
+- NFT
+- Lending
+- DEX
+- Staking
+- Governance
+- Bridge
+- Options Vault
+- Yield Aggregator
+- And many more...
+
+### **Programming Languages**
+
+Examples:
+
+- Solidity
+- Rust
+- Cairo
+- Vyper
+- Move
+- And more...
+
+---
+
+## **Best Practices**
+
+1. **Rate Limiting:** Always check the `X-RateLimit-Remaining` header and implement backoff strategies
+2. **Error Handling:** Implement proper error handling for 4xx and 5xx responses
+3. **Pagination:** Use appropriate page sizes (50-100) to minimize API calls
+4. **Caching:** Cache responses when appropriate to reduce API usage
+5. **Filtering:** Use specific filters to reduce result sets and improve performance
+6. **Security:** Never expose your API key in client-side code or public repositories
+
+---
+
+## **CORS Support**
+
+The API supports CORS for browser-based applications. The following headers are allowed:
+
+- `Content-Type`
+- `X-Cyfrin-API-Key`
+
+---
+
+## **Changelog**
+
+### **Version 1.0 (Current)**
+
+- Initial release of Findings API
+- Support for all web interface filters
+- Pagination with up to 100 results per page
+- Rate limiting (20 requests per 60 seconds)
+- BigInt serialization for large IDs
+
+---
+
+## **Support**
+
+For API support, feature requests, or bug reports:
+
+- **Email:** [support@cyfrin.io](mailto:support@cyfrin.io)
+- **Website:** [https://solodit.cyfrin.io](https://solodit.cyfrin.io/)
+
+---

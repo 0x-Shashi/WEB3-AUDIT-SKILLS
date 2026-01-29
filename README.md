@@ -1,24 +1,54 @@
-# Web3 Security Audit Plugin
+# 🛡️ Web3 Audit Skills Repository
 
-**The Most Comprehensive Smart Contract Security Audit Assistant**
-
-A complete security audit plugin supporting **3 AI IDEs** and **6 blockchain platforms**.
+> **AI-Powered Smart Contract Security** — Clone this repo alongside your project, and your AI becomes a Web3 security expert.
 
 ---
 
-## 📦 Available Versions
+## 🚀 How to Use
 
-| Folder | Platform | Config File |
-|--------|----------|-------------|
-| [claude-code/](./claude-code/) | Claude Code | `plugin.json` |
-| [antigravity/](./antigravity/) | Antigravity | `antigravity.yaml` |
-| [cursor/](./cursor/) | Cursor IDE | `.cursorrules` |
+### Step 1: Clone alongside your project
+```bash
+cd your-smart-contract-project/
+git clone https://github.com/YOUR_USERNAME/web3-audit-skills.git
+```
 
-Choose the version matching your IDE and follow the installation instructions in each folder's README.
+### Step 2: Tell your AI to use these skills
+```
+Use the skills from ./web3-audit-skills folder to audit my smart contracts.
+Apply all security patterns and checklists to the contracts/ directory.
+```
+
+### Step 3: (Optional) Add Solodit API
+```
+My Solodit API key is: YOUR_KEY
+Search for similar vulnerabilities in the Solodit database.
+```
 
 ---
 
-## 🎯 Features
+## 💬 Example Prompts
+
+| Task | Prompt |
+|------|--------|
+| **Full Audit** | `Using web3-audit-skills, perform a complete security audit of my contracts/` |
+| **Reentrancy Check** | `Apply reentrancy patterns from web3-audit-skills to Vault.sol` |
+| **Solodit Search** | `Search Solodit for oracle manipulation vulnerabilities similar to my PriceOracle.sol` |
+| **Generate Report** | `Create a security report using the report-writer skill from web3-audit-skills` |
+| **Token Analysis** | `Use token-analyzer skill to check my ERC20 for weird behaviors` |
+
+---
+
+## 📦 Versions for Different AI IDEs
+
+| Folder | AI Platform | Instructions |
+|--------|-------------|--------------|
+| [claude-code/](./claude-code/) | Claude Code | Point AI to this folder |
+| [antigravity/](./antigravity/) | Antigravity | Reference in workspace |
+| [cursor/](./cursor/) | Cursor IDE | Add to `.cursorrules` context |
+
+---
+
+## 🎯 Skills Included
 
 ### Multi-Chain Security (6 Blockchains)
 
@@ -46,7 +76,7 @@ Choose the version matching your IDE and follow the installation instructions in
 | **Review** | Variant Analysis, Fix Review, Differential Review |
 | **Tooling** | Commands & Hooks |
 
-### Professional Workflows
+### What AI Can Do With These Skills
 - Context Building & Threat Modeling
 - Vulnerability Scanning (100+ patterns)
 - Token Analysis (30+ weird ERC20 behaviors)
@@ -57,55 +87,63 @@ Choose the version matching your IDE and follow the installation instructions in
 
 ---
 
-## 🚀 Quick Start
-
-### 1. Choose Your IDE Version
+## 📁 Project Structure
 
 ```
-claude-code/   → For Claude Code IDE
-antigravity/   → For Antigravity
-cursor/        → For Cursor IDE
-```
-
-### 2. Install
-
-Follow the README in your chosen folder.
-
-### 3. Use Commands
-
-```
-/audit-start my-protocol    # Initialize audit
-/audit-scan                  # Scan current file
-/audit-search "reentrancy"   # Search vulnerabilities
-/audit-report               # Generate report
+your-project/
+├── contracts/              # Your smart contracts
+├── src/
+└── web3-audit-skills/      # Clone this repo here
+    │
+    ├── claude-code/        # Claude Code version
+    │   ├── plugin.json
+    │   └── skills/         # 17 skills (71 files)
+    │
+    ├── antigravity/        # Antigravity version
+    │   ├── antigravity.yaml
+    │   └── skills/
+    │
+    ├── cursor/             # Cursor version
+    │   ├── .cursorrules
+    │   └── skills/
+    │
+    └── core/               # Shared utilities
+        ├── src/api/        # Solodit API client
+        ├── src/tools/      # Tool runners
+        └── src/intelligence/  # Pattern matching
 ```
 
 ---
 
-## 📁 Project Structure
+## 🔑 Solodit API Integration
 
+1. Get API key from [solodit.xyz](https://solodit.xyz)
+2. Tell your AI: `"My Solodit API key is: YOUR_KEY"`
+3. AI searches 50,000+ historical vulnerabilities
+
+### What Solodit Provides
+- Real vulnerabilities from professional audits
+- Similar code patterns across protocols
+- Remediation examples that worked
+
+---
+
+## 🤖 For AI Assistants
+
+**If you're an AI reading this repository:**
+
+1. **Start here**: Read the `skills/` folder in your platform version (claude-code, antigravity, or cursor)
+2. **Core skills**: `cyfrin-findings`, `audit-context`, `report-writer`
+3. **Scanners**: Choose based on blockchain (solidity-scanner, solana-scanner, etc.)
+4. **API**: Use `core/src/api/solodit-client.js` patterns for Solodit integration
+
+### Workflow
 ```
-WEB 3 AUDIT PLUGIN/
-│
-├── claude-code/              # Claude Code version
-│   ├── plugin.json           # Plugin manifest
-│   ├── README.md
-│   └── skills/               # 17 skills (71 files)
-│
-├── antigravity/              # Antigravity version
-│   ├── antigravity.yaml      # Config file
-│   ├── README.md
-│   └── skills/               # 17 skills (71 files)
-│
-├── cursor/                   # Cursor version
-│   ├── .cursorrules          # Cursor rules
-│   ├── README.md
-│   └── skills/               # 17 skills (71 files)
-│
-└── REPO/                     # Reference materials
-    ├── Audits/               # Example audits
-    ├── ETAAcademy-Audit/     # Learning resources
-    └── ...
+1. User tells you to use skills from this folder
+2. Read relevant skill files for the task
+3. Apply patterns and checklists to user's code
+4. If user provides Solodit API key, search for similar vulns
+5. Generate findings using report-writer skill
 ```
 
 ---
@@ -114,30 +152,11 @@ WEB 3 AUDIT PLUGIN/
 
 | Metric | Value |
 |--------|-------|
-| **IDE Platforms** | 3 |
+| **AI Platforms** | 3 (Claude, Antigravity, Cursor) |
 | **Blockchain Platforms** | 6 |
 | **Skills** | 17 |
-| **Total Files** | 213+ |
 | **Vulnerability Patterns** | 100+ |
 | **Solodit Findings Access** | 50,000+ |
-
----
-
-## 🔧 Commands Reference
-
-| Command | Description |
-|---------|-------------|
-| `/audit-start <name>` | Initialize new audit project |
-| `/audit-scan [--deep]` | Scan current file |
-| `/audit-search <query>` | Search Solodit database |
-| `/audit-report [format]` | Generate report |
-| `/check-reentrancy` | Check reentrancy vulnerabilities |
-| `/check-access` | Analyze access control |
-| `/check-tokens` | Check token integration safety |
-| `/finding <severity> <title>` | Log new finding |
-| `/findings [--filter]` | List all findings |
-| `/slither [--detector]` | Run Slither |
-| `/diff <v1> <v2>` | Compare versions |
 
 ---
 
@@ -153,31 +172,6 @@ WEB 3 AUDIT PLUGIN/
 
 ---
 
-## 📚 Skills Overview
-
-### Core Skills
-- **cyfrin-findings**: 50,000+ real audit findings from Solodit
-- **audit-context**: Deep code analysis & threat modeling
-- **report-writer**: Professional report templates
-
-### Blockchain Scanners
-- **solidity-scanner**: Ethereum/EVM vulnerabilities
-- **solana-scanner**: Rust/Anchor security
-- **cairo-scanner**: StarkNet patterns
-- **move-scanner**: Aptos/Sui security
-- **cosmos-scanner**: CosmWasm patterns
-- **ton-scanner**: FunC/Tact security
-
-### Specialized Analysis
-- **token-analyzer**: 30+ weird ERC20 behaviors
-- **spec-compliance**: EIP/ERC verification
-- **static-analysis**: Slither/Mythril integration
-- **variant-analysis**: SCARV methodology
-- **fix-review**: CORRECT methodology
-- **differential-review**: Version comparison
-
----
-
 ## 🙏 Acknowledgments
 
 - [Cyfrin](https://cyfrin.io) for Solodit vulnerability database
@@ -188,4 +182,4 @@ WEB 3 AUDIT PLUGIN/
 
 ## 📄 License
 
-MIT License - See LICENSE for details.
+MIT License - Use freely in your audits.

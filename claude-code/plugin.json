@@ -45,7 +45,20 @@
     "skills/fix-review/SKILL.md",
     "skills/differential-review/SKILL.md",
     "skills/report-writer/SKILL.md",
-    "skills/commands/SKILL.md"
+    "skills/commands/SKILL.md",
+    "skills/INDEX.md",
+    "skills/patterns/vulnerability-patterns.md",
+    "skills/patterns/vulnerability-taxonomy.md",
+    "skills/patterns/severity-scoring.md",
+    "skills/patterns/defi-vulnerabilities.md",
+    "skills/patterns/protocol-specific-patterns.md",
+    "skills/patterns/l2-security.md",
+    "skills/patterns/bridge-security.md",
+    "skills/patterns/evm-gas-dos.md",
+    "skills/patterns/invariant-testing.md",
+    "skills/checklists/comprehensive-checklist.md",
+    "skills/methodology/llm-audit-workflow.md",
+    "skills/methodology/learning-path-attack-vectors.md"
   ],
   "commands": {
     "audit-start": "Initialize a new security audit project",
