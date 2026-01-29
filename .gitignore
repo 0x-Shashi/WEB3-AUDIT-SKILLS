@@ -1,1 +1,17 @@
+# Source repositories (already extracted)
 REPO/
+
+# Data extraction (scripts and raw data - not needed for plugin)
+DATA/CODE/
+DATA/raw/
+DATA/checkpoints/
+DATA/logs/
+DATA/test/
+
+# Node
+node_modules/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
