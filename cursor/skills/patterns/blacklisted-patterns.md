@@ -700,3 +700,4 @@ However, this process is failed if the trader has been blacklisted by the USDC c
 - Examples shown: 16
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

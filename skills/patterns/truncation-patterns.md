@@ -133,3 +133,4 @@ When liquidating a user, if all their collateral is taken but it is not valuable
 - Examples shown: 3
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

@@ -782,3 +782,4 @@ function formatAnalysisMarkdown(filePath, findings) {
 
 // Parse and run
 program.parse();
+

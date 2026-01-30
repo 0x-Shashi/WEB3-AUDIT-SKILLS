@@ -492,3 +492,4 @@ Context package for audit continuation:
 5. **Be skeptical of your findings** - Use Adversarial Reviewer
 6. **Focus on impact** - What's the worst case?
 7. **Be precise in reports** - Triagers appreciate clarity
+

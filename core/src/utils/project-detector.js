@@ -459,3 +459,4 @@ class ProjectDetector {
 }
 
 module.exports = ProjectDetector;
+

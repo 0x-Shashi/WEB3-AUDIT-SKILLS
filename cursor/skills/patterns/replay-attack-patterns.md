@@ -602,3 +602,4 @@ Not an issue AFAIK, miners can't reorder txs unless they are signed with the sam
 - Examples shown: 14
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

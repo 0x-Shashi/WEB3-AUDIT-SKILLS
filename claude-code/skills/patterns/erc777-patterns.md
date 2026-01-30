@@ -508,3 +508,4 @@ If the user sends `1 wei` of input token, the Nested Factory will return an `ent
 - Examples shown: 11
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

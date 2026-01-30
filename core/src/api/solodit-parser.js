@@ -304,3 +304,4 @@ ${finding.audit?.reportUrl ? `- **Report:** [View Report](${finding.audit.report
 }
 
 module.exports = SoloditParser;
+

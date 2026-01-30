@@ -407,3 +407,4 @@ class SeverityScorer {
 }
 
 module.exports = SeverityScorer;
+

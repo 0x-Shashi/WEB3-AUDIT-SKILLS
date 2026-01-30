@@ -470,3 +470,4 @@ emit Swap(msg.sender, tokenIn, amountIn, address(outputToken), amountOut);
 4. **No Flash Loan Protection:** Price can be manipulated atomically
 
 These issues were identified through systematic context building, NOT vulnerability hunting. The vulnerabilities emerged naturally from understanding the code deeply.
+

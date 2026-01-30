@@ -219,3 +219,4 @@ Component: [`policy`](https://github.com/BeamNetwork/currency/tree/af3428020545e
 
 - Total findings from OpenZeppelin: 3,237
 - Last updated: 2026-01-29
+

@@ -515,3 +515,4 @@ Specific code changes with examples.
 - [defi-vulnerabilities.md](defi-vulnerabilities.md) - DeFi-specific patterns
 - [comprehensive-checklist.md](../checklists/comprehensive-checklist.md) - Audit checklist
 - [llm-audit-workflow.md](../methodology/llm-audit-workflow.md) - LLM audit prompts
+

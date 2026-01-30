@@ -387,3 +387,4 @@ When dismissing a finding as false positive:
 - Dismissal logic relies on external behavior
 - "The frontend prevents this" (it doesn't)
 - Complex reasoning needed to prove safety
+

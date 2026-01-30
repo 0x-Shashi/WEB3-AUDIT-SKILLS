@@ -364,3 +364,4 @@ According to sherlock rules a loss of 0.01% qualifies as medium impact. The dist
 - Examples shown: 9
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

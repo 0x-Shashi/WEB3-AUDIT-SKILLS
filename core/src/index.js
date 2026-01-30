@@ -76,3 +76,4 @@ module.exports = {
   // Version
   version: require('../package.json').version
 };
+

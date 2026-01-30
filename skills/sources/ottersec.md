@@ -261,3 +261,4 @@ pub fn amounts_invested<'info, T>(
 
 - Total findings from OtterSec: 2,273
 - Last updated: 2026-01-29
+

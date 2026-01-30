@@ -471,3 +471,4 @@ semgrep --config "p/solidity" --json -o semgrep.json .
 # Full analysis script
 ./scripts/security-scan.sh > security-report.md
 ```
+

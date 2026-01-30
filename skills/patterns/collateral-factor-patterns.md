@@ -149,3 +149,4 @@ for (uint256 i = 0; i < pools.length; i++) {
 - Examples shown: 3
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

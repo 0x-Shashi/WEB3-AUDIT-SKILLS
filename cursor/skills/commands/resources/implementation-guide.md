@@ -471,3 +471,4 @@ For more help, visit the documentation.
 
 module.exports = { helpText };
 ```
+

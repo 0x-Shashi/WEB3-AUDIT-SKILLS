@@ -503,3 +503,4 @@ Search for similar findings in historical audits:
 - Configure Slither for specific detector
 - Build custom Semgrep rules
 - Run focused scans on related code
+

@@ -1049,3 +1049,4 @@ Plenty of ERC20 tokens charge a fee for every transfer (e.g. Safemoon and its fo
 - Examples shown: 25
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

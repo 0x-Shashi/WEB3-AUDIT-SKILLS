@@ -1040,3 +1040,4 @@ The issue is that the `ETHAdapter` sends its full balance to the receiver each
 - Examples shown: 22
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

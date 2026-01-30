@@ -122,3 +122,4 @@ Without using one of the above two techniques storage collision can occur during
 - Examples shown: 3
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

@@ -250,3 +250,4 @@ How to fix it.
 5. **Document reasoning** - explain severity choice
 6. **Be consistent** - same issue = same severity across audits
 7. **When in doubt** - err on higher severity, let team triage
+

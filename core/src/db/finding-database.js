@@ -761,3 +761,4 @@ class FindingDatabase {
 }
 
 module.exports = FindingDatabase;
+

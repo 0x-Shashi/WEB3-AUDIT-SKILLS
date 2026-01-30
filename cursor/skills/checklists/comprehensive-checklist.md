@@ -322,3 +322,4 @@ shasum -a 256 contracts/*.sol
 | SWC-128 | DoS With Block Gas Limit | DoS |
 | SWC-133 | Hash Collisions | Signature |
 | SWC-136 | Unencrypted Private Data | Privacy |
+

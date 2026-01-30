@@ -1120,3 +1120,4 @@ Obviously the `accumulated` value must be calculated for all stakingFundVaults n
 - Examples shown: 25
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

@@ -196,3 +196,4 @@ As the solidity docs describe, two or more dynamic types are passed to `abi.enco
 - Examples shown: 4
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

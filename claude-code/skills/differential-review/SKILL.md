@@ -511,3 +511,4 @@ slither v1/ --json v1-slither.json
 slither v2/ --json v2-slither.json
 diff v1-slither.json v2-slither.json
 ```
+

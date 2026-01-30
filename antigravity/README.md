@@ -356,3 +356,4 @@ See the [main README](../README.md) for general information.
 
 - [Cursor Setup](../cursor/README.md)
 - [Claude Code Setup](../claude-code/README.md)
+

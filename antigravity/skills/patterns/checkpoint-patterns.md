@@ -221,3 +221,4 @@ https://github.com/telcoin/telcoin-staking/pull/9
 - Examples shown: 4
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

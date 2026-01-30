@@ -238,3 +238,4 @@ We recommend incorporating the contract address (or a unique contract-specific f
 - Examples shown: 5
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

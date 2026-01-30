@@ -520,3 +520,4 @@ slither . --detect reentrancy-eth
 # Generate coverage report
 forge coverage --report lcov
 ```
+

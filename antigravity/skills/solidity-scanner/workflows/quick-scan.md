@@ -315,3 +315,4 @@ Quick scan should escalate to full audit if:
 - [ ] Upgrade mechanism present
 - [ ] Complex math/calculations
 - [ ] Reviewer is uncertain about any area
+

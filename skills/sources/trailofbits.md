@@ -308,3 +308,4 @@ The vault contract allows arbitrary messages to be sent to arbitrary recipients 
 
 - Total findings from TrailOfBits: 2,094
 - Last updated: 2026-01-29
+

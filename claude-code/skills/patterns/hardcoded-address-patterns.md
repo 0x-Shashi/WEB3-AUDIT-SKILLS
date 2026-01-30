@@ -296,3 +296,4 @@ Change UNIV2_ROUTER to the address of the V2 router:
 - Examples shown: 6
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

@@ -7,3 +7,4 @@ const FindingDatabase = require('./finding-database');
 module.exports = {
   FindingDatabase
 };
+

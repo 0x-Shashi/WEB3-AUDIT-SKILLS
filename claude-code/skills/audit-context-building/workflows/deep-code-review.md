@@ -375,3 +375,4 @@ Now you can:
 - Use **solidity-scanner** to scan for pattern-based issues
 - Apply **variant-analysis** to find similar bugs
 - Write up findings using **audit-report-writer**
+

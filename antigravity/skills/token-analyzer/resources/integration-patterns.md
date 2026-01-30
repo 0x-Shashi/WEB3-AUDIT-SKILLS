@@ -794,3 +794,4 @@ contract PausableTokenHandler {
 5. **Batch without try-catch** for blacklistable tokens
 6. **Multiply before divide** with low decimals
 7. **Integrate without testing** token behavior
+

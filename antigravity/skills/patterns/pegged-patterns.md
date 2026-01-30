@@ -167,3 +167,4 @@ PerpDepository#deposit shorts the deposit amount and returns the amount of vUSD 
 - Examples shown: 4
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

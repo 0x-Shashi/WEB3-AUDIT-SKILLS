@@ -583,3 +583,4 @@ function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash, uint2
 - [ ] Storage layout preserved?
 - [ ] Upgrade authorization proper?
 - [ ] UUPS logic in all versions?
+

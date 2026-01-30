@@ -866,3 +866,4 @@ Freeze the root after a start time, or gate changes behind a timelock/mul...
 - Total LOW findings: 25,272
 - Examples shown: 30
 - Last updated: 2026-01-29
+

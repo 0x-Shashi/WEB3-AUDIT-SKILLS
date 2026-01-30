@@ -180,3 +180,4 @@ Protect the inherited functions of the ERC20 tokens (GiantLP and LPToken) becaus
 - Examples shown: 4
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

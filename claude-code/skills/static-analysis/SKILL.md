@@ -673,3 +673,4 @@ repos:
 2. Run slow tools on demand (Mythril)
 3. Track findings in issue tracker
 4. Require sign-off before merge
+

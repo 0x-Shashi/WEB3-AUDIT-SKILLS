@@ -411,3 +411,4 @@ Lock up times are necessary for the system to work but users should always be ab
 - Examples shown: 10
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

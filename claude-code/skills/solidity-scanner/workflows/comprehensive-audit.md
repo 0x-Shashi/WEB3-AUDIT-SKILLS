@@ -503,3 +503,4 @@ For a 2-week audit:
 | Report & Delivery | 1-2 | 11% |
 
 Adjust based on codebase complexity and client requirements.
+

@@ -206,3 +206,4 @@ Governance#castVote can be called by anyone, even users that don't have any vote
 - Examples shown: 4
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

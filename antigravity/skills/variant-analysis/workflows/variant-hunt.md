@@ -466,3 +466,4 @@ slither . --detect reentrancy-eth --json variants.json
 # Run Semgrep with custom rules
 semgrep --config ./variants.yaml . --json
 ```
+

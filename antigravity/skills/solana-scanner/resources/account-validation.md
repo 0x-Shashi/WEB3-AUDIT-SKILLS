@@ -465,3 +465,4 @@ For rapid validation audit, check each account:
 | Constraint | Custom logic | `constraint = ...` |
 | Init | Space + rent + zero-init | `init, space=...` |
 | Close | Manual zero + transfer | `close = recipient` |
+

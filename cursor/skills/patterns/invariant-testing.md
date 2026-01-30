@@ -463,3 +463,4 @@ Generate Foundry invariant tests for a [PROTOCOL_TYPE] with:
 - Critical invariants: [describe what must always be true]
 - Token: [ERC20/ERC721/native]
 ```
+

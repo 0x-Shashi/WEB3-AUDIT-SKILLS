@@ -214,3 +214,4 @@ Copy and fill this template for each function analysis.
 4. **Always cite line numbers** - enables verification
 5. **Mark uncertainties** with ⚠️ or ❓
 6. **Apply analytical methods** - at least one First Principles OR 5 Whys OR 5 Hows per function
+

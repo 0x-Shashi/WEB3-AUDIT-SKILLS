@@ -207,3 +207,4 @@ An attacker can now acquire the NFT with tokenId `0xe90b7bceb6e7df5418fb78d8ee54
 - Examples shown: 4
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

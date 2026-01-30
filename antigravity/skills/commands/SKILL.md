@@ -501,3 +501,4 @@ externalTools:
 | `/check-access` | Check access control | `/check-access` |
 | `/check-tokens` | Check token safety | `/check-tokens` |
 | `/diff` | Compare versions | `/diff v1/ v2/` |
+

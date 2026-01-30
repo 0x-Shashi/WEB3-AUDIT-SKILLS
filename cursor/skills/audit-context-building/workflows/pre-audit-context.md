@@ -364,3 +364,4 @@ With pre-audit context complete:
 2. **solidity-scanner** - Scan for known patterns
 3. **variant-analysis** - Find similar issues in related code
 4. **audit-report-writer** - Document findings professionally
+

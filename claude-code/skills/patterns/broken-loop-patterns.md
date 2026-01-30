@@ -307,3 +307,4 @@ The function `processFees()` in `JBPayoutRedemptionPaymentTerminal.sol` may fail
 - Examples shown: 7
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

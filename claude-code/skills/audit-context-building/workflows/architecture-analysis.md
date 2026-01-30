@@ -525,3 +525,4 @@ With architecture context complete:
 - What invariants to verify
 - Where trust boundaries are crossed
 - What external integrations need scrutiny
+

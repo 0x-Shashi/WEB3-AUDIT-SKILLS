@@ -367,3 +367,4 @@ This is true assuming the contract address is the same across other chains. Conf
 - Examples shown: 8
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

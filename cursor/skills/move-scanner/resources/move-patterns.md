@@ -492,3 +492,4 @@ public fun swap<CoinA, CoinB>(
     // Type parameters ensure correct coins used
 }
 ```
+

@@ -538,3 +538,4 @@ Review cross-layer synchronization for:
 - [vulnerability-patterns.md](vulnerability-patterns.md) - General patterns
 - [l2-security.md](l2-security.md) - L2-specific patterns
 - [defi-vulnerabilities.md](defi-vulnerabilities.md) - DeFi patterns
+

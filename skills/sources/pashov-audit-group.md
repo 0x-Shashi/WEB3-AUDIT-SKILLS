@@ -396,3 +396,4 @@ Project uses Openzeppelin@v4.9.6, which deprecates `safeApprove()`. Safe approve
 
 - Total findings from Pashov Audit Group: 3,452
 - Last updated: 2026-01-29
+

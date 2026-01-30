@@ -407,3 +407,4 @@ Additionally, use OpenZeppelin's `ReentrancyGuard` as defense in depth.
 # Export to PDF (requires pandoc)
 /audit-report export-pdf
 ```
+

@@ -7,3 +7,4 @@ const ProjectDetector = require('./project-detector');
 module.exports = {
   ProjectDetector
 };
+

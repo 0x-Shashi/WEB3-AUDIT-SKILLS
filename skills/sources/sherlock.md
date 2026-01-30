@@ -309,3 +309,4 @@ Soft vault shares are issued against interest bearing tokens issued by `Compound
 
 - Total findings from Sherlock: 3,017
 - Last updated: 2026-01-29
+

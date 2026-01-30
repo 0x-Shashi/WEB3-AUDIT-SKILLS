@@ -1139,3 +1139,4 @@ When the delay increment (TD) is rounded down, the debt decay reference time inc
 - Examples shown: 25
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

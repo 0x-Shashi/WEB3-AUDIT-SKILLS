@@ -576,3 +576,4 @@ For ANY protocol, always check:
 - [defi-vulnerabilities.md](defi-vulnerabilities.md) - DeFi patterns
 - [bridge-security.md](bridge-security.md) - Bridge security
 - [l2-security.md](l2-security.md) - L2 patterns
+

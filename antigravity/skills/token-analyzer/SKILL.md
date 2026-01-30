@@ -336,3 +336,4 @@ contract RebasingTokenWrapper {
 - "safeERC20" - Missing SafeERC20
 - "transfer return" - Return value issues
 ```
+

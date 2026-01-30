@@ -398,3 +398,4 @@ const estimate = calculateBatchTime(500);
 const estimate2 = calculateBatchTime(5000);
 // { requests: 50, windows: 3, estimatedSeconds: 180, estimatedMinutes: 3 }
 ```
+

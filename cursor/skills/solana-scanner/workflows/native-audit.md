@@ -461,3 +461,4 @@ grep -rn "try_from_slice\|deserialize" src/
 - [ ] Close instructions drain lamports properly
 - [ ] State transitions are valid
 - [ ] Edge cases handled (zero, max values)
+

@@ -211,3 +211,4 @@ Looping to check a certain buy's gas costs, costs around ~33k gas (PoC attached 
 - Examples shown: 5
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

@@ -502,3 +502,4 @@ class SemanticSearch {
 }
 
 module.exports = SemanticSearch;
+

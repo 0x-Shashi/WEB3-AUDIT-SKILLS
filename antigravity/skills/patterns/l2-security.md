@@ -521,3 +521,4 @@ When auditing L2 contracts:
 4. **Check cross-chain messaging** if protocol bridges
 5. **Verify assumptions** about block times, gas, finality
 6. **Test edge cases** for sequencer downtime/failures
+

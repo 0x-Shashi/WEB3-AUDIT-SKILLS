@@ -269,3 +269,4 @@ Both SoftVault and HardVault implement a withdraw fee. Here we see that withdraw
 - Examples shown: 6
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

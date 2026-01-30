@@ -487,3 +487,4 @@ Check token integration for:
 - [vulnerability-patterns.md](vulnerability-patterns.md) - General vulnerability patterns
 - [severity-scoring.md](severity-scoring.md) - How to score findings
 - [comprehensive-checklist.md](../checklists/comprehensive-checklist.md) - Full audit checklist
+

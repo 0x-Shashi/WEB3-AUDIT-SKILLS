@@ -515,3 +515,4 @@ fn create_ack(result: Result<Uint128, ContractError>) -> Binary {
 - [ ] Errors return proper acks (not panic)
 - [ ] Channel doesn't close unexpectedly
 - [ ] Funds never lost in any path
+

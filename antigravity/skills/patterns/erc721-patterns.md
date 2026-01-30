@@ -836,3 +836,4 @@ Add a check to the _transfer function to ensure that `_from` != `_to`.
 - Examples shown: 21
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

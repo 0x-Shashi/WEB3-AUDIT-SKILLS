@@ -240,3 +240,4 @@ When starting an audit, read these files first:
 3. Relevant pattern files based on the contract type
 
 Then proceed with the audit.
+

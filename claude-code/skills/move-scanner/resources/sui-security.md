@@ -438,3 +438,4 @@ module my_package::tests {
 - [ ] UpgradeCap properly secured or made immutable
 - [ ] Entry functions validate object ownership context
 - [ ] Balance and Coin operations atomic
+

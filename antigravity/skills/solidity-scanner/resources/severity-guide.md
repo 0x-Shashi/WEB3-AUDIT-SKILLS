@@ -336,3 +336,4 @@ Impact: Owner can rug (if malicious)
 Likelihood: Depends on team trust
 → Severity: INFORMATIONAL (design choice) or MEDIUM (if concern)
 ```
+

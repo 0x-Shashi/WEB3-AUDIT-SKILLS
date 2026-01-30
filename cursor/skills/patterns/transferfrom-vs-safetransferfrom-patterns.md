@@ -554,3 +554,4 @@ Using safeTransferFrom of SafeERC20.sol is recommended instead.<br>
 - Examples shown: 14
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

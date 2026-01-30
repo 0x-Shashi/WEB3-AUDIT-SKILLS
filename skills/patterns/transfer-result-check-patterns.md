@@ -142,3 +142,4 @@ The exploit relies on insufficient handling of two corner cases of [ERC-20](http
 - Examples shown: 3
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

@@ -286,3 +286,4 @@ Code Location
 
 - Total findings from Halborn: 2,649
 - Last updated: 2026-01-29
+

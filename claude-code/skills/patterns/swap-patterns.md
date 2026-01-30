@@ -824,3 +824,4 @@ Allow users to use an aggregator like paraswap or multiple routers instead of on
 - Examples shown: 18
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

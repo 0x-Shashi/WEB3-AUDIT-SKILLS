@@ -1059,3 +1059,4 @@ Or, it's recommended to set a minLiquidity received and revert if the total liqu
 - Examples shown: 25
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

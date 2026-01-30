@@ -1080,3 +1080,4 @@ This scenario may happen for newly deployed vaults with a short maturity period 
 - Examples shown: 25
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

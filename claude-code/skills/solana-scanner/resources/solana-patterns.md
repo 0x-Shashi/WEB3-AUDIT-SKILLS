@@ -604,3 +604,4 @@ grep -rn "AccountInfo<'info>" programs/
 | TOK-01 (Token owner) | Critical | Token theft |
 | AR-01 (Overflow) | High | Economic exploit |
 | DV-03 (Duplicate) | High | Logic break |
+

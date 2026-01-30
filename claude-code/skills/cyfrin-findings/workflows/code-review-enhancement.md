@@ -319,3 +319,4 @@ For each concern discovered:
 | MEDIUM | Conditional loss, DoS, limited impact |
 | LOW | Minor issues, best practices |
 | INFO | Suggestions, optimizations |
+

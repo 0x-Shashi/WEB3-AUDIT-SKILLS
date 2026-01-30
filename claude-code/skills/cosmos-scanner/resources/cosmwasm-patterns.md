@@ -545,3 +545,4 @@ pub fn execute_stake(
     Ok(Response::new())
 }
 ```
+

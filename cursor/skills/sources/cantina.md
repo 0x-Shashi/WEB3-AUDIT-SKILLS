@@ -355,3 +355,4 @@ The `Rv32LoadStoreAdapterChip` is responsible for managing interactions with mem
 
 - Total findings from Cantina: 2,932
 - Last updated: 2026-01-29
+

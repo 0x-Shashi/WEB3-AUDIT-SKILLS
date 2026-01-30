@@ -373,3 +373,4 @@ mod tests {
 - [ ] Sequencer trust assumptions understood
 - [ ] Block timestamp manipulation tolerance
 - [ ] Fee payment mechanism understood
+

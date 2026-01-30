@@ -571,3 +571,4 @@ class PatternMatcher {
 }
 
 module.exports = PatternMatcher;
+

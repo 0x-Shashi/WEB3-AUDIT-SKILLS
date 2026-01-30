@@ -481,3 +481,4 @@ we're not going to support non standard NFT anymore, just wrapped versions
 - Examples shown: 9
 - Data source: Cyfrin Solodit (50,530 total findings)
 - Last updated: 2026-01-29
+

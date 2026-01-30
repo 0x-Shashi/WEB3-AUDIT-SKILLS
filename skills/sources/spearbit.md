@@ -350,3 +350,4 @@ An attacker can decrease other users' NFT balances, making them unable to cancel
 
 - Total findings from Spearbit: 2,224
 - Last updated: 2026-01-29
+
