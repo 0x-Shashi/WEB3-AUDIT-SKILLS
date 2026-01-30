@@ -1,12 +1,8 @@
 # Source repositories (already extracted)
 REPO/
 
-# Data extraction (scripts and raw data - not needed for plugin)
-DATA/CODE/
-DATA/raw/
-DATA/checkpoints/
-DATA/logs/
-DATA/test/
+# Data extraction (not needed for plugin)
+DATA/
 
 # Node
 node_modules/
