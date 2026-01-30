@@ -1,4 +1,4 @@
-# Command Implementation Guide
+﻿# Command Implementation Guide
 
 Reference for implementing plugin commands and hooks in Cursor/IDE environments.
 
@@ -179,7 +179,7 @@ module.exports = {
   menus: [
     {
       id: 'audit.analyzeSelection',
-      label: '🔍 Analyze Selection',
+      label: ' Analyze Selection',
       when: 'editorHasSelection && resourceExtname =~ /\\.(sol|rs|cairo|move|fc)$/',
       group: 'web3audit',
       
@@ -194,7 +194,7 @@ module.exports = {
     
     {
       id: 'audit.reportFinding',
-      label: '🐛 Report Finding Here',
+      label: ' Report Finding Here',
       when: 'editorHasSelection',
       group: 'web3audit',
       
@@ -213,7 +213,7 @@ module.exports = {
     
     {
       id: 'audit.searchSimilar',
-      label: '📚 Search Similar Vulnerabilities',
+      label: ' Search Similar Vulnerabilities',
       when: 'editorHasSelection',
       group: 'web3audit',
       
@@ -283,7 +283,7 @@ module.exports = {
       priority: 100,
       
       get text() {
-        return context.isAuditMode ? '🔍 Audit Mode: ON' : '🔍 Audit Mode: OFF';
+        return context.isAuditMode ? ' Audit Mode: ON' : ' Audit Mode: OFF';
       },
       
       get tooltip() {
@@ -303,7 +303,7 @@ module.exports = {
       
       get text() {
         const count = context.findings?.length || 0;
-        return `📋 Findings: ${count}`;
+        return ` Findings: ${count}`;
       },
       
       get tooltip() {

@@ -1,4 +1,4 @@
-# Aptos Security Guide
+﻿# Aptos Security Guide
 
 Security considerations specific to Aptos blockchain and Move development.
 
@@ -121,7 +121,7 @@ public fun get_module_signer(data: &ModuleData): signer {
 ```move
 use aptos_framework::timestamp;
 
-// ⚠️ WARNING: Timestamp is set by validators
+//  WARNING: Timestamp is set by validators
 // Don't use for high-precision timing
 
 public fun check_deadline(deadline: u64) {

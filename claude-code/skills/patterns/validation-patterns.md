@@ -1,4 +1,4 @@
-# Validation Security Patterns
+﻿# Validation Security Patterns
 
 ## Overview
 
@@ -104,7 +104,7 @@ function decodeId(uint256 id) public pure returns (CloberOrderBook.OrderKey memo
 ## Description  
 The `onReceive()` function does not verify the integrity of `transferId` against all other parameters. Although the `onlyBridgeRouter` modifier checks that the call originates from another BridgeRouter (assuming a correct configuration of the whitelist) to the `onReceive()` function, it does not check that the call originates from another Connext Diamond.
 
-This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connext’s `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
+This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connexts `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
 
 - **Alice** is a bridge user and makes an honest call to transfer funds over to the destination chain.  
 - **Bob** does not make a transfer but instead calls the `sendToHook()` function with the same `_extraData` but passes an `_amount` of `1 wei`.  
@@ -311,7 +311,7 @@ if (s.finalAuctionEnd != 0) {
 So in `_appendStack` we have:
 
 ```
-onew + on + ... + oj  ≤ Lj
+onew + on + ... + oj   Lj
 ```
 
 Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount for the stack slot plus the potential interest at the end of its term. 
@@ -319,7 +319,7 @@ Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount
 So it would make sense to enforce a stricter inequality for `Lnew`:
 
 ```
-(1 + r(tend − tnow) / 10^18) Anew = onew ≤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 The big issue regarding the current lower bound is when the borrower only takes one lien and for this lien `liquidationInitialAsk == amount` (or they are close). Then at any point during the lien term (maybe very close to the end), the borrower can atomically self-liquidate and settle the Seaport auction in one transaction. This way the borrower can skip paying any interest (they would need to pay OpenSea fees and potentially royalty fees) and plus they would receive liquidation fees.
@@ -328,7 +328,7 @@ The big issue regarding the current lower bound is when the borrower only takes 
 Make sure the following stricter lower bound is used instead:
 
 ```
-(1 + r(tend − tnow) / 10^18) Anew = onew ≤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 **Reference**: [View Original Finding](https://github.com/spearbit/portfolio/blob/master/pdfs/Astaria-Spearbit-Security-Review.pdf)
@@ -957,7 +957,7 @@ This becomes very problematic for revenue tokens that use push payments. An atta
 - **Lines**: 80-113, 115-167
 
 ## Description
-Routers can provide liquidity in the protocol to improve the UX of cross-chain transfers. Liquidity is sent to users under the router’s consent before the cross-chain message is settled on the optimistic message protocol, i.e., Nomad. The router can also borrow liquidity from AAVE if the router does not have enough of it. It is the router’s responsibility to repay the debt to AAVE.
+Routers can provide liquidity in the protocol to improve the UX of cross-chain transfers. Liquidity is sent to users under the routers consent before the cross-chain message is settled on the optimistic message protocol, i.e., Nomad. The router can also borrow liquidity from AAVE if the router does not have enough of it. It is the routers responsibility to repay the debt to AAVE.
 
 ### Code Snippet
 ```solidity
@@ -1074,7 +1074,7 @@ However, when `tokenIndexFrom == tokenIndexTo`, the second update overwrites the
 
 **Note:** The protection against this problem is located in the function `getY()`. However, this function is not called from `swapOut()`.
 
-**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isn’t an immediate risk here.
+**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnt an immediate risk here.
 
 ### Code Snippets
 ```solidity
@@ -1141,9 +1141,9 @@ Acknowledged.
 `RewardsManagerForAave.sol#L145-L147`
 
 ## Description
-Aave has 3 different types of tokens: aToken, stable debt token, and variable debt token (a/s/vToken). Aave’s incentive controller can define rewards for all of them, but Morpho never uses a stable-rate borrow token (sToken). 
+Aave has 3 different types of tokens: aToken, stable debt token, and variable debt token (a/s/vToken). Aaves incentive controller can define rewards for all of them, but Morpho never uses a stable-rate borrow token (sToken). 
 
-The public `accrueUserUnclaimedRewards` function allows passing arbitrary token addresses for which to accrue user rewards. Current code assumes that if the token is not the variable debt token, then it must be the aToken, and uses the user’s supply balance for the reward calculation as follows:
+The public `accrueUserUnclaimedRewards` function allows passing arbitrary token addresses for which to accrue user rewards. Current code assumes that if the token is not the variable debt token, then it must be the aToken, and uses the users supply balance for the reward calculation as follows:
 
 ```solidity
 uint256 stakedByUser = reserve.variableDebtTokenAddress == asset
@@ -1154,7 +1154,7 @@ uint256 stakedByUser = reserve.variableDebtTokenAddress == asset
 An attacker can accrue rewards by passing in an sToken address and steal from the contract. The steps are as follows:
 1. Attacker supplies a large amount of tokens for which sToken rewards are defined.
 2. The aToken reward index is updated to the latest index, but the sToken index is not initialized.
-3. Attacker calls `accrueUserUnclaimedRewards([sToken])`, which will compute the difference between the current Aave reward index and the user’s sToken index, then multiply it by their supply balance.
+3. Attacker calls `accrueUserUnclaimedRewards([sToken])`, which will compute the difference between the current Aave reward index and the users sToken index, then multiply it by their supply balance.
 4. The user-accumulated rewards in `userUnclaimedRewards[user]` can be withdrawn by calling `PositionManager.claimRewards([sToken, ...])`.
 5. Attac
 

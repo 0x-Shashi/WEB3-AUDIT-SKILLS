@@ -1,4 +1,4 @@
-# Frequently Asked Questions
+﻿# Frequently Asked Questions
 
 ## General Questions
 
@@ -127,18 +127,18 @@ For **novel vulnerabilities**: Lower (limited to pattern matching)
 For **business logic bugs**: Moderate (context-dependent)
 
 ### What does this catch well?
-✅ Reentrancy variants
-✅ Access control issues
-✅ Oracle manipulation patterns
-✅ Common DeFi vulnerabilities
-✅ Known attack vectors
+ Reentrancy variants
+ Access control issues
+ Oracle manipulation patterns
+ Common DeFi vulnerabilities
+ Known attack vectors
 
 ### What might this miss?
-⚠️ Novel attack vectors
-⚠️ Complex economic exploits
-⚠️ Protocol-specific edge cases
-⚠️ Cross-contract interactions (context limits)
-⚠️ Timing-based attacks
+ Novel attack vectors
+ Complex economic exploits
+ Protocol-specific edge cases
+ Cross-contract interactions (context limits)
+ Timing-based attacks
 
 ### How does it compare to static analysis?
 | Aspect | Static Analysis | AI + Skills |
@@ -163,8 +163,8 @@ Yes, the skill system is open source. You only pay for:
 
 ### Can I use this commercially?
 Check the license. Generally:
-- Use for client audits: ✅
-- Modify for internal use: ✅
+- Use for client audits: 
+- Modify for internal use: 
 - Attribution required: Check license
 - Resell as product: Check license
 

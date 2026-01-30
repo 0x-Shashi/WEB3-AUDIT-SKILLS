@@ -1,4 +1,4 @@
-# Swap Security Patterns
+﻿# Swap Security Patterns
 
 ## Overview
 
@@ -52,7 +52,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 
 **Note:** Exploiters can pull the tokens from the LiFi protocol. Please refer to the issue **"Remaining tokens can be swept from the LiFi Diamond or the Executor," Issue #82**. Exploiters can take a more aggressive strategy and force the victim's swap to revert. A possible exploit scenario:
 
-- A victim wants to swap 10K optimism’s BTC into Ethereum mainnet USDC.
+- A victim wants to swap 10K optimisms BTC into Ethereum mainnet USDC.
 - Since DEXs on the mainnet have the best liquidity, the LiFi protocol helps users swap on the mainnet.
 - The transaction on the source chain (optimism) succeeds, and the bridge services try to call `Co
 
@@ -88,7 +88,7 @@ However, when `tokenIndexFrom == tokenIndexTo`, the second update overwrites the
 
 **Note:** The protection against this problem is located in the function `getY()`. However, this function is not called from `swapOut()`.
 
-**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isn’t an immediate risk here.
+**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnt an immediate risk here.
 
 ### Code Snippets
 ```solidity
@@ -277,7 +277,7 @@ Trades that lead to a change in amplifier value need to be split up into two tra
 - `Executor.sol#L323-L333`
 
 ### Description
-The function `LibSwap.swap()` pulls in tokens via `transferFromERC20()` from `msg.sender` when needed. When put in a loop, through `_executeSwaps()`, it can pull in multiple different tokens. It also doesn’t detect accidentally sending native tokens along with ERC20 tokens. This approach is counterintuitive and leads to risks.
+The function `LibSwap.swap()` pulls in tokens via `transferFromERC20()` from `msg.sender` when needed. When put in a loop, through `_executeSwaps()`, it can pull in multiple different tokens. It also doesnt detect accidentally sending native tokens along with ERC20 tokens. This approach is counterintuitive and leads to risks.
 
 Suppose someone wants to swap 100 USDC to 100 DAI and then 100 DAI to 100 USDT. If the first swap somehow gives back fewer tokens (for example, 90 DAI), then `LibSwap.swap()` pulls in 10 extra DAI from `msg.sender`. **Note**: This requires the `msg.sender` to have given multiple allowances to the LiFi Diamond.
 
@@ -397,7 +397,7 @@ Recommend adding a minimum amount out parameter. The function reverts if the min
 OmniBridgeFacet.sol#L63-L65
 
 ## Description
-Several bridges check that the output of swaps isn’t 0. However, it could also happen that a swap gives a positive output, but still lower than expected due to slippage, sandwiching, or MEV. Several AMMs will have a mechanism to limit slippage, but it might be useful to add a generic mechanism as multiple swaps in sequence might have a relatively large slippage.
+Several bridges check that the output of swaps isnt 0. However, it could also happen that a swap gives a positive output, but still lower than expected due to slippage, sandwiching, or MEV. Several AMMs will have a mechanism to limit slippage, but it might be useful to add a generic mechanism as multiple swaps in sequence might have a relatively large slippage.
 
 ```solidity
 function swapAndStartBridgeTokensViaOmniBridge(...) {
@@ -472,7 +472,7 @@ Acknowledged.
 
 ## Impact
 
-When a member calls removeLiquiditySingle() requesting only SPARTA in return, i.e. toBASE = true, the LP tokens are transferred to the Pool to withdraw the constituent SPARTA and TOKENs back to the Router. The withdrawn TOKENs are then transferred back to the Pool to convert to SPARTA and directly transferred to the member from the Pool. However, the member’s SPARTA are left behind in the Router instead of being returned along with converted SPARTA from the Pool. 
+When a member calls removeLiquiditySingle() requesting only SPARTA in return, i.e. toBASE = true, the LP tokens are transferred to the Pool to withdraw the constituent SPARTA and TOKENs back to the Router. The withdrawn TOKENs are then transferred back to the Pool to convert to SPARTA and directly transferred to the member from the Pool. However, the members SPARTA are left behind in the Router instead of being returned along with converted SPARTA from the Pool. 
 
 In other words, the _member's BASE SPARTA tokens that were removed from the Pool along with the TOKENs are never sent back to the _member because the _token's transferred to the Pool are converted to SPARTA and only those are sent back to member directly from the Pool via swapTo(). 
 

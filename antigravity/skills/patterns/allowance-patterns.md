@@ -1,4 +1,4 @@
-# Allowance Security Patterns
+﻿# Allowance Security Patterns
 
 ## Overview
 
@@ -25,7 +25,7 @@
 
 ## Real-World Examples
 
-### Example 1: allowance() doesn’t limit withdraw() s
+### Example 1: allowance() doesnt limit withdraw() s
 
 **Source**: Spearbit
 **Protocol**: Gauntlet

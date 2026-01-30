@@ -1,4 +1,4 @@
-# call vs transfer Security Patterns
+﻿# call vs transfer Security Patterns
 
 ## Overview
 
@@ -70,14 +70,14 @@ https://github.com/debtdao/Line-of-Credit/blob/e8aa08b44f6132a5ed901f8daa231700c
 
 ## Impact
 
-When withdrawing and refund  ETH, the  contract uses Solidity’s `transfer()` function. 
+When withdrawing and refund  ETH, the  contract uses Soliditys `transfer()` function. 
 
 Using Solidity's `transfer()` function has some notable shortcomings when the withdrawer is a smart contract, which can render ETH deposits impossible to withdraw. Specifically, the withdrawal will inevitably fail when:
 * The withdrawer smart contract does not implement a payable fallback function.
 * The withdrawer smart contract implements a payable fallback function which uses more than 2300 gas units.
-* The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the call’s gas usage above 2300.
+* The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the calls gas usage above 2300.
 
-Risks of reentrancy stemming from the use of this function can be mitigated by tightly following the "Check-Effects-Interactions" pattern and using OpenZeppelin Contract’s ReentrancyGuard contract. 
+Risks of reentrancy stemming from the use of this function can be mitigated by tightly following the "Check-Effects-Interactions" pattern and using OpenZeppelin Contracts ReentrancyGuard contract.
 
 ## Proof of Concept
 
@@ -89,10 +89,10 @@ Risks of reentrancy stemming from the use of this function can be mitigated by t
 
 #### References:
 
-The issues with `transfer()` are outlined [here](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/
+The issues with`transfer()`are outlined [here](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/
 )
 
-For further reference on why using Solidity’s `transfer()` is no longer recommended, refer to these [articles](https://blog.openzeppelin.com/reentrancy-after-istanb
+For further reference on why using Soliditys `transfer()` is no longer recommended, refer to these [articles](https://blog.openzeppelin.com/reentrancy-after-istanb
 
 *[Content truncated...]*
 
@@ -152,8 +152,8 @@ File: src/modules/Migration.sol   #1
 
 ### Proof of Concept
 
-1.  The destination is a smart contract that doesn’t implement a `payable` function or it implements a `payable` function but that function uses more than 2300 gas units.
-2.  The destination is a smart contract that doesn’t implement a `payable` `fallback` function or it implements a `payable` `fallback` function but that function uses more than 2300 gas units.
+1.  The destination is a smart contract that doesnt implement a `payable` function or it implements a `payable` function but that function uses more than 2300 gas units.
+2.  The destination is a smart contract that doesnt implement a `payable` `fallback` function or it implements a `payable` `fallback` function but that function uses more than 2300 gas units.
 3.  The destination is a smart contract but that smart contract is called via an intermediate proxy contract increasing the case requirements to more than 2300 gas units. A further example of unknown destination complexity is that of a multisig wallet that as part of its operation uses more than 2300 gas units.
 4.  Future changes or forks in Ethereum result in higher gas fees than transfer provides. The `.transfer()` creates a hard dependency on 2300 gas units being appropriate now and into the future.
 
@@ -216,7 +216,7 @@ require(success, "Transfer failed.")
 
 ---
 
-### Example 6: [H-01] OpenLevV1Lib’s and LPool’s doTransferOut functions call native payable.transfer, which can be unusable for smart contract calls
+### Example 6: [H-01] OpenLevV1Libs and LPools doTransferOut functions call native payable.transfer, which can be unusable for smart contract calls
 
 **Source**: Code4rena
 **Protocol**: OpenLeverage
@@ -352,11 +352,11 @@ Examples of similar issues ranked as medium can be found [here](https://github.c
 
 ### Impact
 
-The protocol uses Solidity’s `transfer()` when transferring ETH to the recipients. This has some notable shortcomings when the recipient is a smart contract, which can render ETH impossible to transfer. Specifically, the transfer will inevitably fail when the smart contract:
+The protocol uses Soliditys `transfer()` when transferring ETH to the recipients. This has some notable shortcomings when the recipient is a smart contract, which can render ETH impossible to transfer. Specifically, the transfer will inevitably fail when the smart contract:
 
 *   does not implement a payable fallback function, or
 *   implements a payable fallback function which would incur more than 2300 gas units, or
-*   implements a payable fallback function incurring less than 2300 gas units but is called through a proxy that raises the call’s gas usage above 2300.
+*   implements a payable fallback function incurring less than 2300 gas units but is called through a proxy that raises the calls gas usage above 2300.
 
 ### Proof of Concept
 
@@ -532,7 +532,7 @@ require(result, "Failed to send Ether");
 
 ### Proof of Concept
 
-`.transfer` or `.send` method, only 2300 gas will be “forwarded” to fallback function. Specifically, the SLOAD instruction, will go from costing 200 gas to 800 gas.
+`.transfer` or `.send` method, only 2300 gas will be forwarded to fallback function. Specifically, the SLOAD instruction, will go from costing 200 gas to 800 gas.
 
 If any smart contract has a functionality of register ens and it has fallback function which is making some state change in contract on ether receive, it could use more than 2300 gas and revert every transaction.
 
@@ -612,7 +612,7 @@ transfer() uses a fixed amount of gas, which was used to prevent reentrancy. How
 Specifically, the withdrawal will inevitably fail when:
 1.The withdrawer smart contract does not implement a payable fallback function.
 2.The withdrawer smart contract implements a payable fallback function which uses more than 2300 gas units.
-3.The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the call’s gas usage above 2300.
+3.The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the calls gas usage above 2300.
 
 ## Impact
 transfer() uses a fixed amount of gas, which can result in revert.

@@ -1,4 +1,4 @@
-# Don't update state Security Patterns
+﻿# Don't update state Security Patterns
 
 ## Overview
 
@@ -284,7 +284,7 @@ Due to the implementation of `OracleMembers.deleteItem`, the last item of the ar
 1. At T0, add member `m0` to the list of members: `members[0] = m0`.
 2. At T1, add member `m1` to the list of members: `members[1] = m1`.
 3. At T3, `m0` calls `reportBeacon(...)`. This action triggers a call to `ReportsPositions.register(uint256(0));` which registers that the member at index 0 has voted.
-4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`’s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
+4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
    - `members[0] = m0; members[1] = m1`
    - to `members[0] = m1;`.
 
@@ -351,7 +351,7 @@ It is clear that the mapping `sETHStakedBalanceForKnot` is decreased as expected
 
 ---
 
-### Example 8: [H-19] withdrawETH() in GiantPoolBase don’t call _distributeETHRewardsToUserForToken() or _onWithdraw() which would make users to lose their remaining rewards 
+### Example 8: [H-19] withdrawETH() in GiantPoolBase dont call _distributeETHRewardsToUserForToken() or _onWithdraw() which would make users to lose their remaining rewards 
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -439,7 +439,7 @@ As you can see it increase user `lpTokenETH` balance and then calls `_onDepositE
 
 ---
 
-### Example 10: [H-14] Fund lose in function bringUnusedETHBackIntoGiantPool() of GiantSavETHVaultPool ETH gets back to giant pool but the value of idleETH don’t increase
+### Example 10: [H-14] Fund lose in function bringUnusedETHBackIntoGiantPool() of GiantSavETHVaultPool ETH gets back to giant pool but the value of idleETH dont increase
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -554,7 +554,7 @@ contract TakeFromGiantP
 
 ---
 
-### Example 13: [H-09] Incorrect accounting in SyndicateRewardsProcessor results in any LP token holder being able to steal other LP tokens holder’s ETH from the fees and MEV vault
+### Example 13: [H-09] Incorrect accounting in SyndicateRewardsProcessor results in any LP token holder being able to steal other LP tokens holders ETH from the fees and MEV vault
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -1077,7 +1077,7 @@ When the `deRegisterKnotFromSyndicate` function is called by the DAO, the `_deRe
 
 ---
 
-### Example 25: [M-15] GiantMevAndFeesPool.previewAccumulatedETH function: “accumulated” variable is not updated correctly in for loop leading to result that is too low
+### Example 25: [M-15] GiantMevAndFeesPool.previewAccumulatedETH function: accumulated variable is not updated correctly in for loop leading to result that is too low
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol

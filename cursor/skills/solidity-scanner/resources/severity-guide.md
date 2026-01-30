@@ -1,4 +1,4 @@
-# Severity Classification Guide
+﻿# Severity Classification Guide
 
 Standards for classifying vulnerability severity in smart contract audits.
 
@@ -214,7 +214,7 @@ Info     = No Impact, OR improvement suggestions
 
 ### Quick Reference Table
 
-| Likelihood ↓ / Impact → | Critical | High | Medium | Low |
+| Likelihood  / Impact  | Critical | High | Medium | Low |
 |-------------------------|----------|------|--------|-----|
 | Almost Certain | Critical | Critical | High | Medium |
 | Likely | Critical | High | Medium | Low |
@@ -313,27 +313,27 @@ Reasons to **decrease** severity:
 ```
 Impact: Direct fund theft, full balance
 Likelihood: Anyone can exploit, simple attack
-→ Severity: CRITICAL
+ Severity: CRITICAL
 ```
 
 ### Example 2: Missing Deadline Check
 ```
 Impact: Stale transaction could execute at bad price
 Likelihood: Requires mempool congestion + price movement
-→ Severity: MEDIUM
+ Severity: MEDIUM
 ```
 
 ### Example 3: Missing Event Emission
 ```
 Impact: Off-chain indexing incomplete
 Likelihood: Always (by definition)
-→ Severity: LOW (no on-chain impact)
+ Severity: LOW (no on-chain impact)
 ```
 
 ### Example 4: Centralized Owner Key
 ```
 Impact: Owner can rug (if malicious)
 Likelihood: Depends on team trust
-→ Severity: INFORMATIONAL (design choice) or MEDIUM (if concern)
+ Severity: INFORMATIONAL (design choice) or MEDIUM (if concern)
 ```
 

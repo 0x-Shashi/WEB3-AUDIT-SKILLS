@@ -1,4 +1,4 @@
-# LOW Severity Findings
+﻿# LOW Severity Findings
 
 ## Overview
 
@@ -33,7 +33,7 @@
 
 ## Representative Examples
 
-### 1. [L-01] Pawn Duration Not Bound to Signed Quote Allows 7↔30-day Term Tampering
+### 1. [L-01] Pawn Duration Not Bound to Signed Quote Allows 730-day Term Tampering
 
 - **Source**: Shieldify
 - **Protocol**: Shiny
@@ -456,7 +456,7 @@ This creates a timing issue between the time an order is created (off-chain via 
 
 ---
 
-### 16. [QA-06] Uniswap V3 can’t be fully used, contrary to docs
+### 16. [QA-06] Uniswap V3 cant be fully used, contrary to docs
 
 - **Source**: Code4rena
 - **Protocol**: Lambo.win
@@ -473,7 +473,7 @@ Issue however is that provision is only made for V2 in scope, see:
     address public constant UNISWAP_ROUTER_ADDRESS = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
 ```
 
-Note that this address is the router address for V2 and not V3, making any planned calls via V3’s Router unreachable.
+Note that this address is the router address for V2 and not V3, making any planned calls via V3s Router unreachable.
 
 ### Impact
 
@@ -523,7 +523,7 @@ The `CurveStableswapOracle.price()` function returns the price of 1 collateral t
 
 The `IERC677Receiver` interface documentation incorrectly references `ERC1363` instead of `ERC677`. This mismatch between the interface name and its documentation could lead to integration issues and developer confusion.
 
-The interface is named `IERC677Receiver` but its documentation comments reference `ERC1363`’s `transferAndCall` functionality. While both standards have similar purposes, they have different implementations and requirements. This inconsistency could cause:
+The interface is named `IERC677Receiver` but its documentation comments reference `ERC1363`s `transferAndCall` functionality. While both standards have similar purposes, they have different implementations and requirements. This inconsistency could cause:
 
 * Integration errors if developers implement the wrong standard based on the documentation
 * Confusion during code review and maintenance
@@ -551,7 +551,7 @@ transparent proxy and has the following initializer:
 Therefore, an attacker can call initialize() on the implementation contract and become the 
 owner. At this point they can do just about anything to this contract, but it has no impact on 
 the proxy as it is using separate storage. If there was a delegatecall coded in GMXAdapter, 
-attacker could have used it to call an attacker’s contract and execute the SELFDESTRUCT 
+attacker could have used it to call an attackers contract and execute the SELFDESTRUCT 
 opcode, killing the implementation. With no implementation, the proxy itself would not be 
 functional until it is updated to a new implementation. It is ill-advised to a...
 
@@ -648,7 +648,7 @@ Adhere to the standard OpenZeppelin Upgradeable pattern by explicitly calling `_
 
 **Description:** Since [unspent gas is not refunded](https://docs.chain.link/ccip/best-practices#setting-gaslimit), Chainlink recommends carefully setting the `gasLimit` within the `extraArgs` parameter to avoid overpaying for execution.
 
-In [`BridgeCCIP::send`](https://github.com/YieldFiLabs/contracts/blob/40caad6c60625d750cc5c3a5a7df92b96a93a2fb/contracts/bridge/ccip/BridgeCCIP.sol#L131), the `gasLimit` is hardcoded to `200_000`, which is also Chainlink’s default:
+In [`BridgeCCIP::send`](https://github.com/YieldFiLabs/contracts/blob/40caad6c60625d750cc5c3a5a7df92b96a93a2fb/contracts/bridge/ccip/BridgeCCIP.sol#L131), the `gasLimit` is hardcoded to `200_000`, which is also Chainlinks default:
 
 ```solidity
 extraArgs: Client._argsToBytes(Client.EVMExtraArgsV2({ gasLimit: 200_000, allowOutOfOrderExecution: true })),
@@ -668,7 +668,7 @@ This hardcoded value directly affects every user bridging tokens, as they will b
 - **Protocol**: Reserve Protocol Solana DTFs
 - **Tags**: Business Logic
 
-## Diﬃculty: High
+## Diculty: High
 
 ## Type: Data Validation
 

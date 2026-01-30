@@ -1,4 +1,4 @@
-# Aztec Contract Audit Workflow
+﻿# Aztec Contract Audit Workflow
 
 ## Phase 1: Setup (30 min)
 
@@ -77,8 +77,8 @@ For each note type:
 ### 3.3 Trace Note Lifecycle
 
 ```
-Creation → Encryption → Storage → Discovery → Spending
-   ↓           ↓           ↓          ↓           ↓
+Creation  Encryption  Storage  Discovery  Spending
+                                              
 new()    encrypt_log   insert()  get_notes  push_nullifier
 ```
 
@@ -174,9 +174,9 @@ grep -rn "assert(" src/
 
 | Operation | Required Constraints | Implemented |
 |-----------|---------------------|-------------|
-| Transfer | balance >= amount | ✓/✗ |
-| Mint | caller == admin | ✓/✗ |
-| Burn | caller == owner | ✓/✗ |
+| Transfer | balance >= amount | / |
+| Mint | caller == admin | / |
+| Burn | caller == owner | / |
 
 ### 7.3 Arithmetic Safety
 - [ ] No overflow in additions

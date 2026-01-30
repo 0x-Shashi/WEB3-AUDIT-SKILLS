@@ -1,4 +1,4 @@
-# Update State After Admin Action Security Patterns
+﻿# Update State After Admin Action Security Patterns
 
 ## Overview
 
@@ -101,7 +101,7 @@ Acknowledged.
 - `ManagedPool.sol#L680-L698`
 
 ## Description
-Balancer’s `ManagedPool` uses 32-bit values for `startTime` and `endTime` but does not verify if those values exist within that range. When `endTime` is set to \(2^{32}\), it becomes larger than `startTime`, so the `_require(startTime <= endTime, ...)` statement will not revert. When `endTime` is converted to 32 bits, it will get a value of 0, causing the check in `_calculateWeightChangeProgress()` with `if (currentTime >= endTime)` to be true, thus leading to an immediate weight change.
+Balancers `ManagedPool` uses 32-bit values for `startTime` and `endTime` but does not verify if those values exist within that range. When `endTime` is set to \(2^{32}\), it becomes larger than `startTime`, so the `_require(startTime <= endTime, ...)` statement will not revert. When `endTime` is converted to 32 bits, it will get a value of 0, causing the check in `_calculateWeightChangeProgress()` with `if (currentTime >= endTime)` to be true, thus leading to an immediate weight change.
 
 This allows the Manager to trigger an immediate weight change via the `updateWeightsGradually()` function and open arbitrage opportunities.
 

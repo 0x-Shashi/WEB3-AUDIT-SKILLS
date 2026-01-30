@@ -1,4 +1,4 @@
-# AI Audit Workflow - LLM Playbook
+﻿# AI Audit Workflow - LLM Playbook
 
 > **For AI Assistants:** This is your complete workflow for conducting smart contract audits.
 > Source: Consolidated from Audit LLM Assistant Playbook.
@@ -9,37 +9,37 @@
 
 ```
 [0] Local Setup
-    └─ Prepare code context
-    └─ Build scope index
+     Prepare code context
+     Build scope index
 
 [1] Exploration (Mode, not phase)
-    └─ Understand protocol design
-    └─ Map modules/roles/flows
-    └─ NO security assessment yet
-    └─ Make notes for investigation
+     Understand protocol design
+     Map modules/roles/flows
+     NO security assessment yet
+     Make notes for investigation
 
-[2] Main — Hypothesis Generation
-    └─ Generate attack hypotheses
-    └─ Quick code check
-    └─ INVALID → discard immediately
-    └─ ALIVE → continue to Working
+[2] Main  Hypothesis Generation
+     Generate attack hypotheses
+     Quick code check
+     INVALID  discard immediately
+     ALIVE  continue to Working
 
 [3] Manual Audit Marathon
-    └─ Continuous exploration
-    └─ Your own ideas emerge
-    └─ → Working for deep analysis
-    └─ → Drafting for valid findings
+     Continuous exploration
+     Your own ideas emerge
+      Working for deep analysis
+      Drafting for valid findings
 
-[4] Working — Deep Dive
-    └─ Surviving hypotheses
-    └─ Debate and pushback OK
-    └─ Find and maximize impact
-    └─ Prepare report material
+[4] Working  Deep Dive
+     Surviving hypotheses
+     Debate and pushback OK
+     Find and maximize impact
+     Prepare report material
 
 [5] Drafting
-    └─ Format findings
-    └─ Severity / Narrative / Clarity
-    └─ Final report format
+     Format findings
+     Severity / Narrative / Clarity
+     Final report format
 ```
 
 ### Key Principles
@@ -170,7 +170,7 @@ Rules:
 Output format:
 
 Hypothesis:
-- H<N> — <short title>
+- H<N>  <short title>
 
 Hypothesis Status:
 - Valid / Invalid / Inconclusive
@@ -414,7 +414,7 @@ Focus areas:
 - Implicit assumptions not enforced in code
 - Edge-case state transitions rarely exercised
 - Cross-module or cross-function interactions
-- Lifecycle boundaries (init → normal → shutdown)
+- Lifecycle boundaries (init  normal  shutdown)
 - Invariants relying on ordering or timing
 - "This works unless X happens" situations
 
@@ -475,7 +475,7 @@ Context package for audit continuation:
 
 | Situation | Mode to Use |
 |-----------|-------------|
-| Just started audit | Exploration → Protocol Mapper |
+| Just started audit | Exploration  Protocol Mapper |
 | Protocol understood | Attack Hypothesis Generator |
 | Have hypothesis to check | Code Path Explorer |
 | Hypothesis looks valid | Working Chat for impact |
@@ -488,7 +488,7 @@ Context package for audit continuation:
 1. **Start with Exploration** - Understand before attacking
 2. **Generate hypotheses systematically** - 10-15 to start
 3. **Kill hypotheses quickly** - Don't waste time on invalid ones
-4. **Document as you go** - Working notes → Findings
+4. **Document as you go** - Working notes  Findings
 5. **Be skeptical of your findings** - Use Adversarial Reviewer
 6. **Focus on impact** - What's the worst case?
 7. **Be precise in reports** - Triagers appreciate clarity

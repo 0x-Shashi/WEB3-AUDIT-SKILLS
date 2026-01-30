@@ -1,4 +1,4 @@
-# Completeness Checklist
+﻿# Completeness Checklist
 
 Use this checklist to verify your context-building analysis meets quality standards.
 
@@ -113,7 +113,7 @@ For at least one implementation:
 ### Evidence-Based Claims
 - [ ] Every claim has line number reference
 - [ ] No vague statements like "probably" or "might"
-- [ ] Uncertainties explicitly marked with ⚠️
+- [ ] Uncertainties explicitly marked with 
 - [ ] All code references verified against actual source
 - [ ] No assumptions stated as facts
 
@@ -204,31 +204,31 @@ Must answer "Yes" to all:
 ## Quick Reference Card
 
 ```
-┌─────────────────────────────────────────────────────┐
-│           COMPLETENESS QUICK CHECK                  │
-├─────────────────────────────────────────────────────┤
-│ Per Function:                                       │
-│   □ Purpose (2-3 sentences)                        │
-│   □ Inputs & Assumptions (5+)                      │
-│   □ Outputs & Effects                              │
-│   □ Block-by-Block Analysis                        │
-│   □ Invariants (3+)                                │
-│   □ Risk Analysis                                  │
-│   □ Cross-References                               │
-├─────────────────────────────────────────────────────┤
-│ Per Block:                                          │
-│   □ What / Why / Assumptions                       │
-│   □ Invariant / Depends On / Dependents            │
-├─────────────────────────────────────────────────────┤
-│ Methods Applied:                                    │
-│   □ First Principles (1+)                          │
-│   □ 5 Whys + 5 Hows (3+ combined)                  │
-├─────────────────────────────────────────────────────┤
-│ Quality Gates:                                      │
-│   □ Line numbers cited                             │
-│   □ No vague statements                            │
-│   □ Uncertainties marked                           │
-│   □ Cross-refs complete                            │
-└─────────────────────────────────────────────────────┘
+
+           COMPLETENESS QUICK CHECK                  
+
+ Per Function:                                       
+    Purpose (2-3 sentences)                        
+    Inputs & Assumptions (5+)                      
+    Outputs & Effects                              
+    Block-by-Block Analysis                        
+    Invariants (3+)                                
+    Risk Analysis                                  
+    Cross-References                               
+
+ Per Block:                                          
+    What / Why / Assumptions                       
+    Invariant / Depends On / Dependents            
+
+ Methods Applied:                                    
+    First Principles (1+)                          
+    5 Whys + 5 Hows (3+ combined)                  
+
+ Quality Gates:                                      
+    Line numbers cited                             
+    No vague statements                            
+    Uncertainties marked                           
+    Cross-refs complete                            
+
 ```
 

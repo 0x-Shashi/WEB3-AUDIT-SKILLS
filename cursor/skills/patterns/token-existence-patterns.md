@@ -1,4 +1,4 @@
-# Token Existence Security Patterns
+﻿# Token Existence Security Patterns
 
 ## Overview
 
@@ -157,21 +157,21 @@ File: contracts/src/PuttyV2.sol   #2
 
 **Details**:
 
-There is a subtle difference between the implementation of solmate’s SafeTransferLib and OZ’s SafeERC20: OZ’s SafeERC20 checks if the token is a contract or not, solmate’s SafeTransferLib does not.<br>
+There is a subtle difference between the implementation of solmates SafeTransferLib and OZs SafeERC20: OZs SafeERC20 checks if the token is a contract or not, solmates SafeTransferLib does not.<br>
 See: <https://github.com/Rari-Capital/solmate/blob/main/src/utils/SafeTransferLib.sol#L9><br>
 Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller.<br>
-As a result, when the token’s address has no code, the transaction will just succeed with no error.<br>
+As a result, when the tokens address has no code, the transaction will just succeed with no error.<br>
 This attack vector was made well-known by the qBridge hack back in Jan 2022.
 
-In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmate’s libraries.
+In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmates libraries.
 
-Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesn’t have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
+Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesnt have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
 
 So this will lead to miscalculation and loss of funds.
 
 ### Attack scenario (example):
 
-It’s becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
+Its becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
 
 *[Content truncated...]*
 

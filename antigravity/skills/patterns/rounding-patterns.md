@@ -1,4 +1,4 @@
-# Rounding Security Patterns
+﻿# Rounding Security Patterns
 
 ## Overview
 
@@ -47,11 +47,11 @@ If multiple orders are taken, the taker fee calculated is rounded up once, but t
 - takerFee = 100011 (10.0011%)
 - 2 maker orders of amounts 400000 and 377000
 - total amount = 400000 + 377000 = 777000
-- Taker fee taken = 777000 * 100011 / 1000000 = 77708.547 ≈ 77709 
+- Taker fee taken = 777000 * 100011 / 1000000 = 77708.547  77709 
 
 Maker fees would be:
-- 377000 * 100011 / 1000000 = 37704.147 ≈ 37705
-- 400000 * 100011 / 1000000 = 40004.4 ≈ 40005
+- 377000 * 100011 / 1000000 = 37704.147  37705
+- 400000 * 100011 / 1000000 = 40004.4  40005
 
 This results in 1 wei more than actually taken.
 
@@ -697,7 +697,7 @@ uint256 mintedRewards = _rewardOperators(operatorRewards);
 
 Instead of passing `operatorRewards`, we can pass two values: one for the numerator and one for the denominator. This way, we can avoid extra rounding errors introduced in `_rewardOperators`. `_rewardOperators` also needs to be changed slightly to account for these two new values.
 
-Here’s the updated code:
+Heres the updated code:
 
 ```solidity
 uint256 globalFee = GlobalFee.get();
@@ -714,7 +714,7 @@ if (denominator != 0) { // note: this was added to avoid calling `_rewardOperato
 
 ---
 
-### Example 16: [M-07] Oracle’s two-day feature can be gamed
+### Example 16: [M-07] Oracles two-day feature can be gamed
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -1028,7 +1028,7 @@ Assume that the vault with the following state:
 *   Total Asset = 1000 WETH
 *   Total Supply = 10 shares
 
-Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the **`Vault.withdraw(99 WETH)`** function.
+Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the**`Vault.withdraw(99 WETH)`**function.
 
 The calculation would go like this:
 
@@ -1070,8 +1070,8 @@ Per EIP 4626's Security Considerations (https://eips.ethereum.org/EIPS/eip-4626)
 
 > Finally, ERC-4626 Vault implementers should be aware of the need for specific, opposing rounding directions across the different mutable and view methods, as it is considered most secure to favor the Vault itself during calculations over its users:
 
-> If (1) it’s calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) it’s determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
-If (1) it’s calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) it’s calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
+> If (1) its calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) its determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
+If (1) its calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) its calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
 
 Then previewWithdraw in AutoRoller.sol should round up.
 

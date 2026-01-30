@@ -1,4 +1,4 @@
-# Gas Limit Security Patterns
+﻿# Gas Limit Security Patterns
 
 ## Overview
 
@@ -474,7 +474,7 @@ if (LibAsset.isNativeAsset(assetId)) {
 
 ---
 
-### Example 11: Controller Can Indefinitely Lock Users’ Tokens
+### Example 11: Controller Can Indefinitely Lock Users Tokens
 
 **Source**: SigmaPrime
 **Protocol**: Status
@@ -604,7 +604,7 @@ Change the minimum bid percent to 0.1% in the `EmpaModuleTest` contract in `EMPA
 
 ---
 
-### Example 15: Low/high MaxGas values could make match/unmatch supplier/borrower functions always “fail” or revert
+### Example 15: Low/high MaxGas values could make match/unmatch supplier/borrower functions always fail or revert
 
 **Source**: Spearbit
 **Protocol**: Morpho

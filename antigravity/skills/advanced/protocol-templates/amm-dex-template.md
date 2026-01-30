@@ -1,24 +1,24 @@
-# AMM/DEX Protocol Template
+﻿# AMM/DEX Protocol Template
 
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                       AMM/DEX PROTOCOL                       │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐   │
-│  │   ROUTER    │────▶│    POOL     │────▶│   TOKENS    │   │
-│  │  (Swaps)    │     │ (Liquidity) │     │  (Assets)   │   │
-│  └─────────────┘     └─────────────┘     └─────────────┘   │
-│         │                   │                   │           │
-│         ▼                   ▼                   ▼           │
-│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐   │
-│  │  FACTORY    │     │  LP TOKENS  │     │   ORACLE    │   │
-│  │ (Pool mgmt) │     │  (Shares)   │     │  (Prices)   │   │
-│  └─────────────┘     └─────────────┘     └─────────────┘   │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+
+                       AMM/DEX PROTOCOL                       
+
+                                                              
+               
+     ROUTER        POOL        TOKENS       
+    (Swaps)          (Liquidity)        (Assets)      
+               
+                                                          
+                                                          
+               
+    FACTORY           LP TOKENS          ORACLE       
+   (Pool mgmt)        (Shares)          (Prices)      
+               
+                                                              
+
 ```
 
 ---
@@ -269,7 +269,7 @@ function getPrice() view returns (uint256) {
 ```
 
 **Attack:**
-Flash loan → Large swap → Manipulated price → Attack → Swap back
+Flash loan  Large swap  Manipulated price  Attack  Swap back
 
 **Mitigation:**
 - Use TWAP (time-weighted average)

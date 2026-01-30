@@ -1,4 +1,4 @@
-# Compliance Audit Workflow
+﻿# Compliance Audit Workflow
 
 Systematic workflow for verifying smart contract compliance with EIP/ERC standards.
 
@@ -83,12 +83,12 @@ grep -n "event Approval" contracts/
 
 | Function | Expected | Found | Status |
 |----------|----------|-------|--------|
-| totalSupply() | returns (uint256) | ✅ | |
-| balanceOf(address) | returns (uint256) | ✅ | |
-| transfer(address,uint256) | returns (bool) | ✅ | |
-| allowance(address,address) | returns (uint256) | ✅ | |
-| approve(address,uint256) | returns (bool) | ✅ | |
-| transferFrom(address,address,uint256) | returns (bool) | ✅ | |
+| totalSupply() | returns (uint256) |  | |
+| balanceOf(address) | returns (uint256) |  | |
+| transfer(address,uint256) | returns (bool) |  | |
+| allowance(address,address) | returns (uint256) |  | |
+| approve(address,uint256) | returns (bool) |  | |
+| transferFrom(address,address,uint256) | returns (bool) |  | |
 ```
 
 ### 2.3 Event Compliance
@@ -235,7 +235,7 @@ function testPreviewWithdrawRoundsUp() {
 ### 4.3 Invariant Testing
 
 ```solidity
-// Invariant: convertToShares(convertToAssets(x)) ≈ x
+// Invariant: convertToShares(convertToAssets(x))  x
 function testSharesAssetsRoundTrip(uint256 shares) {
     vm.assume(shares > 0 && shares <= vault.totalSupply());
     uint256 assets = vault.convertToAssets(shares);
@@ -295,12 +295,12 @@ grep -n "TYPEHASH\|keccak256.*\".*(" contracts/
 
 ### Domain Type Hash
 Expected: `EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)`
-Found: ✅
+Found: 
 
 ### Struct Type Hashes
 | Struct | Expected Format | Found | Status |
 |--------|-----------------|-------|--------|
-| Permit | `Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)` | ✅ | |
+| Permit | `Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)` |  | |
 
 ### Common Issues
 - [ ] No extra spaces in type strings
@@ -443,10 +443,10 @@ function testProxiableUUID() {
 
 | Standard | Compliance | Issues |
 |----------|------------|--------|
-| ERC20 | ✅ Compliant | 0 |
-| ERC721 | ⚠️ Partial | 2 |
-| ERC4626 | ❌ Non-compliant | 3 |
-| EIP712 | ✅ Compliant | 0 |
+| ERC20 |  Compliant | 0 |
+| ERC721 |  Partial | 2 |
+| ERC4626 |  Non-compliant | 3 |
+| EIP712 |  Compliant | 0 |
 
 ## Detailed Findings
 
@@ -482,20 +482,20 @@ function testProxiableUUID() {
 
 | Requirement | Section | Status | Notes |
 |-------------|---------|--------|-------|
-| totalSupply() | 3.1 | ✅ | |
-| balanceOf(address) | 3.1 | ✅ | |
-| transfer(address,uint256) | 3.1 | ✅ | |
-| transfer returns bool | 3.1 | ⚠️ | Returns void |
-| Transfer event on transfer | 3.2 | ✅ | |
-| Transfer event on mint | 3.2 | ❌ | Missing |
+| totalSupply() | 3.1 |  | |
+| balanceOf(address) | 3.1 |  | |
+| transfer(address,uint256) | 3.1 |  | |
+| transfer returns bool | 3.1 |  | Returns void |
+| Transfer event on transfer | 3.2 |  | |
+| Transfer event on mint | 3.2 |  | Missing |
 
 ### ERC721 Compliance
 
 | Requirement | Section | Status | Notes |
 |-------------|---------|--------|-------|
-| ownerOf reverts for non-existent | 4.1 | ✅ | |
-| safeTransferFrom checks receiver | 4.2 | ❌ | Not checking |
-| Approval cleared on transfer | 4.3 | ❌ | Persists |
+| ownerOf reverts for non-existent | 4.1 |  | |
+| safeTransferFrom checks receiver | 4.2 |  | Not checking |
+| Approval cleared on transfer | 4.3 |  | Persists |
 ```
 
 ---

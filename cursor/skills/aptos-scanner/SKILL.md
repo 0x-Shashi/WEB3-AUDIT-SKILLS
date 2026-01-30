@@ -1,4 +1,4 @@
----
+﻿---
 name: aptos-scanner
 description: "Comprehensive Aptos Move vulnerability scanner for Move modules and smart contracts. Covers resource safety, module upgrades, coin standards, and Aptos-specific attack vectors. Use this skill when auditing Aptos programs."
 allowed-tools:
@@ -53,24 +53,24 @@ Do NOT use this skill for:
 ### Key Concepts
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                   APTOS SECURITY MODEL                   │
-├─────────────────────────────────────────────────────────┤
-│ RESOURCES                                                │
-│ • Stored under accounts (not objects)                   │
-│ • Global storage access via borrow_global               │
-│ • Acquires annotation for resource operations           │
-├─────────────────────────────────────────────────────────┤
-│ SIGNERS                                                  │
-│ • Represent authorized accounts                         │
-│ • Required for resource operations                      │
-│ • Can create resource accounts                          │
-├─────────────────────────────────────────────────────────┤
-│ MODULES                                                  │
-│ • Published under accounts                              │
-│ • Can be upgraded (if allowed)                          │
-│ • Define resource types                                 │
-└─────────────────────────────────────────────────────────┘
+
+                   APTOS SECURITY MODEL                   
+
+ RESOURCES                                                
+  Stored under accounts (not objects)                   
+  Global storage access via borrow_global               
+  Acquires annotation for resource operations           
+
+ SIGNERS                                                  
+  Represent authorized accounts                         
+  Required for resource operations                      
+  Can create resource accounts                          
+
+ MODULES                                                  
+  Published under accounts                              
+  Can be upgraded (if allowed)                          
+  Define resource types                                 
+
 ```
 
 ---

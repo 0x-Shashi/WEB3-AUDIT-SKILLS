@@ -1,4 +1,4 @@
-# ConsenSys - Audit Findings
+﻿# ConsenSys - Audit Findings
 
 ## Overview
 
@@ -28,7 +28,7 @@
 
 ## Notable Findings
 
-### 1. Re-entrancy issue for ERC1155 ✓ Fixed
+### 1. Re-entrancy issue for ERC1155 Fixed
 
 **Protocol**: Bridge Mutual | **Impact**: HIGH
 
@@ -58,7 +58,7 @@ function distributeAllNFT() external {
 
 ---
 
-### 2. RocketRewardPool - Unpredictable staking rewards as stake can be added just before claiming and rewards may be paid to to operators that do not provide a service to the system  Partially Addressed
+### 2. RocketRewardPool - Unpredictable staking rewards as stake can be added just before claiming and rewards may be paid to to operators that do not provide a service to the system Partially Addressed
 
 **Protocol**: Rocketpool | **Impact**: HIGH
 
@@ -66,7 +66,7 @@ function distributeAllNFT() external {
 
 
 
-Partially addressed in branch `rp3.0-updates` ([rocket-pool/[email protected]`b424ca1`](https://github.com/rocket-pool/rocketpool/commit/b424ca1ae1d0c1c5f3fa3f7f6f36051f8e57bbc2)) by changing the withdrawal requirements to `150%` of the effective RPL.
+Partially addressed in branch `rp3.0-updates` ([rocket-pool/[emailprotected]`b424ca1`](https://github.com/rocket-pool/rocketpool/commit/b424ca1ae1d0c1c5f3fa3f7f6f36051f8e57bbc2)) by changing the withdrawal requirements to `150%` of the effective RPL.
 
 
 The client provided the following statement:
@@ -89,7 +89,7 @@ Nodes/TrustedNodes earn rewards based on the **current** share of the effective 
 
 ---
 
-### 3. RocketNodeDistributorDelegate - Reentrancy in distribute() allows node owner to drain distributor funds ✓ Fixed
+### 3. RocketNodeDistributorDelegate - Reentrancy in distribute() allows node owner to drain distributor funds Fixed
 
 **Protocol**: Rocket Pool Atlas (v1.2) | **Impact**: HIGH
 
@@ -110,11 +110,11 @@ Fixed in <https://github.com/rocket-pool/rocketpool/tree/77d7cca65b7c0557cfda078
 
 
 > 
-> We followed OpenZeppelin’s de...
+> We followed OpenZeppelins de...
 
 ---
 
-### 4. Oracle front-running could deplete reserves over time ✓ Addressed
+### 4. Oracle front-running could deplete reserves over time Addressed
 
 **Protocol**: Bancor V2 AMM Security Audit | **Impact**: HIGH
 
@@ -126,7 +126,7 @@ To mitigate this issue, the Bancor team has added a mechanism that adjusts the e
 
 ---
 
-### 5. didTransferShares function has no access control modifier ✓ Fixed
+### 5. didTransferShares function has no access control modifier Fixed
 
 **Protocol**: Forta Delegated Staking | **Impact**: HIGH
 
@@ -144,7 +144,7 @@ The staked tokens (shares) in Forta are meant to be transferable. Similarly, the
 
 ---
 
-### 6. 18_deploy_RollupRevenueVault.ts – Deployment Script Leaves Contract Uninitialized; fallback Does Not Enforce msg.value  0 ✓ Fixed
+### 6. 18_deploy_RollupRevenueVault.ts  Deployment Script Leaves Contract Uninitialized; fallback Does Not Enforce msg.value  0 Fixed
 
 **Protocol**: Linea - Burn Mechanism | **Impact**: HIGH
 
@@ -168,7 +168,7 @@ The deployment script for `RollupRevenueVault` incorrectly attempts to call a no
 
 ---
 
-### 7. Gator - Currency Mismatch for Non-English Users ✓ Fixed
+### 7. Gator - Currency Mismatch for Non-English Users Fixed
 
 **Protocol**: Metamask - EIP-7715 Permissions Snap | **Impact**: HIGH
 
@@ -184,14 +184,14 @@ Export to Clipboard (text)
 
 #### Resolution
 
-Fixed in [MetaMask/snap-7715-permissions@`476e653`](https://github.com/MetaMask/snap-7715-permissions/commit/476e6534f9e219ac130f7e9c4f10f6b3f17b12ed) by updating the logic to invoke the Price API with the user’s preferred currency and updating the UI element when falling back to USD. The client provided additional details:
+Fixed in [MetaMask/snap-7715-permissions@`476e653`](https://github.com/MetaMask/snap-7715-permissions/commit/476e6534f9e219ac130f7e9c4f10f6b3f17b12ed) by updating the logic to invoke the Price API with the users preferred currency and updating the UI element when falling back to USD. The client provided additional details:
 
-> **Resolution:** Logic was updated to invoke the Price API with the user’s preferred currency, incorporating a fallback mechanism.  
+> **Resolution:** Logic was updated to invoke the Price API with the users preferred currency, incorporating a fallback mechanism.  
 > **Imple...
 
 ---
 
-### 8. Kernel - Prototype Pollution via Method Handler Lookup ✓ Fixed
+### 8. Kernel - Prototype Pollution via Method Handler Lookup Fixed
 
 **Protocol**: Metamask - EIP-7715 Permissions Snap | **Impact**: HIGH
 
@@ -214,7 +214,7 @@ Fixed in [MetaMask/snap-7715-permissions@`476e653`](https://github.com/MetaMask/
 
 ---
 
-### 9. getTermsInfo Reverts Because of Block Gas Limit ✓ Fixed
+### 9. getTermsInfo Reverts Because of Block Gas Limit Fixed
 
 **Protocol**: Metamask Delegation Framework April 2025 | **Impact**: HIGH
 
@@ -236,7 +236,7 @@ Fixed in [49b57f4a55f10d83fe9b1a990a0dd52cced186c8](https://github.com/MetaMask/
 
 ---
 
-### 10. Missing Safe Transfer Validation in Execution Logic  Acknowledged
+### 10. Missing Safe Transfer Validation in Execution Logic Acknowledged
 
 **Protocol**: Metamask Delegation Framework April 2025 | **Impact**: HIGH
 
@@ -262,7 +262,7 @@ In the `beforeHook` function of the `MultiTokenPeriodEnforcer` contract, there i
 
 ---
 
-### 11. Incorrect Fee Handling During Withdrawals ✓ Fixed
+### 11. Incorrect Fee Handling During Withdrawals Fixed
 
 **Protocol**: USDi | **Impact**: HIGH
 
@@ -282,7 +282,7 @@ In the `1ae396b8da0f15367703764e3071e8cdffd926a5` commit for fix review the find
 
 #### Description
 
-As a way to generate fees, the contract deducts a portion of the user’s deposit or withdrawal during processing. This behavior is evident in the use of the `getFee()` function and subsequent `backingToken` transfers, such as `backingToken.safeTransfer(tr...
+As a way to generate fees, the contract deducts a portion of the users deposit or withdrawal during processing. This behavior is evident in the use of the `getFee()` function and subsequent `backingToken` transfers, such as `backingToken.safeTransfer(tr...
 
 ---
 
@@ -309,7 +309,7 @@ let mut h: [u32; 8] = [1779033703, 3144134277, 1013904242, 2773480762, ...
 
 #### Description
 
-`partial_sha256_var_interstitial` function is used with a partially computed sha256 hash created with `partial_sha256_var_start` and a partial message to generate an interstate hash. However, when the input message’s size (`N`) is less than the message size parameter (`message_size`) and the size is not a multiple of `BLOCK_SIZE` (64 bytes), the last unfilled block of the message would not be hashed. In other words, even though the expected amount of data to be hashed is `message_size`, only `BLOCK_SIZE*(N/BLOCK_SIZE)` amount of data will be hashed. Consequently, the remainin...
+`partial_sha256_var_interstitial` function is used with a partially computed sha256 hash created with `partial_sha256_var_start` and a partial message to generate an interstate hash. However, when the input messages size (`N`) is less than the message size parameter (`message_size`) and the size is not a multiple of `BLOCK_SIZE` (64 bytes), the last unfilled block of the message would not be hashed. In other words, even though the expected amount of data to be hashed is `message_size`, only `BLOCK_SIZE*(N/BLOCK_SIZE)` amount of data will be hashed. Consequently, the remainin...
 
 ---
 

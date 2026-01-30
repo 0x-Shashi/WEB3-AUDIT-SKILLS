@@ -1,4 +1,4 @@
-# Move Vulnerability Patterns
+﻿# Move Vulnerability Patterns
 
 Detailed vulnerability patterns for Move smart contracts on Aptos and Sui.
 
@@ -11,7 +11,7 @@ Creating multiple copies of a resource that should be unique, leading to token i
 
 ### Vulnerable Code
 ```move
-struct Coin has copy, key, store {  // ❌ 'copy' on valuable resource!
+struct Coin has copy, key, store {  //  'copy' on valuable resource!
     value: u64
 }
 
@@ -22,7 +22,7 @@ public fun duplicate_coins(coin: &Coin): Coin {
 
 ### Secure Code
 ```move
-struct Coin has key, store {  // ✅ No 'copy' ability
+struct Coin has key, store {  //  No 'copy' ability
     value: u64
 }
 
@@ -45,7 +45,7 @@ Accidentally destroying valuable resources by not properly handling them.
 
 ### Vulnerable Code
 ```move
-struct Coin has key, store, drop {  // ❌ 'drop' allows silent destruction
+struct Coin has key, store, drop {  //  'drop' allows silent destruction
     value: u64
 }
 
@@ -57,7 +57,7 @@ public fun process(coin: Coin) {
 
 ### Secure Code
 ```move
-struct Coin has key, store {  // ✅ No 'drop' - must be handled
+struct Coin has key, store {  //  No 'drop' - must be handled
     value: u64
 }
 
@@ -87,7 +87,7 @@ public entry fun withdraw(
     vault_addr: address,
     amount: u64
 ) acquires Vault {
-    // ❌ Anyone can withdraw from any vault!
+    //  Anyone can withdraw from any vault!
     let vault = borrow_global_mut<Vault>(vault_addr);
     let coins = coin::extract(&mut vault.balance, amount);
     coin::deposit(signer::address_of(user), coins);
@@ -100,7 +100,7 @@ public entry fun withdraw(
     user: &signer,
     amount: u64
 ) acquires Vault {
-    // ✅ Withdraw only from signer's own vault
+    //  Withdraw only from signer's own vault
     let user_addr = signer::address_of(user);
     let vault = borrow_global_mut<Vault>(user_addr);
     let coins = coin::extract(&mut vault.balance, amount);
@@ -115,7 +115,7 @@ public entry fun withdraw(
     amount: u64,
     ctx: &mut TxContext
 ) {
-    // ❌ Anyone with Vault reference can withdraw!
+    //  Anyone with Vault reference can withdraw!
     let coins = balance::split(&mut vault.balance, amount);
     transfer::public_transfer(coin::from_balance(coins, ctx), tx_context::sender(ctx));
 }
@@ -128,7 +128,7 @@ public entry fun withdraw(
     amount: u64,
     ctx: &mut TxContext
 ) {
-    // ✅ Verify caller is vault owner
+    //  Verify caller is vault owner
     assert!(vault.owner == tx_context::sender(ctx), E_NOT_OWNER);
     
     let coins = balance::split(&mut vault.balance, amount);
@@ -148,7 +148,7 @@ Privileged function doesn't verify caller holds the required capability.
 struct AdminCap has key, store { id: UID }
 
 public entry fun admin_function(/* no cap check */) {
-    // ❌ Anyone can call this!
+    //  Anyone can call this!
     // ... privileged operations
 }
 ```
@@ -158,7 +158,7 @@ public entry fun admin_function(/* no cap check */) {
 struct AdminCap has key, store { id: UID }
 
 public entry fun admin_function(
-    _cap: &AdminCap,  // ✅ Requires capability
+    _cap: &AdminCap,  //  Requires capability
     // ... other params
 ) {
     // Only holders of AdminCap can call
@@ -175,7 +175,7 @@ Entry function performs sensitive operations without proper authorization.
 
 ### Vulnerable Code
 ```move
-// ❌ Public entry with no access control
+//  Public entry with no access control
 public entry fun set_price(oracle: &mut Oracle, price: u64) {
     oracle.price = price;  // Anyone can manipulate price!
 }
@@ -184,7 +184,7 @@ public entry fun set_price(oracle: &mut Oracle, price: u64) {
 ### Secure Code
 ```move
 public entry fun set_price(
-    cap: &OracleAdminCap,  // ✅ Requires capability
+    cap: &OracleAdminCap,  //  Requires capability
     oracle: &mut Oracle,
     price: u64
 ) {
@@ -240,7 +240,7 @@ public entry fun airdrop<CoinType>(
 ) acquires Treasury {
     let treasury = borrow_global_mut<Treasury>(signer::address_of(admin));
     let coins = coin::extract(&mut treasury.balance, amount);
-    // ❌ Will fail if recipient not registered for CoinType
+    //  Will fail if recipient not registered for CoinType
     coin::deposit(recipient, coins);
 }
 ```
@@ -252,7 +252,7 @@ public entry fun airdrop<CoinType>(
     recipient: address,
     amount: u64
 ) acquires Treasury {
-    // ✅ Check registration first
+    //  Check registration first
     if (!coin::is_account_registered<CoinType>(recipient)) {
         // Either abort or handle gracefully
         abort E_NOT_REGISTERED
@@ -276,7 +276,7 @@ Using predictable or colliding keys in Aptos Table structures.
 use aptos_std::table::{Self, Table};
 
 struct Registry has key {
-    users: Table<u64, UserData>,  // ❌ Sequential IDs can collide
+    users: Table<u64, UserData>,  //  Sequential IDs can collide
 }
 
 public fun register(registry: &mut Registry, user_id: u64, data: UserData) {
@@ -287,7 +287,7 @@ public fun register(registry: &mut Registry, user_id: u64, data: UserData) {
 ### Secure Code
 ```move
 struct Registry has key {
-    users: Table<address, UserData>,  // ✅ Address is unique
+    users: Table<address, UserData>,  //  Address is unique
 }
 
 public fun register(registry: &mut Registry, user: &signer, data: UserData) {
@@ -306,7 +306,7 @@ Overuse of shared objects causing transaction failures due to contention.
 
 ### Vulnerable Code
 ```move
-// ❌ Global counter as shared object - every transaction conflicts
+//  Global counter as shared object - every transaction conflicts
 struct GlobalCounter has key {
     id: UID,
     count: u64,
@@ -319,7 +319,7 @@ public entry fun increment(counter: &mut GlobalCounter) {
 
 ### Secure Code
 ```move
-// ✅ Use owned objects where possible
+//  Use owned objects where possible
 struct UserCounter has key {
     id: UID,
     count: u64,
@@ -345,14 +345,14 @@ Improper handling of object ownership in Sui, leading to unauthorized access.
 ### Vulnerable Code
 ```move
 public entry fun process(obj: MyObject) {
-    // ❌ obj is consumed but not transferred - destroyed!
+    //  obj is consumed but not transferred - destroyed!
 }
 ```
 
 ### Secure Code
 ```move
 public entry fun process(obj: MyObject, ctx: &mut TxContext) {
-    // ✅ Transfer back or to recipient
+    //  Transfer back or to recipient
     transfer::transfer(obj, tx_context::sender(ctx));
 }
 
@@ -374,14 +374,14 @@ Colliding keys in Sui dynamic fields causing overwrites.
 use sui::dynamic_field as df;
 
 public fun add_data(parent: &mut UID, key: u64, data: Data) {
-    // ❌ Numeric keys can easily collide
+    //  Numeric keys can easily collide
     df::add(parent, key, data);
 }
 ```
 
 ### Secure Code
 ```move
-// ✅ Use unique type-based keys
+//  Use unique type-based keys
 struct DataKey has copy, drop, store { user: address }
 
 public fun add_data(parent: &mut UID, user: address, data: Data) {
@@ -401,7 +401,7 @@ Critical invariants not enforced with abort conditions.
 ### Vulnerable Code
 ```move
 public fun withdraw(vault: &mut Vault, amount: u64): Coin {
-    // ❌ No balance check - could underflow
+    //  No balance check - could underflow
     vault.balance = vault.balance - amount;
     Coin { value: amount }
 }
@@ -410,7 +410,7 @@ public fun withdraw(vault: &mut Vault, amount: u64): Coin {
 ### Secure Code
 ```move
 public fun withdraw(vault: &mut Vault, amount: u64): Coin {
-    // ✅ Check invariant
+    //  Check invariant
     assert!(vault.balance >= amount, E_INSUFFICIENT_BALANCE);
     vault.balance = vault.balance - amount;
     Coin { value: amount }
@@ -471,7 +471,7 @@ public entry fun authorize_upgrade(
 
 ### Vulnerable Code
 ```move
-// ❌ No constraint on T - could be malicious type
+//  No constraint on T - could be malicious type
 public fun process<T>(item: T) {
     // What if T has unexpected behavior?
 }
@@ -479,12 +479,12 @@ public fun process<T>(item: T) {
 
 ### Secure Code
 ```move
-// ✅ Constrain generics appropriately
+//  Constrain generics appropriately
 public fun process<T: store + drop>(item: T) {
     // T must have store and drop abilities
 }
 
-// ✅ Verify coin types
+//  Verify coin types
 public fun swap<CoinA, CoinB>(
     pool: &mut Pool<CoinA, CoinB>,
     coin_in: Coin<CoinA>

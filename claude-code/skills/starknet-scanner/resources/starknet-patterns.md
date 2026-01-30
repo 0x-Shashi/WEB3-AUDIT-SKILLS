@@ -1,4 +1,4 @@
-# Starknet Cairo 1.0 Vulnerability Patterns
+﻿# Starknet Cairo 1.0 Vulnerability Patterns
 
 Comprehensive database of Starknet-specific vulnerability patterns.
 
@@ -196,13 +196,13 @@ fn execute_calls(mut calls: Array<Call>) -> Array<Span<felt252>> {
 
 ---
 
-## L1↔L2 Messaging Patterns
+## L1L2 Messaging Patterns
 
 ### Pattern L2-01: L1 Handler Replay
 
 **Risk Level:** Critical
 
-**Description:** L1→L2 messages must only be processed once.
+**Description:** L1L2 messages must only be processed once.
 
 **Note:** Starknet automatically consumes messages, but logic errors can allow similar attacks.
 
@@ -279,11 +279,11 @@ fn handle_message(
 
 ---
 
-### Pattern L2-03: L2→L1 Message Consumption
+### Pattern L2-03: L2L1 Message Consumption
 
 **Risk Level:** High
 
-**Description:** L2→L1 messages require proof verification on L1. Premature state changes can be exploited.
+**Description:** L2L1 messages require proof verification on L1. Premature state changes can be exploited.
 
 **Detection Pattern:**
 ```
@@ -327,8 +327,8 @@ fn withdraw(ref self: ContractState, amount: u256) {
         array![withdrawal_id.into(), user.into(), amount.low.into(), amount.high.into()].span()
     );
     
-    // L1 confirms withdrawal → call finalize_withdrawal
-    // If L1 fails → user can cancel after timeout
+    // L1 confirms withdrawal  call finalize_withdrawal
+    // If L1 fails  user can cancel after timeout
 }
 
 #[external(v0)]

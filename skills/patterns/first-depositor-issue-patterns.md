@@ -1,4 +1,4 @@
-# First Depositor Issue Security Patterns
+﻿# First Depositor Issue Security Patterns
 
 ## Overview
 
@@ -33,7 +33,7 @@
 
 **Details**:
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
@@ -175,7 +175,7 @@ Require a minimum initial shares amount for the first deposit by adjusting the i
 
 _Submitted by MiloTruck, also found by cccz, oyc_109, VAD37, PP1004, SmartSek, minhquanym, unforgiven, berndartmueller, WatchPug, CertoraInc, and sorrynotsorry_
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
@@ -219,12 +219,12 @@ _Submitted by hickuphh3, also found by 0xDjango, berndartmueller, cmichel, hyh, 
 
 [yVault.sol#L148-L153](https://github.com/code-423n4/2022-04-jpegd/blob/main/contracts/vaults/yVault/yVault.sol#L148-L153)<br>
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
 *   Attacker deposits 1 wei to mint 1 share
-*   Attacker transfers exorbitant amount to the `StrategyPUSDConvex` contract to greatly inflate the share’s price. Note that the strategy deposits its entire balance into Convex when its `deposit()` function is called.
+*   Attacker transfers exorbitant amount to the `StrategyPUSDConvex` contract to greatly inflate the shares price. Note that the strategy deposits its entire balance into Convex when its `deposit()` function is called.
 *   Subsequent depositors instead have to deposit an equivalent sum to avoid minting 0 shares. Otherwise, their deposits accrue to the attacker who holds the only share.
 
 Insert this test into [`yVault.ts`](https://github.com/code-423n4/2022-04-jpegd/blob/main/tests/yVault.ts).
@@ -258,12 +258,12 @@ _Submitted by GreyArt, also found by 0xDjango, CertoraInc, cmichel, rayn, TomFre
 
 [Collateral.sol#L82-L91](https://github.com/code-423n4/2022-03-prepo/blob/main/contracts/core/Collateral.sol#L82-L91)<br>
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
 *   Attacker deposits 2 wei (so that it is greater than min fee) to mint 1 share
-*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the share’s price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
+*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the shares price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
 *   Subsequent depositors instead have to deposit an equivalent sum to avoid minting 0 shares. Otherwise, their deposits accrue to the attacker who holds the only share.
 
 ```jsx
@@ -937,7 +937,7 @@ The first depositor can buy a small number of shares and next he should wait unt
  setApprovals(hecer);
  setApprovals(investor);
 
-    mintWeth(1 wei, hecer); // hecker starts with 1 wei 🐱‍👤
+    mintWeth(1 wei, hecer); // hecker starts with 1 wei 
     mintWeth(20 ether, investor);
  
  

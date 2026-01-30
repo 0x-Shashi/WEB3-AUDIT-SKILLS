@@ -1,4 +1,4 @@
-# OpenZeppelin - Audit Findings
+﻿# OpenZeppelin - Audit Findings
 
 ## Overview
 
@@ -34,7 +34,7 @@
 In the `AntiSandwichHook` contract, an integer underflow may occur due to the improper casting of a negative `int128` value to `uint128` in the [`_getTargetOutput`](https://github.com/OpenZeppelin/uniswap-hooks/blob/087974776fb7285ec844ca090eab860bd8430a11/src/general/AntiSandwichHook.sol#L196) function:
 
 ```
- int128 target =
+int128 target =
     (params.amountSpecified < 0 == params.zeroForOne) ? targetDelta.amount1() : targetDelta.amount0();
 targetOutput = uint256(uint128(target));
 
@@ -43,7 +43,7 @@ targetOutput = uint256(uint128(target));
 To understand the issue, consider the following example:
 
 ```
- SwapParams({
+SwapParams({
     zeroForOne: true,
     amountSpecified: 10_...
 
@@ -64,7 +64,7 @@ The `LimitOrderHook` [contract](https://github.com/OpenZeppelin/uniswap-hooks/bl
 The helper function [`mloadPotentiallyPaddedValue`](https://github.com/matter-labs/era-contracts/blob/cc1619cfb03cc19adb21a2071c89415cab1479e8/system-contracts/evm-emulator/EvmEmulatorFunctions.template.yul#L1052) is intended to read a 32-byte word from memory and zero out any bytes that lie beyond a specified memory boundary. However, due to improper use of a `let` declaration inside an `if` block, the adjusted value is not actually returned.
 
 ```
- function mloadPotentiallyPaddedValue(index, memoryBound) -> value {
+function mloadPotentiallyPaddedValue(index, memoryBound) -> value {
     value := mload(index)
 
     if lt(memoryBound, add(index, 32)) {
@@ -89,7 +89,7 @@ The `_pullCustomGas` [function](https://github.com/across-protocol/contracts/blo
 The [`quantize` function](https://github.com/forta-network/forta-firewall-contracts/blob/09feff1d712011470d49d54f2462e3204c11afaf/src/Quantization.sol#L20-L24) contains a vulnerability caused by an intermediate overflow during sequential operations in the return statement:
 
 ```
- return ((n >> offset) << offset) + (2 ** offset) - 1;
+return ((n >> offset) << offset) + (2 ** offset) - 1;
 
 ```
 
@@ -129,12 +129,12 @@ When committing a new batch, the `ScrollChain` contract calls the [`_commitChunk
 
 ### 9. ETH withdrawal within allowed limit could fail
 
-**Protocol**: zkSync – L1 Diff Audit (February 2023) | **Impact**: HIGH
+**Protocol**: zkSync  L1 Diff Audit (February 2023) | **Impact**: HIGH
 
-The protocol enforces an ETH withdraw limit (currently 10% of the total balance) within each 1-day window as a safety mechanism. This is done through the [`_verifyWithdrawalLimit` function in `Mailbox.sol`](https://github.com/matter-labs/zksync-2-contracts/blob/3f345ce52bc378c4b5d710c80d817db170775049/ethereum/contracts/zksync/facets/Mailbox.sol#L204). However, this function has a logic flaw that could cause an ETH withdrawal within the limit to fail.
+The protocol enforces an ETH withdraw limit (currently 10% of the total balance) within each 1-day window as a safety mechanism. This is done through the[`_verifyWithdrawalLimit`function in`Mailbox.sol`](https://github.com/matter-labs/zksync-2-contracts/blob/3f345ce52bc378c4b5d710c80d817db170775049/ethereum/contracts/zksync/facets/Mailbox.sol#L204). However, this function has a logic flaw that could cause an ETH withdrawal within the limit to fail.
 
 
-When withdrawal validations occur within the same 1-day window, the function checks the limit in [line 215 of Mailbox](https://github.com/matt...
+When withdrawal validations occur within the same 1-day window, the function checks the limit in[line 215 of Mailbox](https://github.com/matt...
 
 ---
 
@@ -142,20 +142,20 @@ When withdrawal validations occur within the same 1-day window, the function che
 
 **Protocol**: zkSync Bootloader Audit Report | **Impact**: HIGH
 
-The [`RLPEncoder` library](https://github.com/matter-labs/system-contracts/blob/4ad1f26ae205d5a973216d141833e0ac37d72ec8/contracts/libraries/RLPEncoder.sol) allows the encoding of bytes and list-type values. These dynamic types need to be prefixed to indicate the type and length of the data. The type is indicated through an offset:
+The[`RLPEncoder`library](https://github.com/matter-labs/system-contracts/blob/4ad1f26ae205d5a973216d141833e0ac37d72ec8/contracts/libraries/RLPEncoder.sol)allows the encoding of bytes and list-type values. These dynamic types need to be prefixed to indicate the type and length of the data. The type is indicated through an offset:
 
 
-* `0x80` for bytes
-* `0xc0` for a list
+* `0x80`for bytes
+* `0xc0`for a list
 
 
 The length encoding depends on the length itself:
 
 
 1. Length < 56: The length is added onto the offset.
-	* Bytes 1st byte range: `[0x80, 0xb7]`
-	* List 1st byte range: `[0xc0, 0xf7]`
-2. Length ≥ 56: The length of the data ...
+	* Bytes 1st byte range:`[0x80, 0xb7]`
+	* List 1st byte range:`[0xc0, 0xf7]`
+2. Length  56: The length of the data ...
 
 ---
 
@@ -163,7 +163,7 @@ The length encoding depends on the length itself:
 
 **Protocol**: UMA DVM 2.0 Audit | **Impact**: HIGH
 
-In the `VotingV2` contract the [`_updateAccountSlashingTrackers`](https://github.com/UMAprotocol/protocol/blob/7938617bf79854811959eb605237edf6bdccbc90/packages/core/contracts/oracle/implementation/VotingV2.sol#L831)function contains an optimization that marks unresolved requests in a prior round (rolled votes) as deleted via an entry in the `deletedRequests` map. The intention is to reduce gas consumption as the function will be called for every staker in the system. The logic on [line 860](https://github.com/UMAprotocol/protocol/blob/7938617bf79854811959eb605237edf6bdccbc90/packages/core/con...
+In the`VotingV2`contract the[`_updateAccountSlashingTrackers`](https://github.com/UMAprotocol/protocol/blob/7938617bf79854811959eb605237edf6bdccbc90/packages/core/contracts/oracle/implementation/VotingV2.sol#L831)function contains an optimization that marks unresolved requests in a prior round (rolled votes) as deleted via an entry in the`deletedRequests`map. The intention is to reduce gas consumption as the function will be called for every staker in the system. The logic on[line 860](https://github.com/UMAprotocol/protocol/blob/7938617bf79854811959eb605237edf6bdccbc90/packages/core/con...
 
 ---
 
@@ -171,7 +171,7 @@ In the `VotingV2` contract the [`_updateAccountSlashingTrackers`](https://git
 
 **Protocol**: Beta Finance Audit | **Impact**: HIGH
 
-When the protocol considers that a position does not have enough collateral, decided by [the asset’s `liquidationLTV`](https://github.com/beta-finance/beta-private/blob/9e73eaf40e5118125d6925b29e4fb9ad8bf8e113/contracts/BetaConfig.sol#L9), anyone can call the [`BetaBank` `liquidate` function](https://github.com/beta-finance/beta-private/blob/9e73eaf40e5118125d6925b29e4fb9ad8bf8e113/contracts/BetaBank.sol#L360) to liquidate the position in question. The caller can pay off up to 50% of the position’s debt, and in return gets paid from the collateral of the position.
+When the protocol considers that a position does not have enough collateral, decided by [the assets `liquidationLTV`](https://github.com/beta-finance/beta-private/blob/9e73eaf40e5118125d6925b29e4fb9ad8bf8e113/contracts/BetaConfig.sol#L9), anyone can call the [`BetaBank` `liquidate` function](https://github.com/beta-finance/beta-private/blob/9e73eaf40e5118125d6925b29e4fb9ad8bf8e113/contracts/BetaBank.sol#L360) to liquidate the position in question. The caller can pay off up to 50% of the positions debt, and in return gets paid from the collateral of the position.
 
 
 The process of liquidation ...

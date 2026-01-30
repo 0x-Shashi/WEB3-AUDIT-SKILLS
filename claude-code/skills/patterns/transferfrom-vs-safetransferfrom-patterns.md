@@ -1,4 +1,4 @@
-# transferFrom vs safeTransferFrom Security Patterns
+﻿# transferFrom vs safeTransferFrom Security Patterns
 
 ## Overview
 
@@ -188,10 +188,10 @@ _Submitted by hickuphh3, also found by antonttc, berndartmueller, catchup, cccz,
 
 ### Details & Impact
 
-The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isn’t recommended because:
+The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isnt recommended because:
 
-*   [OpenZeppelin’s documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
-*   Given that any NFT can be used for the call option, there are a few NFTs (here’s an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
+*   [OpenZeppelins documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
+*   Given that any NFT can be used for the call option, there are a few NFTs (heres an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
 
 ### Recommended Mitigation Steps
 
@@ -248,7 +248,7 @@ https://github.com/code-423n4/2022-10-inverse/blob/main/src/Market.sol#L602
 ## Vulnerability details
 
 ## Impact
-ERC20 implementations are not always consistent. Some implementations of transfer and transferFrom could return ‘false’ on failure instead of reverting. It is safer to wrap such calls into require() statements to these failures.
+ERC20 implementations are not always consistent. Some implementations of transfer and transferFrom could return false on failure instead of reverting. It is safer to wrap such calls into require() statements to these failures.
 
 
 ## Proof of Concept
@@ -263,7 +263,7 @@ https://github.com/code-423n4/2022-10-inverse/blob/main/src/Market.sol#L602
 Read the codes
 
 ## Recommended Mitigation Steps
-Check the return value and revert on 0/false or use OpenZeppelin’s SafeERC20 wrappe
+Check the return value and revert on 0/false or use OpenZeppelins SafeERC20 wrappe
 
 *[Content truncated...]*
 
@@ -496,9 +496,9 @@ https://github.com/code-423n4/2022-05-rubicon/blob/8c312a63a91193c6a192a9aab44ff
 
 ## Impact
 
-It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelin’s `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
+It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelins `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
 
-However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelin’s `safeTransfer()`/`safeTransferFrom()`.
+However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelins `safeTransfer()`/`safeTransferFrom()`.
 
 ## Proof of Concept
 

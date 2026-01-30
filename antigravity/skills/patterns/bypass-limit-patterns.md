@@ -1,4 +1,4 @@
-# Bypass limit Security Patterns
+﻿# Bypass limit Security Patterns
 
 ## Overview
 
@@ -220,7 +220,7 @@ To have the inequality `assets < s.depositCap` to be always correct, we would ne
 
 ---
 
-### Example 6: [M-04] Lender can trade claimToken in a malicious way to steal the borrower’s money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
+### Example 6: [M-04] Lender can trade claimToken in a malicious way to steal the borrowers money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
 
 **Source**: Code4rena
 **Protocol**: Debt DAO
@@ -286,7 +286,7 @@ function _claimAndTrade(
 
 ---
 
-### Example 7: [M-07] Oracle’s two-day feature can be gamed
+### Example 7: [M-07] Oracles two-day feature can be gamed
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -328,7 +328,7 @@ If you increase it to a three-day interval you can fix this issue. Then, the ora
 
 ---
 
-### Example 8: enableTradingWithWeights allow the Treasury to change the pool’s weights even if the swap is not disabled
+### Example 8: enableTradingWithWeights allow the Treasury to change the pools weights even if the swap is not disabled
 
 **Source**: Spearbit
 **Protocol**: Gauntlet
@@ -342,10 +342,10 @@ If you increase it to a three-day interval you can fix this issue. Then, the ora
 AeraVaultV1.sol#L574-L583
 
 ## Description
-`enableTradingWithWeights` is a function that can only be called by the owner of the Aera Vault contract and that should be used only to re-enable the swap feature on the pool while updating token weights. The function does not verify if the pool’s swap feature is enabled and for this reason, it allows the Treasury to act as the manager who is the only actor allowed to change the pool weights. The function should add a check to ensure that it is only callable when the pool’s swap is disabled.
+`enableTradingWithWeights` is a function that can only be called by the owner of the Aera Vault contract and that should be used only to re-enable the swap feature on the pool while updating token weights. The function does not verify if the pools swap feature is enabled and for this reason, it allows the Treasury to act as the manager who is the only actor allowed to change the pool weights. The function should add a check to ensure that it is only callable when the pools swap is disabled.
 
 ## Recommendation
-Update the function to revert when the pool’s swap is enabled.
+Update the function to revert when the pools swap is enabled.
 
 ```solidity
 function enableTradingWithWeights(uint256[] calldata weights)

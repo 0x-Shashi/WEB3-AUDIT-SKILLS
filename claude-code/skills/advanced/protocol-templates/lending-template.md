@@ -1,33 +1,33 @@
-# Lending Protocol Template
+﻿# Lending Protocol Template
 
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     LENDING PROTOCOL                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌───────────────┐                       ┌───────────────┐      │
-│  │   LENDERS     │──── Deposit ────────▶│   POOL/VAULT  │      │
-│  │  (Supply)     │◀─── Interest ────────│               │      │
-│  └───────────────┘                       └───────┬───────┘      │
-│                                                  │               │
-│  ┌───────────────┐                               │               │
-│  │  BORROWERS    │◀─── Borrow ──────────────────┤               │
-│  │  (Demand)     │──── Collateral + Interest ───▶               │
-│  └───────────────┘                               │               │
-│                                                  │               │
-│  ┌───────────────┐                       ┌───────┴───────┐      │
-│  │ LIQUIDATORS   │──── Liquidate ──────▶│  COLLATERAL   │      │
-│  │               │◀─── Bonus ───────────│   MANAGER     │      │
-│  └───────────────┘                       └───────────────┘      │
-│                                                  │               │
-│                                          ┌───────┴───────┐      │
-│                                          │    ORACLE     │      │
-│                                          │   (Prices)    │      │
-│                                          └───────────────┘      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+                     LENDING PROTOCOL                             
+
+                                                                  
+                               
+     LENDERS      Deposit    POOL/VAULT        
+    (Supply)      Interest                      
+                               
+                                                                 
+                                                
+    BORROWERS     Borrow                
+    (Demand)      Collateral + Interest                
+                                                
+                                                                 
+                               
+   LIQUIDATORS    Liquidate   COLLATERAL         
+                  Bonus    MANAGER           
+                               
+                                                                 
+                                                
+                                              ORACLE           
+                                             (Prices)          
+                                                
+                                                                  
+
 ```
 
 ---
@@ -153,7 +153,7 @@ function liquidate(
 
 ## Common Vulnerabilities
 
-### LEND-01: Oracle Manipulation → Bad Debt
+### LEND-01: Oracle Manipulation  Bad Debt
 
 **Risk:** Critical
 
@@ -256,7 +256,7 @@ uint256 interest = principal * rate / YEAR;  // Truncates!
 
 **Attack:**
 1. Flash borrow ETH
-2. Dump on DEX → crash price
+2. Dump on DEX  crash price
 3. Liquidate underwater positions
 4. Profit from liquidation bonus
 5. Repay flash loan
@@ -275,7 +275,7 @@ uint256 interest = principal * rate / YEAR;  // Truncates!
 **Description:** First depositor inflates share price to steal from later depositors.
 
 **Attack:**
-1. Deposit 1 wei → 1 share
+1. Deposit 1 wei  1 share
 2. Donate large amount to vault
 3. Share price = huge
 4. Next depositor's amount rounds to 0 shares
@@ -300,7 +300,7 @@ constructor() {
 **Attack:**
 1. Deposit tokenA as collateral
 2. Borrow tokenB
-3. Dump tokenB → crash its price
+3. Dump tokenB  crash its price
 4. tokenA now worth more relatively
 5. Borrow more, repeat
 

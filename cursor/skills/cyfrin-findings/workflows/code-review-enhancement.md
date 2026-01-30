@@ -1,4 +1,4 @@
-# Code Review Enhancement Workflow
+﻿# Code Review Enhancement Workflow
 
 Combine Solodit findings with manual code review for comprehensive security analysis.
 
@@ -297,7 +297,7 @@ For each concern discovered:
 
 ## Quick Reference
 
-### Pattern → Query Mapping
+### Pattern  Query Mapping
 
 | If You See | Query This |
 |------------|-----------|

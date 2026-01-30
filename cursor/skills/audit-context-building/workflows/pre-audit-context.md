@@ -1,4 +1,4 @@
-# Pre-Audit Context Workflow
+﻿# Pre-Audit Context Workflow
 
 Build comprehensive context BEFORE the audit begins to maximize efficiency and coverage.
 
@@ -97,10 +97,10 @@ From docs/previous audits:
 ### Dependency Map
 ```
 Vault.sol
-├── imports Strategy.sol
-├── imports Token.sol
-└── imports Oracle.sol
-    └── imports Chainlink
+ imports Strategy.sol
+ imports Token.sol
+ imports Oracle.sol
+     imports Chainlink
 ```
 
 ### External Dependencies
@@ -263,8 +263,8 @@ From function analysis:
 ### Invariant Verification Plan
 | Invariant | Verification Method | Status |
 |-----------|---------------------|--------|
-| I1 | Check deposit/withdraw | ⏳ |
-| I2 | Review withdraw logic | ⏳ |
+| I1 | Check deposit/withdraw |  |
+| I2 | Review withdraw logic |  |
 ```
 
 ---
@@ -312,30 +312,30 @@ From previous audits / cyfrin-findings:
 
 ### Value Entry/Exit Points
 ```
-User ──[tokens]──► deposit() ──► balances storage
-                                      │
-User ◄──[tokens]── withdraw() ◄───────┘
+User [tokens] deposit()  balances storage
+                                      
+User [tokens] withdraw() 
 ```
 
 ### Trust Boundaries
 ```
-┌─────────────────────────────────────┐
-│ TRUSTED (Owner/Admin)              │
-│   setFee(), pause(), upgrade()     │
-├─────────────────────────────────────┤
-│ SEMI-TRUSTED (Keepers/Oracles)     │
-│   harvest(), priceCallback()       │
-├─────────────────────────────────────┤
-│ UNTRUSTED (Users/External)         │
-│   deposit(), withdraw(), claim()   │
-└─────────────────────────────────────┘
+
+ TRUSTED (Owner/Admin)              
+   setFee(), pause(), upgrade()     
+
+ SEMI-TRUSTED (Keepers/Oracles)     
+   harvest(), priceCallback()       
+
+ UNTRUSTED (Users/External)         
+   deposit(), withdraw(), claim()   
+
 ```
 
 ### High-Risk Intersections
 Where untrusted input meets critical operations:
-1. User input → value transfer
-2. Oracle data → calculation
-3. Callback → state change
+1. User input  value transfer
+2. Oracle data  calculation
+3. Callback  state change
 ```
 
 ---
@@ -345,12 +345,12 @@ Where untrusted input meets critical operations:
 With pre-audit context complete:
 
 ### You Now Have:
-✅ Complete protocol understanding  
-✅ All entry points mapped  
-✅ External integrations analyzed  
-✅ Invariants identified  
-✅ Attack surface mapped  
-✅ Focus areas prioritized  
+ Complete protocol understanding  
+ All entry points mapped  
+ External integrations analyzed  
+ Invariants identified  
+ Attack surface mapped  
+ Focus areas prioritized  
 
 ### Ready For:
 - Systematic vulnerability hunting

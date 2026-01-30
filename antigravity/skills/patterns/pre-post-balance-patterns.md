@@ -1,4 +1,4 @@
-# Pre/Post Balance Security Patterns
+﻿# Pre/Post Balance Security Patterns
 
 ## Overview
 
@@ -132,11 +132,11 @@ The contract **SwapperV2** contains the following construction (twice) to preven
 - It performs an action.
 - If the end balance is greater than the start balance, it uses the difference; otherwise (which includes the case where the start balance is equal to the end balance), it uses the end balance.
 
-Thus, if the else clause is reached, it will use the end balance and ignore any start balance. If the action hasn’t changed the balances, then start balance equals end balance, and this amount is used. When the action has lowered the balances, then the end balance is also used. 
+Thus, if the else clause is reached, it will use the end balance and ignore any start balance. If the action hasnt changed the balances, then start balance equals end balance, and this amount is used. When the action has lowered the balances, then the end balance is also used. 
 
 This defeats the purpose of the code.
 
-**Note**: Normally, there shouldn’t be any tokens in the LiFi Diamond contract, so the risk is limited. The **Swapper.sol** contract has similar code.
+**Note**: Normally, there shouldnt be any tokens in the LiFi Diamond contract, so the risk is limited. The **Swapper.sol** contract has similar code.
 
 ### Code Snippets
 ```solidity

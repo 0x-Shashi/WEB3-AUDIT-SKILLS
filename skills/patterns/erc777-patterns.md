@@ -1,4 +1,4 @@
-# ERC777 Security Patterns
+﻿# ERC777 Security Patterns
 
 ## Overview
 
@@ -220,12 +220,12 @@ Source: https://github.com/sherlock-audit/2022-11-buffer-judging/issues/130
 bin2chen, HonorLt, KingNFT
 
 ## Summary
-_openQueuedTrade() does not follow the “Checks Effects Interactions” principle and may lead to re-entry to steal the funds
+_openQueuedTrade() does not follow the Checks Effects Interactions principle and may lead to re-entry to steal the funds
 
 https://fravoll.github.io/solidity-patterns/checks_effects_interactions.html
 
 ## Vulnerability Detail
-The prerequisite is that tokenX is ERC777 e.g. “sushi”
+The prerequisite is that tokenX is ERC777 e.g. sushi
 1. resolveQueuedTrades() call _openQueuedTrade()
 2. in _openQueuedTrade() call "tokenX.transfer(queuedTrade.user)" if (revisedFee < queuedTrade.totalFee) before set queuedTrade.isQueued = false; 
 ```solidity
@@ -255,7 +255,7 @@ Manual Review
 
 ## Recommendation
 
-follow “Checks Effects Interactions” 
+follow Checks Effects Interactions 
 
 ```solidity
 
@@ -373,16 +373,16 @@ As can be seen above, t
 
 **Details**:
 
-The internal [`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407) function handles user deposits, transferring a specified amount of `stETH` from `msg.sender` to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by the [`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371) function.
+The internal[`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407)function handles user deposits, transferring a specified amount of`stETH`from`msg.sender`to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by the[`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371)function.
 
 
-As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter the `deposit` function multiple times.
+As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter the`deposit`function multiple times.
 
 
 This re-entrancy will result in an increment in the receiver balance on the queue, even though this balance will not correspond to the actual amount deposited into the vault.
 
 
-In the current implementation, the `_deposit` function in the `BaseVault` contract is overridden by the [implementation in the `STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, the `BaseVault` is likely to be inherited by future vaults, so it is crucial to have the correct `_deposit` implementation in this contract in case it is not overridden.
+In the current implementation, the`_deposit`function in the`BaseVault`contract is overridden by the[implementation in the`STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, the`BaseVault`is likely to be inherited by future vaults, so it is crucial to have the correct`_deposit`implementation in this contract in case it is not overridden.
 
 
 Consider reordering the calls, doing the transfer first, and then adding th

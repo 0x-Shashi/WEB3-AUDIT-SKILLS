@@ -1,4 +1,4 @@
-# Quick Scan Workflow
+﻿# Quick Scan Workflow
 
 Rapid security assessment for time-constrained situations.
 
@@ -106,8 +106,8 @@ For each external function, quick check:
 
 | Function | Access | Value | External Call | Status |
 |----------|--------|-------|---------------|--------|
-| deposit() | ✅ | ✅ ETH | ❌ None | OK |
-| withdraw() | ⚠️ Check | ✅ | ✅ Check CEI | Check |
+| deposit() |  |  ETH |  None | OK |
+| withdraw() |  Check |  |  Check CEI | Check |
 
 ### Phase 3: High-Risk Patterns (10 minutes)
 
@@ -255,8 +255,8 @@ Identify and review the 3 most critical functions:
 
 | Category | Status |
 |----------|--------|
-| Critical Issues | ✅ None / ❌ [count] |
-| High Issues | ✅ None / ⚠️ [count] |
+| Critical Issues |  None /  [count] |
+| High Issues |  None /  [count] |
 | Tool Alerts | [count] to review |
 
 ## Automated Tool Results
@@ -275,10 +275,10 @@ Identify and review the 3 most critical functions:
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| Access Control | ✅/❌ | |
-| Reentrancy | ✅/❌ | |
-| Value Handling | ✅/❌ | |
-| Token Safety | ✅/❌ | |
+| Access Control | / | |
+| Reentrancy | / | |
+| Value Handling | / | |
+| Token Safety | / | |
 
 ## Immediate Concerns
 

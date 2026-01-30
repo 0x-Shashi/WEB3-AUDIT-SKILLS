@@ -1,4 +1,4 @@
-# 0x Security Patterns
+﻿# 0x Security Patterns
 
 ## Overview
 
@@ -37,12 +37,12 @@ _Submitted by GreyArt, also found by 0xDjango, CertoraInc, cmichel, rayn, TomFre
 
 [Collateral.sol#L82-L91](https://github.com/code-423n4/2022-03-prepo/blob/main/contracts/core/Collateral.sol#L82-L91)<br>
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
 *   Attacker deposits 2 wei (so that it is greater than min fee) to mint 1 share
-*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the share’s price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
+*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the shares price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
 *   Subsequent depositors instead have to deposit an equivalent sum to avoid minting 0 shares. Otherwise, their deposits accrue to the attacker who holds the only share.
 
 ```jsx
@@ -145,7 +145,7 @@ Convert the `_id` to a string before calling `abi.encodePacked`. Latest Solmate 
 
 ---
 
-### Example 4: [M-04] Lender can trade claimToken in a malicious way to steal the borrower’s money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
+### Example 4: [M-04] Lender can trade claimToken in a malicious way to steal the borrowers money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
 
 **Source**: Code4rena
 **Protocol**: Debt DAO

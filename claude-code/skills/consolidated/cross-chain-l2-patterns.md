@@ -12,7 +12,7 @@
 | Sequencer Down | L2 sequencer offline breaks oracles | High |
 | Bridge Double-Spend | Withdraw same funds twice | Critical |
 | Reorg Risk | L2 reorgs can reverse finality | High |
-| L1 → L2 Delay | Messages take time to finalize | Medium |
+| L1  L2 Delay | Messages take time to finalize | Medium |
 | Gas Price Differences | L2 gas much cheaper than L1 | Medium |
 
 ---
@@ -58,7 +58,7 @@ function getPrice() external view returns (uint) {
 - [ ] Messages include source chain ID
 - [ ] Messages include source contract address
 - [ ] Nonce prevents replay on same chain
-- [ ] Waiting period for L2 → L1 messages
+- [ ] Waiting period for L2  L1 messages
 - [ ] Sequencer uptime check for L2 oracles
 - [ ] Grace period after sequencer restart
 
@@ -245,9 +245,9 @@ https://github.com/code-423n4/2022-11-stakehouse/blob/main/contracts/liquid-stak
 ### Impact
 Mistakes made on one chain can be re-applied to a new chain
 
-There is noÂ chain.idÂ in the data
+There is nochain.idin the data
 
-If a user does `deployLPToken`Â using the wrong network, an attacker can replay the action on the correct chain, and steal the funds a-la the wintermute gnosis safe attack, where the attacker can create the same address that the user tried to, and steal the funds from there
+If a user does `deployLPToken`using the wrong network, an attacker can replay the action on the correct chain, and steal the funds a-la the wintermute gnosis safe attack, where the attacker can create the same address that the user tried to, and steal the funds from there
 
 
 https://mirror.xyz/0xbuidlerdao.eth/lOE5VN-BHI0olGOXe27F0auviIuoSlnou_9t3XRJseY
@@ -381,7 +381,7 @@ Source: https://github.com/sherlock-audit/2024-11-autonomint-judging/issues/998
 
 ### Summary
 
-In the Liquidation Type 1 process, Ether refunds are being sent to an incorrect [recipient address](https://github.com/sherlock-audit/2024-11-autonomint-bluenights004/blob/main/Blockchain/Blockchian/contracts/Core_logic/borrowLiquidation.sol#L303). Specifically, refunds should be directed to the admin user, who acts as the liquidation operator and is the legitimate recipient. However, the current implementation mistakenly sends the refund to the borrowerâ€™s address.
+In the Liquidation Type 1 process, Ether refunds are being sent to an incorrect [recipient address](https://github.com/sherlock-audit/2024-11-autonomint-bluenights004/blob/main/Blockchain/Blockchian/contracts/Core_logic/borrowLiquidation.sol#L303). Specifically, refunds should be directed to the admin user, who acts as the liquidation operator and is the legitimate recipient. However, the current implementation mistakenly sends the refund to the borrowers address.
 
 ```Solidity
 File: borrowLiquidation.sol
@@ -393,7 +393,7 @@ File: borrowLiquidation.sol
 
 ### Root Cause
 
-When liqAmountToGetFromOtherChain is zero or cross-chain operations are unnecessary, the Ether refund is incorrectly sent to the borrowerâ€™s address instead of the adminâ€™s address. This misdirection can result in the admin losing funds that should rightfully be refunded to them.
+When liqAmountToGetFromOtherChain is zero or cross-chain operations are unnecessary, the Ether refund is incorrectly sent to the borrowers address instead of the admins address. This misdirection can result in the admin losing funds that should rightfully be refunded to them.
 
 ### Internal pre-conditions
 
@@ -515,7 +515,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 
 **Note:** Exploiters can pull the tokens from the LiFi protocol. Please refer to the issue **"Remaining tokens can be swept from the LiFi Diamond or the Executor," Issue #82**. Exploiters can take a more aggressive strategy and force the victim's swap to revert. A possible exploit scenario:
 
-- A victim wants to swap 10K optimismâ€™s BTC into Ethereum mainnet USDC.
+- A victim wants to swap 10K optimisms BTC into Ethereum mainnet USDC.
 - Since DEXs on the mainnet have the best liquidity, the LiFi protocol helps users swap on the mainnet.
 - The transaction on the source chain (optimism) succeeds, and the bridge services try to call `Co
 
@@ -636,7 +636,7 @@ gravity.call(data);
 
 The log output is as follows:
 ```solidity
-    ERC20DeployedEvent("atom", "name", â®utf8 decode failedâ¯: 0x73796d626fc0, 18, 2)
+    ERC20DeployedEvent("atom", "name", utf8 decode failed: 0x73796d626fc0, 18, 2)
 ```
 
 Which hits [this code path](https://github.com/althea-net/cosmos-gravity-bridge/blob/92d0e12cea813305e6472851beeb80bd2eaf858d/orchestrator/gravity_utils/src/types/ethereum_events.rs#L431-L438):
@@ -1209,11 +1209,11 @@ Check for:
 
 ### Key Lessons
 
-1. **Ronin**: 5 of 9 validators compromised â†’ Use higher thresholds, distributed validators
-2. **Wormhole**: Guardian signature check bypassed â†’ Rigorous signature verification
-3. **Nomad**: acceptableRoot allowed any message â†’ Never trust unverified messages
-4. **Harmony**: 2 of 5 multisig â†’ Use higher M/N ratios
-5. **BNB**: Proof verification bug â†’ Formal verification of proof logic
+1. **Ronin**: 5 of 9 validators compromised  Use higher thresholds, distributed validators
+2. **Wormhole**: Guardian signature check bypassed  Rigorous signature verification
+3. **Nomad**: acceptableRoot allowed any message  Never trust unverified messages
+4. **Harmony**: 2 of 5 multisig  Use higher M/N ratios
+5. **BNB**: Proof verification bug  Formal verification of proof logic
 
 ---
 
@@ -2128,7 +2128,7 @@ When auditing L2 contracts:
 - **Lines:** 97-113
 
 ### Description
-The `OptimismBridgeFacet` uses Optimismâ€™s bridge with user-provided `l2Gas`.
+The `OptimismBridgeFacet` uses Optimisms bridge with user-provided `l2Gas`.
 
 ```solidity
 function _startBridge(
@@ -2154,7 +2154,7 @@ function _startBridge(
 }
 ```
 
-Optimismâ€™s standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
+Optimisms standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
 
 - **File:** L1StandardBridge.sol
 - **Lines:** 114-123
@@ -2179,7 +2179,7 @@ sendCrossDomainMessage(l2TokenBridge, _l2Gas, message);
 If the `l2Gas` is underpaid, `finalizeDeposit` will fail and user funds will be lost.
 
 ### Recommendation
-Given the potential risks of losing usersâ€™ funds, it is recommend
+Given the potential risks of losing users funds, it is recommend
 
 *[Content truncated...]*
 
@@ -2319,7 +2319,7 @@ The team fixed the issue as recommended. Addressed in: `3be95dd540da57f9f2a1e20d
 
 **File(s) affected:**`contracts/factory.fc`
 
-**Description:** In the `factory`â€™s `op::create_master`, the initial check requires `msg_value > service_fee + BASE_FEE * (6 + mint_messages_count)`, but the refund calculation deducts `service_fee + BASE_FEE * (8 + mint_messages_count)`. This discrepancy allows transactions that pass validation to fail later or refund less than expected, leading to user confusion and potential loss of funds.
+**Description:** In the `factory`s `op::create_master`, the initial check requires `msg_value > service_fee + BASE_FEE * (6 + mint_messages_count)`, but the refund calculation deducts `service_fee + BASE_FEE * (8 + mint_messages_count)`. This discrepancy allows transactions that pass validation to fail later or refund less than expected, leading to user confusion and potential loss of funds.
 
 **Exploit Scenario:**
 
@@ -2424,7 +2424,7 @@ onlyOwner { , !
 - **Lines:** 97-113
 
 ### Description
-The `OptimismBridgeFacet` uses Optimismâ€™s bridge with user-provided `l2Gas`.
+The `OptimismBridgeFacet` uses Optimisms bridge with user-provided `l2Gas`.
 
 ```solidity
 function _startBridge(
@@ -2450,7 +2450,7 @@ function _startBridge(
 }
 ```
 
-Optimismâ€™s standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
+Optimisms standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
 
 - **File:** L1StandardBridge.sol
 - **Lines:** 114-123
@@ -2475,7 +2475,7 @@ sendCrossDomainMessage(l2TokenBridge, _l2Gas, message);
 If the `l2Gas` is underpaid, `finalizeDeposit` will fail and user funds will be lost.
 
 ### Recommendation
-Given the potential risks of losing usersâ€™ funds, it is recommend
+Given the potential risks of losing users funds, it is recommend
 
 *[Content truncated...]*
 
@@ -2828,7 +2828,7 @@ Affected function has been removed
 
 The development team pointed out that, if the call by Stargate to `sgReceive()` were to revert, the tokens transferred from Stargate would be left in the SushiXSwap contract on the destination chain, where they could be transferred away freely by any user.
 
-One possible condition under which this transaction could revert is if the Stargate router is redeployed, perhaps as part of an upgrade. The `require` on line [80] would then cause the transaction to revert, resulting in a loss of funds. It is difficult to estimate the likelihood of this issue as it is outside the scope of this review to investigate Stargateâ€™s likelihood of redeploying their router. However, whatever their stated policy, there could still be a redeployment and so a risk remains that could result in a loss of user funds.
+One possible condition under which this transaction could revert is if the Stargate router is redeployed, perhaps as part of an upgrade. The `require` on line [80] would then cause the transaction to revert, resulting in a loss of funds. It is difficult to estimate the likelihood of this issue as it is outside the scope of this review to investigate Stargates likelihood of redeploying their router. However, whatever their stated policy, there could still be a redeployment and so a risk remains that could result in a loss of user funds.
 
 ## Recommendations
 
@@ -3234,7 +3234,7 @@ Calculate **proposalId** as a hash of the proposal p
 
 ---
 
-### Example 6: in3-server - should enforce safe settings for minBlockHeight Â Won't Fix
+### Example 6: in3-server - should enforce safe settings for minBlockHeight Won't Fix
 
 **Source**: ConsenSys
 **Protocol**: Slock.it Incubed3
@@ -3258,7 +3258,7 @@ Client response:
 > We have discussed this, but decided to keep it flexible. This means:
 > 
 > 
-> 1. We have put the minBlockHeight into the registry (as part of the properties). Because these properties indicate the limit and capabilities of the node and give the client a chance to filter out nodes if they donâ€™t match the requirements. So each client is able to filter out node who are not willing to take the risk and sign for example latest-6. Of course these nodes will most likely only store a low deposit ( you can not have a signature of a young block and a high deposit), but if you need a high security the nodes with a deposit will propably wait at least 10 or more blocks. In order to protect the owner of a node of using insecure settings, we will use our wizard to check the deposit and minBlockHeights and warn or educate the user. The reason why this flexibility is important, is because there use cases where dapps will not accept the let user wait 10 blocks before confirming a transaction. If the dapp developer needs a signature of a younger block, he will need to liv
+> 1. We have put the minBlockHeight into the registry (as part of the properties). Because these properties indicate the limit and capabilities of the node and give the client a chance to filter out nodes if they dont match the requirements. So each client is able to filter out node who are not willing to take the risk and sign for example latest-6. Of course these nodes will most likely only store a low deposit ( you can not have a signature of a young block and a high deposit), but if you need a high security the nodes with a deposit will propably wait at least 10 or more blocks. In order to protect the owner of a node of using insecure settings, we will use our wizard to check the deposit and minBlockHeights and warn or educate the user. The reason why this flexibility is important, is because there use cases where dapps will not accept the let user wait 10 blocks before confirming a transaction. If the dapp developer needs a signature of a younger block, he will need to liv
 
 *[Content truncated...]*
 
@@ -3356,7 +3356,7 @@ The PoolTogether team is aware of this issue but is yet to mitigate this attack 
 
 ---
 
-### Example 10: Malicious clients can use forks or reorgs to convict honest nodes Â Won't Fix
+### Example 10: Malicious clients can use forks or reorgs to convict honest nodes Won't Fix
 
 **Source**: ConsenSys
 **Protocol**: Slock.it Incubed3
@@ -3374,7 +3374,7 @@ Default value for past signed blocks is changed to 10 blocks. Slockit plans to u
 #### Description
 
 
-In case of reorgs it is possible to have more than 6 blocks in a node that gets replaced by a new longer chain. Also for forks, such as upcoming [Istanbul fork](https://blog.infura.io/were-ready-for-the-istanbul-fork-e39afc2b1412), itâ€™s common to have some nodes taking some time to update and they will be in the wrong chain for the time being. In both cases, in3-nodes are prone to sign blocks that are considered invalid in the main chain.
+In case of reorgs it is possible to have more than 6 blocks in a node that gets replaced by a new longer chain. Also for forks, such as upcoming [Istanbul fork](https://blog.infura.io/were-ready-for-the-istanbul-fork-e39afc2b1412), its common to have some nodes taking some time to update and they will be in the wrong chain for the time being. In both cases, in3-nodes are prone to sign blocks that are considered invalid in the main chain.
 Malicious nodes can catch these instances and convict the honest users in the main chain to get 50% of their deposits.
 
 
@@ -3578,7 +3578,7 @@ To mitigate this issue, consider integrating an external uptime feed such as [Ch
 
 ---
 
-### Example 16: Risk of double-spend attacks due to use of single-node Clique consensus without ï¬nality API
+### Example 16: Risk of double-spend attacks due to use of single-node Clique consensus without nality API
 
 **Source**: TrailOfBits
 **Protocol**: Scroll, l2geth
@@ -3586,7 +3586,7 @@ To mitigate this issue, consider integrating an external uptime feed such as [Ch
 
 **Details**:
 
-## Diï¬ƒculty: Medium
+## Diculty: Medium
 
 ## Type: Denial of Service
 
@@ -3595,11 +3595,11 @@ l2geth uses the proof-of-authority Clique consensus protocol, defined by EIP-255
 
 The severity of this finding is compounded by the fact that there is no API for an end user to determine whether their transaction has been finalized by L1, forcing L2 users to use ineffective block/time delays to determine finality.
 
-Clique consensus was originally designed as a replacement for proof-of-work consensus for Ethereum testnets. It uses the same fork choice rule as Ethereumâ€™s proof-of-work consensus; the fork with the highest â€œdifficultyâ€ should be considered the canonical fork.
+Clique consensus was originally designed as a replacement for proof-of-work consensus for Ethereum testnets. It uses the same fork choice rule as Ethereums proof-of-work consensus; the fork with the highest difficulty should be considered the canonical fork.
 
 Clique consensus does not use proof-of-work and cannot update block difficulty using the traditional calculation; instead, block difficulty may be one of two values:
-- â€œ1â€ if the block was mined by the designated signer for the block height
-- â€œ2â€ if the block was mined by a non-designated signer for the block height
+- 1 if the block was mined by the designated signer for the block height
+- 2 if the block was mined by a non-designated signer for the block height
 
 This means that in a network with only one authorized signer, all of the blocks and forks produced by the sequencer will have the same difficulty value, making it impossible for syncing nodes to determine which fork is canonical at the given block height.
 

@@ -1,4 +1,4 @@
-# Sui Move Audit Workflow
+﻿# Sui Move Audit Workflow
 
 ## Phase 1: Project Understanding (30 min)
 
@@ -72,7 +72,7 @@ grep -r "public entry fun" sources/ --include="*.move"
 
 | Function | Objects | Required Auth | Verified? |
 |----------|---------|---------------|-----------|
-| `withdraw` | Pool (shared) | AdminCap | ✓/✗ |
+| `withdraw` | Pool (shared) | AdminCap | / |
 | `deposit` | Pool (shared) | None | N/A |
 | ... | ... | ... | ... |
 

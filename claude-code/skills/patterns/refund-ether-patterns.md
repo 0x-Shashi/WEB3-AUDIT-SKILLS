@@ -1,4 +1,4 @@
-# Refund Ether Security Patterns
+﻿# Refund Ether Security Patterns
 
 ## Overview
 
@@ -433,7 +433,7 @@ This vulnerability impacts EscrowedLine, LineOfCredit, SpigotedLine and SecuredL
 
 ---
 
-### Example 11: [M-02] If L1GraphTokenGateway’s outboundTransfer is called by a contract, the entire msg.value is blackholed, whether the ticket got redeemed or not
+### Example 11: [M-02] If L1GraphTokenGateways outboundTransfer is called by a contract, the entire msg.value is blackholed, whether the ticket got redeemed or not
 
 **Source**: Code4rena
 **Protocol**: The Graph

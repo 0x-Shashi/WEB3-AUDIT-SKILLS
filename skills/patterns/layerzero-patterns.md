@@ -1,4 +1,4 @@
-# LayerZero Security Patterns
+﻿# LayerZero Security Patterns
 
 ## Overview
 
@@ -265,7 +265,7 @@ Affected function has been removed
 
 The development team pointed out that, if the call by Stargate to `sgReceive()` were to revert, the tokens transferred from Stargate would be left in the SushiXSwap contract on the destination chain, where they could be transferred away freely by any user.
 
-One possible condition under which this transaction could revert is if the Stargate router is redeployed, perhaps as part of an upgrade. The `require` on line [80] would then cause the transaction to revert, resulting in a loss of funds. It is difficult to estimate the likelihood of this issue as it is outside the scope of this review to investigate Stargate’s likelihood of redeploying their router. However, whatever their stated policy, there could still be a redeployment and so a risk remains that could result in a loss of user funds.
+One possible condition under which this transaction could revert is if the Stargate router is redeployed, perhaps as part of an upgrade. The `require` on line [80] would then cause the transaction to revert, resulting in a loss of funds. It is difficult to estimate the likelihood of this issue as it is outside the scope of this review to investigate Stargates likelihood of redeploying their router. However, whatever their stated policy, there could still be a redeployment and so a risk remains that could result in a loss of user funds.
 
 ## Recommendations
 

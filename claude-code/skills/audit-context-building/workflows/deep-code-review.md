@@ -1,4 +1,4 @@
-# Deep Code Review Workflow
+﻿# Deep Code Review Workflow
 
 A systematic workflow for performing ultra-granular code review with full context building.
 
@@ -47,9 +47,9 @@ Map the codebase structure:
 ### Inheritance Graph
 ```
 Main
-├── Ownable
-├── ReentrancyGuard
-└── PausableUpgradeable
+ Ownable
+ ReentrancyGuard
+ PausableUpgradeable
 ```
 
 ### External Dependencies
@@ -81,19 +81,19 @@ List all public/external functions:
 ### User-Facing
 | Function | Contract | Access | Critical |
 |----------|----------|--------|----------|
-| deposit() | Vault.sol | public | ✅ |
-| withdraw() | Vault.sol | public | ✅ |
+| deposit() | Vault.sol | public |  |
+| withdraw() | Vault.sol | public |  |
 
 ### Admin-Facing
 | Function | Contract | Access | Critical |
 |----------|----------|--------|----------|
-| setFee() | Vault.sol | onlyOwner | ⚠️ |
-| pause() | Vault.sol | onlyOwner | ⚠️ |
+| setFee() | Vault.sol | onlyOwner |  |
+| pause() | Vault.sol | onlyOwner |  |
 
 ### Callback/Internal
 | Function | Contract | Access | Critical |
 |----------|----------|--------|----------|
-| _callback() | Vault.sol | internal | ✅ |
+| _callback() | Vault.sol | internal |  |
 ```
 
 ---
@@ -142,8 +142,8 @@ After analyzing related functions:
 | balances | withdraw, getBalance | deposit, withdraw | sum = totalSupply |
 
 ### Interaction Patterns
-1. deposit() → _updateRewards() → balances
-2. withdraw() → _updateRewards() → _transfer()
+1. deposit()  _updateRewards()  balances
+2. withdraw()  _updateRewards()  _transfer()
 
 ### Module Invariants
 1. [Invariant spanning multiple functions]
@@ -151,9 +151,9 @@ After analyzing related functions:
 
 ### Dependency Graph
 ```
-deposit() ──► _updateRewards() ──► _calculateReward()
-    │                                    │
-    ▼                                    ▼
+deposit()  _updateRewards()  _calculateReward()
+                                        
+                                        
 balances                            rewardRate
 ```
 ```
@@ -187,8 +187,8 @@ For each external integration:
 | Failure | Likelihood | Impact | Our Handling |
 |---------|------------|--------|--------------|
 | Reverts | Medium | Medium | Caught, tx fails |
-| Returns stale | Low | High | No validation! ⚠️ |
-| Returns wrong | Very Low | Critical | No validation! ⚠️ |
+| Returns stale | Low | High | No validation!  |
+| Returns wrong | Very Low | Critical | No validation!  |
 
 ### Recommendations
 - [ ] Add staleness check for oracle
@@ -202,18 +202,18 @@ For each external integration:
 
 ### Token Flows
 ```
-User ──[tokenA]──► deposit() ──[tokenA]──► Contract
-                                              │
-                                              ▼
-Contract ──[tokenB]──► withdraw() ──[tokenB]──► User
+User [tokenA] deposit() [tokenA] Contract
+                                              
+                                              
+Contract [tokenB] withdraw() [tokenB] User
 ```
 
 ### ETH Flows
 ```
-User ──[ETH]──► payable receive() ──[ETH]──► Stored
-                                               │
-                                               ▼
-Stored ──[ETH]──► claimRewards() ──[ETH]──► User
+User [ETH] payable receive() [ETH] Stored
+                                               
+                                               
+Stored [ETH] claimRewards() [ETH] User
 ```
 
 ### Value Entry Points
@@ -237,24 +237,24 @@ Stored ──[ETH]──► claimRewards() ──[ETH]──► User
 ### Role Hierarchy
 ```
 DEFAULT_ADMIN_ROLE
-    │
-    ├── OPERATOR_ROLE
-    │       └── Can: harvest, compound
-    │
-    └── PAUSER_ROLE
-            └── Can: pause, unpause
+    
+     OPERATOR_ROLE
+            Can: harvest, compound
+    
+     PAUSER_ROLE
+             Can: pause, unpause
 ```
 
 ### Function Access Matrix
 | Function | Public | Owner | Operator | Pauser |
 |----------|--------|-------|----------|--------|
-| deposit | ✅ | ✅ | ✅ | ✅ |
-| pause | ❌ | ✅ | ❌ | ✅ |
-| harvest | ❌ | ✅ | ✅ | ❌ |
+| deposit |  |  |  |  |
+| pause |  |  |  |  |
+| harvest |  |  |  |  |
 
 ### Access Control Gaps
-- ⚠️ [Missing modifier on function X]
-- ⚠️ [Role can be self-assigned]
+-  [Missing modifier on function X]
+-  [Role can be self-assigned]
 ```
 
 ---
@@ -290,8 +290,8 @@ DEFAULT_ADMIN_ROLE
 ### Critical Risks
 | Risk | Location | Status | Action Needed |
 |------|----------|--------|---------------|
-| Reentrancy | swap() L45 | ❌ | Add guard |
-| Oracle manipulation | getPrice() | ⚠️ | Add TWAP |
+| Reentrancy | swap() L45 |  | Add guard |
+| Oracle manipulation | getPrice() |  | Add TWAP |
 
 ### High Risks
 [Same format]

@@ -1,4 +1,4 @@
-# Fund Lock Security Patterns
+﻿# Fund Lock Security Patterns
 
 ## Overview
 
@@ -25,7 +25,7 @@
 
 ## Real-World Examples
 
-### Example 1: Tokens can get stuck in Executor contract if the destination doesn’t claim them all
+### Example 1: Tokens can get stuck in Executor contract if the destination doesnt claim them all
 
 **Source**: Spearbit
 **Protocol**: Connext
@@ -78,7 +78,7 @@ Determine what should happen with unclaimed tokens. Consider one or more of the 
 
 ---
 
-### Example 2: Tokens transferred with Axelar can get lost if the destination transaction can’t be executed
+### Example 2: Tokens transferred with Axelar can get lost if the destination transaction cant be executed
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -147,7 +147,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 
 **Note:** Exploiters can pull the tokens from the LiFi protocol. Please refer to the issue **"Remaining tokens can be swept from the LiFi Diamond or the Executor," Issue #82**. Exploiters can take a more aggressive strategy and force the victim's swap to revert. A possible exploit scenario:
 
-- A victim wants to swap 10K optimism’s BTC into Ethereum mainnet USDC.
+- A victim wants to swap 10K optimisms BTC into Ethereum mainnet USDC.
 - Since DEXs on the mainnet have the best liquidity, the LiFi protocol helps users swap on the mainnet.
 - The transaction on the source chain (optimism) succeeds, and the bridge services try to call `Co
 
@@ -174,7 +174,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 `NomadFacet.sol#L225-L242`
 
 ## Description
-When routers front liquidity for the protocol’s users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
+When routers front liquidity for the protocols users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
 
 Instead, the function will set `amountIn = 0` and continue to distribute the local asset to the router.
 
@@ -284,7 +284,7 @@ which has even more rounding errors. wlsETH could internally track the underlyin
 
 ---
 
-### Example 7: What if the receiver of Axelar _executeWithToken() doesn’t claim all tokens
+### Example 7: What if the receiver of Axelar _executeWithToken() doesnt claim all tokens
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -301,7 +301,7 @@ which has even more rounding errors. wlsETH could internally track the underlyin
 `Executor.sol#L293-L316`
 
 ## Description
-The function `_executeWithToken()` approves tokens and then calls `callTo`. If that contract doesn’t retrieve the tokens, then the tokens stay within the Executor and are lost. 
+The function `_executeWithToken()` approves tokens and then calls `callTo`. If that contract doesnt retrieve the tokens, then the tokens stay within the Executor and are lost. 
 
 Also see: "Remaining tokens can be swept from the LiFi Diamond or the Executor."
 
@@ -406,7 +406,7 @@ Fi
 - **Lines:** 97-113
 
 ### Description
-The `OptimismBridgeFacet` uses Optimism’s bridge with user-provided `l2Gas`.
+The `OptimismBridgeFacet` uses Optimisms bridge with user-provided `l2Gas`.
 
 ```solidity
 function _startBridge(
@@ -432,7 +432,7 @@ function _startBridge(
 }
 ```
 
-Optimism’s standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
+Optimisms standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
 
 - **File:** L1StandardBridge.sol
 - **Lines:** 114-123
@@ -457,7 +457,7 @@ sendCrossDomainMessage(l2TokenBridge, _l2Gas, message);
 If the `l2Gas` is underpaid, `finalizeDeposit` will fail and user funds will be lost.
 
 ### Recommendation
-Given the potential risks of losing users’ funds, it is recommend
+Given the potential risks of losing users funds, it is recommend
 
 *[Content truncated...]*
 
@@ -465,7 +465,7 @@ Given the potential risks of losing users’ funds, it is recommend
 
 ---
 
-### Example 10: WormholeFacet doesn’t send native token
+### Example 10: WormholeFacet doesnt send native token
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -479,7 +479,7 @@ Given the potential risks of losing users’ funds, it is recommend
 `WormholeFacet.sol#L36-L103`
 
 ## Description
-The functions of `WormholeFacet` allow sending the native token; however, they don’t actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
+The functions of `WormholeFacet` allow sending the native token; however, they dont actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
 
 ```solidity
 contract WormholeFacet is ILiFi, ReentrancyGuard, Swapper {
@@ -530,7 +530,7 @@ Balancer offers a liquidity mining rewards distribution for liquidity providers.
 
 Liquidity Mining distributions are available to claim weekly through the `MerkleOrchard` contract. Liquidity Providers can claim tokens from this contract by submitting claims to the tokens. These claims are checked against a Merkle root of the accrued token balances which are stored in a Merkle tree. Claiming through the `MerkleOrchard` is much more gas-efficient than the previous generation of claiming contracts, especially when claiming multiple weeks of rewards, and when claiming multiple tokens.
 
-The AeraVault is itself the only liquidity provider of the Balancer pool deployed, so each week it’s entitled to claim those rewards. Currently, those rewards cannot be claimed because the AeraVault is missing an implementation to interact with the `MerkleOrchard` contract, causing all rewards (BAL + other tokens) to remain in the `MerkleOrchard` forever.
+The AeraVault is itself the only liquidity provider of the Balancer pool deployed, so each week its entitled to claim those rewards. Currently, those rewards cannot be claimed because the AeraVault is missing an implementation to interact with the `MerkleOrchard` contract, causing all rewards (BAL + other tokens) to remain in the `MerkleOrchard` forever.
 
 ## Recommendation
 Add a function to allow the vault owner (the Treasury) to claim those rewards. More information on how to claim rewards and interact with the contract can be found directly in the Balancer Documentation website.
@@ -1023,10 +1023,10 @@ Add a method that can withdraw ETH from the `HibernationDen` contract.
 
 **Details**:
 
-The [`ETHAdapter`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol) contract is used as a proxy to allow users to interact with the vault through sending and receiving ETH instead of stETH. The adapter achieves this by converting ETH and stETH through a curve pool and then forwarding interactions to and from the vault. In the course of a normal [withdrawal](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L71) or [redemption](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L46) transaction, the `ETHAdapter` will pull the funds out of the vault before passing them on to the designated receiver. During the moment the `ETHAdapter` is holding the funds, it first [converts](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L110-L112) all of its stETH to ETH, and then sends its entire ETH balance to the receiving address.
+The[`ETHAdapter`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol)contract is used as a proxy to allow users to interact with the vault through sending and receiving ETH instead of stETH. The adapter achieves this by converting ETH and stETH through a curve pool and then forwarding interactions to and from the vault. In the course of a normal[withdrawal](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L71)or[redemption](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L46)transaction, the`ETHAdapter`will pull the funds out of the vault before passing them on to the designated receiver. During the moment the`ETHAdapter`is holding the funds, it first[converts](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L110-L112)all of its stETH to ETH, and then sends its entire ETH balance to the receiving address.
 
 
-The issue is that the `ETHAdapter` sends its full balance to the receiver each time, meaning any ETH or stETH that is mistakenly sent to it can be drained by any user who performs a withdrawal or redemption on the `ETHAdapter`. This is exacerbated by the fact that the vault is passed in as a [parameter](https://github.com/pods-finance/yield-contracts/blob/9389ab4
+The issue is that the`ETHAdapter`sends its full balance to the receiver each time, meaning any ETH or stETH that is mistakenly sent to it can be drained by any user who performs a withdrawal or redemption on the`ETHAdapter`. This is exacerbated by the fact that the vault is passed in as a[parameter](https://github.com/pods-finance/yield-contracts/blob/9389ab4
 
 *[Content truncated...]*
 

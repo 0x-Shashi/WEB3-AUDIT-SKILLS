@@ -1,4 +1,4 @@
-# Revert Inside Hook Security Patterns
+﻿# Revert Inside Hook Security Patterns
 
 ## Overview
 
@@ -25,7 +25,7 @@
 
 ## Real-World Examples
 
-### Example 1: [H-07] GiantLP with a transferHookProcessor cant be burned, users’ funds will be stuck in the Giant Pool
+### Example 1: [H-07] GiantLP with a transferHookProcessor cant be burned, users funds will be stuck in the Giant Pool
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol

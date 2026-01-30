@@ -1,4 +1,4 @@
-# Lending Pool Security Patterns
+﻿# Lending Pool Security Patterns
 
 ## Overview
 
@@ -71,7 +71,7 @@ https://woo.org/blog/en/woofi-spmm-exploit-post-mortem
 https://rekt.news/woo-rekt/
 
 Flashloan 99989999999999999990000 (99_990) WOO
-Sell WOO partially (in 10 pieces) assuming maxGamma | maxNotionalSwap doesnt allow us to do it in one go
+Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
 Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
 Repay flashloan, pocket the rest of the 100K WOO.
 
@@ -79,7 +79,7 @@ Repay flashloan, pocket the rest of the 100K WOO.
 ```solidity
 function test_Exploit() public {
         // Flashloan 99989999999999999990000 (99_990) WOO
-        // Sell WOO partially (in 10 pieces) assuming maxGamma | maxNotionalSwap doesnt allow us to do it in one go
+        // Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
         // Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
         // Repay flashloan, pocket the rest of the 100K WOO. 
 

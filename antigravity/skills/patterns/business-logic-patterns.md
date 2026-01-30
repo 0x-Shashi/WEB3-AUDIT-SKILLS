@@ -1,4 +1,4 @@
-# Business Logic Security Patterns
+﻿# Business Logic Security Patterns
 
 ## Overview
 
@@ -563,7 +563,7 @@ https://github.com/debtdao/Line-of-Credit/blob/e8aa08b44f6132a5ed901f8daa231700c
 
 ## Description
 
-LineOfCredit manages an array of open credit line identifiers called `ids`. Many interactions with the Line operate on ids\[0\], which is presumed to be the oldest borrow which has non zero principal. For example, borrowers must first deposit and repay to ids\[0\] before other credit lines. 
+LineOfCredit manages an array of open credit line identifiers called `ids`. Many interactions with the Line operate on ids\[0\], which is presumed to be the oldest borrow which has non zero principal. For example, borrowers must first deposit and repay to ids\[0\] before other credit lines.
 
 The list is managed by several functions:
 
@@ -573,7 +573,7 @@ The list is managed by several functions:
     1.  target index is not empty
     2.  there is no principal owed for the target index's credit
 
-The idea I had is that if we could corrupt the ids array so that ids\[0\] would be zero, but after it there would be some other active borrows, it would be a very severe situation. The whileBorrowing() modifier assumes if the first element has no principal, borrower is not borrowing. 
+The idea I had is that if we could corrupt the ids array so that ids\[0\] would be zero, but after it there would be some other active borrows, it would be a very severe situation. The whileBorrowing() modifier assumes if the first element has no principal, borrower is not borrowing.
 
 ```
 modifier whileBorrowing() {
@@ -923,7 +923,7 @@ library AssetLogic {
 
 ---
 
-### Example 20: _handleExecuteTransaction() doesn’t handle native assets correctly
+### Example 20: _handleExecuteTransaction() doesnt handle native assets correctly
 
 **Source**: Spearbit
 **Protocol**: Connext
@@ -937,7 +937,7 @@ library AssetLogic {
 **Context:** BridgeFacet.sol#L644-L718, Executor.sol#L142-L243  
 
 **Description:**  
-The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesn’t work as expected, leading to incorrect handling of native assets.
+The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesnt work as expected, leading to incorrect handling of native assets.
 
 **Note:**  
 Also see issue "Executor reverts on receiving native tokens from BridgeFacet".
@@ -994,7 +994,7 @@ Change the code of `execute()` to handle previously sent native assets. Alternat
 `NomadFacet.sol#L225-L242`
 
 ## Description
-When routers front liquidity for the protocol’s users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
+When routers front liquidity for the protocols users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
 
 Instead, the function will set `amountIn = 0` and continue to distribute the local asset to the router.
 
@@ -1040,7 +1040,7 @@ It might be useful to convert the adopted asset amount back to the local asset s
 `ConnextPriceOracle.sol#L109-L135`
 
 ## Description
-The function `getPriceFromDex` derives the price by querying the balance of AMM’s pools.
+The function `getPriceFromDex` derives the price by querying the balance of AMMs pools.
 
 ```solidity
 function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
@@ -1056,7 +1056,7 @@ function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
 Deriving the price with `balanceOf` is dangerous as `balanceOf` may be gamed. Consider Uniswap V2 as an example; exploiters can first send tokens into the pool and pump the price, then absorb the tokens that were previously donated by calling `mint`.
 
 ## Recommendation
-Consider querying DEX’s state through function calls such as Uniswap V2’s `getReserves()` which returns the correct state of the pool.
+Consider querying DEXs state through function calls such as Uniswap V2s `getReserves()` which returns the correct state of the pool.
 
 ## References
 - **Connext**: Solved in PR 1649.

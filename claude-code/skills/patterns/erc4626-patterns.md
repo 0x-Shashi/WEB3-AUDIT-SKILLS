@@ -1,4 +1,4 @@
-# ERC4626 Security Patterns
+﻿# ERC4626 Security Patterns
 
 ## Overview
 
@@ -114,7 +114,7 @@ if (s.finalAuctionEnd != 0) {
 
 _Submitted by MiloTruck, also found by cccz, oyc_109, VAD37, PP1004, SmartSek, minhquanym, unforgiven, berndartmueller, WatchPug, CertoraInc, and sorrynotsorry_
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
@@ -243,7 +243,7 @@ https://github.com/sherlock-audit/2022-10-mycelium/blob/main/mylink-contracts/sr
 
 ---
 
-### Example 6: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying token’s decimals
+### Example 6: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying tokens decimals
 
 **Source**: Sherlock
 **Protocol**: Sentiment
@@ -263,9 +263,9 @@ EIP-4626 does not require the decimals must be the same as the underlying tokens
 
 In the current implementation, `IERC4626(token).decimals()` is used as the `IERC4626(token).asset()`'s decimals to calculate the ERC4626's price.
 
-However, while most ERC4626s are using the underlying token’s decimals as `decimals`, there are some ERC4626s use a different decimals from underlying token’s decimals since EIP-4626 does not require the decimals must be the same as the underlying token’s decimals:
+However, while most ERC4626s are using the underlying tokens decimals as `decimals`, there are some ERC4626s use a different decimals from underlying tokens decimals since EIP-4626 does not require the decimals must be the same as the underlying tokens decimals:
 
-> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vault’s decimals variable, it is still strongly recommended to mirror the underlying token’s decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
+> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaults decimals variable, it is still strongly recommended to mirror the underlying tokens decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
 
 Ref: https://eips.ethereum.org/EIPS/eip-4626
 
@@ -607,7 +607,7 @@ Assume that the vault with the following state:
 *   Total Asset = 1000 WETH
 *   Total Supply = 10 shares
 
-Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the **`Vault.withdraw(99 WETH)`** function.
+Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the**`Vault.withdraw(99 WETH)`**function.
 
 The calculation would go like this:
 
@@ -649,8 +649,8 @@ Per EIP 4626's Security Considerations (https://eips.ethereum.org/EIPS/eip-4626)
 
 > Finally, ERC-4626 Vault implementers should be aware of the need for specific, opposing rounding directions across the different mutable and view methods, as it is considered most secure to favor the Vault itself during calculations over its users:
 
-> If (1) it’s calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) it’s determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
-If (1) it’s calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) it’s calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
+> If (1) its calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) its determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
+If (1) its calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) its calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
 
 Then previewWithdraw in AutoRoller.sol should round up.
 

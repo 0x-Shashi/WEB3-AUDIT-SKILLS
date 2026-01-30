@@ -1,4 +1,4 @@
-# Cyfrin Solodit API Reference
+﻿# Cyfrin Solodit API Reference
 
 ## Overview
 
@@ -11,7 +11,7 @@ The Cyfrin Solodit API provides access to 50,000+ smart contract security findin
 ### API Key Setup
 
 1. Create account at [solodit.cyfrin.io](https://solodit.cyfrin.io)
-2. Click profile dropdown → "API Keys"
+2. Click profile dropdown  "API Keys"
 3. Generate new API key
 
 ### Environment Variable

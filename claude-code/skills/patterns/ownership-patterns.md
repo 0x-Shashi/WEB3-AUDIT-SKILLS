@@ -1,4 +1,4 @@
-# Ownership Security Patterns
+﻿# Ownership Security Patterns
 
 ## Overview
 
@@ -382,7 +382,7 @@ The contracts lack two-step role transfer functionality. Both the ownership of t
 
 Given that `handOverHost` can be invoked by anyone who created the market, it is possible to unintentionally or intentionally make a typo. An attacker could exploit this situation to disrupt fees collection, as the host affects `collectFees` in `OrderBook` (which is documented as a separate issue).
 
-While ownership transfer should ideally be less error-prone—being conducted by a DAO with care—implementing a two-step role transfer remains preferable.
+While ownership transfer should ideally be less error-pronebeing conducted by a DAO with careimplementing a two-step role transfer remains preferable.
 
 ## Recommendation
 It is recommended to implement a two-step role transfer where:

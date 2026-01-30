@@ -24,7 +24,7 @@
 ```solidity
 // VULNERABLE: Price read during flash loan is manipulated
 function getPrice() public view returns (uint) {
-    return reserve0 / reserve1;  // ← Can be manipulated in same block
+    return reserve0 / reserve1;  //  Can be manipulated in same block
 }
 
 // SAFER: Use TWAP or external oracle with staleness check
@@ -38,10 +38,10 @@ function getPrice() public view returns (uint) {
 ### Oracle Manipulation Detection
 ```solidity
 // DANGEROUS: Spot price from AMM
-uint price = reserve0 / reserve1;  // ← Flash loan manipulable
+uint price = reserve0 / reserve1;  //  Flash loan manipulable
 
 // DANGEROUS: No staleness check
-(, int price,,,) = feed.latestRoundData();  // ← Could be hours old
+(, int price,,,) = feed.latestRoundData();  //  Could be hours old
 
 // SAFE: Full Chainlink validation
 (uint80 roundId, int price,, uint updatedAt, uint80 answeredInRound) = feed.latestRoundData();
@@ -56,7 +56,7 @@ require(block.timestamp - updatedAt < STALENESS_THRESHOLD, "Price too old");
 // VULNERABLE: First deposit can be manipulated
 function deposit(uint assets) external returns (uint shares) {
     shares = totalSupply == 0 ? assets : (assets * totalSupply) / totalAssets();
-    // Attacker: deposit 1 wei → donate 1M tokens → next depositor gets 0 shares
+    // Attacker: deposit 1 wei  donate 1M tokens  next depositor gets 0 shares
 }
 
 // SAFE: Virtual offset or minimum deposit
@@ -270,7 +270,7 @@ https://woo.org/blog/en/woofi-spmm-exploit-post-mortem
 https://rekt.news/woo-rekt/
 
 Flashloan 99989999999999999990000 (99_990) WOO
-Sell WOO partially (in 10 pieces) assuming maxGamma |Â maxNotionalSwap doesnt allow us to do it in one go
+Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
 Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
 Repay flashloan, pocket the rest of the 100K WOO.
 
@@ -278,7 +278,7 @@ Repay flashloan, pocket the rest of the 100K WOO.
 ```solidity
 function test_Exploit() public {
         // Flashloan 99989999999999999990000 (99_990) WOO
-        // Sell WOO partially (in 10 pieces) assuming maxGamma |Â maxNotionalSwap doesnt allow us to do it in one go
+        // Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
         // Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
         // Repay flashloan, pocket the rest of the 100K WOO. 
 
@@ -520,7 +520,7 @@ The attack process is as follows:
 
 **Details**:
 
-[`LBPair.flashLoan()`](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2abc9c5f57db93/src/LBPair.sol#L415-L456) utilizes an â€œunfairâ€ fee mechanism in which the whole pair liquidity can be loaned but only the liquidity providers of the active bin receive the fees. Although one can argue that this unfair structure is to incentivize greater liquidity around the active price range, it nonetheless opens up a way to easily manipulate fees. The current structure allows a user to provide liquidity to an active bin right before a flashloan to receive most of the fees. This trick can be used both by the borrower themselves, or by a third party miner or a node operator frontrunning the flashloan transactions. In either case, this is in detriment to the liquidity providers, who would be providing the bulk of the flashloan, but receiving a much less fraction of the fees.
+[`LBPair.flashLoan()`](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2abc9c5f57db93/src/LBPair.sol#L415-L456) utilizes an unfair fee mechanism in which the whole pair liquidity can be loaned but only the liquidity providers of the active bin receive the fees. Although one can argue that this unfair structure is to incentivize greater liquidity around the active price range, it nonetheless opens up a way to easily manipulate fees. The current structure allows a user to provide liquidity to an active bin right before a flashloan to receive most of the fees. This trick can be used both by the borrower themselves, or by a third party miner or a node operator frontrunning the flashloan transactions. In either case, this is in detriment to the liquidity providers, who would be providing the bulk of the flashloan, but receiving a much less fraction of the fees.
 
 ### Proof of Concept
 
@@ -531,7 +531,7 @@ The attack process is as follows:
         tokenY.safeTransfer(_to, _amountYOut);
 ```
 
-This means that a liquidity providerâ€™s tokens can be used regardless of which bin their liquidity is in. However, the loan fee [is only paid to the active binâ€™s liquidity providers](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2a
+This means that a liquidity providers tokens can be used regardless of which bin their liquidity is in. However, the loan fee [is only paid to the active bins liquidity providers](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2a
 
 *[Content truncated...]*
 
@@ -992,11 +992,11 @@ https://github.com/code-423n4/2023-04-caviar/blob/main/src/PrivatePool.sol#L623-
 Let's say that Bob is the attacker and Alice is a regular user.
 
 1.Bob creates a `PrivatePool.sol` where he deposits 5 ERC721 tokens and 500 USDC.
-2.Then Bob creates a malicious contract (let's call it `PrivatePoolExploit.sol`) and this contract contains `onFlashLoan` (IERC3156FlashBorrower), `transferFrom` ,Â `ownerOf`, `onERC721Received` functions (like ERC721 does) and an additional `attack` function.
+2.Then Bob creates a malicious contract (let's call it `PrivatePoolExploit.sol`) and this contract contains `onFlashLoan` (IERC3156FlashBorrower), `transferFrom` ,`ownerOf`, `onERC721Received` functions (like ERC721 does) and an additional `attack` function.
 3.Via `PrivatePool.execute` function Bob approves USDC spending (`type(uint).max`) and `setApprovalForAll` for ERC721 tokens
 4.Since the ownership of `PrivatePool` is stored in `Factory.sol` as an ERC721 token, ownership can be sold on any ERC721 marketplace. Alice decides to buy Bob's `PrivatePool` and ownership is transferred to Alice.
 5.Right after the ownership is transferred, Bob runs `PrivatePoolExploit.attack` function, which calls `PrivatePool.flashLoan` where `PrivatePoolExploit.transferFrom` will be called since the flash loan can be called on any address.
-6. All the funds are stolen by Bob and Alice'sÂ `PrivatePool` is left with nothing.
+6. All the funds are stolen by Bob and Alice's`PrivatePool` is left with nothing.
 
 ### Here is a 
 
@@ -1634,7 +1634,7 @@ When withdrawing an uncollateralized deposit, the [`WiseCore._coreWithdrawToken(
 
 ---
 
-### Example 12: [M-08] User fund loss because function purchaseLiquidationAuctionNFT() takes extra liquidation penalty when userâ€™s last collateral is liquidated, (set wrong value for maxDebtCached when isLastCollateral is true)
+### Example 12: [M-08] User fund loss because function purchaseLiquidationAuctionNFT() takes extra liquidation penalty when users last collateral is liquidated, (set wrong value for maxDebtCached when isLastCollateral is true)
 
 **Source**: Code4rena
 **Protocol**: Backed Protocol
@@ -2161,12 +2161,12 @@ These amounts are later transferred to the caller, the liquidator, at the end of
 To liquidate an unhealthy loan position the liquidate() function inside CreditorNFT can be called by anyone where the debtAmount of debt token is paid out by the liquidator.
 This function in turn calls the liquidate function of LoanVault at L133.
 
-Inside LoanVault.solâ€™s liquidate() it is checked if the debtAmount (initial debt amount when loan was created) is now equal to the balance of debt token in the vault , if not revert (L163)
+Inside LoanVault.sols liquidate() it is checked if the debtAmount (initial debt amount when loan was created) is now equal to the balance of debt token in the vault , if not revert (L163)
 
 An attacker can see a liquidation() call in the mempool and ->
 
 a.) Frontruns this call to send the lowest amount of debt token to the vault , say 1
-b.) Now when the liquidator tries to liquidate he sends out debtAmount of tokens to the vault , letâ€™s say they were 100
+b.) Now when the liquidator tries to liquidate he sends out debtAmount of tokens to the vault , lets say they were 100
 c.) It is checked that debt amount and balance of debt token balance in the vault is equal
 d.) But they are not since there are a total of 101 debt tokens now , liquidation reverts.
 
@@ -2265,7 +2265,7 @@ https://woo.org/blog/en/woofi-spmm-exploit-post-mortem
 https://rekt.news/woo-rekt/
 
 Flashloan 99989999999999999990000 (99_990) WOO
-Sell WOO partially (in 10 pieces) assuming maxGamma |Â maxNotionalSwap doesnt allow us to do it in one go
+Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
 Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
 Repay flashloan, pocket the rest of the 100K WOO.
 
@@ -2273,7 +2273,7 @@ Repay flashloan, pocket the rest of the 100K WOO.
 ```solidity
 function test_Exploit() public {
         // Flashloan 99989999999999999990000 (99_990) WOO
-        // Sell WOO partially (in 10 pieces) assuming maxGamma |Â maxNotionalSwap doesnt allow us to do it in one go
+        // Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
         // Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
         // Repay flashloan, pocket the rest of the 100K WOO. 
 
@@ -3503,7 +3503,7 @@ if (s.finalAuctionEnd != 0) {
 
 _Submitted by MiloTruck, also found by cccz, oyc_109, VAD37, PP1004, SmartSek, minhquanym, unforgiven, berndartmueller, WatchPug, CertoraInc, and sorrynotsorry_
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large â€œdonationâ€.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
@@ -3632,7 +3632,7 @@ https://github.com/sherlock-audit/2022-10-mycelium/blob/main/mylink-contracts/sr
 
 ---
 
-### Example 6: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying tokenâ€™s decimals
+### Example 6: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying tokens decimals
 
 **Source**: Sherlock
 **Protocol**: Sentiment
@@ -3652,9 +3652,9 @@ EIP-4626 does not require the decimals must be the same as the underlying tokens
 
 In the current implementation, `IERC4626(token).decimals()` is used as the `IERC4626(token).asset()`'s decimals to calculate the ERC4626's price.
 
-However, while most ERC4626s are using the underlying tokenâ€™s decimals as `decimals`, there are some ERC4626s use a different decimals from underlying tokenâ€™s decimals since EIP-4626 does not require the decimals must be the same as the underlying tokenâ€™s decimals:
+However, while most ERC4626s are using the underlying tokens decimals as `decimals`, there are some ERC4626s use a different decimals from underlying tokens decimals since EIP-4626 does not require the decimals must be the same as the underlying tokens decimals:
 
-> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaultâ€™s decimals variable, it is still strongly recommended to mirror the underlying tokenâ€™s decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
+> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaults decimals variable, it is still strongly recommended to mirror the underlying tokens decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
 
 Ref: https://eips.ethereum.org/EIPS/eip-4626
 
@@ -3996,7 +3996,7 @@ Assume that the vault with the following state:
 *   Total Asset = 1000 WETH
 *   Total Supply = 10 shares
 
-Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls theÂ **`Vault.withdraw(99 WETH)`**Â function.
+Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the**`Vault.withdraw(99 WETH)`**function.
 
 The calculation would go like this:
 
@@ -4038,8 +4038,8 @@ Per EIP 4626's Security Considerations (https://eips.ethereum.org/EIPS/eip-4626)
 
 > Finally, ERC-4626 Vault implementers should be aware of the need for specific, opposing rounding directions across the different mutable and view methods, as it is considered most secure to favor the Vault itself during calculations over its users:
 
-> If (1) itâ€™s calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) itâ€™s determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
-If (1) itâ€™s calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) itâ€™s calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
+> If (1) its calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) its determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
+If (1) its calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) its calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
 
 Then previewWithdraw in AutoRoller.sol should round up.
 
@@ -4682,7 +4682,7 @@ Assume that the vault with the following state:
 *   Total Asset = 1000 WETH
 *   Total Supply = 10 shares
 
-Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls theÂ **`Vault.withdraw(99 WETH)`**Â function.
+Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the**`Vault.withdraw(99 WETH)`**function.
 
 The calculation would go like this:
 
@@ -4829,7 +4829,7 @@ Medium, as multiple methods are not compliant with the standard
 
 As per EIP-4626, the `maxDeposit` method "MUST factor in both global and user-specific limits, like if deposits are entirely disabled (even temporarily) it MUST return 0.". This is not the case currently, as even if the contract is paused, the `maxDeposit` method will still return what it usually does.
 
-When it comes to the `decimals` method, the EIP says: "Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaultâ€™s decimals variable, it is still strongly recommended to mirror the underlying tokenâ€™s decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users."
+When it comes to the `decimals` method, the EIP says: "Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaults decimals variable, it is still strongly recommended to mirror the underlying tokens decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users."
 The `LoanVault` contract has hardcoded the value of 18 to be returned when `decimals` are called, but it should be the decimals of the underlying token (it might not be 18 in some case maybe).
 
 **Recommendations**
@@ -4934,7 +4934,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 
 **Note:** Exploiters can pull the tokens from the LiFi protocol. Please refer to the issue **"Remaining tokens can be swept from the LiFi Diamond or the Executor," Issue #82**. Exploiters can take a more aggressive strategy and force the victim's swap to revert. A possible exploit scenario:
 
-- A victim wants to swap 10K optimismâ€™s BTC into Ethereum mainnet USDC.
+- A victim wants to swap 10K optimisms BTC into Ethereum mainnet USDC.
 - Since DEXs on the mainnet have the best liquidity, the LiFi protocol helps users swap on the mainnet.
 - The transaction on the source chain (optimism) succeeds, and the bridge services try to call `Co
 
@@ -4970,7 +4970,7 @@ However, when `tokenIndexFrom == tokenIndexTo`, the second update overwrites the
 
 **Note:** The protection against this problem is located in the function `getY()`. However, this function is not called from `swapOut()`.
 
-**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnâ€™t an immediate risk here.
+**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnt an immediate risk here.
 
 ### Code Snippets
 ```solidity
@@ -5159,7 +5159,7 @@ Trades that lead to a change in amplifier value need to be split up into two tra
 - `Executor.sol#L323-L333`
 
 ### Description
-The function `LibSwap.swap()` pulls in tokens via `transferFromERC20()` from `msg.sender` when needed. When put in a loop, through `_executeSwaps()`, it can pull in multiple different tokens. It also doesnâ€™t detect accidentally sending native tokens along with ERC20 tokens. This approach is counterintuitive and leads to risks.
+The function `LibSwap.swap()` pulls in tokens via `transferFromERC20()` from `msg.sender` when needed. When put in a loop, through `_executeSwaps()`, it can pull in multiple different tokens. It also doesnt detect accidentally sending native tokens along with ERC20 tokens. This approach is counterintuitive and leads to risks.
 
 Suppose someone wants to swap 100 USDC to 100 DAI and then 100 DAI to 100 USDT. If the first swap somehow gives back fewer tokens (for example, 90 DAI), then `LibSwap.swap()` pulls in 10 extra DAI from `msg.sender`. **Note**: This requires the `msg.sender` to have given multiple allowances to the LiFi Diamond.
 
@@ -5279,7 +5279,7 @@ Recommend adding a minimum amount out parameter. The function reverts if the min
 OmniBridgeFacet.sol#L63-L65
 
 ## Description
-Several bridges check that the output of swaps isnâ€™t 0. However, it could also happen that a swap gives a positive output, but still lower than expected due to slippage, sandwiching, or MEV. Several AMMs will have a mechanism to limit slippage, but it might be useful to add a generic mechanism as multiple swaps in sequence might have a relatively large slippage.
+Several bridges check that the output of swaps isnt 0. However, it could also happen that a swap gives a positive output, but still lower than expected due to slippage, sandwiching, or MEV. Several AMMs will have a mechanism to limit slippage, but it might be useful to add a generic mechanism as multiple swaps in sequence might have a relatively large slippage.
 
 ```solidity
 function swapAndStartBridgeTokensViaOmniBridge(...) {
@@ -5354,7 +5354,7 @@ Acknowledged.
 
 ## Impact
 
-When a member calls removeLiquiditySingle() requesting only SPARTA in return, i.e. toBASE = true, the LP tokens are transferred to the Pool to withdraw the constituent SPARTA and TOKENs back to the Router. The withdrawn TOKENs are then transferred back to the Pool to convert to SPARTA and directly transferred to the member from the Pool. However, the memberâ€™s SPARTA are left behind in the Router instead of being returned along with converted SPARTA from the Pool. 
+When a member calls removeLiquiditySingle() requesting only SPARTA in return, i.e. toBASE = true, the LP tokens are transferred to the Pool to withdraw the constituent SPARTA and TOKENs back to the Router. The withdrawn TOKENs are then transferred back to the Pool to convert to SPARTA and directly transferred to the member from the Pool. However, the members SPARTA are left behind in the Router instead of being returned along with converted SPARTA from the Pool. 
 
 In other words, the _member's BASE SPARTA tokens that were removed from the Pool along with the TOKENs are never sent back to the _member because the _token's transferred to the Pool are converted to SPARTA and only those are sent back to member directly from the Pool via swapTo(). 
 
@@ -6299,7 +6299,7 @@ The protocol has acknowledged this issue.
 0k, 0xMojito, 0xRstStn, 0xloscar01, Stoicov, ZanyBonzy, den\_sosnovskyi, deth, fibonacci, giraffe, mahmud, n1punp, santiellena, sunill\_eth, tank
 ## Summary
 
-In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and itâ€™s meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
+In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and its meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
 
 ## Vulnerability Detail
 
@@ -6601,7 +6601,7 @@ I think this is incorrectly **excluded**. The issue is not related to **flashloa
 ```
 The issue is that calculation of p is likely to overflow. sqrtPriceX96 has 96 bits for decimals, 
 10** `token0.decimals()` will have 60 bits when decimals is 18, therefore there is only 
-(256 â€“ 2 * 96 â€“ 60) / 2 = 2 bits for non-decimal part of sqrtPriceX96. 
+(256  2 * 96  60) / 2 = 2 bits for non-decimal part of sqrtPriceX96. 
 
 **Recommended Mitigation:**
 Consider converting the sqrtPrice to a 60x18 format and performing arithmetic operations 
@@ -6757,12 +6757,12 @@ _Submitted by GreyArt, also found by 0xDjango, CertoraInc, cmichel, rayn, TomFre
 
 [Collateral.sol#L82-L91](https://github.com/code-423n4/2022-03-prepo/blob/main/contracts/core/Collateral.sol#L82-L91)<br>
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large â€œdonationâ€.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
 *   Attacker deposits 2 wei (so that it is greater than min fee) to mint 1 share
-*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the shareâ€™s price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
+*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the shares price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
 *   Subsequent depositors instead have to deposit an equivalent sum to avoid minting 0 shares. Otherwise, their deposits accrue to the attacker who holds the only share.
 
 ```jsx
@@ -6865,7 +6865,7 @@ Convert the `_id` to a string before calling `abi.encodePacked`. Latest Solmate 
 
 ---
 
-### Example 4: [M-04] Lender can trade claimToken in a malicious way to steal the borrowerâ€™s money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
+### Example 4: [M-04] Lender can trade claimToken in a malicious way to steal the borrowers money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
 
 **Source**: Code4rena
 **Protocol**: Debt DAO
@@ -7560,7 +7560,7 @@ Recommend adding a minimum amount out parameter. The function reverts if the min
 OmniBridgeFacet.sol#L63-L65
 
 ## Description
-Several bridges check that the output of swaps isnâ€™t 0. However, it could also happen that a swap gives a positive output, but still lower than expected due to slippage, sandwiching, or MEV. Several AMMs will have a mechanism to limit slippage, but it might be useful to add a generic mechanism as multiple swaps in sequence might have a relatively large slippage.
+Several bridges check that the output of swaps isnt 0. However, it could also happen that a swap gives a positive output, but still lower than expected due to slippage, sandwiching, or MEV. Several AMMs will have a mechanism to limit slippage, but it might be useful to add a generic mechanism as multiple swaps in sequence might have a relatively large slippage.
 
 ```solidity
 function swapAndStartBridgeTokensViaOmniBridge(...) {
@@ -7598,16 +7598,16 @@ Verified.
 
 **Severity:** High Risk  
 **Context:** AeraVaultV1.sol#L402-L453, AeraVaultV1.sol#L456-L514  
-**Description:** Transactions calling the `deposit()` function are susceptible to sandwich attacks where an attacker can extract value from deposits. A similar issue exists in the `withdraw()` function but the minimum check on the pool holdings limits the attackâ€™s impact.
+**Description:** Transactions calling the `deposit()` function are susceptible to sandwich attacks where an attacker can extract value from deposits. A similar issue exists in the `withdraw()` function but the minimum check on the pool holdings limits the attacks impact.
 
 ## Scenario Example
 (Assuming swap fees are ignored for simplicity):
 
 1. Suppose the Balancer pool contains two tokens, WETH and DAI, with weights of 0.5 each. Currently, there is 1 WETH and 3k DAI in the pool, and the WETH spot price is 3k.
 2. The Treasury wants to add another 3k DAI into the Aera vault, so it calls the `deposit()` function.
-3. The attacker front-runs the Treasuryâ€™s transaction. They swap 3k DAI into the Balancer pool and receive 0.5 WETH. The weights remain 0.5 and 0.5, but because WETH and DAI balances become 0.5 and 6k, WETHâ€™s spot price now becomes 12k.
-4. At this point, the Treasuryâ€™s transaction adds 3k DAI into the Balancer pool and changes the weights to 0.6 and 0.4.
-5. The attacker back-runs the transaction and swaps the 0.5 WETH acquired in step 3 back to DAI, recovering WETHâ€™s spot price to slightly above 3k. According to the current weights, they can receive 9k * (1 - 1/r) = 3.33k DAI from the pool, where r = (2^0.4)^(1/0.6).
+3. The attacker front-runs the Treasurys transaction. They swap 3k DAI into the Balancer pool and receive 0.5 WETH. The weights remain 0.5 and 0.5, but because WETH and DAI balances become 0.5 and 6k, WETHs spot price now becomes 12k.
+4. At this point, the Treasurys transaction adds 3k DAI into the Balancer pool and changes the weights to 0.6 and 0.4.
+5. The attacker back-runs the transaction and swaps the 0.5 WETH acquired in step 3 back to DAI, recovering WETHs spot price to slightly above 3k. According to the current weights, they can receive 9k * (1 - 1/r) = 3.33k DAI from the pool, where r = (2^0.4)^(1/0.6).
 6. As a result, the attacker profits 3.33k - 3k = 0.33k DAI.
 
 ## Recommendations
@@ -8556,16 +8556,16 @@ index a699162..337d1f5 100644
 
 **Severity:** High Risk  
 **Context:** AeraVaultV1.sol#L402-L453, AeraVaultV1.sol#L456-L514  
-**Description:** Transactions calling the `deposit()` function are susceptible to sandwich attacks where an attacker can extract value from deposits. A similar issue exists in the `withdraw()` function but the minimum check on the pool holdings limits the attackâ€™s impact.
+**Description:** Transactions calling the `deposit()` function are susceptible to sandwich attacks where an attacker can extract value from deposits. A similar issue exists in the `withdraw()` function but the minimum check on the pool holdings limits the attacks impact.
 
 ## Scenario Example
 (Assuming swap fees are ignored for simplicity):
 
 1. Suppose the Balancer pool contains two tokens, WETH and DAI, with weights of 0.5 each. Currently, there is 1 WETH and 3k DAI in the pool, and the WETH spot price is 3k.
 2. The Treasury wants to add another 3k DAI into the Aera vault, so it calls the `deposit()` function.
-3. The attacker front-runs the Treasuryâ€™s transaction. They swap 3k DAI into the Balancer pool and receive 0.5 WETH. The weights remain 0.5 and 0.5, but because WETH and DAI balances become 0.5 and 6k, WETHâ€™s spot price now becomes 12k.
-4. At this point, the Treasuryâ€™s transaction adds 3k DAI into the Balancer pool and changes the weights to 0.6 and 0.4.
-5. The attacker back-runs the transaction and swaps the 0.5 WETH acquired in step 3 back to DAI, recovering WETHâ€™s spot price to slightly above 3k. According to the current weights, they can receive 9k * (1 - 1/r) = 3.33k DAI from the pool, where r = (2^0.4)^(1/0.6).
+3. The attacker front-runs the Treasurys transaction. They swap 3k DAI into the Balancer pool and receive 0.5 WETH. The weights remain 0.5 and 0.5, but because WETH and DAI balances become 0.5 and 6k, WETHs spot price now becomes 12k.
+4. At this point, the Treasurys transaction adds 3k DAI into the Balancer pool and changes the weights to 0.6 and 0.4.
+5. The attacker back-runs the transaction and swaps the 0.5 WETH acquired in step 3 back to DAI, recovering WETHs spot price to slightly above 3k. According to the current weights, they can receive 9k * (1 - 1/r) = 3.33k DAI from the pool, where r = (2^0.4)^(1/0.6).
 6. As a result, the attacker profits 3.33k - 3k = 0.33k DAI.
 
 ## Recommendations
@@ -8956,7 +8956,7 @@ Call `mintAndDistribute` through flashbots
 ## Description  
 The `onReceive()` function does not verify the integrity of `transferId` against all other parameters. Although the `onlyBridgeRouter` modifier checks that the call originates from another BridgeRouter (assuming a correct configuration of the whitelist) to the `onReceive()` function, it does not check that the call originates from another Connext Diamond.
 
-This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connextâ€™s `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
+This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connexts `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
 
 - **Alice** is a bridge user and makes an honest call to transfer funds over to the destination chain.  
 - **Bob** does not make a transfer but instead calls the `sendToHook()` function with the same `_extraData` but passes an `_amount` of `1 wei`.  
@@ -9913,7 +9913,7 @@ This issue is similar to "The reportBeacon is prone to front-runnin
 
 ---
 
-### Example 23: [M-03] Grieving attack by failing userâ€™s transactions
+### Example 23: [M-03] Grieving attack by failing users transactions
 
 **Source**: Code4rena
 **Protocol**: Backed Protocol
@@ -10447,7 +10447,7 @@ if (answer == 0 || answeredInRound < roundId || updateAt == 0) {
 }
 ```
 
-`updateAt` refers to the timestamp of the round. This value isnâ€™t checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
+`updateAt` refers to the timestamp of the round. This value isnt checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
 
 ## Recommendation
 - Determine the tolerance threshold for `updateAt`. If `block.timestamp - updateAt` exceeds that threshold, return 0, which is consistent with how the current validations are handled.
@@ -10462,7 +10462,7 @@ Recency check is implemented in PR 1602. Off-chain monitoring will be consider
 
 ---
 
-### Example 11: [M-07] Oracleâ€™s two-day feature can be gamed
+### Example 11: [M-07] Oracles two-day feature can be gamed
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -10587,7 +10587,7 @@ PaprController.sol
 
 ---
 
-### Example 14: [M-18] Protocolâ€™s usability becomes very limited when access to Chainlink oracle data feed is blocked
+### Example 14: [M-18] Protocols usability becomes very limited when access to Chainlink oracle data feed is blocked
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -10607,7 +10607,7 @@ https://github.com/code-423n4/2022-10-inverse/blob/main/src/Market.sol#L353-L363
 ## Vulnerability details
 
 ## Impact
-Based on the current implementation, when the protocol wants to use Chainlink oracle data feed for getting a collateral token's price, the fixed price for the token should not be set. When the fixed price is not set for the token, calling the `Oracle` contract's `viewPrice` or `getPrice` function will execute `uint price = feeds[token].feed.latestAnswer()`. As https://blog.openzeppelin.com/secure-smart-contract-guidelines-the-dangers-of-price-oracles/ mentions, it is possible that Chainlinkâ€™s "multisigs can immediately block access to price feeds at will". When this occurs, executing `feeds[token].feed.latestAnswer()` will revert so calling the `viewPrice` and `getPrice` functions also revert, which cause denial of service when calling functions like `getCollateralValueInternal` and`getWithdrawalLimitInternal`. The `getCollateralValueInternal` and`getWithdrawalLimitInternal` functions are the key elements to the core functionalities, such as borrowing, withdrawing, force-replenishing, and liquidating; with these functionalit
+Based on the current implementation, when the protocol wants to use Chainlink oracle data feed for getting a collateral token's price, the fixed price for the token should not be set. When the fixed price is not set for the token, calling the `Oracle` contract's `viewPrice` or `getPrice` function will execute `uint price = feeds[token].feed.latestAnswer()`. As https://blog.openzeppelin.com/secure-smart-contract-guidelines-the-dangers-of-price-oracles/ mentions, it is possible that Chainlinks "multisigs can immediately block access to price feeds at will". When this occurs, executing `feeds[token].feed.latestAnswer()` will revert so calling the `viewPrice` and `getPrice` functions also revert, which cause denial of service when calling functions like `getCollateralValueInternal` and`getWithdrawalLimitInternal`. The `getCollateralValueInternal` and`getWithdrawalLimitInternal` functions are the key elements to the core functionalities, such as borrowing, withdrawing, force-replenishing, and liquidating; with these functionalit
 
 *[Content truncated...]*
 
@@ -10615,7 +10615,7 @@ Based on the current implementation, when the protocol wants to use Chainlink or
 
 ---
 
-### Example 15: [M-11] viewPrice doesnâ€™t always report dampened price
+### Example 15: [M-11] viewPrice doesnt always report dampened price
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -10734,7 +10734,7 @@ spTKNMinimalOracle `_calculateSpTknPerBase()` does not calculate correct price f
 
 ### Root Cause
 
-First, letâ€™s clarify the denomination: tokenA/tokenB represents how much tokenB is worth per tokenA. For example, ETH/USDC = 3000 means 1 ETH is equivalent to 3000 USDC.
+First, lets clarify the denomination: tokenA/tokenB represents how much tokenB is worth per tokenA. For example, ETH/USDC = 3000 means 1 ETH is equivalent to 3000 USDC.
 
 The `_calculateSpTknPerBase()` function is used to calculate baseTKN/spTKN. It starts with the `_priceBasePerPTkn18` variable, which is pTKN/baseTKN.
 
@@ -10820,7 +10820,7 @@ if ((score >= _mean - _stddev) && (score <= _mean + _stddev))
 
 However, in cases where `_mean < _stddev`, such as some valid edge case where for example `scores[] = [0,1,0,1,2]`, the calculation of `_mean - _stddev` attempts to produce a negative value.
 
-Since Solidityâ€™s uint256 type does not support negative numbers, this results in an underflow, triggering an automatic revert and causing the transaction to fail. The edge case described results in `_stddev = 1` and `_mean = 0`, which causes the check `score >= _mean - _stddev` to revert, as `_mean - _stddev` evaluates to a negative result.
+Since Soliditys uint256 type does not support negative numbers, this results in an underflow, triggering an automatic revert and causing the transaction to fail. The edge case described results in `_stddev = 1` and `_mean = 0`, which causes the check `score >= _mean - _stddev` to revert, as `_mean - _stddev` evaluates to a negative result.
 
 The same issue exists also in \[<https://github.com/Cyfrin/2024-10-swan-dria/blob/main/contracts/llm/LLMOracleCoordinator.sol#L3
 
@@ -10838,9 +10838,9 @@ The same issue exists also in \[<https://github.com/Cyfrin/2024-10-swan-dria/blo
 
 ## Vulnerability Details
 
-The Generalised Oracle is broken for the external tokens that use Uniswap. This is happening for two reasons:Â 
+The Generalised Oracle is broken for the external tokens that use Uniswap. This is happening for two reasons:
 
-1. The token passed as a base token for the `OracleLibrary.getQuoteAtTick` is incorrect. The base token should be the token the protocol wants to fetch the price from, not the quote token. Take into consideration the following scenario: Fetching the price for WBTC.Â 
+1. The token passed as a base token for the `OracleLibrary.getQuoteAtTick` is incorrect. The base token should be the token the protocol wants to fetch the price from, not the quote token. Take into consideration the following scenario: Fetching the price for WBTC.
 
 ```Solidity
             // LibUsdOracle -> getTokenPriceFromExternal
@@ -10856,7 +10856,7 @@ The Generalised Oracle is broken for the external tokens that use Uniswap. This 
                 uint128(10) ** uint128(IERC20Decimals(token).decimals()) // @audit base token amount
 ```
 
-The function getTwap:Â 
+The function getTwap:
 
 ```Solidity
     function getTwap(
@@ -10884,7 +10884,7 @@ The function getTwap:Â 
 
 ## Vulnerability Details
 
-The function `getUsdPrice`from `LibUsdOracle`Â should return the token value in USD.Â  For example, one of its consumers is the function [`getMintFertilizerOut`](https://github.com/Cyfrin/2024-05-beanstalk-the-finale/blob/4e0ad0b964f74a1b4880114f4dd5b339bc69cd3e/protocol/contracts/beanstalk/barn/FertilizerFacet.sol#L117-L122):
+The function `getUsdPrice`from `LibUsdOracle`should return the token value in USD. For example, one of its consumers is the function [`getMintFertilizerOut`](https://github.com/Cyfrin/2024-05-beanstalk-the-finale/blob/4e0ad0b964f74a1b4880114f4dd5b339bc69cd3e/protocol/contracts/beanstalk/barn/FertilizerFacet.sol#L117-L122):
 
 `fertilizerAmountOut = tokenAmountIn.div(LibUsdOracle.getUsdPrice(barnRaiseToken));`
 
@@ -11210,7 +11210,7 @@ if (answer == 0 || answeredInRound < roundId || updateAt == 0) {
 }
 ```
 
-`updateAt` refers to the timestamp of the round. This value isnâ€™t checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
+`updateAt` refers to the timestamp of the round. This value isnt checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
 
 ## Recommendation
 - Determine the tolerance threshold for `updateAt`. If `block.timestamp - updateAt` exceeds that threshold, return 0, which is consistent with how the current validations are handled.
@@ -12192,7 +12192,7 @@ Without a specified gasLimit, the default gas limit set by the CCIP router or th
 
 ## Real-World Examples
 
-### Example 1: P2P rate can be manipulated as itâ€™s a lazy-updated snapshot
+### Example 1: P2P rate can be manipulated as its a lazy-updated snapshot
 
 **Source**: Spearbit
 **Protocol**: Morpho
@@ -12205,7 +12205,7 @@ Without a specified gasLimit, the default gas limit set by the CCIP router or th
 MarketsManagerForAave.sol#L408-L411
 
 ## Description
-The P2P rate is lazy-updated upon interactions with the Morpho protocol. It takes the mid-rate of the current Aave supply and borrow rate. Itâ€™s possible to manipulate these rates before triggering an update on Morpho.
+The P2P rate is lazy-updated upon interactions with the Morpho protocol. It takes the mid-rate of the current Aave supply and borrow rate. Its possible to manipulate these rates before triggering an update on Morpho.
 ```solidity
 function _updateSPYs(address _marketAddress) internal {
     DataTypes.ReserveData memory reserveData = lendingPool.getReserveData(
@@ -12792,7 +12792,7 @@ if (answer == 0 || answeredInRound < roundId || updateAt == 0) {
 }
 ```
 
-`updateAt` refers to the timestamp of the round. This value isnâ€™t checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
+`updateAt` refers to the timestamp of the round. This value isnt checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
 
 ## Recommendation
 - Determine the tolerance threshold for `updateAt`. If `block.timestamp - updateAt` exceeds that threshold, return 0, which is consistent with how the current validations are handled.
@@ -13198,7 +13198,7 @@ Chainlink also advise developers to check for the `updatedAt` before using the p
 
 ---
 
-### Example 14: [H-03] WrappedIbbtcEth contract will use stalled price for mint/burn if updatePricePerShare wasnâ€™t run properly
+### Example 14: [H-03] WrappedIbbtcEth contract will use stalled price for mint/burn if updatePricePerShare wasnt run properly
 
 **Source**: Code4rena
 **Protocol**: BadgerDAO
@@ -13693,7 +13693,7 @@ index 0587c86..cf2dcf5 100644
 
 **Details**:
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large â€œdonationâ€.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
@@ -13835,7 +13835,7 @@ Require a minimum initial shares amount for the first deposit by adjusting the i
 
 _Submitted by MiloTruck, also found by cccz, oyc_109, VAD37, PP1004, SmartSek, minhquanym, unforgiven, berndartmueller, WatchPug, CertoraInc, and sorrynotsorry_
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large â€œdonationâ€.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
@@ -13879,12 +13879,12 @@ _Submitted by hickuphh3, also found by 0xDjango, berndartmueller, cmichel, hyh, 
 
 [yVault.sol#L148-L153](https://github.com/code-423n4/2022-04-jpegd/blob/main/contracts/vaults/yVault/yVault.sol#L148-L153)<br>
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large â€œdonationâ€.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
 *   Attacker deposits 1 wei to mint 1 share
-*   Attacker transfers exorbitant amount to the `StrategyPUSDConvex` contract to greatly inflate the shareâ€™s price. Note that the strategy deposits its entire balance into Convex when its `deposit()` function is called.
+*   Attacker transfers exorbitant amount to the `StrategyPUSDConvex` contract to greatly inflate the shares price. Note that the strategy deposits its entire balance into Convex when its `deposit()` function is called.
 *   Subsequent depositors instead have to deposit an equivalent sum to avoid minting 0 shares. Otherwise, their deposits accrue to the attacker who holds the only share.
 
 Insert this test into [`yVault.ts`](https://github.com/code-423n4/2022-04-jpegd/blob/main/tests/yVault.ts).
@@ -13918,12 +13918,12 @@ _Submitted by GreyArt, also found by 0xDjango, CertoraInc, cmichel, rayn, TomFre
 
 [Collateral.sol#L82-L91](https://github.com/code-423n4/2022-03-prepo/blob/main/contracts/core/Collateral.sol#L82-L91)<br>
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large â€œdonationâ€.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 
 *   Attacker deposits 2 wei (so that it is greater than min fee) to mint 1 share
-*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the shareâ€™s price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
+*   Attacker transfers exorbitant amount to `_strategyController` to greatly inflate the shares price. Note that the `_strategyController` deposits its entire balance to the strategy when its `deposit()` function is called.
 *   Subsequent depositors instead have to deposit an equivalent sum to avoid minting 0 shares. Otherwise, their deposits accrue to the attacker who holds the only share.
 
 ```jsx
@@ -14597,7 +14597,7 @@ The first depositor can buy a small number of shares and next he should wait unt
  setApprovals(hecer);
  setApprovals(investor);
 
-    mintWeth(1 wei, hecer); // hecker starts with 1 wei ðŸ±â€ðŸ‘¤
+    mintWeth(1 wei, hecer); // hecker starts with 1 wei 
     mintWeth(20 ether, investor);
  
  
@@ -15203,7 +15203,7 @@ The number of shares minted to a depositor is determined by
 
 Potential attackers can spot a call to `UserDepositManagerV1._deposit` and front-run it with a transaction that sends wei to the contract (by self-destructing another contract and sending the funds to it), causing the victim to receive fewer shares than expected. 
 
-More specifically, if `oldTotalAssetBalance()` is greater than `underlyingAssetValue * totalSupply()`, then the number of shares the depositor receives will be 0, although `underlyingAssetValue` will still be pulled from the depositorâ€™s balance. 
+More specifically, if `oldTotalAssetBalance()` is greater than `underlyingAssetValue * totalSupply()`, then the number of shares the depositor receives will be 0, although `underlyingAssetValue` will still be pulled from the depositors balance. 
 
 An attacker with access to enough liquidity and the mempool data can spot a call to `UserDepositManagerV1._deposit` and front-run it by sending at least 
 
@@ -15919,7 +15919,7 @@ for (uint256 i = 0; i < pools.length; i++) {
 `MarketsManagerForAave.sol#L413-L418`
 
 ## Description
-The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. Itâ€™s currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
+The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. Its currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
 
 ```solidity
 supplyP2PSPY[_marketAddress] =
@@ -15932,8 +15932,8 @@ MAX_BASIS_POINTS;
 ```
 
 ## Recommendation
-Fix the computation. The real reserve factor should apply only on the spread so youâ€™re right that this formula is wrong and needs to be updated: 
-`a + (1/2 Â± f)(b-a)` where f is the reserve factor.
+Fix the computation. The real reserve factor should apply only on the spread so youre right that this formula is wrong and needs to be updated: 
+`a + (1/2  f)(b-a)` where f is the reserve factor.
 
 ## Spearbit
 Acknowledged, fixed in PR #565.

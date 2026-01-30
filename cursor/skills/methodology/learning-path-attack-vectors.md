@@ -1,30 +1,30 @@
-# Security Auditor Learning Path & Attack Vectors
+﻿# Security Auditor Learning Path & Attack Vectors
 
 > **AI Skill**: This file provides a structured curriculum for learning smart contract security and a comprehensive attack vector reference. Based on Cyfrin's Security & Auditing Course.
 
 ## Learning Path Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  PHASE 1: Fundamentals (2-4 weeks)                              │
-│  • Solidity basics, EVM, storage, encoding                      │
-│  • Foundry tooling, fuzzing basics                              │
-├─────────────────────────────────────────────────────────────────┤
-│  PHASE 2: First Audits (2-4 weeks)                              │
-│  • PasswordStore: Access control, private data                  │
-│  • Puppy Raffle: Reentrancy, DoS, RNG, arithmetic              │
-├─────────────────────────────────────────────────────────────────┤
-│  PHASE 3: DeFi & Invariants (4-6 weeks)                         │
-│  • T-Swap: AMMs, invariants, stateful fuzzing                   │
-│  • Thunder Loan: Flash loans, oracles, proxies                  │
-├─────────────────────────────────────────────────────────────────┤
-│  PHASE 4: Advanced (4-6 weeks)                                  │
-│  • Boss Bridge: Signatures, L2, assembly                        │
-│  • Vault Guardians: MEV, governance, complex systems            │
-├─────────────────────────────────────────────────────────────────┤
-│  PHASE 5: Professional Practice (Ongoing)                       │
-│  • Competitive audits, bug bounties, private audits             │
-└─────────────────────────────────────────────────────────────────┘
+
+  PHASE 1: Fundamentals (2-4 weeks)                              
+   Solidity basics, EVM, storage, encoding                      
+   Foundry tooling, fuzzing basics                              
+
+  PHASE 2: First Audits (2-4 weeks)                              
+   PasswordStore: Access control, private data                  
+   Puppy Raffle: Reentrancy, DoS, RNG, arithmetic              
+
+  PHASE 3: DeFi & Invariants (4-6 weeks)                         
+   T-Swap: AMMs, invariants, stateful fuzzing                   
+   Thunder Loan: Flash loans, oracles, proxies                  
+
+  PHASE 4: Advanced (4-6 weeks)                                  
+   Boss Bridge: Signatures, L2, assembly                        
+   Vault Guardians: MEV, governance, complex systems            
+
+  PHASE 5: Professional Practice (Ongoing)                       
+   Competitive audits, bug bounties, private audits             
+
 ```
 
 ---

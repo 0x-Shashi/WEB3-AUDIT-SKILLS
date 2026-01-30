@@ -1,4 +1,4 @@
-# Upgrade Safety Patterns
+﻿# Upgrade Safety Patterns
 
 Comprehensive guide for analyzing upgrade safety in smart contract differential reviews.
 
@@ -94,13 +94,13 @@ contract VaultV1 {
     uint256 public balance;  // slot 1
 }
 
-// V2 - WRONG ❌
+// V2 - WRONG 
 contract VaultV2 {
     uint256 public balance;  // slot 0 - REORDERED!
     address public owner;    // slot 1 - REORDERED!
 }
 
-// V2 - CORRECT ✅
+// V2 - CORRECT 
 contract VaultV2 {
     address public owner;    // slot 0 - unchanged
     uint256 public balance;  // slot 1 - unchanged
@@ -116,12 +116,12 @@ contract VaultV1 {
     uint128 public value;  // slot 0 (half)
 }
 
-// V2 - WRONG ❌
+// V2 - WRONG 
 contract VaultV2 {
     uint256 public value;  // Now uses full slot!
 }
 
-// V2 - CORRECT ✅ (if needed, new variable)
+// V2 - CORRECT  (if needed, new variable)
 contract VaultV2 {
     uint128 public value;      // unchanged
     uint128 public reserved;   // padding
@@ -139,13 +139,13 @@ contract VaultV1 {
     uint256 public balance;
 }
 
-// V2 - WRONG ❌
+// V2 - WRONG 
 contract VaultV2 {
     address public owner;
     uint256 public balance;  // Shifted!
 }
 
-// V2 - CORRECT ✅
+// V2 - CORRECT 
 contract VaultV2 {
     address public owner;
     address public __deprecated;  // Keep slot, rename
@@ -186,12 +186,12 @@ contract VaultV1 is Ownable, ReentrancyGuard {
     uint256 public value;
 }
 
-// V2 - SAFE ✅ (Appending to inheritance)
+// V2 - SAFE  (Appending to inheritance)
 contract VaultV2 is Ownable, ReentrancyGuard, Pausable {
     uint256 public value;
 }
 
-// V2 - UNSAFE ❌ (Reordering inheritance)
+// V2 - UNSAFE  (Reordering inheritance)
 contract VaultV2 is Pausable, Ownable, ReentrancyGuard {
     uint256 public value;
 }

@@ -1,4 +1,4 @@
-# Initializer Security Patterns
+﻿# Initializer Security Patterns
 
 ## Overview
 
@@ -176,7 +176,7 @@ th
 #### Description
 
 
-In the contracts implement Openzeppelin’s UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, it’s recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
+In the contracts implement Openzeppelins UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, its recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
 
 
 #### Examples

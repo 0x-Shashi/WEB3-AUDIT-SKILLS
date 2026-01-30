@@ -123,7 +123,7 @@ Some parts of the codebase are not compliant with the EIP-4337 from the [EIP-433
 **Sender existence**
 
 ```text
-Create the account if it does not yet exist, using the initcode provided in the UserOperation. If the account does not exist, and the initcode is empty, or does not deploy a contract at the â€œsenderâ€ address, the call must fail.
+Create the account if it does not yet exist, using the initcode provided in the UserOperation. If the account does not exist, and the initcode is empty, or does not deploy a contract at the sender address, the call must fail.
 ```
 
 If we take a look at the [`_createSenderIfNeeded()`]() function, we can see that it's not properly implemented:
@@ -287,7 +287,7 @@ The team addressed in: `a429b0c9ce78be9294a27934e1a184261b88917a`, `2255f30c7f95
 
 **File(s) affected:**`contracts/factory.fc`, `contracts/master.fc`
 
-**Description:** In both the `factory`â€™s `op::create_master` and the `master`â€™s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
+**Description:** In both the `factory`s `op::create_master` and the `master`s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
 
 Generally, we should not expect a proposal to pass with zero votes.
 
@@ -872,7 +872,7 @@ https://github.com/debtdao/Line-of-Credit/blob/e8aa08b44f6132a5ed901f8daa231700c
 
 ## Description
 
-LineOfCredit manages an array of open credit line identifiers called `ids`. Many interactions with the Line operate on ids\[0\], which is presumed to be the oldest borrow which has non zero principal. For example, borrowers must first deposit and repay to ids\[0\] before other credit lines.Â 
+LineOfCredit manages an array of open credit line identifiers called `ids`. Many interactions with the Line operate on ids\[0\], which is presumed to be the oldest borrow which has non zero principal. For example, borrowers must first deposit and repay to ids\[0\] before other credit lines.
 
 The list is managed by several functions:
 
@@ -882,7 +882,7 @@ The list is managed by several functions:
     1.  target index is not empty
     2.  there is no principal owed for the target index's credit
 
-The idea I had is that if we could corrupt the ids array so that ids\[0\] would be zero, but after it there would be some other active borrows, it would be a very severe situation. The whileBorrowing() modifier assumes if the first element has no principal, borrower is not borrowing.Â 
+The idea I had is that if we could corrupt the ids array so that ids\[0\] would be zero, but after it there would be some other active borrows, it would be a very severe situation. The whileBorrowing() modifier assumes if the first element has no principal, borrower is not borrowing.
 
 ```
 modifier whileBorrowing() {
@@ -1232,7 +1232,7 @@ library AssetLogic {
 
 ---
 
-### Example 20: _handleExecuteTransaction() doesnâ€™t handle native assets correctly
+### Example 20: _handleExecuteTransaction() doesnt handle native assets correctly
 
 **Source**: Spearbit
 **Protocol**: Connext
@@ -1246,7 +1246,7 @@ library AssetLogic {
 **Context:** BridgeFacet.sol#L644-L718, Executor.sol#L142-L243  
 
 **Description:**  
-The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesnâ€™t work as expected, leading to incorrect handling of native assets.
+The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesnt work as expected, leading to incorrect handling of native assets.
 
 **Note:**  
 Also see issue "Executor reverts on receiving native tokens from BridgeFacet".
@@ -1303,7 +1303,7 @@ Change the code of `execute()` to handle previously sent native assets. Alternat
 `NomadFacet.sol#L225-L242`
 
 ## Description
-When routers front liquidity for the protocolâ€™s users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
+When routers front liquidity for the protocols users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
 
 Instead, the function will set `amountIn = 0` and continue to distribute the local asset to the router.
 
@@ -1349,7 +1349,7 @@ It might be useful to convert the adopted asset amount back to the local asset s
 `ConnextPriceOracle.sol#L109-L135`
 
 ## Description
-The function `getPriceFromDex` derives the price by querying the balance of AMMâ€™s pools.
+The function `getPriceFromDex` derives the price by querying the balance of AMMs pools.
 
 ```solidity
 function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
@@ -1365,7 +1365,7 @@ function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
 Deriving the price with `balanceOf` is dangerous as `balanceOf` may be gamed. Consider Uniswap V2 as an example; exploiters can first send tokens into the pool and pump the price, then absorb the tokens that were previously donated by calling `mint`.
 
 ## Recommendation
-Consider querying DEXâ€™s state through function calls such as Uniswap V2â€™s `getReserves()` which returns the correct state of the pool.
+Consider querying DEXs state through function calls such as Uniswap V2s `getReserves()` which returns the correct state of the pool.
 
 ## References
 - **Connext**: Solved in PR 1649.
@@ -1969,13 +1969,13 @@ Source: https://github.com/sherlock-audit/2023-06-bond-judging/issues/63
 BenRai, qandisa
 ## Summary
 
-When deploying an `optionToken` the parameter `expiry` is rounded down to the â€œnearest day at 0000 UTCâ€ but since the end of an epoch is calculated by the `epochDuration` and the exact time the epoch has stared and the `optionToken` was created this can lead to an epoch still being active but the corresponding `optionToken` to be already expired. 
+When deploying an `optionToken` the parameter `expiry` is rounded down to the nearest day at 0000 UTC but since the end of an epoch is calculated by the `epochDuration` and the exact time the epoch has stared and the `optionToken` was created this can lead to an epoch still being active but the corresponding `optionToken` to be already expired. 
 
 ## Vulnerability Detail
 
 When starting a new epoch, the variable `epochStart` is set to the current time (`block.timestamp`) and the end of the epoch is calculated by adding the `epochDuration` to the `epochStart` variable. 
 
-The `optionToken` of the new epoch is deployed with the parameter `expire` calculated based on the current time stamp, the `timeUntilEligible` and the `eligibleDuration`. (`uint48(block.timestamp) + timeUntilEligible + eligibleDuration`). The final expiration date of the optionToken is rounded down to the â€œnearest day at 0000 UTCâ€ before the token is deployed.
+The `optionToken` of the new epoch is deployed with the parameter `expire` calculated based on the current time stamp, the `timeUntilEligible` and the `eligibleDuration`. (`uint48(block.timestamp) + timeUntilEligible + eligibleDuration`). The final expiration date of the optionToken is rounded down to the nearest day at 0000 UTC before the token is deployed.
 
 Since the `epochDuration` can be as close as 1 second to the sum of `timeUntilEligible + eligibleDuration` this can lead to an epoch still being active but its `optionToken` to be already expired.
 
@@ -2009,7 +2009,7 @@ The team fixed the issue as recommended. Addressed in: `3be95dd540da57f9f2a1e20d
 
 **File(s) affected:**`contracts/factory.fc`
 
-**Description:** In the `factory`â€™s `op::create_master`, the initial check requires `msg_value > service_fee + BASE_FEE * (6 + mint_messages_count)`, but the refund calculation deducts `service_fee + BASE_FEE * (8 + mint_messages_count)`. This discrepancy allows transactions that pass validation to fail later or refund less than expected, leading to user confusion and potential loss of funds.
+**Description:** In the `factory`s `op::create_master`, the initial check requires `msg_value > service_fee + BASE_FEE * (6 + mint_messages_count)`, but the refund calculation deducts `service_fee + BASE_FEE * (8 + mint_messages_count)`. This discrepancy allows transactions that pass validation to fail later or refund less than expected, leading to user confusion and potential loss of funds.
 
 **Exploit Scenario:**
 
@@ -2274,7 +2274,7 @@ Unused code can hint at programming or architectural errors.  Recommend using it
 **[xyz-ctrl (Visor) acknowledged but disputed severity](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-862607014):**
 
 **[ghoul-sol (Judge) commented](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-873480513):**
-> Agree with sponsor, it doesnâ€™t present a security issue itâ€™s a non-critical issue.
+> Agree with sponsor, it doesnt present a security issue its a non-critical issue.
 
 **[ztcrypto (Visor) commented](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-889191547):**
 > patch [link](https://github.com/VisorFinance/visor-core/commit/cc22d6e450e16aaa9eb3af1ee4d9e6ac8afe43da#diff-b094db7ce2f99cbcbde7ec178a6754bac666e2192f076807acbd70d49ddd0559)
@@ -2454,7 +2454,7 @@ The team addressed in: `a429b0c9ce78be9294a27934e1a184261b88917a`, `2255f30c7f95
 
 **File(s) affected:**`contracts/factory.fc`, `contracts/master.fc`
 
-**Description:** In both the `factory`â€™s `op::create_master` and the `master`â€™s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
+**Description:** In both the `factory`s `op::create_master` and the `master`s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
 
 Generally, we should not expect a proposal to pass with zero votes.
 
@@ -2826,7 +2826,7 @@ Unused code can hint at programming or architectural errors.  Recommend using it
 **[xyz-ctrl (Visor) acknowledged but disputed severity](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-862607014):**
 
 **[ghoul-sol (Judge) commented](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-873480513):**
-> Agree with sponsor, it doesnâ€™t present a security issue itâ€™s a non-critical issue.
+> Agree with sponsor, it doesnt present a security issue its a non-critical issue.
 
 **[ztcrypto (Visor) commented](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-889191547):**
 > patch [link](https://github.com/VisorFinance/visor-core/commit/cc22d6e450e16aaa9eb3af1ee4d9e6ac8afe43da#diff-b094db7ce2f99cbcbde7ec178a6754bac666e2192f076807acbd70d49ddd0559)
@@ -3871,7 +3871,7 @@ ShortLongSpell#openPosition will be completely nonfunctional when the user is
 
 ## Real-World Examples
 
-### Example 1: [H-01] Use of tokenBâ€™s price instead of tokenA in determining account health will lead to protocol mis-accounting and insolvency
+### Example 1: [H-01] Use of tokenBs price instead of tokenA in determining account health will lead to protocol mis-accounting and insolvency
 
 **Source**: Code4rena
 **Protocol**: Wild Credit
@@ -4193,7 +4193,7 @@ Change `address current = addressesToWipe[0];` ==> `  address current = addresse
 
 The `IERC677Receiver` interface documentation incorrectly references `ERC1363` instead of `ERC677`. This mismatch between the interface name and its documentation could lead to integration issues and developer confusion.
 
-The interface is named `IERC677Receiver` but its documentation comments reference `ERC1363`â€™s `transferAndCall` functionality. While both standards have similar purposes, they have different implementations and requirements. This inconsistency could cause:
+The interface is named `IERC677Receiver` but its documentation comments reference `ERC1363`s `transferAndCall` functionality. While both standards have similar purposes, they have different implementations and requirements. This inconsistency could cause:
 
 * Integration errors if developers implement the wrong standard based on the documentation
 * Confusion during code review and maintenance
@@ -4214,7 +4214,7 @@ interface IERC677Receiver {
 }
 ```
 
-The interface is used in `MergeTgt.sol` for handling token transfers, but itâ€™s implementing ERC677 functionality despite the 
+The interface is used in `MergeTgt.sol` for handling token transfers, but its implementing ERC677 functionality despite the 
 
 *[Content truncated...]*
 
@@ -4297,7 +4297,7 @@ uint256 earlyExitFee = (uint256(yieldToWithdraw) * EARLY_EXIT_FEE) / BASIS_POINT
 
 **Description:** [Documentation](https://hackmd.io/CPINxScvSE2vo-t8mwY_Og#Risks) states the following:
 
-_"Closing the Contract: If the majority of the pets agree, they can vote to close the contract. Once closed, the remaining funds will be divided among the surviving pets. This is the most beneficial scenario for you, as youâ€™ll earn the base rewards, early withdrawal rewards, and rewards from dead pets."_
+_"Closing the Contract: If the majority of the pets agree, they can vote to close the contract. Once closed, the remaining funds will be divided among the surviving pets. This is the most beneficial scenario for you, as youll earn the base rewards, early withdrawal rewards, and rewards from dead pets."_
 
 Inline comments for the [`StakePet::closedown`](https://github.com/Ranama/StakePet/blob/9ba301823b5062d657baa3462224da498dc4bb46/src/StakePet.sol#L398C2-L398C2) function state the following"
 
@@ -4616,7 +4616,7 @@ Due to the implementation of `OracleMembers.deleteItem`, the last item of the ar
 1. At T0, add member `m0` to the list of members: `members[0] = m0`.
 2. At T1, add member `m1` to the list of members: `members[1] = m1`.
 3. At T3, `m0` calls `reportBeacon(...)`. This action triggers a call to `ReportsPositions.register(uint256(0));` which registers that the member at index 0 has voted.
-4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`â€™s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
+4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
    - `members[0] = m0; members[1] = m1`
    - to `members[0] = m1;`.
 
@@ -4683,7 +4683,7 @@ It is clear that the mapping `sETHStakedBalanceForKnot` is decreased as expected
 
 ---
 
-### Example 8: [H-19] withdrawETH() in GiantPoolBase donâ€™t call _distributeETHRewardsToUserForToken() or _onWithdraw() which would make users to lose their remaining rewards 
+### Example 8: [H-19] withdrawETH() in GiantPoolBase dont call _distributeETHRewardsToUserForToken() or _onWithdraw() which would make users to lose their remaining rewards 
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -4771,7 +4771,7 @@ As you can see it increase user `lpTokenETH` balance and then calls `_onDepositE
 
 ---
 
-### Example 10: [H-14] Fund lose in function bringUnusedETHBackIntoGiantPool() of GiantSavETHVaultPool ETH gets back to giant pool but the value of idleETH donâ€™t increase
+### Example 10: [H-14] Fund lose in function bringUnusedETHBackIntoGiantPool() of GiantSavETHVaultPool ETH gets back to giant pool but the value of idleETH dont increase
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -4886,7 +4886,7 @@ contract TakeFromGiantP
 
 ---
 
-### Example 13: [H-09] Incorrect accounting in SyndicateRewardsProcessor results in any LP token holder being able to steal other LP tokens holderâ€™s ETH from the fees and MEV vault
+### Example 13: [H-09] Incorrect accounting in SyndicateRewardsProcessor results in any LP token holder being able to steal other LP tokens holders ETH from the fees and MEV vault
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -5409,7 +5409,7 @@ When the `deRegisterKnotFromSyndicate` function is called by the DAO, the `_deRe
 
 ---
 
-### Example 25: [M-15] GiantMevAndFeesPool.previewAccumulatedETH function: â€œaccumulatedâ€ variable is not updated correctly in for loop leading to result that is too low
+### Example 25: [M-15] GiantMevAndFeesPool.previewAccumulatedETH function: accumulated variable is not updated correctly in for loop leading to result that is too low
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol
@@ -5785,7 +5785,7 @@ Alternatively, unwrap the native asset and send it along with the call to the ex
 
 ---
 
-### Example 4: _handleExecuteTransaction() doesnâ€™t handle native assets correctly
+### Example 4: _handleExecuteTransaction() doesnt handle native assets correctly
 
 **Source**: Spearbit
 **Protocol**: Connext
@@ -5799,7 +5799,7 @@ Alternatively, unwrap the native asset and send it along with the call to the ex
 **Context:** BridgeFacet.sol#L644-L718, Executor.sol#L142-L243  
 
 **Description:**  
-The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesnâ€™t work as expected, leading to incorrect handling of native assets.
+The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesnt work as expected, leading to incorrect handling of native assets.
 
 **Note:**  
 Also see issue "Executor reverts on receiving native tokens from BridgeFacet".
@@ -5839,7 +5839,7 @@ Change the code of `execute()` to handle previously sent native assets. Alternat
 
 ---
 
-### Example 5: WormholeFacet doesnâ€™t send native token
+### Example 5: WormholeFacet doesnt send native token
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -5853,7 +5853,7 @@ Change the code of `execute()` to handle previously sent native assets. Alternat
 `WormholeFacet.sol#L36-L103`
 
 ## Description
-The functions of `WormholeFacet` allow sending the native token; however, they donâ€™t actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
+The functions of `WormholeFacet` allow sending the native token; however, they dont actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
 
 ```solidity
 contract WormholeFacet is ILiFi, ReentrancyGuard, Swapper {
@@ -6535,7 +6535,7 @@ This vulnerability impacts EscrowedLine, LineOfCredit, SpigotedLine and SecuredL
 
 ---
 
-### Example 11: [M-02] If L1GraphTokenGatewayâ€™s outboundTransfer is called by a contract, the entire msg.value is blackholed, whether the ticket got redeemed or not
+### Example 11: [M-02] If L1GraphTokenGateways outboundTransfer is called by a contract, the entire msg.value is blackholed, whether the ticket got redeemed or not
 
 **Source**: Code4rena
 **Protocol**: The Graph
@@ -6750,11 +6750,11 @@ The contract **SwapperV2** contains the following construction (twice) to preven
 - It performs an action.
 - If the end balance is greater than the start balance, it uses the difference; otherwise (which includes the case where the start balance is equal to the end balance), it uses the end balance.
 
-Thus, if the else clause is reached, it will use the end balance and ignore any start balance. If the action hasnâ€™t changed the balances, then start balance equals end balance, and this amount is used. When the action has lowered the balances, then the end balance is also used. 
+Thus, if the else clause is reached, it will use the end balance and ignore any start balance. If the action hasnt changed the balances, then start balance equals end balance, and this amount is used. When the action has lowered the balances, then the end balance is also used. 
 
 This defeats the purpose of the code.
 
-**Note**: Normally, there shouldnâ€™t be any tokens in the LiFi Diamond contract, so the risk is limited. The **Swapper.sol** contract has similar code.
+**Note**: Normally, there shouldnt be any tokens in the LiFi Diamond contract, so the risk is limited. The **Swapper.sol** contract has similar code.
 
 ### Code Snippets
 ```solidity
@@ -8056,16 +8056,16 @@ Review this governance protocol for:
 
 ```
 For ANY protocol, always check:
-â–¡ Access control on all state-changing functions
-â–¡ Reentrancy protection on external calls
-â–¡ Return value checks on token transfers
-â–¡ Slippage/deadline protection on swaps
-â–¡ Oracle staleness checks
-â–¡ Proper event emission
-â–¡ Pausability for emergencies
-â–¡ Upgrade mechanism security (if upgradeable)
-â–¡ Admin key management
-â–¡ Input validation and bounds checking
+ Access control on all state-changing functions
+ Reentrancy protection on external calls
+ Return value checks on token transfers
+ Slippage/deadline protection on swaps
+ Oracle staleness checks
+ Proper event emission
+ Pausability for emergencies
+ Upgrade mechanism security (if upgradeable)
+ Admin key management
+ Input validation and bounds checking
 ```
 
 ---
@@ -8096,7 +8096,7 @@ For ANY protocol, always check:
 
 ## Solidity Patterns
 
-### ðŸ”´ CRITICAL Severity
+###  CRITICAL Severity
 
 #### Reentrancy with ETH Transfer
 ```
@@ -8173,7 +8173,7 @@ Recommendation: Validate recipient addresses and implement access control
 
 ---
 
-### ðŸŸ  HIGH Severity
+###  HIGH Severity
 
 #### tx.origin Authentication
 ```
@@ -8297,7 +8297,7 @@ Recommendation: Add require(address != address(0))
 
 ---
 
-### ðŸŸ¡ MEDIUM Severity
+###  MEDIUM Severity
 
 #### Reentrancy (No ETH)
 ```
@@ -8397,7 +8397,7 @@ Recommendation: Use increaseAllowance/decreaseAllowance pattern
 
 ---
 
-### ðŸŸ¢ LOW Severity
+###  LOW Severity
 
 #### Missing Event Emission
 ```
@@ -8446,7 +8446,7 @@ Recommendation: Upgrade to Solidity 0.8.x or later
 
 ---
 
-### â›½ GAS Optimization
+###  GAS Optimization
 
 #### Storage Read in Loop
 ```
@@ -8472,7 +8472,7 @@ Recommendation: Use custom errors or shorter messages
 
 ## Rust/Solana Patterns
 
-### ðŸ”´ CRITICAL
+###  CRITICAL
 
 #### Missing Signer Check
 ```
@@ -8500,7 +8500,7 @@ Look for:
 Recommendation: Validate program ID before CPI calls
 ```
 
-### ðŸŸ  HIGH
+###  HIGH
 
 #### Missing Owner Check
 ```
@@ -8531,7 +8531,7 @@ Recommendation: Store and validate bump seeds
 
 ## Move Patterns
 
-### ðŸ”´ CRITICAL
+###  CRITICAL
 
 #### Missing Capability Check
 ```
@@ -8545,7 +8545,7 @@ Look for:
 Recommendation: Add capability check with assert!
 ```
 
-### ðŸŸ¡ MEDIUM
+###  MEDIUM
 
 #### Resource Leak
 ```
@@ -8969,12 +8969,12 @@ Techniques:
 
 | Level | Score Range | Color | Description |
 |-------|-------------|-------|-------------|
-| CRITICAL | 9.0 - 10.0 | ðŸ”´ | Direct, unconditional fund loss |
-| HIGH | 7.0 - 8.9 | ðŸŸ  | Significant damage possible |
-| MEDIUM | 4.0 - 6.9 | ðŸŸ¡ | Limited impact or conditional |
-| LOW | 2.0 - 3.9 | ðŸŸ¢ | Minor issues, best practices |
-| INFO | 0.1 - 1.9 | â„¹ï¸ | Suggestions, no security impact |
-| GAS | 0.0 - 0.5 | â›½ | Gas optimization only |
+| CRITICAL | 9.0 - 10.0 |  | Direct, unconditional fund loss |
+| HIGH | 7.0 - 8.9 |  | Significant damage possible |
+| MEDIUM | 4.0 - 6.9 |  | Limited impact or conditional |
+| LOW | 2.0 - 3.9 |  | Minor issues, best practices |
+| INFO | 0.1 - 1.9 |  | Suggestions, no security impact |
+| GAS | 0.0 - 0.5 |  | Gas optimization only |
 
 ---
 
@@ -8982,20 +8982,20 @@ Techniques:
 
 ```
 Is there direct fund loss possible?
-â”œâ”€ YES â†’ Is it unconditional (anyone can exploit)?
-â”‚        â”œâ”€ YES â†’ CRITICAL
-â”‚        â””â”€ NO (needs conditions) â†’ HIGH
-â”‚
-â””â”€ NO â†’ Is there indirect fund loss or protocol damage?
-        â”œâ”€ YES â†’ Is the attack practical?
-        â”‚        â”œâ”€ YES â†’ HIGH
-        â”‚        â””â”€ NO (theoretical) â†’ MEDIUM
-        â”‚
-        â””â”€ NO â†’ Does it affect protocol operation?
-                â”œâ”€ YES â†’ MEDIUM
-                â””â”€ NO â†’ Is it a code quality issue?
-                        â”œâ”€ YES â†’ LOW
-                        â””â”€ NO â†’ INFO/GAS
+ YES  Is it unconditional (anyone can exploit)?
+         YES  CRITICAL
+         NO (needs conditions)  HIGH
+
+ NO  Is there indirect fund loss or protocol damage?
+         YES  Is the attack practical?
+                 YES  HIGH
+                 NO (theoretical)  MEDIUM
+        
+         NO  Does it affect protocol operation?
+                 YES  MEDIUM
+                 NO  Is it a code quality issue?
+                         YES  LOW
+                         NO  INFO/GAS
 ```
 
 ---
@@ -9084,47 +9084,47 @@ Adjust based on protocol context:
 
 ### CRITICAL Examples
 ```
-âœ“ Reentrancy allowing drain of all pool funds
-âœ“ Missing access control on withdraw function
-âœ“ Unprotected selfdestruct
-âœ“ Arbitrary delegatecall to user-controlled address
-âœ“ Storage collision in proxy allowing takeover
+ Reentrancy allowing drain of all pool funds
+ Missing access control on withdraw function
+ Unprotected selfdestruct
+ Arbitrary delegatecall to user-controlled address
+ Storage collision in proxy allowing takeover
 ```
 
 ### HIGH Examples
 ```
-âœ“ tx.origin authentication (phishing possible)
-âœ“ Unchecked ERC20 transfer return value
-âœ“ Missing zero address check on token address
-âœ“ Oracle manipulation via flash loan
-âœ“ First depositor vault inflation attack
+ tx.origin authentication (phishing possible)
+ Unchecked ERC20 transfer return value
+ Missing zero address check on token address
+ Oracle manipulation via flash loan
+ First depositor vault inflation attack
 ```
 
 ### MEDIUM Examples
 ```
-âœ“ Centralization risk (single admin key)
-âœ“ Front-running on swap without slippage protection
-âœ“ Block timestamp used for deadline
-âœ“ Missing event emission on critical function
-âœ“ Approve race condition (standard ERC20 approve)
+ Centralization risk (single admin key)
+ Front-running on swap without slippage protection
+ Block timestamp used for deadline
+ Missing event emission on critical function
+ Approve race condition (standard ERC20 approve)
 ```
 
 ### LOW Examples
 ```
-âœ“ Floating pragma
-âœ“ Outdated Solidity version (0.7.x)
-âœ“ Variable shadowing
-âœ“ Magic numbers without constants
-âœ“ Missing NatSpec comments
+ Floating pragma
+ Outdated Solidity version (0.7.x)
+ Variable shadowing
+ Magic numbers without constants
+ Missing NatSpec comments
 ```
 
 ### INFO/GAS Examples
 ```
-âœ“ Storage read in loop (gas optimization)
-âœ“ Long revert strings
-âœ“ Public function could be external
-âœ“ Unused imports
-âœ“ Code style suggestions
+ Storage read in loop (gas optimization)
+ Long revert strings
+ Public function could be external
+ Unused imports
+ Code style suggestions
 ```
 
 ---
@@ -9132,18 +9132,18 @@ Adjust based on protocol context:
 ## Severity Adjustment Keywords
 
 **Increase severity if description contains:**
-- "steal", "drain" â†’ +20%
-- "arbitrary" â†’ +20%
-- "bypass" â†’ +15%
-- "lock", "freeze" â†’ +10%
-- "anyone can" â†’ +30%
+- "steal", "drain"  +20%
+- "arbitrary"  +20%
+- "bypass"  +15%
+- "lock", "freeze"  +10%
+- "anyone can"  +30%
 
 **Decrease severity if description contains:**
-- "requires admin" â†’ -40%
-- "requires owner" â†’ -40%
-- "edge case" â†’ -30%
-- "theoretical" â†’ -50%
-- "unlikely" â†’ -60%
+- "requires admin"  -40%
+- "requires owner"  -40%
+- "edge case"  -30%
+- "theoretical"  -50%
+- "unlikely"  -60%
 
 ---
 
@@ -9152,7 +9152,7 @@ Adjust based on protocol context:
 When prioritizing findings, compare:
 
 ```
-Priority Score = Severity Ã— Likelihood Ã— Impact Ã— Context
+Priority Score = Severity  Likelihood  Impact  Context
 
 Where:
 - Severity: 0-10 base score
@@ -9162,13 +9162,13 @@ Where:
 ```
 
 ### Priority Ordering
-1. CRITICAL with high likelihood â†’ Fix immediately
-2. HIGH with high likelihood â†’ Fix before deployment
-3. CRITICAL with low likelihood â†’ Fix before deployment
-4. HIGH with low likelihood â†’ Fix recommended
-5. MEDIUM â†’ Acknowledge and consider
-6. LOW â†’ Best practice improvements
-7. INFO/GAS â†’ Optional optimizations
+1. CRITICAL with high likelihood  Fix immediately
+2. HIGH with high likelihood  Fix before deployment
+3. CRITICAL with low likelihood  Fix before deployment
+4. HIGH with low likelihood  Fix recommended
+5. MEDIUM  Acknowledge and consider
+6. LOW  Best practice improvements
+7. INFO/GAS  Optional optimizations
 
 ---
 
@@ -9186,8 +9186,8 @@ When reporting findings, include:
 **Score Breakdown:**
 - Base: X/10 (from category)
 - Impact: +/- Y (funds/access affected)
-- Likelihood: Ã—Z (exploitability)
-- Context: Ã—W (protocol type)
+- Likelihood: Z (exploitability)
+- Context: W (protocol type)
 - **Final: X.X/10**
 
 **Impact:**

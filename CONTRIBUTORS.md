@@ -1,6 +1,6 @@
-# Contributors
+﻿# Contributors
 
-Thank you to all the amazing people who have contributed to making Web3 more secure! 🛡️
+Thank you to all the amazing people who have contributed to making Web3 more secure! 
 
 ---
 
@@ -38,14 +38,14 @@ Thank you to all the amazing people who have contributed to making Web3 more sec
 
 | Emoji | Type |
 |-------|------|
-| 🔍 | Vulnerability Patterns |
-| ⛓️ | Chain Scanner |
-| 📋 | Protocol Template |
-| 🔗 | Attack Chain |
-| 📖 | Documentation |
-| 🐛 | Bug Fix |
-| 💡 | Ideas & Suggestions |
-| 👀 | Review |
+|  | Vulnerability Patterns |
+|  | Chain Scanner |
+|  | Protocol Template |
+|  | Attack Chain |
+|  | Documentation |
+|  | Bug Fix |
+|  | Ideas & Suggestions |
+|  | Review |
 
 ---
 

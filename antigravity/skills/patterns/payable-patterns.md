@@ -1,4 +1,4 @@
-# Payable Security Patterns
+﻿# Payable Security Patterns
 
 ## Overview
 
@@ -170,7 +170,7 @@ Alternatively, unwrap the native asset and send it along with the call to the ex
 
 ---
 
-### Example 4: _handleExecuteTransaction() doesn’t handle native assets correctly
+### Example 4: _handleExecuteTransaction() doesnt handle native assets correctly
 
 **Source**: Spearbit
 **Protocol**: Connext
@@ -184,7 +184,7 @@ Alternatively, unwrap the native asset and send it along with the call to the ex
 **Context:** BridgeFacet.sol#L644-L718, Executor.sol#L142-L243  
 
 **Description:**  
-The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesn’t work as expected, leading to incorrect handling of native assets.
+The function `_handleExecuteTransaction()` sends any native tokens to the executor contract first, and then calls `s.executor.execute()`. This means that within that function, `msg.value` will always be 0. As a result, the associated logic that uses `msg.value` doesnt work as expected, leading to incorrect handling of native assets.
 
 **Note:**  
 Also see issue "Executor reverts on receiving native tokens from BridgeFacet".
@@ -224,7 +224,7 @@ Change the code of `execute()` to handle previously sent native assets. Alternat
 
 ---
 
-### Example 5: WormholeFacet doesn’t send native token
+### Example 5: WormholeFacet doesnt send native token
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -238,7 +238,7 @@ Change the code of `execute()` to handle previously sent native assets. Alternat
 `WormholeFacet.sol#L36-L103`
 
 ## Description
-The functions of `WormholeFacet` allow sending the native token; however, they don’t actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
+The functions of `WormholeFacet` allow sending the native token; however, they dont actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
 
 ```solidity
 contract WormholeFacet is ILiFi, ReentrancyGuard, Swapper {

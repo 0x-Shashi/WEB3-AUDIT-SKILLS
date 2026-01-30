@@ -1,4 +1,4 @@
----
+﻿---
 name: sui-scanner
 description: "Comprehensive Sui Move vulnerability scanner for Move modules and smart contracts. Covers object ownership, dynamic fields, capability patterns, and Sui-specific attack vectors. Use this skill when auditing Sui programs."
 allowed-tools:
@@ -53,24 +53,24 @@ Do NOT use this skill for:
 ### Key Concepts
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    SUI SECURITY MODEL                    │
-├─────────────────────────────────────────────────────────┤
-│ OBJECTS                                                  │
-│ • Everything is an object with unique ID                │
-│ • Owned (single address) vs Shared (global access)      │
-│ • Object ownership = access control                     │
-├─────────────────────────────────────────────────────────┤
-│ CAPABILITIES                                             │
-│ • Hot Potato pattern for forced consumption             │
-│ • Witness pattern for type-level authorization          │
-│ • AdminCap pattern for privilege management             │
-├─────────────────────────────────────────────────────────┤
-│ DYNAMIC FIELDS                                           │
-│ • Attach arbitrary data to objects                      │
-│ • Can bypass static analysis                            │
-│ • Critical security consideration                       │
-└─────────────────────────────────────────────────────────┘
+
+                    SUI SECURITY MODEL                    
+
+ OBJECTS                                                  
+  Everything is an object with unique ID                
+  Owned (single address) vs Shared (global access)      
+  Object ownership = access control                     
+
+ CAPABILITIES                                             
+  Hot Potato pattern for forced consumption             
+  Witness pattern for type-level authorization          
+  AdminCap pattern for privilege management             
+
+ DYNAMIC FIELDS                                           
+  Attach arbitrary data to objects                      
+  Can bypass static analysis                            
+  Critical security consideration                       
+
 ```
 
 ---

@@ -1,4 +1,4 @@
-# CosmWasm Vulnerability Patterns
+﻿# CosmWasm Vulnerability Patterns
 
 Detailed vulnerability patterns for CosmWasm smart contracts.
 
@@ -18,7 +18,7 @@ pub fn execute_withdraw(
     vault_id: u64,
     amount: Uint128,
 ) -> Result<Response, ContractError> {
-    // ❌ Anyone can withdraw from any vault!
+    //  Anyone can withdraw from any vault!
     let mut vault = VAULTS.load(deps.storage, vault_id)?;
     vault.balance = vault.balance.checked_sub(amount)?;
     VAULTS.save(deps.storage, vault_id, &vault)?;
@@ -42,7 +42,7 @@ pub fn execute_withdraw(
 ) -> Result<Response, ContractError> {
     let vault = VAULTS.load(deps.storage, vault_id)?;
     
-    // ✅ Verify caller owns the vault
+    //  Verify caller owns the vault
     if info.sender != vault.owner {
         return Err(ContractError::Unauthorized {});
     }
@@ -65,7 +65,7 @@ pub fn execute_deposit(
     _env: Env,
     info: MessageInfo,
 ) -> Result<Response, ContractError> {
-    // ❌ Accepts any denom!
+    //  Accepts any denom!
     let amount = info.funds[0].amount;
     
     let mut state = STATE.load(deps.storage)?;
@@ -85,14 +85,14 @@ pub fn execute_deposit(
 ) -> Result<Response, ContractError> {
     let config = CONFIG.load(deps.storage)?;
     
-    // ✅ Find specific denom
+    //  Find specific denom
     let deposit = info
         .funds
         .iter()
         .find(|c| c.denom == config.deposit_denom)
         .ok_or(ContractError::InvalidDenom {})?;
     
-    // ✅ Ensure only one coin sent
+    //  Ensure only one coin sent
     if info.funds.len() != 1 {
         return Err(ContractError::MultipleCoins {});
     }
@@ -118,7 +118,7 @@ pub fn execute_buy(
 ) -> Result<Response, ContractError> {
     let item = ITEMS.load(deps.storage, item_id)?;
     
-    // ❌ Trusts declared_amount, not actual funds!
+    //  Trusts declared_amount, not actual funds!
     if declared_amount < item.price {
         return Err(ContractError::InsufficientPayment {});
     }
@@ -137,7 +137,7 @@ pub fn execute_buy(
     let config = CONFIG.load(deps.storage)?;
     let item = ITEMS.load(deps.storage, item_id)?;
     
-    // ✅ Check actual funds received
+    //  Check actual funds received
     let payment = info
         .funds
         .iter()
@@ -165,26 +165,26 @@ Different storage items using overlapping keys.
 
 ### Vulnerable Code
 ```rust
-// ❌ Same prefix for different data types
+//  Same prefix for different data types
 const CONFIG: Item<Config> = Item::new("config");
 const CONFIG_V2: Item<ConfigV2> = Item::new("config");  // Collision!
 
-// ❌ Map keys can collide
+//  Map keys can collide
 const USER_DATA: Map<&str, UserData> = Map::new("user");
 const USER_STATS: Map<&str, UserStats> = Map::new("user");  // Collision!
 ```
 
 ### Secure Code
 ```rust
-// ✅ Unique prefixes for each storage item
+//  Unique prefixes for each storage item
 const CONFIG: Item<Config> = Item::new("config_v1");
 const CONFIG_V2: Item<ConfigV2> = Item::new("config_v2");
 
-// ✅ Unique namespaces
+//  Unique namespaces
 const USER_DATA: Map<&Addr, UserData> = Map::new("user_data");
 const USER_STATS: Map<&Addr, UserStats> = Map::new("user_stats");
 
-// ✅ Use typed keys for complex maps
+//  Use typed keys for complex maps
 const POSITION: Map<(&Addr, u64), Position> = Map::new("position");
 ```
 
@@ -203,7 +203,7 @@ pub fn migrate(
     _env: Env,
     _msg: MigrateMsg,
 ) -> Result<Response, ContractError> {
-    // ❌ Overwrites existing state without migration
+    //  Overwrites existing state without migration
     let new_config = Config::default();
     CONFIG.save(deps.storage, &new_config)?;
     
@@ -236,20 +236,20 @@ pub fn migrate(
     _env: Env,
     msg: MigrateMsg,
 ) -> Result<Response, ContractError> {
-    // ✅ Load old state
+    //  Load old state
     let old_config = CONFIG_V1.load(deps.storage)?;
     
-    // ✅ Migrate to new state
+    //  Migrate to new state
     let new_config = ConfigV2 {
         admin: old_config.admin,
         fee: old_config.fee,
         fee_recipient: deps.api.addr_validate(&msg.fee_recipient)?,
     };
     
-    // ✅ Save new state
+    //  Save new state
     CONFIG_V2.save(deps.storage, &new_config)?;
     
-    // ✅ Optionally remove old state
+    //  Optionally remove old state
     CONFIG_V1.remove(deps.storage);
     
     Ok(Response::new())
@@ -273,7 +273,7 @@ pub fn execute_withdraw(
 ) -> Result<Response, ContractError> {
     let balance = BALANCES.load(deps.storage, &info.sender)?;
     
-    // ❌ External call BEFORE state update
+    //  External call BEFORE state update
     let msg = SubMsg::reply_on_success(
         BankMsg::Send {
             to_address: info.sender.to_string(),
@@ -298,7 +298,7 @@ pub fn execute_withdraw(
 ) -> Result<Response, ContractError> {
     let mut balance = BALANCES.load(deps.storage, &info.sender)?;
     
-    // ✅ State update BEFORE external call
+    //  State update BEFORE external call
     if balance < amount {
         return Err(ContractError::InsufficientBalance {});
     }
@@ -330,7 +330,7 @@ pub fn sudo(
     _env: Env,
     msg: SudoMsg,
 ) -> Result<Response, ContractError> {
-    // ❌ Sudo allows arbitrary state changes
+    //  Sudo allows arbitrary state changes
     match msg {
         SudoMsg::UpdateAdmin { new_admin } => {
             let new_admin = deps.api.addr_validate(&new_admin)?;
@@ -357,10 +357,10 @@ pub fn sudo(
 ) -> Result<Response, ContractError> {
     match msg {
         SudoMsg::UpdateConfig { updates } => {
-            // ✅ Validate all updates
+            //  Validate all updates
             validate_config_updates(&updates)?;
             
-            // ✅ Log the change
+            //  Log the change
             let mut config = CONFIG.load(deps.storage)?;
             apply_updates(&mut config, updates);
             CONFIG.save(deps.storage, &config)?;
@@ -388,7 +388,7 @@ pub fn add_rewards(
 ) -> Result<Response, ContractError> {
     let mut state = STATE.load(deps.storage)?;
     
-    // ❌ Uint128 operations can overflow (though Rust panics)
+    //  Uint128 operations can overflow (though Rust panics)
     state.total_rewards = state.total_rewards + amount;
     
     STATE.save(deps.storage, &state)?;
@@ -404,7 +404,7 @@ pub fn add_rewards(
 ) -> Result<Response, ContractError> {
     let mut state = STATE.load(deps.storage)?;
     
-    // ✅ Use checked arithmetic
+    //  Use checked arithmetic
     state.total_rewards = state.total_rewards
         .checked_add(amount)
         .map_err(|_| ContractError::Overflow {})?;
@@ -428,7 +428,7 @@ pub fn calculate_share(
     total_deposits: Uint128,
     rewards: Uint128,
 ) -> Uint128 {
-    // ❌ Division first loses precision
+    //  Division first loses precision
     let share_ratio = user_deposit / total_deposits;  // Rounds to 0 if user < total
     share_ratio * rewards
 }
@@ -447,7 +447,7 @@ pub fn calculate_share(
         return Err(ContractError::DivisionByZero {});
     }
     
-    // ✅ Use larger type, multiply first
+    //  Use larger type, multiply first
     let user_256 = Uint256::from(user_deposit);
     let total_256 = Uint256::from(total_deposits);
     let rewards_256 = Uint256::from(rewards);
@@ -471,7 +471,7 @@ Query returns unbounded list, causing DoS.
 ### Vulnerable Code
 ```rust
 pub fn query_all_users(deps: Deps) -> StdResult<Binary> {
-    // ❌ Returns ALL users - can be huge
+    //  Returns ALL users - can be huge
     let users: Vec<_> = USERS
         .range(deps.storage, None, None, Order::Ascending)
         .collect::<StdResult<Vec<_>>>()?;
@@ -487,7 +487,7 @@ pub fn query_users_paginated(
     start_after: Option<String>,
     limit: Option<u32>,
 ) -> StdResult<Binary> {
-    // ✅ Enforce maximum limit
+    //  Enforce maximum limit
     const MAX_LIMIT: u32 = 30;
     const DEFAULT_LIMIT: u32 = 10;
     let limit = limit.unwrap_or(DEFAULT_LIMIT).min(MAX_LIMIT);
@@ -516,7 +516,7 @@ pub fn execute_stake(
     deps: DepsMut,
     info: MessageInfo,
 ) -> Result<Response, ContractError> {
-    // ❌ Accepts any token as stake
+    //  Accepts any token as stake
     for coin in info.funds.iter() {
         // Updates stake with any token
         update_stake(deps.storage, &info.sender, coin)?;
@@ -533,7 +533,7 @@ pub fn execute_stake(
 ) -> Result<Response, ContractError> {
     let config = CONFIG.load(deps.storage)?;
     
-    // ✅ Only accept whitelisted tokens
+    //  Only accept whitelisted tokens
     for coin in info.funds.iter() {
         if !config.allowed_denoms.contains(&coin.denom) {
             return Err(ContractError::InvalidDenom {

@@ -1,4 +1,4 @@
----
+﻿---
 name: fuel-scanner
 description: "Comprehensive FuelVM (Sway) vulnerability scanner for smart contracts. Covers UTXO handling, predicates, scripts, and Fuel-specific attack vectors. Use this skill when auditing Fuel contracts."
 allowed-tools:
@@ -53,24 +53,24 @@ Do NOT use this skill for:
 ### Key Concepts
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                   FUELVM SECURITY MODEL                  │
-├─────────────────────────────────────────────────────────┤
-│ UTXO MODEL                                               │
-│ • Unspent Transaction Outputs                           │
-│ • Parallel transaction execution                        │
-│ • Native assets (multi-token)                           │
-├─────────────────────────────────────────────────────────┤
-│ PREDICATES                                               │
-│ • Stateless spending conditions                         │
-│ • Pure functions (no state changes)                     │
-│ • Unlock UTXOs when satisfied                           │
-├─────────────────────────────────────────────────────────┤
-│ CONTRACTS                                                │
-│ • Stateful smart contracts                              │
-│ • Storage + functions                                   │
-│ • Similar to Solidity but Rust-like                     │
-└─────────────────────────────────────────────────────────┘
+
+                   FUELVM SECURITY MODEL                  
+
+ UTXO MODEL                                               
+  Unspent Transaction Outputs                           
+  Parallel transaction execution                        
+  Native assets (multi-token)                           
+
+ PREDICATES                                               
+  Stateless spending conditions                         
+  Pure functions (no state changes)                     
+  Unlock UTXOs when satisfied                           
+
+ CONTRACTS                                                
+  Stateful smart contracts                              
+  Storage + functions                                   
+  Similar to Solidity but Rust-like                     
+
 ```
 
 ---

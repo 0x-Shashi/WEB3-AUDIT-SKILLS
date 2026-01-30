@@ -1,4 +1,4 @@
----
+﻿---
 name: audit-context-building
 description: "Enables ultra-granular, line-by-line code analysis to build deep architectural context before vulnerability hunting. Use this skill BEFORE searching for bugs to establish comprehensive understanding of the codebase through First Principles, 5 Whys, and 5 Hows methodology."
 allowed-tools:
@@ -16,7 +16,7 @@ This skill governs **how to think** during the context-building phase of an audi
 When active, I will:
 - Perform **line-by-line / block-by-block** code analysis
 - Apply **First Principles**, **5 Whys**, and **5 Hows** at micro scale
-- Continuously link insights → functions → modules → entire system
+- Continuously link insights  functions  modules  entire system
 - Maintain a stable, explicit mental model that evolves with evidence
 - Identify invariants, assumptions, flows, and reasoning hazards
 
@@ -163,11 +163,11 @@ Apply to each block:
 - Are those assumptions valid?
 
 #### 5 Whys (Dig Deeper)
-1. Why does this check exist? → Because users might...
-2. Why might users do that? → Because the UI allows...
-3. Why does the UI allow it? → Because the spec says...
-4. Why does the spec say that? → Because of business requirement...
-5. Why that requirement? → Core business logic
+1. Why does this check exist?  Because users might...
+2. Why might users do that?  Because the UI allows...
+3. Why does the UI allow it?  Because the spec says...
+4. Why does the spec say that?  Because of business requirement...
+5. Why that requirement?  Core business logic
 
 #### 5 Hows (Implementation Detail)
 1. How is this value calculated?
@@ -185,7 +185,7 @@ When encountering calls, continue the same analysis across boundaries.
 #### Internal Calls
 - Jump into the callee immediately
 - Perform block-by-block analysis
-- Track flow: caller → callee → return → caller
+- Track flow: caller  callee  return  caller
 - Note if callee behaves differently in this context
 
 #### External Calls (Code Available)
@@ -356,7 +356,7 @@ See [resources/function-analysis-example.md](resources/function-analysis-example
 ### After Context Building
 
 ```
-Context Built → Ready for Vulnerability Hunting
+Context Built  Ready for Vulnerability Hunting
 
 Use:
 - cyfrin-findings: Research similar vulnerabilities

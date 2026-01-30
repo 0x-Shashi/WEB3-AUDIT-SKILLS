@@ -1,4 +1,4 @@
-# Optimism Security Patterns
+﻿# Optimism Security Patterns
 
 ## Overview
 
@@ -79,7 +79,7 @@ onlyOwner { , !
 - **Lines:** 97-113
 
 ### Description
-The `OptimismBridgeFacet` uses Optimism’s bridge with user-provided `l2Gas`.
+The `OptimismBridgeFacet` uses Optimisms bridge with user-provided `l2Gas`.
 
 ```solidity
 function _startBridge(
@@ -105,7 +105,7 @@ function _startBridge(
 }
 ```
 
-Optimism’s standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
+Optimisms standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
 
 - **File:** L1StandardBridge.sol
 - **Lines:** 114-123
@@ -130,7 +130,7 @@ sendCrossDomainMessage(l2TokenBridge, _l2Gas, message);
 If the `l2Gas` is underpaid, `finalizeDeposit` will fail and user funds will be lost.
 
 ### Recommendation
-Given the potential risks of losing users’ funds, it is recommend
+Given the potential risks of losing users funds, it is recommend
 
 *[Content truncated...]*
 

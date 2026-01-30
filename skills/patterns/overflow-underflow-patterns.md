@@ -1,4 +1,4 @@
-# Overflow/Underflow Security Patterns
+﻿# Overflow/Underflow Security Patterns
 
 ## Overview
 
@@ -112,7 +112,7 @@ LT swap proceeds = (scaledProceeds[last] - scaledProceeds[prev]) * (order.salesR
 
 The value 264 is referred to as the "scaling factor" and is intended to reduce precision loss in the division to determine the increment to the scaled proceeds.
 
-The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmetic—since only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
+The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmeticsince only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
 
 *[Content truncated...]*
 
@@ -808,7 +808,7 @@ If `_fee == 0`, the `adjustedFeeShares`
 `FullMath.sol#L2`
 
 ## Description
-UniswapV3’s `FullMath.sol` is copied and migrated from an old solidity version to version 0.8, which reverts on overflows. However, the old `FullMath` relies on implicit overflow behavior. The current code will revert on overflows when it should not, which breaks the `SwapManagerUniV3` contract.
+UniswapV3s `FullMath.sol` is copied and migrated from an old solidity version to version 0.8, which reverts on overflows. However, the old `FullMath` relies on implicit overflow behavior. The current code will revert on overflows when it should not, which breaks the `SwapManagerUniV3` contract.
 
 ## Recommendation
 Use the official `FullMath.sol` 0.8 branch that wraps the code in an unchecked statement. See #40.
@@ -949,7 +949,7 @@ When liquidity is first minted to user, the \_accruedDebts is updated to match c
 
 ##### Description
 
-An overflow happens when an arithmetic operation reaches the maximum size of a type. For instance, in `Monoswap.sol`, the `getAmountOut` method is subtracting `fees` from a fixed number and may end up overflowing the integer since the resulting value is not checked to be greater or equal 0. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits – either larger than the maximum or lower than the minimum representable value.
+An overflow happens when an arithmetic operation reaches the maximum size of a type. For instance, in `Monoswap.sol`, the `getAmountOut` method is subtracting `fees` from a fixed number and may end up overflowing the integer since the resulting value is not checked to be greater or equal 0. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits  either larger than the maximum or lower than the minimum representable value.
 
 Code Location
 -------------

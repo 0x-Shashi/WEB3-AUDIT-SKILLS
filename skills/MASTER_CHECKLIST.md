@@ -1,10 +1,10 @@
-# 🛡️ Smart Contract Security Master Checklist
+﻿#  Smart Contract Security Master Checklist
 
 *Based on 50,530 real audit findings from Code4rena, Sherlock, Cyfrin, and 20+ audit platforms*
 
 ---
 
-## 🔴 CRITICAL PRIORITY (Top 20 Most Common)
+##  CRITICAL PRIORITY (Top 20 Most Common)
 
 ### 1. Business Logic (234 occurrences - 0.46%)
 
@@ -12,7 +12,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/business-logic-patterns.md](patterns/business-logic-patterns.md)
+ **Pattern Reference**: [patterns/business-logic-patterns.md](patterns/business-logic-patterns.md)
 
 ---
 
@@ -22,7 +22,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/validation-patterns.md](patterns/validation-patterns.md)
+ **Pattern Reference**: [patterns/validation-patterns.md](patterns/validation-patterns.md)
 
 ---
 
@@ -32,7 +32,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/wrong-math-patterns.md](patterns/wrong-math-patterns.md)
+ **Pattern Reference**: [patterns/wrong-math-patterns.md](patterns/wrong-math-patterns.md)
 
 ---
 
@@ -42,7 +42,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/front-running-patterns.md](patterns/front-running-patterns.md)
+ **Pattern Reference**: [patterns/front-running-patterns.md](patterns/front-running-patterns.md)
 
 ---
 
@@ -52,7 +52,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/fee-on-transfer-patterns.md](patterns/fee-on-transfer-patterns.md)
+ **Pattern Reference**: [patterns/fee-on-transfer-patterns.md](patterns/fee-on-transfer-patterns.md)
 
 ---
 
@@ -62,7 +62,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/dos-patterns.md](patterns/dos-patterns.md)
+ **Pattern Reference**: [patterns/dos-patterns.md](patterns/dos-patterns.md)
 
 ---
 
@@ -72,7 +72,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/oracle-patterns.md](patterns/oracle-patterns.md)
+ **Pattern Reference**: [patterns/oracle-patterns.md](patterns/oracle-patterns.md)
 
 ---
 
@@ -82,7 +82,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/reentrancy-patterns.md](patterns/reentrancy-patterns.md)
+ **Pattern Reference**: [patterns/reentrancy-patterns.md](patterns/reentrancy-patterns.md)
 
 ---
 
@@ -92,7 +92,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/access-control-patterns.md](patterns/access-control-patterns.md)
+ **Pattern Reference**: [patterns/access-control-patterns.md](patterns/access-control-patterns.md)
 
 ---
 
@@ -102,7 +102,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/don-t-update-state-patterns.md](patterns/don-t-update-state-patterns.md)
+ **Pattern Reference**: [patterns/don-t-update-state-patterns.md](patterns/don-t-update-state-patterns.md)
 
 ---
 
@@ -112,7 +112,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/decimals-patterns.md](patterns/decimals-patterns.md)
+ **Pattern Reference**: [patterns/decimals-patterns.md](patterns/decimals-patterns.md)
 
 ---
 
@@ -122,7 +122,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/overflow-underflow-patterns.md](patterns/overflow-underflow-patterns.md)
+ **Pattern Reference**: [patterns/overflow-underflow-patterns.md](patterns/overflow-underflow-patterns.md)
 
 ---
 
@@ -132,7 +132,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/liquidation-patterns.md](patterns/liquidation-patterns.md)
+ **Pattern Reference**: [patterns/liquidation-patterns.md](patterns/liquidation-patterns.md)
 
 ---
 
@@ -142,7 +142,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/slippage-patterns.md](patterns/slippage-patterns.md)
+ **Pattern Reference**: [patterns/slippage-patterns.md](patterns/slippage-patterns.md)
 
 ---
 
@@ -152,7 +152,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/denial-of-service-patterns.md](patterns/denial-of-service-patterns.md)
+ **Pattern Reference**: [patterns/denial-of-service-patterns.md](patterns/denial-of-service-patterns.md)
 
 ---
 
@@ -162,7 +162,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/admin-patterns.md](patterns/admin-patterns.md)
+ **Pattern Reference**: [patterns/admin-patterns.md](patterns/admin-patterns.md)
 
 ---
 
@@ -172,7 +172,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/missing-logic-patterns.md](patterns/missing-logic-patterns.md)
+ **Pattern Reference**: [patterns/missing-logic-patterns.md](patterns/missing-logic-patterns.md)
 
 ---
 
@@ -182,7 +182,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/rounding-patterns.md](patterns/rounding-patterns.md)
+ **Pattern Reference**: [patterns/rounding-patterns.md](patterns/rounding-patterns.md)
 
 ---
 
@@ -192,7 +192,7 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/stale-price-patterns.md](patterns/stale-price-patterns.md)
+ **Pattern Reference**: [patterns/stale-price-patterns.md](patterns/stale-price-patterns.md)
 
 ---
 
@@ -202,11 +202,11 @@
 - [ ] Check edge cases and boundary conditions
 - [ ] Verify proper validation and access controls
 
-📚 **Pattern Reference**: [patterns/erc4626-patterns.md](patterns/erc4626-patterns.md)
+ **Pattern Reference**: [patterns/erc4626-patterns.md](patterns/erc4626-patterns.md)
 
 ---
 
-## 🟡 HIGH PRIORITY (Ranks 21-50)
+##  HIGH PRIORITY (Ranks 21-50)
 
 | Rank | Vulnerability Type | Count | % of Total |
 |------|-------------------|-------|------------|
@@ -242,7 +242,7 @@
 | 50 | transferFrom vs safeTransferFrom | 14 | 0.028% |
 
 
-## 🟢 MEDIUM PRIORITY (Ranks 51-100)
+##  MEDIUM PRIORITY (Ranks 51-100)
 
 | Rank | Vulnerability Type | Count |
 |------|-------------------|-------|
@@ -300,14 +300,14 @@
 
 ---
 
-## 📊 Statistics
+##  Statistics
 
 - **Total Vulnerabilities Analyzed**: 50,530
 - **Unique Vulnerability Types**: 207
 - **Checklist Coverage**: Top 100 vulnerability types
 - **Last Updated**: 2026-01-29
 
-## 📁 Quick Links
+##  Quick Links
 
 - [All Pattern Files](patterns/)
 - [Severity Analysis](severity/)

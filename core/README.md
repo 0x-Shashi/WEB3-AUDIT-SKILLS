@@ -1,4 +1,4 @@
-# Web3 Audit Core Module
+﻿# Web3 Audit Core Module
 
 The functional core of the Web3 Security Audit System. This module provides the actual execution layer for security analysis.
 
@@ -166,23 +166,23 @@ db.close();
 
 ```
 core/
-├── package.json           # Node.js config
-├── bin/
-│   └── cli.js            # CLI entry point
-├── src/
-│   ├── index.js          # Main exports
-│   ├── api/
-│   │   ├── solodit-client.js   # Solodit API
-│   │   └── solodit-parser.js   # Response parsing
-│   ├── tools/
-│   │   ├── slither-runner.js   # Slither integration
-│   │   ├── mythril-runner.js   # Mythril integration
-│   │   ├── aderyn-runner.js    # Aderyn integration
-│   │   └── tool-runner.js      # Unified runner
-│   ├── db/
-│   │   └── finding-database.js # SQLite/JSON storage
-│   └── utils/
-│       └── project-detector.js # Framework detection
+ package.json           # Node.js config
+ bin/
+    cli.js            # CLI entry point
+ src/
+    index.js          # Main exports
+    api/
+       solodit-client.js   # Solodit API
+       solodit-parser.js   # Response parsing
+    tools/
+       slither-runner.js   # Slither integration
+       mythril-runner.js   # Mythril integration
+       aderyn-runner.js    # Aderyn integration
+       tool-runner.js      # Unified runner
+    db/
+       finding-database.js # SQLite/JSON storage
+    utils/
+        project-detector.js # Framework detection
 ```
 
 ## Supported Frameworks
@@ -201,9 +201,9 @@ core/
 
 | Tool | Speed | Depth | Install |
 |------|-------|-------|---------|
-| Slither | ⚡ Fast | Pattern-based | `pip install slither-analyzer` |
-| Aderyn | ⚡ Very Fast | Pattern-based | `cargo install aderyn` |
-| Mythril | 🐢 Slow | Symbolic exec | `pip install mythril` |
+| Slither |  Fast | Pattern-based | `pip install slither-analyzer` |
+| Aderyn |  Very Fast | Pattern-based | `cargo install aderyn` |
+| Mythril |  Slow | Symbolic exec | `pip install mythril` |
 
 **Recommendation:** Use Slither + Aderyn for quick scans, add Mythril for deep analysis.
 

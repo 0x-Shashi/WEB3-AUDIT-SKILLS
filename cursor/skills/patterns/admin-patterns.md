@@ -1,4 +1,4 @@
-# Admin Security Patterns
+﻿# Admin Security Patterns
 
 ## Overview
 
@@ -134,7 +134,7 @@ Beware of including tokens with callbacks such as ERC777 tokens into the Vault. 
 - `ManagedPool.sol#L680-L698`
 
 ## Description
-Balancer’s `ManagedPool` uses 32-bit values for `startTime` and `endTime` but does not verify if those values exist within that range. When `endTime` is set to \(2^{32}\), it becomes larger than `startTime`, so the `_require(startTime <= endTime, ...)` statement will not revert. When `endTime` is converted to 32 bits, it will get a value of 0, causing the check in `_calculateWeightChangeProgress()` with `if (currentTime >= endTime)` to be true, thus leading to an immediate weight change.
+Balancers `ManagedPool` uses 32-bit values for `startTime` and `endTime` but does not verify if those values exist within that range. When `endTime` is set to \(2^{32}\), it becomes larger than `startTime`, so the `_require(startTime <= endTime, ...)` statement will not revert. When `endTime` is converted to 32 bits, it will get a value of 0, causing the check in `_calculateWeightChangeProgress()` with `if (currentTime >= endTime)` to be true, thus leading to an immediate weight change.
 
 This allows the Manager to trigger an immediate weight change via the `updateWeightsGradually()` function and open arbitrage opportunities.
 
@@ -484,8 +484,8 @@ AeraVaultV1.sol#L564-L593
 The vault Owner can set arbitrary weights via `disableTrading()` and then call `enableTradingWithWeights()` to set the spot price and create arbitrage opportunities for himself. This way, `allowance()` in `withdraw()` checks, which limit the amount of funds an owner can withdraw, can be circumvented. Something similar can be done with `enableTradingRiskingArbitrage()` in combination with sufficient time.
 
 Also see the following issues:
-- `allowance()` doesn’t limit `withdraw()`
-- `enableTradingWithWeights` allows the Treasury to change the pool’s weights even if the swap is not disabled
+- `allowance()` doesnt limit `withdraw()`
+- `enableTradingWithWeights` allows the Treasury to change the pools weights even if the swap is not disabled
 - Separation of concerns between Owner and Manager
 
 ### Functions
@@ -531,7 +531,7 @@ For safety reasons, we want the treasury to have full control over trading. Give
 LibDiamond.sol#L95-L119
 
 ## Description
-The function `diamondCut()` of `LibDiamond` verifies the signed version of the update parameters. It checks whether the signed version is available and if a sufficient amount of time has passed. However, it doesn’t prevent multiple executions, and the signed version remains valid indefinitely.
+The function `diamondCut()` of `LibDiamond` verifies the signed version of the update parameters. It checks whether the signed version is available and if a sufficient amount of time has passed. However, it doesnt prevent multiple executions, and the signed version remains valid indefinitely.
 
 This allows old updates to be executed again. Assume the following:
 
@@ -822,7 +822,7 @@ https://github.com/code-423n4/2022-10-traderjoe/blob/main/src/libraries/PendingO
 ## Vulnerability details
 
 ### Vulnerability details
-Typically, the contract’s owner is the account that deploys the contract. As a result, the owner is able to perform certain privileged activities.
+Typically, the contracts owner is the account that deploys the contract. As a result, the owner is able to perform certain privileged activities.
 
 However, Owner privileges are numerous and there is no timelock structure in the process of using these privileges.
 The Owner is assumed to be an EOA, since the documents do not provide information on whether the Owner will be a multisign structure.
@@ -832,7 +832,7 @@ In parallel with the private key thefts of the project owners, which have increa
 Similar vulnerability;
 Private keys stolen:
 
-Hackers have stolen cryptocurrency worth around €552 million from a blockchain project linked to the popular online game Axie Infinity, in one of the largest cryptocurrency heists on record. Security issue : PrivateKey of the project officer was stolen:
+Hackers have stolen cryptocurrency worth around 552 million from a blockchain project linked to the popular online game Axie Infinity, in one of the largest cryptocurrency heists on record. Security issue : PrivateKey of the project officer was stolen:
 https://www.euronews.com/next/2022/03/30/blockchain-network-ronin-hit-by-552-million-crypto-heist
 
 

@@ -1,4 +1,4 @@
-# Access Control Security Patterns
+﻿# Access Control Security Patterns
 
 ## Overview
 
@@ -84,7 +84,7 @@ This attack is made possible by the following issues:
 With the contract `GenericBridgeFacet`, the functions `swapAndStartBridgeTokensGeneric()` (via `LibSwap.swap()`) and `_startBridge()` allow arbitrary function calls, which enable anyone to call `transferFrom()` and steal tokens from users who have provided a large allowance to the LiFi protocol. This vulnerability has been exploited in the past.
 
 ### Additional Risks
-- Ability to call the LiFi Diamond itself via functions that don’t have `nonReentrant`.
+- Ability to call the LiFi Diamond itself via functions that dont have `nonReentrant`.
 - Potential cancellation of transfers for other users.
 - Calling functions protected by checks on `this`, such as `completeBridgeTokensViaStargate`.
 
@@ -279,7 +279,7 @@ https://github.com/rabbitholegg
 
 ## Description
 
-tSQD is designed so that it can be bridged from Ethereum (L1) to Arbitrum (L2) via Arbitrum’s generic-custom gateway.
+tSQD is designed so that it can be bridged from Ethereum (L1) to Arbitrum (L2) via Arbitrums generic-custom gateway.
 However, the `registerTokenOnL2` function, which sets the L2 token address via `gateway.registerTokenToL2`, is not currently restricted.
 
 ```solidity

@@ -1,4 +1,4 @@
-# ERC1155 Security Patterns
+﻿# ERC1155 Security Patterns
 
 ## Overview
 
@@ -67,7 +67,7 @@ The code will go into `_transferERC721s` instead of `_transferERC1155s`, since t
 
 ---
 
-### Example 2: Re-entrancy issue for ERC1155 ✓ Fixed
+### Example 2: Re-entrancy issue for ERC1155 Fixed
 
 **Source**: ConsenSys
 **Protocol**: Bridge Mutual

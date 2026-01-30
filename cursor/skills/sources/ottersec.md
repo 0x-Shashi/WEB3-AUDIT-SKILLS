@@ -1,4 +1,4 @@
-# OtterSec - Audit Findings
+﻿# OtterSec - Audit Findings
 
 ## Overview
 
@@ -34,7 +34,7 @@
 
 ## Withdrawal Request Issue in Staking Pool
 
-`staking_inner::request_withdraw_stake` does not explicitly prevent a withdrawal request with a `share_amount` of zero. This oversight may allow a malicious user to manipulate the staking pool’s share-to-asset ratio by withdrawing a small principal or leaving it.
+`staking_inner::request_withdraw_stake` does not explicitly prevent a withdrawal request with a `share_amount` of zero. This oversight may allow a malicious user to manipulate the staking pools share-to-asset ratio by withdrawing a small principal or leaving it.
 
 Furthermore, there is a possibility of a denial-of-service attack when `share_amount` is zero in `exchange_rate::convert_to_wal_amount`, due to division by zero when the function performs a division by `share_amount` to compute the WAL equivalent. Specifically, this affects epoch advanceme...
 
@@ -66,7 +66,7 @@ public fun join(sw: &mut StakedWal, other: StakedWal) {
 The vulnerability concerns the potential for an emission to be removed from SyMeta in a way that breaks the integrity of the system. 
 
 ## Details
-The **Position** structure tracks the state of a user’s position, including their amount and a list of rewards, which are tied to emissions. Each **Reward** in **Position** corresponds to an **Emission** on SyMeta, tracked by its *mint* and *last_seen_share_index*, which is saved in **Reward**. 
+The **Position** structure tracks the state of a users position, including their amount and a list of rewards, which are tied to emissions. Each **Reward** in **Position** corresponds to an **Emission** on SyMeta, tracked by its *mint* and *last_seen_share_index*, which is saved in **Reward**. 
 
 The `Position::ensure_trackers` function ensures that the position has a corresponding reward entry for every emission t...
 
@@ -132,7 +132,7 @@ function postBat...
 
 `validate_and_store_payload` in Consortium validates and records the usage of a payload. However, since it is public, anyone may call it. This creates a potential front-running attack, where a malicious actor may interfere with the expected execution of a valid transaction. 
 
-Thus, if a user submits a valid transaction that calls `validate_and_store_payload(payload, proof)` to validate the payload, the attacker may front-run this with a similar call to `validate_and_store_payload`, which executes before the user’s call.
+Thus, if a user submits a valid transaction that calls `validate_and_store_payload(payload, proof)` to validate the payload, the attacker may front-run this with a similar call to `validate_and_store_payload`, which executes before the users call.
 
 ```rust
 >_ move/consortium/s...
@@ -176,7 +176,7 @@ public fun pay_flashloan(assets: vector<FungibleAsset>, loan: Flashl...
 
 ## Vulnerability in Solidity's Inheritance Hierarchy
 
-The vulnerability lies in how Solidity’s inheritance hierarchy and the `super` keyword determine which parent implementation is prioritized when overriding a function. 
+The vulnerability lies in how Soliditys inheritance hierarchy and the `super` keyword determine which parent implementation is prioritized when overriding a function. 
 
 Here, `YieldToken` inherits both `YieldDistributionToken` and `ERC4626`, both of which implement the `decimals` function.
 
@@ -199,7 +199,7 @@ The vulnerability concerns inconsistencies that arise when certain functions in 
 
 ## YieldToken Custom Logic
 
-`YieldToken` redefines `convertToShares` and `convertToAssets` with custom logic that differs from the inherited ERC4626 contract’s expectations. These methods directly impact proportionality calculations between assets and shares.
+`YieldToken` redefines `convertToShares` and `convertToAssets` with custom logic that differs from the inherited ERC4626 contracts expectations. These methods directly impact proportionality calculations between assets and shares.
 
 ```solidity
 // smart-wallets/src/token/YieldToken.sol
@@ -214,7 +214,7 @@ function convertToShares(
 
 ## Issue Overview
 
-The issue concerns how `receiveYield` in `YieldToken` interacts with the contract’s accounting, specifically the mechanism used to track user share values relative to the underlying assets. In the current implementation, when `receiveYield` is called, it increases both the `yieldPerTokenStored` and the total `currencyToken` held by the `YieldToken` contract.
+The issue concerns how `receiveYield` in `YieldToken` interacts with the contracts accounting, specifically the mechanism used to track user share values relative to the underlying assets. In the current implementation, when `receiveYield` is called, it increases both the `yieldPerTokenStored` and the total `currencyToken` held by the `YieldToken` contract.
 
 ## Code Snippet
 
@@ -244,7 +244,7 @@ So, to properly update the value of `left` within the `MinterCap` structure, it 
 
 There is a sequence mismatch between the `vault_allocation_strategy` and `invested.allocations` arrays in `amounts_invested`. 
 
-`vault_allocation_strategy` represents the vault’s target allocation strategy and contains all allocations, including active and inactive ones (inactive entries have `Pubkey::default` as the reserve key). `invested.allocations`, on the other hand, reflects the current state of investments in the vault.
+`vault_allocation_strategy` represents the vaults target allocation strategy and contains all allocations, including active and inactive ones (inactive entries have `Pubkey::default` as the reserve key). `invested.allocations`, on the other hand, reflects the current state of investments in the vault.
 
 ## Code Snippet
 

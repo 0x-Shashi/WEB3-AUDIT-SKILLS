@@ -1,4 +1,4 @@
-# Weird ERC20 Security Patterns
+﻿# Weird ERC20 Security Patterns
 
 ## Overview
 
@@ -55,7 +55,7 @@ if (auctioneerCut > 0) {
 
 This line will revert if `auctioneer` is set to `address(0)` on some tokens (revert on transferring to address(0) is a [default behaviour of the OpenZeppelin template](https://www.notion.so/Yield-Witch-555e6981c26b41008d03a504077b4770)). So if someone start an `auction` with `to = address(0)`, this auction becomes un-liquidatable.
 
-A malicious user can run a bot to monitor his own vault, and if the got underwater and they don’t have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
+A malicious user can run a bot to monitor his own vault, and if the got underwater and they dont have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
 
 
 ## Recommended Mitigation Steps
@@ -124,7 +124,7 @@ Note that this function assumes that the `amount` of ERC20 token is always 18 de
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelin’s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.
@@ -677,16 +677,16 @@ Hence, when the user `redeems` the minted shares back to the `_assets`, the cont
 
 **Details**:
 
-The internal [`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407) function handles user deposits, transferring a specified amount of `stETH` from `msg.sender` to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by the [`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371) function.
+The internal[`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407)function handles user deposits, transferring a specified amount of`stETH`from`msg.sender`to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by the[`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371)function.
 
 
-As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter the `deposit` function multiple times.
+As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter the`deposit`function multiple times.
 
 
 This re-entrancy will result in an increment in the receiver balance on the queue, even though this balance will not correspond to the actual amount deposited into the vault.
 
 
-In the current implementation, the `_deposit` function in the `BaseVault` contract is overridden by the [implementation in the `STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, the `BaseVault` is likely to be inherited by future vaults, so it is crucial to have the correct `_deposit` implementation in this contract in case it is not overridden.
+In the current implementation, the`_deposit`function in the`BaseVault`contract is overridden by the[implementation in the`STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, the`BaseVault`is likely to be inherited by future vaults, so it is crucial to have the correct`_deposit`implementation in this contract in case it is not overridden.
 
 
 Consider reordering the calls, doing the transfer first, and then adding th
@@ -743,7 +743,7 @@ As we all know, some tokens will deduct fees when transferring token. In this wa
 
 ## Vulnerability Detail
 
-The `_bidCollaterals` mapping of `CollateralManager` records the `CollateralInfo` of each bidId. This structure records the collateral information provided by the user when creating a bid for a loan. A lender can accept a loan by calling  `TellerV2.lenderAcceptBid` that will eventually transfer the user's collateral from the user address to the CollateralEscrowV1 contract corresponding to the loan. The whole process will deduct fee twice.
+The `_bidCollaterals` mapping of `CollateralManager` records the `CollateralInfo` of each bidId. This structure records the collateral information provided by the user when creating a bid for a loan. A lender can accept a loan by calling `TellerV2.lenderAcceptBid` that will eventually transfer the user's collateral from the user address to the CollateralEscrowV1 contract corresponding to the loan. The whole process will deduct fee twice.
 
 ```solidity
 //CollateralManager.sol
@@ -995,13 +995,13 @@ If you are making a Lock fund for escrow using a fee on transfer token then cont
 
 **Details**:
 
-The vault implements a [`mintWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L131) and [`depositWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L106) function intended to allow users to transfer assets to the vault in a single transaction. However, the vault’s underlying asset is intended to be [stETH](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F10#L50) which does not have a `permit` function. Currently, any user who tries to perform a `mintWithPermit` or `depositWithPermit` will have their transaction reverted due to the stETH contract’s [fallback](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F1#L279) function.
+The vault implements a[`mintWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L131)and[`depositWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L106)function intended to allow users to transfer assets to the vault in a single transaction. However, the vaults underlying asset is intended to be[stETH](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F10#L50)which does not have a`permit`function. Currently, any user who tries to perform a`mintWithPermit`or`depositWithPermit`will have their transaction reverted due to the stETH contracts[fallback](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F1#L279)function.
 
 
-Consider removing the `mintWithPermit` and `depositWithPermit` functions. We note that [wstETH](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0#code#L965) does have a permit function for future considerations.
+Consider removing the`mintWithPermit`and`depositWithPermit`functions. We note that[wstETH](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0#code#L965)does have a permit function for future considerations.
 
 
-***Update:** Acknowledged, and will not fix. Pods Finance team’s statement for this issue:*
+***Update:**Acknowledged, and will not fix. Pods Finance teams statement for this issue:*
 
 
 

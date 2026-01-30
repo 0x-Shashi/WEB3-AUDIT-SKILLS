@@ -1,4 +1,4 @@
-# Account Validation Checklist
+﻿# Account Validation Checklist
 
 Comprehensive checklist for validating Solana accounts in both native programs and Anchor.
 
@@ -391,13 +391,13 @@ For rapid validation audit, check each account:
 
 | Check | Present | Notes |
 |-------|---------|-------|
-| Owner | ✅/❌ | |
-| Signer | ✅/❌/N/A | |
-| Writable | ✅/❌/N/A | |
-| Type/Discriminator | ✅/❌ | |
-| PDA Seeds | ✅/❌/N/A | |
-| Relationships | ✅/❌/N/A | |
-| Duplicates | ✅/❌ | |
+| Owner | / | |
+| Signer | //N/A | |
+| Writable | //N/A | |
+| Type/Discriminator | / | |
+| PDA Seeds | //N/A | |
+| Relationships | //N/A | |
+| Duplicates | / | |
 
 **Missing:** [List]
 **Risk:** Critical/High/Medium/Low

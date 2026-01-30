@@ -1,4 +1,4 @@
-# MEDIUM Severity Findings
+﻿# MEDIUM Severity Findings
 
 ## Overview
 
@@ -45,7 +45,7 @@ Medium Risk
 
 ## Description
 
-When a pawn expires, `PawnShop.liquidate(...)` closes the position by burning the escrowed NFT collateral through the NFT’s `burn(...)` function (context).
+When a pawn expires, `PawnShop.liquidate(...)` closes the position by burning the escrowed NFT collateral through the NFTs `burn(...)` function (context).
 
 However, in this system, the NFT is `RWA`, whose burn path is gated by `whenNotPaused`, and whose transfer/burn internals revert if the caller (`auth`) is blacklisted. This means an admin action on `RWA` (pause or blacklist) can cause `PawnShop.liquidate(...)` to revert (problem).
 
@@ -390,7 +390,7 @@ File: src/core/VaultManagerV2.sol
 207:     uint to //The address where the collateral will be sent
 208:   ) 
 ...: 	// ... some code ...
-215:❌	   dyad.burn(id, msg.sender, dyad.mintedDyad(address(this), id)); //<@audit: caller need to burn full borrowed amount
+215:	   dyad.burn(id, msg.sender, dyad.mintedDyad(address(this), id)); //<@audit: caller need to burn full borrowed amount
 216: 
 217:       uint cappedCr               = cr < 1e18 ? 1e18 : cr; /// == max(1e18, cr)
 218:       uint liquidation...

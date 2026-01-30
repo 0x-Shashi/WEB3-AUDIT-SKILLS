@@ -1,4 +1,4 @@
-# Function Analysis Example
+﻿# Function Analysis Example
 
 Complete walkthrough of ultra-granular function analysis using a DEX swap function.
 
@@ -126,8 +126,8 @@ This function enables users to exchange one token for another within the DEX's l
 **Returns:** `uint256 amountOut` - The amount of output tokens received
 
 **State Changes:**
-1. `reserveA` updated: +amountIn if swapping A→B, -amountOut if swapping B→A
-2. `reserveB` updated: +amountIn if swapping B→A, -amountOut if swapping A→B
+1. `reserveA` updated: +amountIn if swapping AB, -amountOut if swapping BA
+2. `reserveB` updated: +amountIn if swapping BA, -amountOut if swapping AB
 
 **Events:**
 - `Swap(msg.sender, tokenIn, amountIn, outputToken, amountOut)`
@@ -176,11 +176,11 @@ require(amountIn > 0, "Zero amount");
 - A: Without this check, an attacker could pass any address. The swap direction logic would produce unpredictable results. Arbitrary token addresses could be used to drain funds.
 
 **5 Whys:**
-1. Why must tokenIn be tokenA or tokenB? → Because swap logic assumes two-token pool
-2. Why only two tokens? → Constant product formula works for pairs
-3. Why constant product? → It's the simplest AMM model
-4. Why use AMM? → Enables permissionless liquidity provision
-5. Why permissionless? → Core DeFi value proposition
+1. Why must tokenIn be tokenA or tokenB?  Because swap logic assumes two-token pool
+2. Why only two tokens?  Constant product formula works for pairs
+3. Why constant product?  It's the simplest AMM model
+4. Why use AMM?  Enables permissionless liquidity provision
+5. Why permissionless?  Core DeFi value proposition
 
 ---
 
@@ -214,11 +214,11 @@ bool isAtoB = tokenIn == address(tokenA);
 - `reserveIn`/`reserveOut` for calculation
 
 **5 Hows:**
-1. How does direction affect calculation? → Changes which reserve is numerator vs denominator
-2. How does it affect transfers? → Determines which token to receive and which to send
-3. How could direction be manipulated? → Only by providing different tokenIn
-4. How does reserve assignment work? → Memory copies of storage values
-5. How could reserve values be wrong? → If external calls modified balances without updating reserves
+1. How does direction affect calculation?  Changes which reserve is numerator vs denominator
+2. How does it affect transfers?  Determines which token to receive and which to send
+3. How could direction be manipulated?  Only by providing different tokenIn
+4. How does reserve assignment work?  Memory copies of storage values
+5. How could reserve values be wrong?  If external calls modified balances without updating reserves
 
 ---
 
@@ -253,11 +253,11 @@ amountOut = numerator / denominator;
 - A: Derived from constant product invariant. Before swap: k = x * y. After swap: (x + dx) * (y - dy) = k. Solving for dy with fee adjustment gives this formula.
 
 **5 Whys:**
-1. Why multiply by FEE_NUMERATOR (997)? → To subtract 0.3% fee
-2. Why 0.3% fee? → Standard AMM fee, balances LP returns vs trader cost
-3. Why is fee in numerator not denominator? → Reduces effective input amount
-4. Why integer division? → Solidity doesn't have native floats
-5. Why truncate toward zero? → Protects pool from rounding attacks
+1. Why multiply by FEE_NUMERATOR (997)?  To subtract 0.3% fee
+2. Why 0.3% fee?  Standard AMM fee, balances LP returns vs trader cost
+3. Why is fee in numerator not denominator?  Reduces effective input amount
+4. Why integer division?  Solidity doesn't have native floats
+5. Why truncate toward zero?  Protects pool from rounding attacks
 
 **Risk Analysis:**
 - **Precision Loss:** Integer division loses decimals. For very small swaps relative to pool size, output could round to zero.
@@ -288,11 +288,11 @@ require(amountOut > 0, "Zero output");
 **Later Logic Depends On:** amountOut is valid for transfer
 
 **5 Whys:**
-1. Why check minAmountOut? → Protect user from sandwich attacks/slippage
-2. Why allow user to set this? → User knows their risk tolerance
-3. Why check zero output separately? → Edge case where calculation underflows to 0
-4. Why is zero output possible? → Precision loss for tiny amounts or manipulation
-5. Why here instead of earlier? → Need calculated value first
+1. Why check minAmountOut?  Protect user from sandwich attacks/slippage
+2. Why allow user to set this?  User knows their risk tolerance
+3. Why check zero output separately?  Edge case where calculation underflows to 0
+4. Why is zero output possible?  Precision loss for tiny amounts or manipulation
+5. Why here instead of earlier?  Need calculated value first
 
 **Missing Feature Analysis:**
 - No deadline parameter (vulnerable to long-pending txs)
@@ -324,16 +324,16 @@ inputToken.transferFrom(msg.sender, address(this), amountIn);
 **Later Logic Depends On:** Contract now holds the input tokens
 
 **5 Hows:**
-1. How could this fail? → Insufficient balance, insufficient allowance, paused token
-2. How does fee-on-transfer break this? → Contract receives less than amountIn, but reserveA updates by amountIn
-3. How does rebasing break this? → Similar balance mismatch
-4. How is reentrancy possible? → ERC777 or malicious token could callback
-5. How is reentrancy mitigated? → Not mitigated! No reentrancy guard.
+1. How could this fail?  Insufficient balance, insufficient allowance, paused token
+2. How does fee-on-transfer break this?  Contract receives less than amountIn, but reserveA updates by amountIn
+3. How does rebasing break this?  Similar balance mismatch
+4. How is reentrancy possible?  ERC777 or malicious token could callback
+5. How is reentrancy mitigated?  Not mitigated! No reentrancy guard.
 
 **CRITICAL ISSUE IDENTIFIED:**
-⚠️ **Potential Reentrancy:** If inputToken is ERC777 or has hooks, it could callback into swap() before reserves are updated, allowing double-spend or manipulation.
+ **Potential Reentrancy:** If inputToken is ERC777 or has hooks, it could callback into swap() before reserves are updated, allowing double-spend or manipulation.
 
-⚠️ **Fee-on-Transfer Vulnerability:** If inputToken has transfer fees, the contract receives less than `amountIn` but reserves update by full `amountIn`, causing permanent accounting error.
+ **Fee-on-Transfer Vulnerability:** If inputToken has transfer fees, the contract receives less than `amountIn` but reserves update by full `amountIn`, causing permanent accounting error.
 
 ---
 
@@ -393,11 +393,11 @@ outputToken.transfer(msg.sender, amountOut);
 **Later Logic Depends On:** None (final meaningful operation)
 
 **5 Hows:**
-1. How could this fail? → Contract lacks balance, token paused, user blacklisted
-2. How is contract balance ensured? → Reserves should track balances
-3. How could balance be wrong? → Fee-on-transfer, direct transfers, exploits
-4. How is failure handled? → Reverts entire transaction (good)
-5. How is user protected? → Gets tokens or entire tx reverts
+1. How could this fail?  Contract lacks balance, token paused, user blacklisted
+2. How is contract balance ensured?  Reserves should track balances
+3. How could balance be wrong?  Fee-on-transfer, direct transfers, exploits
+4. How is failure handled?  Reverts entire transaction (good)
+5. How is user protected?  Gets tokens or entire tx reverts
 
 ---
 
@@ -437,12 +437,12 @@ emit Swap(msg.sender, tokenIn, amountIn, address(outputToken), amountOut);
 
 | Risk | Likelihood | Impact | Mitigation | Status |
 |------|------------|--------|------------|--------|
-| Reentrancy via ERC777 | Medium | Critical | Add nonReentrant | ❌ Missing |
-| Fee-on-transfer desync | Medium | High | Check actual balance received | ❌ Missing |
-| No deadline parameter | High | Medium | Add deadline check | ❌ Missing |
-| Flash loan manipulation | Medium | High | Use TWAP oracle | ❌ Missing |
-| Precision loss on small swaps | Low | Low | Minimum amount checks | ⚠️ Partial |
-| Overflow in calculation | Very Low | Critical | Solidity 0.8+ | ✅ Mitigated |
+| Reentrancy via ERC777 | Medium | Critical | Add nonReentrant |  Missing |
+| Fee-on-transfer desync | Medium | High | Check actual balance received |  Missing |
+| No deadline parameter | High | Medium | Add deadline check |  Missing |
+| Flash loan manipulation | Medium | High | Use TWAP oracle |  Missing |
+| Precision loss on small swaps | Low | Low | Minimum amount checks |  Partial |
+| Overflow in calculation | Very Low | Critical | Solidity 0.8+ |  Mitigated |
 
 ---
 

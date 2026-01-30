@@ -1,4 +1,4 @@
-# 1/64 Rule Security Patterns
+﻿# 1/64 Rule Security Patterns
 
 ## Overview
 
@@ -82,7 +82,7 @@ The withdrawal queue can be forcibly activated to impede the proper operation of
 
 The `RootERC20PredicateFlowRate` contract implements a withdrawal queue to more easily detect and stop large withdrawals from passing through the bridge (e.g., bridging illegitimate funds from an exploit). A transaction can enter the withdrawal queue in four ways:
 
-1. If a token’s flow rate has not been configured by the rate control admin.
+1. If a tokens flow rate has not been configured by the rate control admin.
 2. If the withdrawal amount is larger than or equal to the large transfer threshold for that token.
 3. If, during a predefined period, the total withdrawals of that token are larger than the defined token capacity.
 4. If the rate controller manually activates the withdrawal queue by using the `activateWithdrawalQueue` function.
@@ -112,10 +112,10 @@ Eve observes Alice initiating a transfer to bridge her tokens back to the mainne
 ## Description
 HTML5 local storage is used to hold session data, including keychain values. Because there are no access controls on modifying and retrieving this data using JavaScript, data in local storage is vulnerable to XSS attacks.
 
-**Figure 4.1:** Keychain data stored in a browser’s localStorage
+**Figure 4.1:** Keychain data stored in a browsers localStorage
 
 ## Exploit Scenario
-Alice discovers an XSS vulnerability in a dApp that supports WalletConnect. This vulnerability allows Alice to retrieve the dApp’s keychain data, allowing her to propose new transactions to the connected wallet.
+Alice discovers an XSS vulnerability in a dApp that supports WalletConnect. This vulnerability allows Alice to retrieve the dApps keychain data, allowing her to propose new transactions to the connected wallet.
 
 ## Recommendations
 Short term, consider using cookies to store and send tokens. Enable cross-site request forgery (CSRF) libraries available to mitigate these attacks. Ensure that cookies are tagged with `httpOnly`, and preferably `secure`, to ensure that JavaScript cannot access them.

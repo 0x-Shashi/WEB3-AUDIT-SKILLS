@@ -1,4 +1,4 @@
----
+﻿---
 name: skill-chains
 description: "Pre-defined skill sequences for different audit scenarios. These chains orchestrate multiple skills in optimal order for comprehensive coverage."
 allowed-tools:
@@ -31,44 +31,44 @@ Orchestrate multiple skills in pre-defined sequences for different audit scenari
 ## Chain Execution Flow
 
 ```
-┌─────────────┐
-│   START     │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐     ┌─────────────────────────┐
-│   CONTEXT   │────▶│ Detect chain, protocol  │
-│   DETECT    │     │ Load appropriate skills │
-└──────┬──────┘     └─────────────────────────┘
-       │
-       ▼
-┌─────────────┐     ┌─────────────────────────┐
-│   PATTERN   │────▶│ Apply consolidated      │
-│   SCAN      │     │ vulnerability patterns  │
-└──────┬──────┘     └─────────────────────────┘
-       │
-       ▼
-┌─────────────┐     ┌─────────────────────────┐
-│   ATTACK    │────▶│ Map attack chains       │
-│   CHAIN     │     │ Identify combined vulns │
-└──────┬──────┘     └─────────────────────────┘
-       │
-       ▼
-┌─────────────┐     ┌─────────────────────────┐
-│   SEVERITY  │────▶│ Assess impact           │
-│   ASSESS    │     │ Prioritize findings     │
-└──────┬──────┘     └─────────────────────────┘
-       │
-       ▼
-┌─────────────┐     ┌─────────────────────────┐
-│   REPORT    │────▶│ Generate structured     │
-│   GENERATE  │     │ audit report            │
-└──────┬──────┘     └─────────────────────────┘
-       │
-       ▼
-┌─────────────┐
-│    END      │
-└─────────────┘
+
+   START     
+
+       
+       
+     
+   CONTEXT    Detect chain, protocol  
+   DETECT          Load appropriate skills 
+     
+       
+       
+     
+   PATTERN    Apply consolidated      
+   SCAN            vulnerability patterns  
+     
+       
+       
+     
+   ATTACK     Map attack chains       
+   CHAIN           Identify combined vulns 
+     
+       
+       
+     
+   SEVERITY   Assess impact           
+   ASSESS          Prioritize findings     
+     
+       
+       
+     
+   REPORT     Generate structured     
+   GENERATE        audit report            
+     
+       
+       
+
+    END      
+
 ```
 
 ---
@@ -78,10 +78,10 @@ Orchestrate multiple skills in pre-defined sequences for different audit scenari
 ```
 User: "Run full-audit chain on this codebase"
 
-→ Load: full-audit-chain.md
-→ Execute each step in sequence
-→ Pass context between steps
-→ Aggregate findings
+ Load: full-audit-chain.md
+ Execute each step in sequence
+ Pass context between steps
+ Aggregate findings
 ```
 
 ---

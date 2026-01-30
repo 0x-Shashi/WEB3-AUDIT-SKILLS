@@ -1,4 +1,4 @@
-# FuelVM Audit Workflow
+﻿# FuelVM Audit Workflow
 
 ## Phase 1: Setup (30 min)
 
@@ -103,13 +103,13 @@ grep -rn "transfer\|mint\|burn" src/
 
 ### 5.2 Asset Flow Diagram
 ```
-User deposits → msg_amount() verified
-              → asset_id verified
-              → balance updated
+User deposits  msg_amount() verified
+               asset_id verified
+               balance updated
               
-User withdraws → balance checked
-              → balance updated
-              → transfer() called
+User withdraws  balance checked
+               balance updated
+               transfer() called
 ```
 
 ### 5.3 Asset Checklist

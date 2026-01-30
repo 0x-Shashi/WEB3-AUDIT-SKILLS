@@ -1,4 +1,4 @@
-# Code Quality Security Patterns
+﻿# Code Quality Security Patterns
 
 ## Overview
 
@@ -350,7 +350,7 @@ Unused code can hint at programming or architectural errors.  Recommend using it
 **[xyz-ctrl (Visor) acknowledged but disputed severity](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-862607014):**
 
 **[ghoul-sol (Judge) commented](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-873480513):**
-> Agree with sponsor, it doesn’t present a security issue it’s a non-critical issue.
+> Agree with sponsor, it doesnt present a security issue its a non-critical issue.
 
 **[ztcrypto (Visor) commented](https://github.com/code-423n4/2021-05-visorfinance-findings/issues/44#issuecomment-889191547):**
 > patch [link](https://github.com/VisorFinance/visor-core/commit/cc22d6e450e16aaa9eb3af1ee4d9e6ac8afe43da#diff-b094db7ce2f99cbcbde7ec178a6754bac666e2192f076807acbd70d49ddd0559)

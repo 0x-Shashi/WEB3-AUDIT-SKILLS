@@ -1,10 +1,10 @@
-# 📚 Security Findings Index
+﻿#  Security Findings Index
 
 *Searchable index of all security patterns and findings*
 
 ---
 
-## 🔍 Quick Navigation
+##  Quick Navigation
 
 - [Pattern Files](#pattern-files) - By vulnerability type
 - [Severity Files](#severity-files) - By impact level

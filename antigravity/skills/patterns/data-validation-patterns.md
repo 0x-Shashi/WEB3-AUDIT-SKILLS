@@ -1,4 +1,4 @@
-# Data Validation Security Patterns
+﻿# Data Validation Security Patterns
 
 ## Overview
 
@@ -126,7 +126,7 @@ If a delegator calls `undelegate()` with `type(uint256).max`, `operatorTokenToDa
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelin’s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.

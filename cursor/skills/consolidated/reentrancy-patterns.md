@@ -25,15 +25,15 @@
 // DANGEROUS: External call before state update
 function withdraw() external {
     uint amount = balances[msg.sender];
-    (bool success,) = msg.sender.call{value: amount}("");  // ← External call
-    balances[msg.sender] = 0;  // ← State update AFTER call = VULNERABLE
+    (bool success,) = msg.sender.call{value: amount}("");  //  External call
+    balances[msg.sender] = 0;  //  State update AFTER call = VULNERABLE
 }
 
 // SAFE: State update before external call (CEI pattern)
 function withdraw() external {
     uint amount = balances[msg.sender];
-    balances[msg.sender] = 0;  // ← State update FIRST
-    (bool success,) = msg.sender.call{value: amount}("");  // ← External call AFTER
+    balances[msg.sender] = 0;  //  State update FIRST
+    (bool success,) = msg.sender.call{value: amount}("");  //  External call AFTER
 }
 ```
 
@@ -241,7 +241,7 @@ function buy(uint256 outputAmount, uint256 maxInputAmount) public payable return
 With the contract `GenericBridgeFacet`, the functions `swapAndStartBridgeTokensGeneric()` (via `LibSwap.swap()`) and `_startBridge()` allow arbitrary function calls, which enable anyone to call `transferFrom()` and steal tokens from users who have provided a large allowance to the LiFi protocol. This vulnerability has been exploited in the past.
 
 ### Additional Risks
-- Ability to call the LiFi Diamond itself via functions that donâ€™t have `nonReentrant`.
+- Ability to call the LiFi Diamond itself via functions that dont have `nonReentrant`.
 - Potential cancellation of transfers for other users.
 - Calling functions protected by checks on `this`, such as `completeBridgeTokensViaStargate`.
 
@@ -278,7 +278,7 @@ Whitelist the external call addresses and function signatures for both the dece
 
 ---
 
-### Example 4: Re-entrancy issue for ERC1155 âœ“Â Fixed
+### Example 4: Re-entrancy issue for ERC1155 Fixed
 
 **Source**: ConsenSys
 **Protocol**: Bridge Mutual
@@ -653,7 +653,7 @@ There are two main bugs that cause the above impact:
 
 For easier reading and understanding, please follow the below full attack flow diagram when reading through the explanation.
 
-    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”               â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”            â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     
+                                    
 
 *[Content truncated...]*
 
@@ -779,7 +779,7 @@ Consider this call path that allows a malicious user to reach this undesired sta
 
 ---
 
-### Example 15: RocketNodeDistributorDelegate - Reentrancy in distribute() allows node owner to drain distributor funds âœ“Â Fixed
+### Example 15: RocketNodeDistributorDelegate - Reentrancy in distribute() allows node owner to drain distributor funds Fixed
 
 **Source**: ConsenSys
 **Protocol**: Rocket Pool Atlas (v1.2)
@@ -804,7 +804,7 @@ Fixed in <https://github.com/rocket-pool/rocketpool/tree/77d7cca65b7c0557cfda078
 
 
 > 
-> We followed OpenZeppelinâ€™s design for a reentrancy guard. We were unable to use it directly as it is hardcoded to use storage slot 0 and because we already have deployment of this delegate in the wild already using storage slot 0 for another purpose, we had to append it to the end of the existing storage layout.
+> We followed OpenZeppelins design for a reentrancy guard. We were unable to use it directly as it is hardcoded to use storage slot 0 and because we already have deployment of this delegate in the wild already using storage slot 0 for another purpose, we had to append it to the end of the existing storage layout.
 > 
 > 
 > 
@@ -815,10 +815,10 @@ Fixed in <https://github.com/rocket-pool/rocketpool/tree/77d7cca65b7c0557cfda078
 #### Description
 
 
-The `distribute()` function distributes the contractâ€™s balance between the node operator and the user. The node operator is returned their initial collateral, including a fee. The rest is returned to the RETH token contract as user collateral.
+The `distribute()` function distributes the contracts balance between the node operator and the user. The node operator is returned their initial collateral, including a fee. The rest is returned to the RETH token contract as user collateral.
 
 
-After determining the node ownerâ€™s share, the contract transfers `ETH` to the node withdrawal address, which can be the configured withdrawal address or the node address. Both addresses may potentially be a malicious contract that recursively calls back into the `distribute()` function to retrieve the node share multiple times until al
+After determining the node owners share, the contract transfers `ETH` to the node withdrawal address, which can be the configured withdrawal address or the node address. Both addresses may potentially be a malicious contract that recursively calls back into the `distribute()` function to retrieve the node share multiple times until al
 
 *[Content truncated...]*
 
@@ -943,10 +943,10 @@ A hacker can exploit this mechanism by triggering a callback from `EscrowManager
 
 An attacker can exploit a reentrancy vulnerability in the `deboost()` method, manipulating the boosting mechanism to their advantage:
 1. The attacker calls the `deboost()` method and passes the same boosting NFT ID multiple times, e.g., `deboost(escrowId, [1,1,1,1,1,1,1,1])`.
-2. During the transfer process, the `deboost()` method triggers a callback to the attackerâ€™s contract.
-3. Each time the attackerâ€™s contract receives the NFT, it transfers the NFT back to `EscrowManager`.
+2. During the transfer process, the `deboost()` method triggers a callback to the attackers contract.
+3. Each time the attackers contract receives the NFT, it transfers the NFT back to `EscrowManager`.
 
-As a result, the escrow boosting coverage can be reduced to zero, even though other boosting NFTs may still be present and not withdrawn. This makes subsequent calculations inaccurate, disproportionately **inflating** the attackerâ€™s `lockAmount` and voting power.
+As a result, the escrow boosting coverage can be reduced to zero, even though other boosting NFTs may still be present and not withdrawn. This makes subsequent calculations inaccurate, disproportionately **inflating** the attackers `lockAmount` and voting power.
 
 In the following proof-of-concept (PoC), after the attacker calls `deboost()`, their voting power **increases**
 
@@ -1098,7 +1098,7 @@ Source: https://github.com/sherlock-audit/2023-12-arcadia-judging/issues/153
 ## Found by 
 0xadrii, zzykxx
 ## Summary
-It is possible to drain a liquidity pool/creditor if the poolâ€™s asset is an ERC777 token by triggering a reentrancy flow using flash actions.
+It is possible to drain a liquidity pool/creditor if the pools asset is an ERC777 token by triggering a reentrancy flow using flash actions.
 
 ## Vulnerability Detail
 The following vulnerability describes a complex flow that allows draining any liquidity pool where the underlying asset is an ERC777 token. Before diving into the vulnerability, it is important to properly understand and highlight some concepts from Arcadia that are relevant in order to allow this vulnerability to take place:
@@ -1175,9 +1175,9 @@ The vulnerability stems from the absence of the [Check Effects Interactions](htt
 
 A reentrancy vulnerability in the function `stakeToken()` allows an attacker to drain the funds of any ERC20 token deposited in the contract.
 
-In `stakeToken()` on line [180], `msg.sender`â€™s liquidity is updated in the state variable `userStakes`, however the incentiveâ€™s total liquidity is not updated until line [202]. In between, on line [194], there is a call to `_claimReward()` which passes execution flow back to the token being transferred. Using a malicious token that can react to transfers, such as an ERC777 token, or a custom attack token, the attacker can reenter the contract in between these two lines and interact with the contract in a partially updated state.
+In `stakeToken()` on line [180], `msg.sender`s liquidity is updated in the state variable `userStakes`, however the incentives total liquidity is not updated until line [202]. In between, on line [194], there is a call to `_claimReward()` which passes execution flow back to the token being transferred. Using a malicious token that can react to transfers, such as an ERC777 token, or a custom attack token, the attacker can reenter the contract in between these two lines and interact with the contract in a partially updated state.
 
-In the partially updated state, `userStake.liquidity` has been increased but the total liquidity of one or more incentives have not been. `userStake.liquidity` is global across all the userâ€™s incentives and is used as a multiplier when rewards are calculated. Therefore, a malicious user may multiply the rewards for unclaimed incentives by an inflated figure and drain tokens.
+In the partially updated state, `userStake.liquidity` has been increased but the total liquidity of one or more incentives have not been. `userStake.liquidity` is global across all the users incentives and is used as a multiplier when rewards are calculated. Therefore, a malicious user may multiply the rewards for unclaimed incentives by an inflated figure and drain tokens.
 
 The steps taken for this attack are as follows, suppose that there are multiple incentives where USDC is the staking token. Bob is the attacker and has created a malicious token contract, ATT.
 
@@ -1208,7 +1208,7 @@ The steps taken for this attack are as follows, suppose that there are multiple 
 ## Description  
 The Bribe Protocol has many reentrancy patterns that may be exploitable if the `bidAsset` ERC20 token is set to an asset with a callback mechanism. Many interactions with the `bidAsset` token do not follow the checks-effects-interactions pattern. If `bidAsset` is set to an asset with a callback mechanism, the failure to use this pattern can lead to exploitable reentrancies.  
 
-For example, the `_bid` functionâ€™s use of the reentrant `safeTransferFrom` function allows the caller to execute a double transfer:
+For example, the `_bid` functions use of the reentrant `safeTransferFrom` function allows the caller to execute a double transfer:
 
 ```solidity
 /// @dev place a bid to proposal specified by `proposalId` with `amount` of bid asset
@@ -1444,7 +1444,7 @@ Install the mitigation into the aforementioned methods, changing them to non-vie
 ### Example 6: Potential Reentrancy Into Strategies
 
 **Source**: ConsenSys
-**Protocol**: EigenLabs â€” EigenLayer
+**Protocol**: EigenLabs  EigenLayer
 **Impact**: MEDIUM
 
 **Details**:
@@ -1464,7 +1464,7 @@ Install the mitigation into the aforementioned methods, changing them to non-vie
 #### Description
 
 
-The `StrategyManager` contract is the entry point for deposits into and withdrawals from strategies. More specifically, to deposit into a strategy, a staker calls `depositIntoStrategy` (or anyone calls `depositIntoStrategyWithSignature` with the stakerâ€™s signature) then the asset is transferred from the staker to the strategy contract. After that, the strategyâ€™s `deposit` function is called, followed by some bookkeeping in the `StrategyManager`. For withdrawals (and slashing), the `StrategyManager` calls the strategyâ€™s `withdraw` function, which transfers the given amount of the asset to the given recipient. Both token transfers are a potential source of reentrancy if the token allows it.
+The `StrategyManager` contract is the entry point for deposits into and withdrawals from strategies. More specifically, to deposit into a strategy, a staker calls `depositIntoStrategy` (or anyone calls `depositIntoStrategyWithSignature` with the stakers signature) then the asset is transferred from the staker to the strategy contract. After that, the strategys `deposit` function is called, followed by some bookkeeping in the `StrategyManager`. For withdrawals (and slashing), the `StrategyManager` calls the strategys `withdraw` function, which transfers the given amount of the asset to the given recipient. Both token transfers are a potential source of reentrancy if the token allows it.
 
 
 The `StrategyManager` us
@@ -1526,12 +1526,12 @@ Source: https://github.com/sherlock-audit/2022-11-buffer-judging/issues/130
 bin2chen, HonorLt, KingNFT
 
 ## Summary
-_openQueuedTrade() does not follow the â€œChecks Effects Interactionsâ€ principle and may lead to re-entry to steal the funds
+_openQueuedTrade() does not follow the Checks Effects Interactions principle and may lead to re-entry to steal the funds
 
 https://fravoll.github.io/solidity-patterns/checks_effects_interactions.html
 
 ## Vulnerability Detail
-The prerequisite is that tokenX is ERC777 e.g. â€œsushiâ€
+The prerequisite is that tokenX is ERC777 e.g. sushi
 1. resolveQueuedTrades() call _openQueuedTrade()
 2. in _openQueuedTrade() call "tokenX.transfer(queuedTrade.user)" if (revisedFee < queuedTrade.totalFee) before set queuedTrade.isQueued = false; 
 ```solidity
@@ -1561,7 +1561,7 @@ Manual Review
 
 ## Recommendation
 
-follow â€œChecks Effects Interactionsâ€ 
+follow Checks Effects Interactions 
 
 ```solidity
 
@@ -1724,7 +1724,7 @@ Although we can n
 With the contract `GenericBridgeFacet`, the functions `swapAndStartBridgeTokensGeneric()` (via `LibSwap.swap()`) and `_startBridge()` allow arbitrary function calls, which enable anyone to call `transferFrom()` and steal tokens from users who have provided a large allowance to the LiFi protocol. This vulnerability has been exploited in the past.
 
 ### Additional Risks
-- Ability to call the LiFi Diamond itself via functions that donâ€™t have `nonReentrant`.
+- Ability to call the LiFi Diamond itself via functions that dont have `nonReentrant`.
 - Potential cancellation of transfers for other users.
 - Calling functions protected by checks on `this`, such as `completeBridgeTokensViaStargate`.
 
@@ -1833,7 +1833,7 @@ export async function getAccountImplementationAddress(factoryAddress: string, et
 - `Executor.sol#L269-L288`
 
 ## Description
-The Executor contract allows users to build an arbitrary payload external call to any address except `address(erc20Proxy)`. `erc20Proxy` is not the only dangerous address to call. By building a malicious external call to the Axelar gateway, exploiters can steal usersâ€™ funds.
+The Executor contract allows users to build an arbitrary payload external call to any address except `address(erc20Proxy)`. `erc20Proxy` is not the only dangerous address to call. By building a malicious external call to the Axelar gateway, exploiters can steal users funds.
 
 The Executor performs swaps at the destination chain. By setting the receiver address to the Executor contract at the destination chain, Li-Fi can help users to get the best price. The Executor inherits `IAxelarExecutable`. The `execute` and `executeWithToken` functions validate the payload and execute the external call.
 
@@ -1900,7 +1900,7 @@ contract Executor is IExecutor {
 }
 ```
 
-Since there arenâ€™t restrictions on the destination contract and calldata, exploiters can steal the tokens from the executor.
+Since there arent restrictions on the destination contract and calldata, exploiters can steal the tokens from the executor.
 
 **Note:** The executor does have excess tokens, see: Kovan executor.
 
@@ -1939,7 +1939,7 @@ allows the exploiter to get an infinite allowance of any toke
 The function `xcall()` does some sanity checks; nevertheless, more checks should be added to prevent issues later on in the use of the protocol. 
 
 - If `args.recovery == 0`, then `sendToRecovery()` will send funds to the 0 address, effectively losing them.
-- If `params.agent == 0`, then `forceReceiveLocal` canâ€™t be used, and funds might be locked forever.
+- If `params.agent == 0`, then `forceReceiveLocal` cant be used, and funds might be locked forever.
 - The `args.params.destinationDomain` should never be `s.domain`, although this is also implicitly checked via `_mustHaveRemote()` assuming a correct configuration.
 - If `args.params.slippageTol` is set to something greater than `s.LIQUIDITY_FEE_DENOMINATOR`, then funds can be locked as `xcall()` allows for the user to provide the local asset, avoiding any swap while `_handleExecuteLiquidity()` in `execute()` may attempt to perform a swap on the destination chain.
 
@@ -1991,25 +1991,25 @@ https://github.com/sherlock-audit/2024-05-napier-update/blob/c31af59c6399182fd04
 ```solidity
 File: 2024-05-napier-update\napier-uups-adapters\src\adapters\puffer\PufETHAdapter.sol
 
-66: Â  Â  function _stake(uint256 stakeAmount) internal override returns (uint256) {
+66:   function _stake(uint256 stakeAmount) internal override returns (uint256) {
 ...
 74: 
-75: Â  Â  Â  Â  IWETH9(Constants.WETH).withdraw(stakeAmount);
-76: Â  Â  Â  Â  uint256 _stETHAmt = STETH.balanceOf(address(this));
-77: Â  Â  Â  Â  STETH.submit{value: stakeAmount}(address(this));
-78: Â  Â  Â  Â  _stETHAmt = STETH.balanceOf(address(this)) - _stETHAmt;
-79: Â  Â  Â  Â  if (_stETHAmt == 0) revert InvariantViolation();
+75:     IWETH9(Constants.WETH).withdraw(stakeAmount);
+76:     uint256 _stETHAmt = STETH.balanceOf(address(this));
+77:     STETH.submit{value: stakeAmount}(address(this));
+78:     _stETHAmt = STETH.balanceOf(address(this)) - _stETHAmt;
+79:     if (_stETHAmt == 0) revert InvariantViolation();
 80: 
-81: Â  Â  Â  Â  // Stake stETH to PufferDepositor
-82: Â  Â >>> Â uint256 _pufETHAmt = PUFFER_DEPOSITOR.depositStETH(Permit(block.timestamp, _stETHAmt, 0, 0, 0));
+81:     // Stake stETH to PufferDepositor
+82:  >>> uint256 _pufETHAmt = PUFFER_DEPOSITOR.depositStETH(Permit(block.timestamp, _stETHAmt, 0, 0, 0));
 84: 
 ...
-88: Â  Â  }
+88:   }
 
 ```
 
 **Issue flow**:
-1. When depositing by calling Â `PUFFER_DEPOSITOR.depositStETH(Permit)`, `PufETHAdapter` passes only one parameter `Permit` look at line 82 above.
+1. When depositing by calling `PUFFER_DEPOSITOR.depositStETH(Permit)`, `PufETHAdapter` passes only one parameter `Permit` look at line 82 above.
 2. But the current `PUFFER_DEPOSITOR.depositStETH` has 2 parameters (Permit, address recipient). Chec
 
 *[Content truncated...]*
@@ -2072,21 +2072,21 @@ and it is subcall to `getPositionRisk()`
 
 **Details**:
 
-There is a subtle difference between the implementation of solmateâ€™s SafeTransferLib and OZâ€™s SafeERC20: OZâ€™s SafeERC20 checks if the token is a contract or not, solmateâ€™s SafeTransferLib does not.<br>
+There is a subtle difference between the implementation of solmates SafeTransferLib and OZs SafeERC20: OZs SafeERC20 checks if the token is a contract or not, solmates SafeTransferLib does not.<br>
 See: <https://github.com/Rari-Capital/solmate/blob/main/src/utils/SafeTransferLib.sol#L9><br>
 Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller.<br>
-As a result, when the tokenâ€™s address has no code, the transaction will just succeed with no error.<br>
+As a result, when the tokens address has no code, the transaction will just succeed with no error.<br>
 This attack vector was made well-known by the qBridge hack back in Jan 2022.
 
-In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmateâ€™s libraries.
+In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmates libraries.
 
-Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesnâ€™t have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
+Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesnt have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
 
 So this will lead to miscalculation and loss of funds.
 
 ### Attack scenario (example):
 
-Itâ€™s becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
+Its becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
 
 *[Content truncated...]*
 
@@ -2139,7 +2139,7 @@ Itâ€™s becoming popular for protocols to deploy their token across multiple
 
 **Details**:
 
-## Diï¬ƒculty: High
+## Diculty: High
 
 ## Type: Data Validation
 
@@ -2564,14 +2564,14 @@ https://github.com/debtdao/Line-of-Credit/blob/e8aa08b44f6132a5ed901f8daa231700c
 
 ## Impact
 
-When withdrawing and refund  ETH, the  contract uses Solidityâ€™s `transfer()` function. 
+When withdrawing and refund  ETH, the  contract uses Soliditys `transfer()` function. 
 
 Using Solidity's `transfer()` function has some notable shortcomings when the withdrawer is a smart contract, which can render ETH deposits impossible to withdraw. Specifically, the withdrawal will inevitably fail when:
 * The withdrawer smart contract does not implement a payable fallback function.
 * The withdrawer smart contract implements a payable fallback function which uses more than 2300 gas units.
-* The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the callâ€™s gas usage above 2300.
+* The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the calls gas usage above 2300.
 
-Risks of reentrancy stemming from the use of this function can be mitigated by tightly following the "Check-Effects-Interactions" pattern and using OpenZeppelin Contractâ€™s ReentrancyGuard contract.Â 
+Risks of reentrancy stemming from the use of this function can be mitigated by tightly following the "Check-Effects-Interactions" pattern and using OpenZeppelin Contracts ReentrancyGuard contract.
 
 ## Proof of Concept
 
@@ -2583,10 +2583,10 @@ Risks of reentrancy stemming from the use of this function can be mitigated by t
 
 #### References:
 
-The issues withÂ `transfer()`Â are outlined [here](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/
+The issues with`transfer()`are outlined [here](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/
 )
 
-For further reference on why using Solidityâ€™s `transfer()` is no longer recommended, refer to these [articles](https://blog.openzeppelin.com/reentrancy-after-istanb
+For further reference on why using Soliditys `transfer()` is no longer recommended, refer to these [articles](https://blog.openzeppelin.com/reentrancy-after-istanb
 
 *[Content truncated...]*
 
@@ -2646,8 +2646,8 @@ File: src/modules/Migration.sol   #1
 
 ### Proof of Concept
 
-1.  The destination is a smart contract that doesnâ€™t implement a `payable` function or it implements a `payable` function but that function uses more than 2300 gas units.
-2.  The destination is a smart contract that doesnâ€™t implement a `payable` `fallback` function or it implements a `payable` `fallback` function but that function uses more than 2300 gas units.
+1.  The destination is a smart contract that doesnt implement a `payable` function or it implements a `payable` function but that function uses more than 2300 gas units.
+2.  The destination is a smart contract that doesnt implement a `payable` `fallback` function or it implements a `payable` `fallback` function but that function uses more than 2300 gas units.
 3.  The destination is a smart contract but that smart contract is called via an intermediate proxy contract increasing the case requirements to more than 2300 gas units. A further example of unknown destination complexity is that of a multisig wallet that as part of its operation uses more than 2300 gas units.
 4.  Future changes or forks in Ethereum result in higher gas fees than transfer provides. The `.transfer()` creates a hard dependency on 2300 gas units being appropriate now and into the future.
 
@@ -2710,7 +2710,7 @@ require(success, "Transfer failed.")
 
 ---
 
-### Example 6: [H-01] OpenLevV1Libâ€™s and LPoolâ€™s doTransferOut functions call native payable.transfer, which can be unusable for smart contract calls
+### Example 6: [H-01] OpenLevV1Libs and LPools doTransferOut functions call native payable.transfer, which can be unusable for smart contract calls
 
 **Source**: Code4rena
 **Protocol**: OpenLeverage
@@ -2846,11 +2846,11 @@ Examples of similar issues ranked as medium can be found [here](https://github.c
 
 ### Impact
 
-The protocol uses Solidityâ€™s `transfer()` when transferring ETH to the recipients. This has some notable shortcomings when the recipient is a smart contract, which can render ETH impossible to transfer. Specifically, the transfer will inevitably fail when the smart contract:
+The protocol uses Soliditys `transfer()` when transferring ETH to the recipients. This has some notable shortcomings when the recipient is a smart contract, which can render ETH impossible to transfer. Specifically, the transfer will inevitably fail when the smart contract:
 
 *   does not implement a payable fallback function, or
 *   implements a payable fallback function which would incur more than 2300 gas units, or
-*   implements a payable fallback function incurring less than 2300 gas units but is called through a proxy that raises the callâ€™s gas usage above 2300.
+*   implements a payable fallback function incurring less than 2300 gas units but is called through a proxy that raises the calls gas usage above 2300.
 
 ### Proof of Concept
 
@@ -3026,7 +3026,7 @@ require(result, "Failed to send Ether");
 
 ### Proof of Concept
 
-`.transfer` or `.send` method, only 2300 gas will be â€œforwardedâ€ to fallback function. Specifically, the SLOAD instruction, will go from costing 200 gas to 800 gas.
+`.transfer` or `.send` method, only 2300 gas will be forwarded to fallback function. Specifically, the SLOAD instruction, will go from costing 200 gas to 800 gas.
 
 If any smart contract has a functionality of register ens and it has fallback function which is making some state change in contract on ether receive, it could use more than 2300 gas and revert every transaction.
 
@@ -3106,7 +3106,7 @@ transfer() uses a fixed amount of gas, which was used to prevent reentrancy. How
 Specifically, the withdrawal will inevitably fail when:
 1.The withdrawer smart contract does not implement a payable fallback function.
 2.The withdrawer smart contract implements a payable fallback function which uses more than 2300 gas units.
-3.The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the callâ€™s gas usage above 2300.
+3.The withdrawer smart contract implements a payable fallback function which needs less than 2300 gas units but is called through a proxy that raises the calls gas usage above 2300.
 
 ## Impact
 transfer() uses a fixed amount of gas, which can result in revert.
@@ -3223,7 +3223,7 @@ Check the return value and revert if false is returned:
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelinâ€™s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.
@@ -3686,7 +3686,7 @@ The exploit relies on insufficient handling of two corner cases of [ERC-20](http
 
 ## Real-World Examples
 
-### Example 1: [H-07] GiantLP with a transferHookProcessor cant be burned, usersâ€™ funds will be stuck in the Giant Pool
+### Example 1: [H-07] GiantLP with a transferHookProcessor cant be burned, users funds will be stuck in the Giant Pool
 
 **Source**: Code4rena
 **Protocol**: Stakehouse Protocol

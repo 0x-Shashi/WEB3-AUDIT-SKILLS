@@ -1,4 +1,4 @@
-# USDT Security Patterns
+﻿# USDT Security Patterns
 
 ## Overview
 
@@ -156,7 +156,7 @@ contract NomadFacet is BaseConnextFacet {
 }
 ```
 
-While the following functions don’t do this:
+While the following functions dont do this:
 - `xcall` of `BridgeFacet`
 - `_backLoan` of `PortalFacet`
 - `_swapAsset` of `AssetLogic`

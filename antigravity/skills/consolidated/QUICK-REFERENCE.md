@@ -1,4 +1,4 @@
-# Quick Reference - Web3 Security Patterns
+﻿# Quick Reference - Web3 Security Patterns
 
 A rapid lookup guide for AI auditors. Each pattern has a one-line summary to quickly identify vulnerabilities.
 
@@ -191,40 +191,40 @@ A rapid lookup guide for AI auditors. Each pattern has a one-line summary to qui
 
 ```
 REENTRANCY
-[ ] External calls before state updates? → Reentrancy risk
-[ ] Using transfer/send for ETH? → Reentrancy safe but DoS risk
-[ ] Callback functions (onERC721Received, etc.)? → Check for reentrancy
-[ ] ReentrancyGuard on all external functions? → May have gaps
+[ ] External calls before state updates?  Reentrancy risk
+[ ] Using transfer/send for ETH?  Reentrancy safe but DoS risk
+[ ] Callback functions (onERC721Received, etc.)?  Check for reentrancy
+[ ] ReentrancyGuard on all external functions?  May have gaps
 
 MATH
-[ ] Division before multiplication? → Precision loss
-[ ] Unchecked blocks in Solidity 0.8+? → Intentional overflow risk
-[ ] Different token decimals? → Normalization needed
-[ ] Rounding in share calculations? → Check direction favors protocol
+[ ] Division before multiplication?  Precision loss
+[ ] Unchecked blocks in Solidity 0.8+?  Intentional overflow risk
+[ ] Different token decimals?  Normalization needed
+[ ] Rounding in share calculations?  Check direction favors protocol
 
 ACCESS CONTROL
-[ ] Critical function without modifier? → Anyone can call
-[ ] Using tx.origin? → Phishing vulnerability
-[ ] initialize() without initializer modifier? → Can reinitialize
-[ ] Single owner with no timelock? → Centralization risk
+[ ] Critical function without modifier?  Anyone can call
+[ ] Using tx.origin?  Phishing vulnerability
+[ ] initialize() without initializer modifier?  Can reinitialize
+[ ] Single owner with no timelock?  Centralization risk
 
 VALIDATION
-[ ] Unchecked external call return? → Silent failures
-[ ] Missing zero address check? → Permanent loss
-[ ] Array iteration without bounds? → DoS risk
-[ ] User input used directly in calculations? → Manipulation risk
+[ ] Unchecked external call return?  Silent failures
+[ ] Missing zero address check?  Permanent loss
+[ ] Array iteration without bounds?  DoS risk
+[ ] User input used directly in calculations?  Manipulation risk
 
 ORACLE
-[ ] Single price source? → Manipulation risk
-[ ] No staleness check on Chainlink? → Using outdated price
-[ ] TWAP with short window? → Easily manipulated
-[ ] Spot price from AMM? → Flash loan manipulation
+[ ] Single price source?  Manipulation risk
+[ ] No staleness check on Chainlink?  Using outdated price
+[ ] TWAP with short window?  Easily manipulated
+[ ] Spot price from AMM?  Flash loan manipulation
 
 TOKENS
-[ ] Assuming 18 decimals? → Check actual decimals
-[ ] Not using SafeERC20? → Missing return value
-[ ] Hardcoded token addresses? → Inflexible
-[ ] No fee-on-transfer handling? → Accounting mismatch
+[ ] Assuming 18 decimals?  Check actual decimals
+[ ] Not using SafeERC20?  Missing return value
+[ ] Hardcoded token addresses?  Inflexible
+[ ] No fee-on-transfer handling?  Accounting mismatch
 ```
 
 ---

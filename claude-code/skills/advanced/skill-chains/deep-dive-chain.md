@@ -1,4 +1,4 @@
-# Deep Dive Chain
+﻿# Deep Dive Chain
 
 ## Overview
 
@@ -22,37 +22,37 @@ Intensive analysis of specific modules or vulnerability classes.
 ## Chain Steps
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                    DEEP DIVE CHAIN                              │
-├────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Step 1: Focus Selection                           [10 min]    │
-│  ├─ Identify target module                                     │
-│  ├─ Map dependencies                                           │
-│  └─ Understand intended behavior                               │
-│                                                                 │
-│  Step 2: Exhaustive Pattern Scan                   [45 min]    │
-│  ├─ All patterns on target                                     │
-│  ├─ Edge case analysis                                         │
-│  └─ State transition mapping                                   │
-│                                                                 │
-│  Step 3: Attack Chain Construction                 [60 min]    │
-│  ├─ Identify attack entry points                               │
-│  ├─ Build exploit paths                                        │
-│  ├─ Consider multi-tx attacks                                  │
-│  └─ Flash loan integration                                     │
-│                                                                 │
-│  Step 4: Exploit Scenario Development              [45 min]    │
-│  ├─ Write PoC outline                                          │
-│  ├─ Calculate exploit economics                                │
-│  └─ Consider real-world feasibility                            │
-│                                                                 │
-│  Step 5: Impact Assessment                         [20 min]    │
-│  ├─ Maximum damage calculation                                 │
-│  ├─ Affected parties                                           │
-│  └─ Recovery difficulty                                        │
-│                                                                 │
-└────────────────────────────────────────────────────────────────┘
+
+                    DEEP DIVE CHAIN                              
+
+                                                                 
+  Step 1: Focus Selection                           [10 min]    
+   Identify target module                                     
+   Map dependencies                                           
+   Understand intended behavior                               
+                                                                 
+  Step 2: Exhaustive Pattern Scan                   [45 min]    
+   All patterns on target                                     
+   Edge case analysis                                         
+   State transition mapping                                   
+                                                                 
+  Step 3: Attack Chain Construction                 [60 min]    
+   Identify attack entry points                               
+   Build exploit paths                                        
+   Consider multi-tx attacks                                  
+   Flash loan integration                                     
+                                                                 
+  Step 4: Exploit Scenario Development              [45 min]    
+   Write PoC outline                                          
+   Calculate exploit economics                                
+   Consider real-world feasibility                            
+                                                                 
+  Step 5: Impact Assessment                         [20 min]    
+   Maximum damage calculation                                 
+   Affected parties                                           
+   Recovery difficulty                                        
+                                                                 
+
 ```
 
 ---
@@ -76,10 +76,10 @@ grep -n "import" contracts/lending/LendingPool.sol
 
 ```
 Target: LendingPool.sol
-├── imports Oracle.sol
-├── imports Token.sol
-├── imports ReentrancyGuard.sol
-└── called by Router.sol
+ imports Oracle.sol
+ imports Token.sol
+ imports ReentrancyGuard.sol
+ called by Router.sol
 ```
 
 ### Understand Intent
@@ -132,14 +132,14 @@ grep -n "function " contracts/lending/LendingPool.sol
 ### State Transition Map
 
 ```
-deposit() → balances[user] += amount
-         → totalSupply += amount
-         → emit Deposit()
+deposit()  balances[user] += amount
+          totalSupply += amount
+          emit Deposit()
          
-withdraw() → balances[user] -= amount  
-          → totalSupply -= amount
-          → transfer(user, amount)  ← EXTERNAL CALL
-          → emit Withdraw()
+withdraw()  balances[user] -= amount  
+           totalSupply -= amount
+           transfer(user, amount)   EXTERNAL CALL
+           emit Withdraw()
 ```
 
 ---
@@ -150,11 +150,11 @@ withdraw() → balances[user] -= amount
 
 ```
 ENTRY POINTS:
-├── deposit(amount)     - Requires tokens
-├── withdraw(amount)    - Requires balance
-├── borrow(amount)      - Requires collateral
-├── liquidate(user)     - Requires user underwater
-└── flashLoan(amount)   - No requirements!
+ deposit(amount)     - Requires tokens
+ withdraw(amount)    - Requires balance
+ borrow(amount)      - Requires collateral
+ liquidate(user)     - Requires user underwater
+ flashLoan(amount)   - No requirements!
 ```
 
 ### Attack Path Template
@@ -237,16 +237,16 @@ contract Exploit is Test {
 
 ```
 EXPLOIT ECONOMICS:
-├── Attack Cost
-│   ├── Gas: ~500,000 gas × 50 gwei = 0.025 ETH
-│   ├── Flash loan fee: 0.09% of borrowed
-│   └── Slippage: estimated 2%
-│
-├── Potential Profit
-│   └── Protocol TVL: $10M
-│       └── Max extractable: $X
-│
-└── Net Profit: $X - costs
+ Attack Cost
+    Gas: ~500,000 gas  50 gwei = 0.025 ETH
+    Flash loan fee: 0.09% of borrowed
+    Slippage: estimated 2%
+
+ Potential Profit
+    Protocol TVL: $10M
+        Max extractable: $X
+
+ Net Profit: $X - costs
 ```
 
 ### Feasibility Assessment
@@ -292,10 +292,10 @@ Scenario 3: Total Protocol Drain
 
 ```
 RECOVERY:
-├── Can attack be reversed? [Yes/No]
-├── Can attacker be identified? [Yes/No]
-├── Is insurance available? [Yes/No]
-└── Time to full recovery: [Estimate]
+ Can attack be reversed? [Yes/No]
+ Can attacker be identified? [Yes/No]
+ Is insurance available? [Yes/No]
+ Time to full recovery: [Estimate]
 ```
 
 ---

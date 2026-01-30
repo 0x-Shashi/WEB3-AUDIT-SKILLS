@@ -1,4 +1,4 @@
-# 📊 Solodit Findings Statistics
+﻿#  Solodit Findings Statistics
 
 *Comprehensive analysis of 50,530 security findings*
 

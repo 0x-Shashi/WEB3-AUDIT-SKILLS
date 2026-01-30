@@ -801,11 +801,11 @@ If multiple orders are taken, the taker fee calculated is rounded up once, but t
 - takerFee = 100011 (10.0011%)
 - 2 maker orders of amounts 400000 and 377000
 - total amount = 400000 + 377000 = 777000
-- Taker fee taken = 777000 * 100011 / 1000000 = 77708.547 â‰ˆ 77709 
+- Taker fee taken = 777000 * 100011 / 1000000 = 77708.547  77709 
 
 Maker fees would be:
-- 377000 * 100011 / 1000000 = 37704.147 â‰ˆ 37705
-- 400000 * 100011 / 1000000 = 40004.4 â‰ˆ 40005
+- 377000 * 100011 / 1000000 = 37704.147  37705
+- 400000 * 100011 / 1000000 = 40004.4  40005
 
 This results in 1 wei more than actually taken.
 
@@ -1451,7 +1451,7 @@ uint256 mintedRewards = _rewardOperators(operatorRewards);
 
 Instead of passing `operatorRewards`, we can pass two values: one for the numerator and one for the denominator. This way, we can avoid extra rounding errors introduced in `_rewardOperators`. `_rewardOperators` also needs to be changed slightly to account for these two new values.
 
-Hereâ€™s the updated code:
+Heres the updated code:
 
 ```solidity
 uint256 globalFee = GlobalFee.get();
@@ -1468,7 +1468,7 @@ if (denominator != 0) { // note: this was added to avoid calling `_rewardOperato
 
 ---
 
-### Example 16: [M-07] Oracleâ€™s two-day feature can be gamed
+### Example 16: [M-07] Oracles two-day feature can be gamed
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -1782,7 +1782,7 @@ Assume that the vault with the following state:
 *   Total Asset = 1000 WETH
 *   Total Supply = 10 shares
 
-Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls theÂ **`Vault.withdraw(99 WETH)`**Â function.
+Assume that Alice wants to withdraw 99 WETH from the vault. Thus, she calls the**`Vault.withdraw(99 WETH)`**function.
 
 The calculation would go like this:
 
@@ -1824,8 +1824,8 @@ Per EIP 4626's Security Considerations (https://eips.ethereum.org/EIPS/eip-4626)
 
 > Finally, ERC-4626 Vault implementers should be aware of the need for specific, opposing rounding directions across the different mutable and view methods, as it is considered most secure to favor the Vault itself during calculations over its users:
 
-> If (1) itâ€™s calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) itâ€™s determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
-If (1) itâ€™s calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) itâ€™s calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
+> If (1) its calculating how many shares to issue to a user for a certain amount of the underlying tokens they provide or (2) its determining the amount of the underlying tokens to transfer to them for returning a certain amount of shares, it should round down.
+If (1) its calculating the amount of shares a user has to supply to receive a given amount of the underlying tokens or (2) its calculating the amount of underlying tokens a user has to provide to receive a certain amount of shares, it should round up.
 
 Then previewWithdraw in AutoRoller.sol should round up.
 
@@ -1982,7 +1982,7 @@ Fixed Term Tellers intend to mint tokens that expire once per day, to consolidat
 
 ## Vulnerability Detail
 
-In `BondFixedTermTeller.sol`, new tokenIds are deployed through the `_handlePayout()` function. The function calculates the expiry (rounded down to the nearest day), uses this expiry to create a tokenId, and â€”Â if that tokenId doesn't yet exist â€”Â deploys it.
+In `BondFixedTermTeller.sol`, new tokenIds are deployed through the `_handlePayout()` function. The function calculates the expiry (rounded down to the nearest day), uses this expiry to create a tokenId, and if that tokenId doesn't yet exist deploys it.
 
 ```solidity
 ...
@@ -2030,13 +2030,13 @@ Source: https://github.com/sherlock-audit/2023-06-bond-judging/issues/63
 BenRai, qandisa
 ## Summary
 
-When deploying an `optionToken` the parameter `expiry` is rounded down to the â€œnearest day at 0000 UTCâ€ but since the end of an epoch is calculated by the `epochDuration` and the exact time the epoch has stared and the `optionToken` was created this can lead to an epoch still being active but the corresponding `optionToken` to be already expired. 
+When deploying an `optionToken` the parameter `expiry` is rounded down to the nearest day at 0000 UTC but since the end of an epoch is calculated by the `epochDuration` and the exact time the epoch has stared and the `optionToken` was created this can lead to an epoch still being active but the corresponding `optionToken` to be already expired. 
 
 ## Vulnerability Detail
 
 When starting a new epoch, the variable `epochStart` is set to the current time (`block.timestamp`) and the end of the epoch is calculated by adding the `epochDuration` to the `epochStart` variable. 
 
-The `optionToken` of the new epoch is deployed with the parameter `expire` calculated based on the current time stamp, the `timeUntilEligible` and the `eligibleDuration`. (`uint48(block.timestamp) + timeUntilEligible + eligibleDuration`). The final expiration date of the optionToken is rounded down to the â€œnearest day at 0000 UTCâ€ before the token is deployed.
+The `optionToken` of the new epoch is deployed with the parameter `expire` calculated based on the current time stamp, the `timeUntilEligible` and the `eligibleDuration`. (`uint48(block.timestamp) + timeUntilEligible + eligibleDuration`). The final expiration date of the optionToken is rounded down to the nearest day at 0000 UTC before the token is deployed.
 
 Since the `epochDuration` can be as close as 1 second to the sum of `timeUntilEligible + eligibleDuration` this can lead to an epoch still being active but its `optionToken` to be already expired.
 
@@ -2181,7 +2181,7 @@ LT swap proceeds = (scaledProceeds[last] - scaledProceeds[prev]) * (order.salesR
 
 The value 264 is referred to as the "scaling factor" and is intended to reduce precision loss in the division to determine the increment to the scaled proceeds.
 
-The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmeticâ€”since only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
+The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmeticsince only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
 
 *[Content truncated...]*
 
@@ -2877,7 +2877,7 @@ If `_fee == 0`, the `adjustedFeeShares`
 `FullMath.sol#L2`
 
 ## Description
-UniswapV3â€™s `FullMath.sol` is copied and migrated from an old solidity version to version 0.8, which reverts on overflows. However, the old `FullMath` relies on implicit overflow behavior. The current code will revert on overflows when it should not, which breaks the `SwapManagerUniV3` contract.
+UniswapV3s `FullMath.sol` is copied and migrated from an old solidity version to version 0.8, which reverts on overflows. However, the old `FullMath` relies on implicit overflow behavior. The current code will revert on overflows when it should not, which breaks the `SwapManagerUniV3` contract.
 
 ## Recommendation
 Use the official `FullMath.sol` 0.8 branch that wraps the code in an unchecked statement. See #40.
@@ -3018,7 +3018,7 @@ When liquidity is first minted to user, the \_accruedDebts is updated to match c
 
 ##### Description
 
-An overflow happens when an arithmetic operation reaches the maximum size of a type. For instance, in `Monoswap.sol`, the `getAmountOut` method is subtracting `fees` from a fixed number and may end up overflowing the integer since the resulting value is not checked to be greater or equal 0. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits â€“ either larger than the maximum or lower than the minimum representable value.
+An overflow happens when an arithmetic operation reaches the maximum size of a type. For instance, in `Monoswap.sol`, the `getAmountOut` method is subtracting `fees` from a fixed number and may end up overflowing the integer since the resulting value is not checked to be greater or equal 0. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits  either larger than the maximum or lower than the minimum representable value.
 
 Code Location
 -------------
@@ -3709,14 +3709,14 @@ A malicious user can exploit this in the following way:
 See below
 
 ## Description
-Throughout the contract weâ€™ve encountered various unsafe type-castings.
+Throughout the contract weve encountered various unsafe type-castings.
 
-- **invariant**: Within the `_swap` function, the next invariant is an `int256` variable and is calculated within the `checkInvariant` function implemented in the `RMM01Portfolio`. This variable then is dangerously typecasted to `int128` and assigned to an `int256` variable in the iteration struct (L539). The down-casting from `int256` to `int128` assumes that the `nextInvariantWad` fits in an `int128`; in case it wonâ€™t fit, it will overflow. The updated iteration object is passed to the `_feeSavingEffects` function, which based on the RMM implementation can lead to bad consequences.
+- **invariant**: Within the `_swap` function, the next invariant is an `int256` variable and is calculated within the `checkInvariant` function implemented in the `RMM01Portfolio`. This variable then is dangerously typecasted to `int128` and assigned to an `int256` variable in the iteration struct (L539). The down-casting from `int256` to `int128` assumes that the `nextInvariantWad` fits in an `int128`; in case it wont fit, it will overflow. The updated iteration object is passed to the `_feeSavingEffects` function, which based on the RMM implementation can lead to bad consequences.
   - `iteration.nextInvariant`
   - `_getLatestInvariantAndVirtualPrice`
   - `getNetBalance`
 
-During account settlement, `getNetBalance` is called to compute the difference between the "physical reserves" (contract balance) and the internal reserves: `net = int256(physicalBalance) - int256(internalBalance)`. If the `internalBalance > int256.max`, it overflows into a negative value and the attacker is credited the entire physical balance + overflow upon settlement (and doesnâ€™t have to pay anything in settle). This might happen if an attacker allocates or swaps in very high amounts before settlement is called. Consider doing a safe typecast here as a legitimate possible revert would cause less issues than an actual overflow.
+During account settlement, `getNetBalance` is called to compute the difference between the "physical reserves" (contract balance) and the internal reserves: `net = int256(physicalBalance) - int256(internalBalance)`. If the `internalBalance > int256.max`, it overflows into a negative value and the attacker is credited the entire physical balance + overflow upon settlement (and doesnt have to pay anything in settle). This might happen if an attacker allocates or swaps in very high amounts before settlement is called. Consider doing a safe typecast here as a legitimate possible revert would cause less issues than an actual overflow.
   - `getNetBalance`
 
 ### Encoding / Decoding
@@ -3806,7 +3806,7 @@ Lambda, Tomo, hickuphh3, IllIllI, defsec, sirhashalot
 
 ## Summary
 
-The unsafe casting of the recovered amount from `uint256` to `uint128` means the usersâ€™ funds will be lost.
+The unsafe casting of the recovered amount from `uint256` to `uint128` means the users funds will be lost.
 
 ## Vulnerability Detail
 
@@ -3828,7 +3828,7 @@ The user's balance is `type(uint128).max = 2**128`, but the incremented amount w
 
 ## Recommendation
 
-`amountStored` should be of type `uint256`. Alternatively, use [OpenZeppelinâ€™s SafeCast library](https://docs.openzeppelin.com/contracts/4.x/api/utils#SafeCast) when casting from `uint256` to `uint128`.
+`amountStored` should be of type `uint256`. Alternatively, use [OpenZeppelins SafeCast library](https://docs.openzeppelin.com/contracts/4.x/api/utils#SafeCast) when casting from `uint256` to `uint128`.
 
 ## Lead Senior Watson
 Not sure, any tokens which would have a token supply over `type(uint128).max` but I guess it's best to be proactive. The proposed fix does create some issues. Instead of having less tokens transferred to the vault, the contract will revert and prevent the transfer entirely. Arguably more funds would be at risk, so you may as well use `uint256` then or accept the risk and keep the slot packing.
@@ -4047,7 +4047,7 @@ LT swap proceeds = (scaledProceeds[last] - scaledProceeds[prev]) * (order.salesR
 
 The value 264 is referred to as the "scaling factor" and is intended to reduce precision loss in the division to determine the increment to the scaled proceeds.
 
-The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmeticâ€”since only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
+The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmeticsince only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
 
 *[Content truncated...]*
 
@@ -4500,7 +4500,7 @@ Protocol users can be subject to market manipulations as Sense AMM result isn't 
 
 ---
 
-### Example 12: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying tokenâ€™s decimals
+### Example 12: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying tokens decimals
 
 **Source**: Sherlock
 **Protocol**: Sentiment
@@ -4520,9 +4520,9 @@ EIP-4626 does not require the decimals must be the same as the underlying tokens
 
 In the current implementation, `IERC4626(token).decimals()` is used as the `IERC4626(token).asset()`'s decimals to calculate the ERC4626's price.
 
-However, while most ERC4626s are using the underlying tokenâ€™s decimals as `decimals`, there are some ERC4626s use a different decimals from underlying tokenâ€™s decimals since EIP-4626 does not require the decimals must be the same as the underlying tokenâ€™s decimals:
+However, while most ERC4626s are using the underlying tokens decimals as `decimals`, there are some ERC4626s use a different decimals from underlying tokens decimals since EIP-4626 does not require the decimals must be the same as the underlying tokens decimals:
 
-> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaultâ€™s decimals variable, it is still strongly recommended to mirror the underlying tokenâ€™s decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
+> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaults decimals variable, it is still strongly recommended to mirror the underlying tokens decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
 
 Ref: https://eips.ethereum.org/EIPS/eip-4626
 
@@ -4841,7 +4841,7 @@ uint40 finalVestingDurationSecs = _claim.endTimestamp - _claim.startTimestamp; /
 uint112 linearVestAmount = _claim.linearVestAmount * truncatedCurrentVestingDurationSecs / finalVestingDurationSecs;
 ```
 
-Letâ€™s look at `truncatedCurrentVestingDurationSecs` as just the duration passed from the start of the vesting period for the PoC (this doesnâ€™t omit important data in this context).
+Lets look at `truncatedCurrentVestingDurationSecs` as just the duration passed from the start of the vesting period for the PoC (this doesnt omit important data in this context).
 
 Now think of the following scenario:
 
@@ -5201,7 +5201,7 @@ Before deciding whether or not to relay an auction result, a bot can call `compu
 So in `_appendStack` we have:
 
 ```
-onew + on + ... + oj  â‰¤ Lj
+onew + on + ... + oj   Lj
 ```
 
 Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount for the stack slot plus the potential interest at the end of its term. 
@@ -5209,7 +5209,7 @@ Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount
 So it would make sense to enforce a stricter inequality for `Lnew`:
 
 ```
-(1 + r(tend âˆ’ tnow) / 10^18) Anew = onew â‰¤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 The big issue regarding the current lower bound is when the borrower only takes one lien and for this lien `liquidationInitialAsk == amount` (or they are close). Then at any point during the lien term (maybe very close to the end), the borrower can atomically self-liquidate and settle the Seaport auction in one transaction. This way the borrower can skip paying any interest (they would need to pay OpenSea fees and potentially royalty fees) and plus they would receive liquidation fees.
@@ -5218,7 +5218,7 @@ The big issue regarding the current lower bound is when the borrower only takes 
 Make sure the following stricter lower bound is used instead:
 
 ```
-(1 + r(tend âˆ’ tnow) / 10^18) Anew = onew â‰¤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 **Reference**: [View Original Finding](https://github.com/spearbit/portfolio/blob/master/pdfs/Astaria-Spearbit-Security-Review.pdf)
@@ -5306,7 +5306,7 @@ function _handleExecuteTransaction(...) ... {
 `ConnextPriceOracle.sol#L109-L135`
 
 ## Description
-The function `getPriceFromDex` derives the price by querying the balance of AMMâ€™s pools.
+The function `getPriceFromDex` derives the price by querying the balance of AMMs pools.
 
 ```solidity
 function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
@@ -5322,7 +5322,7 @@ function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
 Deriving the price with `balanceOf` is dangerous as `balanceOf` may be gamed. Consider Uniswap V2 as an example; exploiters can first send tokens into the pool and pump the price, then absorb the tokens that were previously donated by calling `mint`.
 
 ## Recommendation
-Consider querying DEXâ€™s state through function calls such as Uniswap V2â€™s `getReserves()` which returns the correct state of the pool.
+Consider querying DEXs state through function calls such as Uniswap V2s `getReserves()` which returns the correct state of the pool.
 
 ## References
 - **Connext**: Solved in PR 1649.
@@ -5349,7 +5349,7 @@ Consider querying DEXâ€™s state through function calls such as Uniswap V2â
 `MarketsManagerForAave.sol#L413-L418`
 
 ## Description
-The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. Itâ€™s currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
+The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. Its currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
 
 ```solidity
 supplyP2PSPY[_marketAddress] =
@@ -5362,8 +5362,8 @@ MAX_BASIS_POINTS;
 ```
 
 ## Recommendation
-Fix the computation. The real reserve factor should apply only on the spread so youâ€™re right that this formula is wrong and needs to be updated: 
-`a + (1/2 Â± f)(b-a)` where f is the reserve factor.
+Fix the computation. The real reserve factor should apply only on the spread so youre right that this formula is wrong and needs to be updated: 
+`a + (1/2  f)(b-a)` where f is the reserve factor.
 
 ## Spearbit
 Acknowledged, fixed in PR #565.
@@ -6216,7 +6216,7 @@ The withdrawal queue can be forcibly activated to impede the proper operation of
 
 The `RootERC20PredicateFlowRate` contract implements a withdrawal queue to more easily detect and stop large withdrawals from passing through the bridge (e.g., bridging illegitimate funds from an exploit). A transaction can enter the withdrawal queue in four ways:
 
-1. If a tokenâ€™s flow rate has not been configured by the rate control admin.
+1. If a tokens flow rate has not been configured by the rate control admin.
 2. If the withdrawal amount is larger than or equal to the large transfer threshold for that token.
 3. If, during a predefined period, the total withdrawals of that token are larger than the defined token capacity.
 4. If the rate controller manually activates the withdrawal queue by using the `activateWithdrawalQueue` function.
@@ -6246,10 +6246,10 @@ Eve observes Alice initiating a transfer to bridge her tokens back to the mainne
 ## Description
 HTML5 local storage is used to hold session data, including keychain values. Because there are no access controls on modifying and retrieving this data using JavaScript, data in local storage is vulnerable to XSS attacks.
 
-**Figure 4.1:** Keychain data stored in a browserâ€™s localStorage
+**Figure 4.1:** Keychain data stored in a browsers localStorage
 
 ## Exploit Scenario
-Alice discovers an XSS vulnerability in a dApp that supports WalletConnect. This vulnerability allows Alice to retrieve the dAppâ€™s keychain data, allowing her to propose new transactions to the connected wallet.
+Alice discovers an XSS vulnerability in a dApp that supports WalletConnect. This vulnerability allows Alice to retrieve the dApps keychain data, allowing her to propose new transactions to the connected wallet.
 
 ## Recommendations
 Short term, consider using cookies to store and send tokens. Enable cross-site request forgery (CSRF) libraries available to mitigate these attacks. Ensure that cookies are tagged with `httpOnly`, and preferably `secure`, to ensure that JavaScript cannot access them.

@@ -1,4 +1,4 @@
-# Reentrancy Security Patterns
+﻿# Reentrancy Security Patterns
 
 ## Overview
 
@@ -136,7 +136,7 @@ function buy(uint256 outputAmount, uint256 maxInputAmount) public payable return
 With the contract `GenericBridgeFacet`, the functions `swapAndStartBridgeTokensGeneric()` (via `LibSwap.swap()`) and `_startBridge()` allow arbitrary function calls, which enable anyone to call `transferFrom()` and steal tokens from users who have provided a large allowance to the LiFi protocol. This vulnerability has been exploited in the past.
 
 ### Additional Risks
-- Ability to call the LiFi Diamond itself via functions that don’t have `nonReentrant`.
+- Ability to call the LiFi Diamond itself via functions that dont have `nonReentrant`.
 - Potential cancellation of transfers for other users.
 - Calling functions protected by checks on `this`, such as `completeBridgeTokensViaStargate`.
 
@@ -173,7 +173,7 @@ Whitelist the external call addresses and function signatures for both the dece
 
 ---
 
-### Example 4: Re-entrancy issue for ERC1155 ✓ Fixed
+### Example 4: Re-entrancy issue for ERC1155 Fixed
 
 **Source**: ConsenSys
 **Protocol**: Bridge Mutual
@@ -548,7 +548,7 @@ There are two main bugs that cause the above impact:
 
 For easier reading and understanding, please follow the below full attack flow diagram when reading through the explanation.
 
-    ┌───────────┐               ┌───────────┐            ┌───────────┐     
+                                    
 
 *[Content truncated...]*
 
@@ -674,7 +674,7 @@ Consider this call path that allows a malicious user to reach this undesired sta
 
 ---
 
-### Example 15: RocketNodeDistributorDelegate - Reentrancy in distribute() allows node owner to drain distributor funds ✓ Fixed
+### Example 15: RocketNodeDistributorDelegate - Reentrancy in distribute() allows node owner to drain distributor funds Fixed
 
 **Source**: ConsenSys
 **Protocol**: Rocket Pool Atlas (v1.2)
@@ -699,7 +699,7 @@ Fixed in <https://github.com/rocket-pool/rocketpool/tree/77d7cca65b7c0557cfda078
 
 
 > 
-> We followed OpenZeppelin’s design for a reentrancy guard. We were unable to use it directly as it is hardcoded to use storage slot 0 and because we already have deployment of this delegate in the wild already using storage slot 0 for another purpose, we had to append it to the end of the existing storage layout.
+> We followed OpenZeppelins design for a reentrancy guard. We were unable to use it directly as it is hardcoded to use storage slot 0 and because we already have deployment of this delegate in the wild already using storage slot 0 for another purpose, we had to append it to the end of the existing storage layout.
 > 
 > 
 > 
@@ -710,10 +710,10 @@ Fixed in <https://github.com/rocket-pool/rocketpool/tree/77d7cca65b7c0557cfda078
 #### Description
 
 
-The `distribute()` function distributes the contract’s balance between the node operator and the user. The node operator is returned their initial collateral, including a fee. The rest is returned to the RETH token contract as user collateral.
+The `distribute()` function distributes the contracts balance between the node operator and the user. The node operator is returned their initial collateral, including a fee. The rest is returned to the RETH token contract as user collateral.
 
 
-After determining the node owner’s share, the contract transfers `ETH` to the node withdrawal address, which can be the configured withdrawal address or the node address. Both addresses may potentially be a malicious contract that recursively calls back into the `distribute()` function to retrieve the node share multiple times until al
+After determining the node owners share, the contract transfers `ETH` to the node withdrawal address, which can be the configured withdrawal address or the node address. Both addresses may potentially be a malicious contract that recursively calls back into the `distribute()` function to retrieve the node share multiple times until al
 
 *[Content truncated...]*
 
@@ -838,10 +838,10 @@ A hacker can exploit this mechanism by triggering a callback from `EscrowManager
 
 An attacker can exploit a reentrancy vulnerability in the `deboost()` method, manipulating the boosting mechanism to their advantage:
 1. The attacker calls the `deboost()` method and passes the same boosting NFT ID multiple times, e.g., `deboost(escrowId, [1,1,1,1,1,1,1,1])`.
-2. During the transfer process, the `deboost()` method triggers a callback to the attacker’s contract.
-3. Each time the attacker’s contract receives the NFT, it transfers the NFT back to `EscrowManager`.
+2. During the transfer process, the `deboost()` method triggers a callback to the attackers contract.
+3. Each time the attackers contract receives the NFT, it transfers the NFT back to `EscrowManager`.
 
-As a result, the escrow boosting coverage can be reduced to zero, even though other boosting NFTs may still be present and not withdrawn. This makes subsequent calculations inaccurate, disproportionately **inflating** the attacker’s `lockAmount` and voting power.
+As a result, the escrow boosting coverage can be reduced to zero, even though other boosting NFTs may still be present and not withdrawn. This makes subsequent calculations inaccurate, disproportionately **inflating** the attackers `lockAmount` and voting power.
 
 In the following proof-of-concept (PoC), after the attacker calls `deboost()`, their voting power **increases**
 
@@ -993,7 +993,7 @@ Source: https://github.com/sherlock-audit/2023-12-arcadia-judging/issues/153
 ## Found by 
 0xadrii, zzykxx
 ## Summary
-It is possible to drain a liquidity pool/creditor if the pool’s asset is an ERC777 token by triggering a reentrancy flow using flash actions.
+It is possible to drain a liquidity pool/creditor if the pools asset is an ERC777 token by triggering a reentrancy flow using flash actions.
 
 ## Vulnerability Detail
 The following vulnerability describes a complex flow that allows draining any liquidity pool where the underlying asset is an ERC777 token. Before diving into the vulnerability, it is important to properly understand and highlight some concepts from Arcadia that are relevant in order to allow this vulnerability to take place:
@@ -1070,9 +1070,9 @@ The vulnerability stems from the absence of the [Check Effects Interactions](htt
 
 A reentrancy vulnerability in the function `stakeToken()` allows an attacker to drain the funds of any ERC20 token deposited in the contract.
 
-In `stakeToken()` on line [180], `msg.sender`’s liquidity is updated in the state variable `userStakes`, however the incentive’s total liquidity is not updated until line [202]. In between, on line [194], there is a call to `_claimReward()` which passes execution flow back to the token being transferred. Using a malicious token that can react to transfers, such as an ERC777 token, or a custom attack token, the attacker can reenter the contract in between these two lines and interact with the contract in a partially updated state.
+In `stakeToken()` on line [180], `msg.sender`s liquidity is updated in the state variable `userStakes`, however the incentives total liquidity is not updated until line [202]. In between, on line [194], there is a call to `_claimReward()` which passes execution flow back to the token being transferred. Using a malicious token that can react to transfers, such as an ERC777 token, or a custom attack token, the attacker can reenter the contract in between these two lines and interact with the contract in a partially updated state.
 
-In the partially updated state, `userStake.liquidity` has been increased but the total liquidity of one or more incentives have not been. `userStake.liquidity` is global across all the user’s incentives and is used as a multiplier when rewards are calculated. Therefore, a malicious user may multiply the rewards for unclaimed incentives by an inflated figure and drain tokens.
+In the partially updated state, `userStake.liquidity` has been increased but the total liquidity of one or more incentives have not been. `userStake.liquidity` is global across all the users incentives and is used as a multiplier when rewards are calculated. Therefore, a malicious user may multiply the rewards for unclaimed incentives by an inflated figure and drain tokens.
 
 The steps taken for this attack are as follows, suppose that there are multiple incentives where USDC is the staking token. Bob is the attacker and has created a malicious token contract, ATT.
 
@@ -1103,7 +1103,7 @@ The steps taken for this attack are as follows, suppose that there are multiple 
 ## Description  
 The Bribe Protocol has many reentrancy patterns that may be exploitable if the `bidAsset` ERC20 token is set to an asset with a callback mechanism. Many interactions with the `bidAsset` token do not follow the checks-effects-interactions pattern. If `bidAsset` is set to an asset with a callback mechanism, the failure to use this pattern can lead to exploitable reentrancies.  
 
-For example, the `_bid` function’s use of the reentrant `safeTransferFrom` function allows the caller to execute a double transfer:
+For example, the `_bid` functions use of the reentrant `safeTransferFrom` function allows the caller to execute a double transfer:
 
 ```solidity
 /// @dev place a bid to proposal specified by `proposalId` with `amount` of bid asset

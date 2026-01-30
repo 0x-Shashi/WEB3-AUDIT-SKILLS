@@ -1,4 +1,4 @@
----
+﻿---
 name: Cosmos Scanner
 description: CosmWasm smart contract vulnerability scanner with 50+ security patterns
 version: 1.0.0
@@ -160,7 +160,7 @@ pub fn migrate(
 
 **Access Control:**
 ```rust
-// ✅ Admin check
+//  Admin check
 fn only_admin(deps: Deps, info: &MessageInfo) -> Result<(), ContractError> {
     let config = CONFIG.load(deps.storage)?;
     if info.sender != config.admin {
@@ -169,7 +169,7 @@ fn only_admin(deps: Deps, info: &MessageInfo) -> Result<(), ContractError> {
     Ok(())
 }
 
-// ✅ Validated address
+//  Validated address
 fn validate_recipient(deps: Deps, recipient: &str) -> Result<Addr, ContractError> {
     deps.api.addr_validate(recipient)
         .map_err(|_| ContractError::InvalidAddress {})
@@ -178,7 +178,7 @@ fn validate_recipient(deps: Deps, recipient: &str) -> Result<Addr, ContractError
 
 **Safe Funds Handling:**
 ```rust
-// ✅ Verify expected payment
+//  Verify expected payment
 fn verify_payment(
     info: &MessageInfo,
     expected_denom: &str,

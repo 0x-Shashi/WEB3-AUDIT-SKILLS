@@ -1,4 +1,4 @@
----
+﻿---
 name: Variant Analysis
 description: Find similar bugs across codebase after discovering an initial vulnerability
 version: 1.0.0
@@ -249,17 +249,17 @@ function withdraw(uint256 shares) external {
 
 ### Vulnerability Assessment
 
-1. **External Call Present?** ✅
+1. **External Call Present?** 
    - `safeTransfer` calls token transfer
 
 2. **Callback Possible?**
    - ERC20: Generally NO (unless ERC777)
    - Need to verify asset is standard ERC20
 
-3. **State Update After Call?** ✅
+3. **State Update After Call?** 
    - `_burn` modifies `_balances`
 
-4. **Reentrancy Guard?** ❌
+4. **Reentrancy Guard?** 
    - No `nonReentrant` modifier
 
 5. **Exploitable?**

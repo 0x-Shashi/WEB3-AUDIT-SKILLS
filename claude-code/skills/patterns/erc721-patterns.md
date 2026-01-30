@@ -1,4 +1,4 @@
-# ERC721 Security Patterns
+﻿# ERC721 Security Patterns
 
 ## Overview
 
@@ -450,16 +450,16 @@ Use safeMint instead of mint for ERC721
 
 ## Vulnerability Detail
 
-The `msg.sender` will be minted as a proof of staking NFT when `_stakeToken()` is called. 
+The`msg.sender`will be minted as a proof of staking NFT when`_stakeToken()`is called. 
 
-However, if `msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
+However, if`msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
 
 As per the documentation of EIP-721:
 
 > A wallet/broker/auction application MUST implement the wallet interface if it will accept safe transfers.
 > 
 
-Ref: [https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
+Ref:[https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
 
 As per the documentation of ERC721.sol by Openzeppelin
 
@@ -550,10 +550,10 @@ _Submitted by hickuphh3, also found by antonttc, berndartmueller, catchup, cccz,
 
 ### Details & Impact
 
-The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isn’t recommended because:
+The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isnt recommended because:
 
-*   [OpenZeppelin’s documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
-*   Given that any NFT can be used for the call option, there are a few NFTs (here’s an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
+*   [OpenZeppelins documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
+*   Given that any NFT can be used for the call option, there are a few NFTs (heres an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
 
 ### Recommended Mitigation Steps
 

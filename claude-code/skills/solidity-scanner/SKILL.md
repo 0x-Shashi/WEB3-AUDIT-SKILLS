@@ -1,4 +1,4 @@
----
+﻿---
 name: solidity-scanner
 description: "Comprehensive Solidity/EVM vulnerability scanner with 100+ vulnerability patterns, protocol-specific checks, and deep integration with static analysis tools. Use this skill when auditing Ethereum, BSC, Polygon, Arbitrum, Optimism, or any EVM-compatible chain."
 allowed-tools:
@@ -87,9 +87,9 @@ Output: [summary | detailed | findings-only]
 **Quick Check Pattern:**
 ```
 External call (call, transfer, send, or token interaction)
-    ↓
+    
 State changes AFTER the call?
-    ↓
+    
 YES = Potential reentrancy
 ```
 

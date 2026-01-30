@@ -1,4 +1,4 @@
-# MinOut/MaxIn Validation Security Patterns
+﻿# MinOut/MaxIn Validation Security Patterns
 
 ## Overview
 
@@ -39,7 +39,7 @@ Source: https://github.com/sherlock-audit/2022-11-bond-judging/issues/38
 bin2chen
 
 ## Summary
-BondAggregator#findMarketFor() minAmountOut_ does not actually take effect，may return a market's "payout" smaller than minAmountOut_ , Causes users to waste gas calls to purchase
+BondAggregator#findMarketFor() minAmountOut_ does not actually take effectmay return a market's "payout" smaller than minAmountOut_ , Causes users to waste gas calls to purchase
 
 ## Vulnerability Detail
 BondAggregator#findMarketFor() has check minAmountOut_ <= maxPayout

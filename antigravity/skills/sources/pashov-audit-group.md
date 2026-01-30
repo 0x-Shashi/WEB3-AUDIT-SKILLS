@@ -1,4 +1,4 @@
-# Pashov Audit Group - Audit Findings
+﻿# Pashov Audit Group - Audit Findings
 
 ## Overview
 
@@ -88,7 +88,7 @@ _validateExternalTrades(self, externalTra...
 
 ## Description
 
-The `SimplexDiamond` contract includes `DiamondCutFacet.diamondCut.selector` in its selectors. This function allows adding, removing, or modifying facet cuts, which determine the contract’s functionality. However, **this function is not restricted**, meaning **anyone** can call it to remove or replace any selector or facet.
+The `SimplexDiamond` contract includes `DiamondCutFacet.diamondCut.selector` in its selectors. This function allows adding, removing, or modifying facet cuts, which determine the contracts functionality. However, **this function is not restricted**, meaning **anyone** can call it to remove or replace any selector or facet.
 
 ### **Proof of Concept (PoC)**
 

@@ -1,4 +1,4 @@
-# Bridge Security Patterns - AI Reference
+﻿# Bridge Security Patterns - AI Reference
 
 > **For AI Assistants:** Bridges are high-value targets. Apply these patterns when auditing cross-chain protocols.
 
@@ -425,11 +425,11 @@ Check for:
 
 ### Key Lessons
 
-1. **Ronin**: 5 of 9 validators compromised → Use higher thresholds, distributed validators
-2. **Wormhole**: Guardian signature check bypassed → Rigorous signature verification
-3. **Nomad**: acceptableRoot allowed any message → Never trust unverified messages
-4. **Harmony**: 2 of 5 multisig → Use higher M/N ratios
-5. **BNB**: Proof verification bug → Formal verification of proof logic
+1. **Ronin**: 5 of 9 validators compromised  Use higher thresholds, distributed validators
+2. **Wormhole**: Guardian signature check bypassed  Rigorous signature verification
+3. **Nomad**: acceptableRoot allowed any message  Never trust unverified messages
+4. **Harmony**: 2 of 5 multisig  Use higher M/N ratios
+5. **BNB**: Proof verification bug  Formal verification of proof logic
 
 ---
 

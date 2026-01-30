@@ -1,4 +1,4 @@
----
+﻿---
 name: Differential Review
 description: Compare contract versions and identify security-relevant changes
 version: 1.0.0
@@ -216,9 +216,9 @@ modifier onlyOperator() {...}  // NEW
 ### Permission Matrix Change
 | Function | V1 Access | V2 Access | Risk |
 |----------|-----------|-----------|------|
-| withdraw | onlyOwner | onlyAdmin | ⚠️ Review |
-| pause | onlyOwner | onlyOperator | ⚠️ Review |
-| upgrade | onlyOwner | onlyOwner | ✅ Same |
+| withdraw | onlyOwner | onlyAdmin |  Review |
+| pause | onlyOwner | onlyOperator |  Review |
+| upgrade | onlyOwner | onlyOwner |  Same |
 
 ### Questions
 - [ ] Can new roles escalate?
@@ -248,8 +248,8 @@ function calculateValue() {
 | V1 Calls | V2 Calls | Risk |
 |----------|----------|------|
 | OldOracle.getPrice | NewOracle.getPrice | Trust change |
-| token.transfer | token.safeTransfer | ✅ Safer |
-| - | router.swap | ⚠️ New dependency |
+| token.transfer | token.safeTransfer |  Safer |
+| - | router.swap |  New dependency |
 
 ### Questions
 - [ ] New trusted contracts?
@@ -265,9 +265,9 @@ function calculateValue() {
 ### ETH Flow Changes
 | Path | V1 | V2 | Change |
 |------|----|----|--------|
-| Deposit | user→vault | user→vault | Same |
-| Withdraw | vault→user | vault→treasury→user | ⚠️ New hop |
-| Fees | None | vault→treasury | ⚠️ New extraction |
+| Deposit | uservault | uservault | Same |
+| Withdraw | vaultuser | vaulttreasuryuser |  New hop |
+| Fees | None | vaulttreasury |  New extraction |
 
 ### Token Flow Changes
 | Token | V1 Flow | V2 Flow | Risk |
@@ -317,15 +317,15 @@ forge inspect Vault storage-layout --json > v2-layout.json
 | 1 | paused | bool |
 | 2 | totalDeposits | uint256 |
 | 3 | balances | mapping |
-| 4 | newVariable | uint256 | ← NEW (OK)
+| 4 | newVariable | uint256 |  NEW (OK)
 
 ### Compatibility Check
-- [x] Slots 0-3 unchanged ✅
-- [x] New variable appended ✅
-- [ ] No insertions in middle ✅
-- [ ] Types unchanged ✅
+- [x] Slots 0-3 unchanged 
+- [x] New variable appended 
+- [ ] No insertions in middle 
+- [ ] Types unchanged 
 
-### Status: ✅ Storage Compatible
+### Status:  Storage Compatible
 ```
 
 ### 5.3 Storage Gap Pattern
@@ -470,9 +470,9 @@ contract UpgradeTest is Test {
 ### Fixes Verified
 | Finding | Status | Notes |
 |---------|--------|-------|
-| AUDIT-001 | ✅ Fixed | Reentrancy addressed |
-| AUDIT-002 | ✅ Fixed | Access control added |
-| AUDIT-003 | ⚠️ Partial | One variant remains |
+| AUDIT-001 |  Fixed | Reentrancy addressed |
+| AUDIT-002 |  Fixed | Access control added |
+| AUDIT-003 |  Partial | One variant remains |
 
 ### New Concerns
 | ID | Description | Severity |
@@ -481,7 +481,7 @@ contract UpgradeTest is Test {
 | DIFF-002 | Staking withdrawal delay | Low |
 
 ## Storage Layout
-✅ Compatible - New variables appended correctly
+ Compatible - New variables appended correctly
 
 ## Recommendations
 1. Review new oracle integration

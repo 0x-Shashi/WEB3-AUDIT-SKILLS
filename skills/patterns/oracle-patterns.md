@@ -1,4 +1,4 @@
-# Oracle Security Patterns
+﻿# Oracle Security Patterns
 
 ## Overview
 
@@ -397,7 +397,7 @@ if (answer == 0 || answeredInRound < roundId || updateAt == 0) {
 }
 ```
 
-`updateAt` refers to the timestamp of the round. This value isn’t checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
+`updateAt` refers to the timestamp of the round. This value isnt checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
 
 ## Recommendation
 - Determine the tolerance threshold for `updateAt`. If `block.timestamp - updateAt` exceeds that threshold, return 0, which is consistent with how the current validations are handled.
@@ -412,7 +412,7 @@ Recency check is implemented in PR 1602. Off-chain monitoring will be consider
 
 ---
 
-### Example 11: [M-07] Oracle’s two-day feature can be gamed
+### Example 11: [M-07] Oracles two-day feature can be gamed
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -537,7 +537,7 @@ PaprController.sol
 
 ---
 
-### Example 14: [M-18] Protocol’s usability becomes very limited when access to Chainlink oracle data feed is blocked
+### Example 14: [M-18] Protocols usability becomes very limited when access to Chainlink oracle data feed is blocked
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -557,7 +557,7 @@ https://github.com/code-423n4/2022-10-inverse/blob/main/src/Market.sol#L353-L363
 ## Vulnerability details
 
 ## Impact
-Based on the current implementation, when the protocol wants to use Chainlink oracle data feed for getting a collateral token's price, the fixed price for the token should not be set. When the fixed price is not set for the token, calling the `Oracle` contract's `viewPrice` or `getPrice` function will execute `uint price = feeds[token].feed.latestAnswer()`. As https://blog.openzeppelin.com/secure-smart-contract-guidelines-the-dangers-of-price-oracles/ mentions, it is possible that Chainlink’s "multisigs can immediately block access to price feeds at will". When this occurs, executing `feeds[token].feed.latestAnswer()` will revert so calling the `viewPrice` and `getPrice` functions also revert, which cause denial of service when calling functions like `getCollateralValueInternal` and`getWithdrawalLimitInternal`. The `getCollateralValueInternal` and`getWithdrawalLimitInternal` functions are the key elements to the core functionalities, such as borrowing, withdrawing, force-replenishing, and liquidating; with these functionalit
+Based on the current implementation, when the protocol wants to use Chainlink oracle data feed for getting a collateral token's price, the fixed price for the token should not be set. When the fixed price is not set for the token, calling the `Oracle` contract's `viewPrice` or `getPrice` function will execute `uint price = feeds[token].feed.latestAnswer()`. As https://blog.openzeppelin.com/secure-smart-contract-guidelines-the-dangers-of-price-oracles/ mentions, it is possible that Chainlinks "multisigs can immediately block access to price feeds at will". When this occurs, executing `feeds[token].feed.latestAnswer()` will revert so calling the `viewPrice` and `getPrice` functions also revert, which cause denial of service when calling functions like `getCollateralValueInternal` and`getWithdrawalLimitInternal`. The `getCollateralValueInternal` and`getWithdrawalLimitInternal` functions are the key elements to the core functionalities, such as borrowing, withdrawing, force-replenishing, and liquidating; with these functionalit
 
 *[Content truncated...]*
 
@@ -565,7 +565,7 @@ Based on the current implementation, when the protocol wants to use Chainlink or
 
 ---
 
-### Example 15: [M-11] viewPrice doesn’t always report dampened price
+### Example 15: [M-11] viewPrice doesnt always report dampened price
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -684,7 +684,7 @@ spTKNMinimalOracle `_calculateSpTknPerBase()` does not calculate correct price f
 
 ### Root Cause
 
-First, let’s clarify the denomination: tokenA/tokenB represents how much tokenB is worth per tokenA. For example, ETH/USDC = 3000 means 1 ETH is equivalent to 3000 USDC.
+First, lets clarify the denomination: tokenA/tokenB represents how much tokenB is worth per tokenA. For example, ETH/USDC = 3000 means 1 ETH is equivalent to 3000 USDC.
 
 The `_calculateSpTknPerBase()` function is used to calculate baseTKN/spTKN. It starts with the `_priceBasePerPTkn18` variable, which is pTKN/baseTKN.
 
@@ -770,7 +770,7 @@ if ((score >= _mean - _stddev) && (score <= _mean + _stddev))
 
 However, in cases where `_mean < _stddev`, such as some valid edge case where for example `scores[] = [0,1,0,1,2]`, the calculation of `_mean - _stddev` attempts to produce a negative value.
 
-Since Solidity’s uint256 type does not support negative numbers, this results in an underflow, triggering an automatic revert and causing the transaction to fail. The edge case described results in `_stddev = 1` and `_mean = 0`, which causes the check `score >= _mean - _stddev` to revert, as `_mean - _stddev` evaluates to a negative result.
+Since Soliditys uint256 type does not support negative numbers, this results in an underflow, triggering an automatic revert and causing the transaction to fail. The edge case described results in `_stddev = 1` and `_mean = 0`, which causes the check `score >= _mean - _stddev` to revert, as `_mean - _stddev` evaluates to a negative result.
 
 The same issue exists also in \[<https://github.com/Cyfrin/2024-10-swan-dria/blob/main/contracts/llm/LLMOracleCoordinator.sol#L3
 
@@ -788,9 +788,9 @@ The same issue exists also in \[<https://github.com/Cyfrin/2024-10-swan-dria/blo
 
 ## Vulnerability Details
 
-The Generalised Oracle is broken for the external tokens that use Uniswap. This is happening for two reasons: 
+The Generalised Oracle is broken for the external tokens that use Uniswap. This is happening for two reasons:
 
-1. The token passed as a base token for the `OracleLibrary.getQuoteAtTick` is incorrect. The base token should be the token the protocol wants to fetch the price from, not the quote token. Take into consideration the following scenario: Fetching the price for WBTC. 
+1. The token passed as a base token for the `OracleLibrary.getQuoteAtTick` is incorrect. The base token should be the token the protocol wants to fetch the price from, not the quote token. Take into consideration the following scenario: Fetching the price for WBTC.
 
 ```Solidity
             // LibUsdOracle -> getTokenPriceFromExternal
@@ -806,7 +806,7 @@ The Generalised Oracle is broken for the external tokens that use Uniswap. This 
                 uint128(10) ** uint128(IERC20Decimals(token).decimals()) // @audit base token amount
 ```
 
-The function getTwap: 
+The function getTwap:
 
 ```Solidity
     function getTwap(
@@ -834,7 +834,7 @@ The function getTwap: 
 
 ## Vulnerability Details
 
-The function `getUsdPrice`from `LibUsdOracle` should return the token value in USD.  For example, one of its consumers is the function [`getMintFertilizerOut`](https://github.com/Cyfrin/2024-05-beanstalk-the-finale/blob/4e0ad0b964f74a1b4880114f4dd5b339bc69cd3e/protocol/contracts/beanstalk/barn/FertilizerFacet.sol#L117-L122):
+The function `getUsdPrice`from `LibUsdOracle`should return the token value in USD. For example, one of its consumers is the function [`getMintFertilizerOut`](https://github.com/Cyfrin/2024-05-beanstalk-the-finale/blob/4e0ad0b964f74a1b4880114f4dd5b339bc69cd3e/protocol/contracts/beanstalk/barn/FertilizerFacet.sol#L117-L122):
 
 `fertilizerAmountOut = tokenAmountIn.div(LibUsdOracle.getUsdPrice(barnRaiseToken));`
 

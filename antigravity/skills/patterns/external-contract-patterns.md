@@ -1,4 +1,4 @@
-# External Contract Security Patterns
+﻿# External Contract Security Patterns
 
 ## Overview
 
@@ -33,7 +33,7 @@
 
 **Details**:
 
-## Diﬃculty: High
+## Diculty: High
 
 ## Type: Data Validation
 

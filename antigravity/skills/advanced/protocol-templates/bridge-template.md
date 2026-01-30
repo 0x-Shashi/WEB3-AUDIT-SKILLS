@@ -1,28 +1,28 @@
-# Bridge Protocol Template
+﻿# Bridge Protocol Template
 
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    BRIDGE ARCHITECTURE                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│     CHAIN A (Source)              CHAIN B (Destination)         │
-│  ┌───────────────────┐         ┌───────────────────┐           │
-│  │   Bridge Contract │         │   Bridge Contract │           │
-│  │   ─────────────   │         │   ─────────────   │           │
-│  │   Lock tokens     │         │   Mint tokens     │           │
-│  │   Emit event      │         │   Verify proof    │           │
-│  │   Store proof     │         │   Release funds   │           │
-│  └─────────┬─────────┘         └─────────┬─────────┘           │
-│            │                              │                      │
-│            │    ┌─────────────────┐      │                      │
-│            └───▶│   RELAYER/      │◀─────┘                      │
-│                 │   VALIDATOR     │                              │
-│                 │   NETWORK       │                              │
-│                 └─────────────────┘                              │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+                    BRIDGE ARCHITECTURE                           
+
+                                                                  
+     CHAIN A (Source)              CHAIN B (Destination)         
+                      
+     Bridge Contract             Bridge Contract            
+                                  
+     Lock tokens                 Mint tokens                
+     Emit event                  Verify proof               
+     Store proof                 Release funds              
+                      
+                                                                
+                                            
+               RELAYER/                            
+                    VALIDATOR                                   
+                    NETWORK                                     
+                                               
+                                                                  
+
 ```
 
 ---
@@ -222,7 +222,7 @@ function process(uint256 blockNumber, bytes memory proof) {
 
 ---
 
-### BRIDGE-04: Message Spoofing (L1↔L2)
+### BRIDGE-04: Message Spoofing (L1L2)
 
 **Risk:** Critical
 
@@ -423,7 +423,7 @@ grep -rn "handleMessage\|onMessage\|receive.*message" --include="*.sol"
 ### L2 Rollups (Optimism, Arbitrum)
 - Native message passing
 - Retryable tickets
-- Check L1→L2 sender validation
+- Check L1L2 sender validation
 
 ### Wormhole Style
 - Guardian network

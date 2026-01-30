@@ -1,4 +1,4 @@
-# Native Solana Program Audit Workflow
+﻿# Native Solana Program Audit Workflow
 
 Systematic workflow for auditing native (non-Anchor) Solana programs in raw Rust.
 
@@ -82,9 +82,9 @@ fn handler(
 ### Account Parsing
 | Index | Name | Expected Owner | Writable | Signer |
 |-------|------|----------------|----------|--------|
-| 0 | payer | System | ✅ | ✅ |
-| 1 | pool | Self | ✅ | ❌ |
-| 2 | token | Token | ✅ | ❌ |
+| 0 | payer | System |  |  |
+| 1 | pool | Self |  |  |
+| 2 | token | Token |  |  |
 
 ### Validation Checklist
 - [ ] Account count verified
@@ -146,8 +146,8 @@ if data[0] != POOL_DISCRIMINATOR {
 | Check | Account 0 | Account 1 | Account 2 | Account 3 |
 |-------|-----------|-----------|-----------|-----------|
 | Name | authority | pool | user_ata | pool_ata |
-| Signer? | ✅ | ❌ | ❌ | ❌ |
-| Writable? | ❌ | ✅ | ✅ | ✅ |
+| Signer? |  |  |  |  |
+| Writable? |  |  |  |  |
 | Owner? | Any | Program | Token | Token |
 | Size? | N/A | 89 | 165 | 165 |
 | Discrim? | N/A | 0x01 | N/A | N/A |
@@ -164,11 +164,11 @@ if data[0] != POOL_DISCRIMINATOR {
 
 ### AV-01: Missing Owner Check
 ```rust
-// ❌ VULNERABLE
+//  VULNERABLE
 let pool = next_account_info(account_iter)?;
 let data = pool.try_borrow_data()?;  // Attacker can pass ANY account
 
-// ✅ SECURE
+//  SECURE
 if pool.owner != program_id {
     return Err(ProgramError::IncorrectProgramId);
 }
@@ -176,11 +176,11 @@ if pool.owner != program_id {
 
 ### AV-02: Missing Signer Check
 ```rust
-// ❌ VULNERABLE
+//  VULNERABLE
 let authority = next_account_info(account_iter)?;
 // Proceeds without checking is_signer
 
-// ✅ SECURE
+//  SECURE
 if !authority.is_signer {
     return Err(ProgramError::MissingRequiredSignature);
 }
@@ -188,10 +188,10 @@ if !authority.is_signer {
 
 ### AV-06: Missing Discriminator
 ```rust
-// ❌ VULNERABLE - Treats any data as Pool
+//  VULNERABLE - Treats any data as Pool
 let pool: Pool = Pool::try_from_slice(&pool_account.data.borrow())?;
 
-// ✅ SECURE - Verify type first
+//  SECURE - Verify type first
 let data = pool_account.try_borrow_data()?;
 if data[0] != POOL_DISCRIMINATOR {
     return Err(ProgramError::InvalidAccountData);
@@ -201,11 +201,11 @@ let pool: Pool = Pool::try_from_slice(&data[1..])?;
 
 ### AV-07: Missing Account Relationship
 ```rust
-// ❌ VULNERABLE - Doesn't verify user belongs to pool
+//  VULNERABLE - Doesn't verify user belongs to pool
 let pool = next_account_info(account_iter)?;
 let user = next_account_info(account_iter)?;
 
-// ✅ SECURE - Verify relationship
+//  SECURE - Verify relationship
 let user_data: User = User::unpack(&user.data.borrow())?;
 if user_data.pool != *pool.key {
     return Err(ProgramError::InvalidAccountData);
@@ -248,13 +248,13 @@ if *pool.key != pool_pda {
 ### 4.2 Bump Seed Issues
 
 ```rust
-// ❌ VULNERABLE - Accepts user-provided bump
+//  VULNERABLE - Accepts user-provided bump
 let (_, bump) = Pubkey::create_program_address(
     &[b"pool", &[user_bump]],  // User controls bump
     program_id
 )?;
 
-// ✅ SECURE - Use find_program_address for canonical
+//  SECURE - Use find_program_address for canonical
 let (pda, bump) = Pubkey::find_program_address(
     &[b"pool"],
     program_id
@@ -307,7 +307,7 @@ invoke(
 ### 5.2 CPI Validation Pattern
 
 ```rust
-// ✅ SECURE CPI Pattern
+//  SECURE CPI Pattern
 const SPL_TOKEN: Pubkey = spl_token::ID;
 
 // Verify target program
@@ -333,25 +333,25 @@ invoke(
 
 | Location | Operation | Type | Safe? |
 |----------|-----------|------|-------|
-| deposit:45 | a + b | u64 | ❌ unchecked |
-| withdraw:78 | a - b | u64 | ✅ checked |
-| calc_fee:23 | a * b / c | u128 | ❌ overflow |
+| deposit:45 | a + b | u64 |  unchecked |
+| withdraw:78 | a - b | u64 |  checked |
+| calc_fee:23 | a * b / c | u128 |  overflow |
 ```
 
 ### 6.2 Common Issues
 
 ```rust
-// ❌ VULNERABLE - Overflow
+//  VULNERABLE - Overflow
 pool.total += amount;
 
-// ✅ SECURE - Checked arithmetic
+//  SECURE - Checked arithmetic
 pool.total = pool.total.checked_add(amount)
     .ok_or(ProgramError::ArithmeticOverflow)?;
 
-// ❌ VULNERABLE - Division precision loss
+//  VULNERABLE - Division precision loss
 let fee = amount * fee_bps / 10000;
 
-// ✅ SECURE - Use u128 for intermediate
+//  SECURE - Use u128 for intermediate
 let fee = (amount as u128)
     .checked_mul(fee_bps as u128)
     .and_then(|v| v.checked_div(10000))
@@ -383,10 +383,10 @@ let fee = (amount as u128)
 ### 7.2 Serialization Vulnerabilities
 
 ```rust
-// ❌ VULNERABLE - No size check
+//  VULNERABLE - No size check
 let data: MyStruct = MyStruct::try_from_slice(&account.data.borrow())?;
 
-// ✅ SECURE - Verify size first
+//  SECURE - Verify size first
 if account.data_len() != MY_STRUCT_SIZE {
     return Err(ProgramError::InvalidAccountData);
 }

@@ -1,4 +1,4 @@
-# External Call Security Patterns
+﻿# External Call Security Patterns
 
 ## Overview
 
@@ -46,7 +46,7 @@
 With the contract `GenericBridgeFacet`, the functions `swapAndStartBridgeTokensGeneric()` (via `LibSwap.swap()`) and `_startBridge()` allow arbitrary function calls, which enable anyone to call `transferFrom()` and steal tokens from users who have provided a large allowance to the LiFi protocol. This vulnerability has been exploited in the past.
 
 ### Additional Risks
-- Ability to call the LiFi Diamond itself via functions that don’t have `nonReentrant`.
+- Ability to call the LiFi Diamond itself via functions that dont have `nonReentrant`.
 - Potential cancellation of transfers for other users.
 - Calling functions protected by checks on `this`, such as `completeBridgeTokensViaStargate`.
 
@@ -155,7 +155,7 @@ export async function getAccountImplementationAddress(factoryAddress: string, et
 - `Executor.sol#L269-L288`
 
 ## Description
-The Executor contract allows users to build an arbitrary payload external call to any address except `address(erc20Proxy)`. `erc20Proxy` is not the only dangerous address to call. By building a malicious external call to the Axelar gateway, exploiters can steal users’ funds.
+The Executor contract allows users to build an arbitrary payload external call to any address except `address(erc20Proxy)`. `erc20Proxy` is not the only dangerous address to call. By building a malicious external call to the Axelar gateway, exploiters can steal users funds.
 
 The Executor performs swaps at the destination chain. By setting the receiver address to the Executor contract at the destination chain, Li-Fi can help users to get the best price. The Executor inherits `IAxelarExecutable`. The `execute` and `executeWithToken` functions validate the payload and execute the external call.
 
@@ -222,7 +222,7 @@ contract Executor is IExecutor {
 }
 ```
 
-Since there aren’t restrictions on the destination contract and calldata, exploiters can steal the tokens from the executor.
+Since there arent restrictions on the destination contract and calldata, exploiters can steal the tokens from the executor.
 
 **Note:** The executor does have excess tokens, see: Kovan executor.
 
@@ -261,7 +261,7 @@ allows the exploiter to get an infinite allowance of any toke
 The function `xcall()` does some sanity checks; nevertheless, more checks should be added to prevent issues later on in the use of the protocol. 
 
 - If `args.recovery == 0`, then `sendToRecovery()` will send funds to the 0 address, effectively losing them.
-- If `params.agent == 0`, then `forceReceiveLocal` can’t be used, and funds might be locked forever.
+- If `params.agent == 0`, then `forceReceiveLocal` cant be used, and funds might be locked forever.
 - The `args.params.destinationDomain` should never be `s.domain`, although this is also implicitly checked via `_mustHaveRemote()` assuming a correct configuration.
 - If `args.params.slippageTol` is set to something greater than `s.LIQUIDITY_FEE_DENOMINATOR`, then funds can be locked as `xcall()` allows for the user to provide the local asset, avoiding any swap while `_handleExecuteLiquidity()` in `execute()` may attempt to perform a swap on the destination chain.
 
@@ -313,25 +313,25 @@ https://github.com/sherlock-audit/2024-05-napier-update/blob/c31af59c6399182fd04
 ```solidity
 File: 2024-05-napier-update\napier-uups-adapters\src\adapters\puffer\PufETHAdapter.sol
 
-66:     function _stake(uint256 stakeAmount) internal override returns (uint256) {
+66:   function _stake(uint256 stakeAmount) internal override returns (uint256) {
 ...
 74: 
-75:         IWETH9(Constants.WETH).withdraw(stakeAmount);
-76:         uint256 _stETHAmt = STETH.balanceOf(address(this));
-77:         STETH.submit{value: stakeAmount}(address(this));
-78:         _stETHAmt = STETH.balanceOf(address(this)) - _stETHAmt;
-79:         if (_stETHAmt == 0) revert InvariantViolation();
+75:     IWETH9(Constants.WETH).withdraw(stakeAmount);
+76:     uint256 _stETHAmt = STETH.balanceOf(address(this));
+77:     STETH.submit{value: stakeAmount}(address(this));
+78:     _stETHAmt = STETH.balanceOf(address(this)) - _stETHAmt;
+79:     if (_stETHAmt == 0) revert InvariantViolation();
 80: 
-81:         // Stake stETH to PufferDepositor
-82:    >>>  uint256 _pufETHAmt = PUFFER_DEPOSITOR.depositStETH(Permit(block.timestamp, _stETHAmt, 0, 0, 0));
+81:     // Stake stETH to PufferDepositor
+82:  >>> uint256 _pufETHAmt = PUFFER_DEPOSITOR.depositStETH(Permit(block.timestamp, _stETHAmt, 0, 0, 0));
 84: 
 ...
-88:     }
+88:   }
 
 ```
 
 **Issue flow**:
-1. When depositing by calling  `PUFFER_DEPOSITOR.depositStETH(Permit)`, `PufETHAdapter` passes only one parameter `Permit` look at line 82 above.
+1. When depositing by calling `PUFFER_DEPOSITOR.depositStETH(Permit)`, `PufETHAdapter` passes only one parameter `Permit` look at line 82 above.
 2. But the current `PUFFER_DEPOSITOR.depositStETH` has 2 parameters (Permit, address recipient). Chec
 
 *[Content truncated...]*
@@ -394,21 +394,21 @@ and it is subcall to `getPositionRisk()`
 
 **Details**:
 
-There is a subtle difference between the implementation of solmate’s SafeTransferLib and OZ’s SafeERC20: OZ’s SafeERC20 checks if the token is a contract or not, solmate’s SafeTransferLib does not.<br>
+There is a subtle difference between the implementation of solmates SafeTransferLib and OZs SafeERC20: OZs SafeERC20 checks if the token is a contract or not, solmates SafeTransferLib does not.<br>
 See: <https://github.com/Rari-Capital/solmate/blob/main/src/utils/SafeTransferLib.sol#L9><br>
 Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller.<br>
-As a result, when the token’s address has no code, the transaction will just succeed with no error.<br>
+As a result, when the tokens address has no code, the transaction will just succeed with no error.<br>
 This attack vector was made well-known by the qBridge hack back in Jan 2022.
 
-In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmate’s libraries.
+In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmates libraries.
 
-Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesn’t have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
+Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesnt have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
 
 So this will lead to miscalculation and loss of funds.
 
 ### Attack scenario (example):
 
-It’s becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
+Its becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
 
 *[Content truncated...]*
 

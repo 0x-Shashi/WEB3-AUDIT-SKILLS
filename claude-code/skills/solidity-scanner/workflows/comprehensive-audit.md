@@ -1,4 +1,4 @@
-# Comprehensive Audit Workflow
+﻿# Comprehensive Audit Workflow
 
 Full security audit workflow for thorough protocol analysis.
 
@@ -230,8 +230,8 @@ Apply relevant protocol checklist from SKILL.md:
 
 ### Invariants
 From documentation and code:
-1. [Invariant] - Verified: ✅/❌
-2. [Invariant] - Verified: ✅/❌
+1. [Invariant] - Verified: /
+2. [Invariant] - Verified: /
 
 ### Economic Model
 - Fee mechanism: [analysis]
@@ -241,8 +241,8 @@ From documentation and code:
 ### Edge Cases
 | Edge Case | Expected | Actual | Status |
 |-----------|----------|--------|--------|
-| Zero deposit | Revert | [check] | ✅/❌ |
-| Max deposit | Accept | [check] | ✅/❌ |
+| Zero deposit | Revert | [check] | / |
+| Max deposit | Accept | [check] | / |
 ```
 
 ---
@@ -260,7 +260,7 @@ From documentation and code:
 | balance | view, withdraw | deposit, withdraw | Sum consistency |
 
 ### Function Ordering Attacks
-- [ ] deposit → withdraw: [safe/unsafe]
+- [ ] deposit  withdraw: [safe/unsafe]
 - [ ] [other orderings]
 
 ### State Inconsistencies
@@ -286,8 +286,8 @@ From documentation and code:
 ### Failure Modes
 | Failure | Our Response | Adequate |
 |---------|--------------|----------|
-| Reverts | Propagate | ✅ |
-| Stale data | [check] | ❌ |
+| Reverts | Propagate |  |
+| Stale data | [check] |  |
 ```
 
 ### 4.3 Economic Attack Analysis
@@ -468,23 +468,23 @@ By the end, you should have:
 
 ```
 audit-output/
-├── slither.json
-├── slither-summary.txt
-├── semgrep.json
-├── contracts.txt
-├── functions.txt
-├── callgraph.dot
-├── findings/
-│   ├── H-01.md
-│   ├── H-02.md
-│   ├── M-01.md
-│   └── ...
-├── notes/
-│   ├── day1.md
-│   ├── day2.md
-│   └── ...
-├── report-draft.md
-└── report-final.pdf
+ slither.json
+ slither-summary.txt
+ semgrep.json
+ contracts.txt
+ functions.txt
+ callgraph.dot
+ findings/
+    H-01.md
+    H-02.md
+    M-01.md
+    ...
+ notes/
+    day1.md
+    day2.md
+    ...
+ report-draft.md
+ report-final.pdf
 ```
 
 ---

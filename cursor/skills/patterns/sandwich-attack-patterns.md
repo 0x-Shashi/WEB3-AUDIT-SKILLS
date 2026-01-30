@@ -1,4 +1,4 @@
-# Sandwich Attack Security Patterns
+﻿# Sandwich Attack Security Patterns
 
 ## Overview
 
@@ -438,16 +438,16 @@ index a699162..337d1f5 100644
 
 **Severity:** High Risk  
 **Context:** AeraVaultV1.sol#L402-L453, AeraVaultV1.sol#L456-L514  
-**Description:** Transactions calling the `deposit()` function are susceptible to sandwich attacks where an attacker can extract value from deposits. A similar issue exists in the `withdraw()` function but the minimum check on the pool holdings limits the attack’s impact.
+**Description:** Transactions calling the `deposit()` function are susceptible to sandwich attacks where an attacker can extract value from deposits. A similar issue exists in the `withdraw()` function but the minimum check on the pool holdings limits the attacks impact.
 
 ## Scenario Example
 (Assuming swap fees are ignored for simplicity):
 
 1. Suppose the Balancer pool contains two tokens, WETH and DAI, with weights of 0.5 each. Currently, there is 1 WETH and 3k DAI in the pool, and the WETH spot price is 3k.
 2. The Treasury wants to add another 3k DAI into the Aera vault, so it calls the `deposit()` function.
-3. The attacker front-runs the Treasury’s transaction. They swap 3k DAI into the Balancer pool and receive 0.5 WETH. The weights remain 0.5 and 0.5, but because WETH and DAI balances become 0.5 and 6k, WETH’s spot price now becomes 12k.
-4. At this point, the Treasury’s transaction adds 3k DAI into the Balancer pool and changes the weights to 0.6 and 0.4.
-5. The attacker back-runs the transaction and swaps the 0.5 WETH acquired in step 3 back to DAI, recovering WETH’s spot price to slightly above 3k. According to the current weights, they can receive 9k * (1 - 1/r) = 3.33k DAI from the pool, where r = (2^0.4)^(1/0.6).
+3. The attacker front-runs the Treasurys transaction. They swap 3k DAI into the Balancer pool and receive 0.5 WETH. The weights remain 0.5 and 0.5, but because WETH and DAI balances become 0.5 and 6k, WETHs spot price now becomes 12k.
+4. At this point, the Treasurys transaction adds 3k DAI into the Balancer pool and changes the weights to 0.6 and 0.4.
+5. The attacker back-runs the transaction and swaps the 0.5 WETH acquired in step 3 back to DAI, recovering WETHs spot price to slightly above 3k. According to the current weights, they can receive 9k * (1 - 1/r) = 3.33k DAI from the pool, where r = (2^0.4)^(1/0.6).
 6. As a result, the attacker profits 3.33k - 3k = 0.33k DAI.
 
 ## Recommendations

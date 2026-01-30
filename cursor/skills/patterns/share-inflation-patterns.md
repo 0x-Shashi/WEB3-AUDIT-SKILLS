@@ -1,4 +1,4 @@
-# Share Inflation Security Patterns
+﻿# Share Inflation Security Patterns
 
 ## Overview
 
@@ -420,7 +420,7 @@ The number of shares minted to a depositor is determined by
 
 Potential attackers can spot a call to `UserDepositManagerV1._deposit` and front-run it with a transaction that sends wei to the contract (by self-destructing another contract and sending the funds to it), causing the victim to receive fewer shares than expected. 
 
-More specifically, if `oldTotalAssetBalance()` is greater than `underlyingAssetValue * totalSupply()`, then the number of shares the depositor receives will be 0, although `underlyingAssetValue` will still be pulled from the depositor’s balance. 
+More specifically, if `oldTotalAssetBalance()` is greater than `underlyingAssetValue * totalSupply()`, then the number of shares the depositor receives will be 0, although `underlyingAssetValue` will still be pulled from the depositors balance. 
 
 An attacker with access to enough liquidity and the mempool data can spot a call to `UserDepositManagerV1._deposit` and front-run it by sending at least 
 

@@ -1,4 +1,4 @@
-# MixBytes - Audit Findings
+﻿# MixBytes - Audit Findings
 
 ## Overview
 
@@ -178,13 +178,13 @@ compositePrice = (compositePrice * rate)
                / SCALING_FACTOR; // 36-dec fixed-point
 ```
 
-If a feed reports `price > 1.16 * 10^(5 + feed.decimals)` (≈ $100 000 when denominated in wei), the term  
+If a feed reports `price > 1.16 * 10^(5 + feed.decimals)` ($100000 when denominated in wei), the term  
 
 ```
 compositePrice * rate * 10^36
 ```
 
-exceeds the 256‑bit limit. The call rev...
+exceeds the 256bit limit. The call rev...
 
 ---
 
@@ -219,7 +219,7 @@ r.integral_inv_supply = self.integral_inv_supply
 if block.timestamp > r.integral_inv_supply.t:
     r.integral_inv_supply.v += unsafe_div(
         10**36 * (block.timestamp - r.integral_inv_supply.t),
-        erc4626.erc20.totalSupply  # ← may be 0
+        erc4626.erc20.totalSupply  #  may be 0
     )
     r.integral_inv_supply.t = block.timestamp
 ```

@@ -1,4 +1,4 @@
-# from=to Security Patterns
+﻿# from=to Security Patterns
 
 ## Overview
 
@@ -160,7 +160,7 @@ However, when `tokenIndexFrom == tokenIndexTo`, the second update overwrites the
 
 **Note:** The protection against this problem is located in the function `getY()`. However, this function is not called from `swapOut()`.
 
-**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isn’t an immediate risk here.
+**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnt an immediate risk here.
 
 ### Code Snippets
 ```solidity
@@ -239,7 +239,7 @@ Recommend that a `require` check should be imposed prohibiting the `from` and `t
 
 ---
 
-### Example 6: [H-03] transferNotionalFrom doesn’t check from != to
+### Example 6: [H-03] transferNotionalFrom doesnt check from != to
 
 **Source**: Code4rena
 **Protocol**: Swivel

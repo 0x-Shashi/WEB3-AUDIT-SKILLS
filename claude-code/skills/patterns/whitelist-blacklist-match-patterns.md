@@ -1,4 +1,4 @@
-# Whitelist/Blacklist Match Security Patterns
+﻿# Whitelist/Blacklist Match Security Patterns
 
 ## Overview
 
@@ -154,8 +154,8 @@ function test_token_withdrawal_fails() public {
 ```
 
 > ```Solidity
-> ├─ [8858] UpgradeableProxy::withdraw(MockERC20Token: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 4)
-> │   ├─ [8339] TokenManager::withdraw(M
+>  [8858] UpgradeableProxy::withdraw(MockERC20Token: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 4)
+>     [8339] TokenManager::withdraw(M
 
 *[Content truncated...]*
 

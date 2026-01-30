@@ -1,4 +1,4 @@
----
+﻿---
 name: Commands & Hooks
 description: Plugin commands, keyboard shortcuts, and automation hooks
 version: 1.0.0
@@ -320,25 +320,25 @@ shortcuts:
 
 ```yaml
 contextMenu:
-  - label: "🔍 Analyze Selection"
+  - label: " Analyze Selection"
     command: "audit.analyzeSelection"
     when: "editorHasSelection && resourceExtname == .sol"
     
-  - label: "🐛 Report Finding Here"
+  - label: " Report Finding Here"
     command: "audit.reportFinding"
     when: "editorHasSelection"
     
-  - label: "📚 Search Similar Vulnerabilities"
+  - label: " Search Similar Vulnerabilities"
     command: "audit.searchSimilar"
     when: "editorHasSelection"
     
   - label: "---"
     
-  - label: "🔄 Check Reentrancy"
+  - label: " Check Reentrancy"
     command: "audit.checkReentrancy"
     when: "editorLangId == solidity"
     
-  - label: "🔐 Check Access Control"
+  - label: " Check Access Control"
     command: "audit.checkAccess"
     when: "editorLangId == solidity"
 ```
@@ -436,7 +436,7 @@ integration:
   # Status bar
   statusBar:
     - position: "right"
-      content: "🔍 Audit Mode: {status}"
+      content: " Audit Mode: {status}"
       tooltip: "Click to toggle audit mode"
       
     - position: "right"

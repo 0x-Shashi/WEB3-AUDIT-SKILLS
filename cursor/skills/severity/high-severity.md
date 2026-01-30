@@ -1,4 +1,4 @@
-# HIGH Severity Findings
+﻿# HIGH Severity Findings
 
 ## Overview
 
@@ -170,7 +170,7 @@ The ...
 
 ---
 
-### 6. [H-03] `ExecuteRequest`’s are not properly removed from the context queue
+### 6. [H-03] `ExecuteRequest`s are not properly removed from the context queue
 
 - **Source**: Code4rena
 - **Protocol**: Initia
@@ -240,7 +240,7 @@ The issue arises because...
 
 ## Description
 
-The `SimplexDiamond` contract includes `DiamondCutFacet.diamondCut.selector` in its selectors. This function allows adding, removing, or modifying facet cuts, which determine the contract’s functionality. However, **this function is not restricted**, meaning **anyone** can call it to remove or replace any selector or facet.
+The `SimplexDiamond` contract includes `DiamondCutFacet.diamondCut.selector` in its selectors. This function allows adding, removing, or modifying facet cuts, which determine the contracts functionality. However, **this function is not restricted**, meaning **anyone** can call it to remove or replace any selector or facet.
 
 ### **Proof of Concept (PoC)**
 
@@ -413,7 +413,7 @@ The `Rv32BranchLessThan256Chip` uses the wrong opcode offset when creating its i
 This part of the code from the `Int256::build` method shows the issue:
 
 ```rust
-• extension.rs#L184-L196:
+ extension.rs#L184-L196:
 184: let branch_less_than_chip = Rv32BranchLessThan256Chip::new(
 185:     Rv32HeapBranchAdapterChip::new(
 186:         execution_bus,
@@ -453,7 +453,7 @@ This lets a malicious prover write any value for any LOADW or STOREW instruction
 - **Protocol**: Bunni v2
 - **Tags**: None
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -478,7 +478,7 @@ function computeSwap(BunniComputeSwapInput calldata input,
 - **Protocol**: Bunni v2
 - **Tags**: None
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -693,7 +693,7 @@ This allows bypassing `maxRerollsAllowed` for additional reRoll, and to call `_c
 
 ---
 
-### 24. Incorrect upper bound check in wExp(x) can produce an overﬂowed result 
+### 24. Incorrect upper bound check in wExp(x) can produce an overowed result 
 
 - **Source**: Cantina
 - **Protocol**: Morpho
@@ -781,7 +781,7 @@ The consequence of this is that anyone can with low cost and high frequency keep
 
 ### Proof of Concept
 
-I will illustrate the concept of blocking the pathway on the example of sending a message through `BaseTOFT’s` [`sendToYAndBorrow`](https://github.com/Tapioca-DAO/tapiocaz-audit/blo...
+I will illustrate the concept of blocking the pathway on the example of sending a message through `BaseTOFTs` [`sendToYAndBorrow`](https://github.com/Tapioca-DAO/tapiocaz-audit/blo...
 
 [View Full Finding](https://code4rena.com/reports/2023-07-tapioca)
 
@@ -799,9 +799,9 @@ I will illustrate the concept of blocking the pathway on the example of sending 
 Portfolio.sol#L489-L507
 
 ## Description
-When swapping, the registry is credited a `protocolFee`. However, this fee is always reinvested in the pool, meaning the `virtualX` or `virtualY` pool reserves per liquidity increase by `protocolFee / liquidity`. The protocol fee is now double-counted as the registry’s user balance and the pool reserve, while the global reserves are only increased by the protocol fee once in `_increaseReserves(_state.tokenInput, iteration.input)`. A protocol fee breaks the invariant that the global reserve should be greater than the sum of user balances and fees plus the sum of pool reserves.
+When swapping, the registry is credited a `protocolFee`. However, this fee is always reinvested in the pool, meaning the `virtualX` or `virtualY` pool reserves per liquidity increase by `protocolFee / liquidity`. The protocol fee is now double-counted as the registrys user balance and the pool reserve, while the global reserves are only increased by the protocol fee once in `_increaseReserves(_state.tokenInput, iteration.input)`. A protocol fee breaks the invariant that the global reserve should be greater than the sum of user balances and fees plus the sum of pool reserves.
 
-As the protocol fee is reinvested, LPs can withdraw them. If users and LPs decide to withdraw all their balances, the registry can’t with...
+As the protocol fee is reinvested, LPs can withdraw them. If users and LPs decide to withdraw all their balances, the registry cant with...
 
 [View Full Finding](https://github.com/spearbit/portfolio/blob/master/pdfs/Primitive-Spearbit-Security-Review.pdf)
 

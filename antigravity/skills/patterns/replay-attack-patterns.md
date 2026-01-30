@@ -1,4 +1,4 @@
-# Replay Attack Security Patterns
+﻿# Replay Attack Security Patterns
 
 ## Overview
 
@@ -471,7 +471,7 @@ BridgeFacet.sol#L476-496
 Connext bridge supports near-instant transfers by allowing users to pay a small fee to routers for providing them with liquidity. Gelato relayers are tasked with taking in bids from liquidity providers who sign a message consisting of the `transferId` and path length. The path length variable only guarantees that the message they signed will only be valid if `_args.routers.length - 1` routers are also selected. However, it does not prevent Gelato relayers from re-using the same signature multiple times. As a result, routers may unintentionally provide more liquidity than expected.
 
 ## Recommendation
-Consider ensuring that a router’s signed message can only be used once for a given `transferId`. It may be useful to track these in a boolean mapping.
+Consider ensuring that a routers signed message can only be used once for a given `transferId`. It may be useful to track these in a boolean mapping.
 
 ## Connext
 Solved in PR 1626.
@@ -482,7 +482,7 @@ Verified.
 ## Note
 This still assumes that the sequencer is a centralized role maintained by the Connext team. We understand that this will be addressed in future on-chain changes to incentivize honest behavior and further decentralize the sequencer role. Currently, the sequencer is a centralized role, and will be decentralized in the future.
 
-Consider that the only "attack vector" here (really more of a griefing vector) is that the sequencer has only the potential to favor certain routers over others and cannot steal anyone’s funds. Additionally, we know that the “randomness” of the sequen
+Consider that the only "attack vector" here (really more of a griefing vector) is that the sequencer has only the potential to favor certain routers over others and cannot steal anyones funds. Additionally, we know that the randomness of the sequen
 
 *[Content truncated...]*
 
@@ -541,7 +541,7 @@ This is true assuming the contract address is the same across other chains. Conf
 ##### Description
 This issue has been identified within the signature verification flow of the `isValidSignature` function in the `P2pLendingProxy` contract. 
 
-Currently, signatures are verified against `s_client`, but the contract’s address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
+Currently, signatures are verified against `s_client`, but the contracts address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
 
 In the context of `Permit2`, such reuse could allow multiple proxies to be drained using a single signature. Moreover, any message a client signs for themselves may inadvertently be valid for their proxies, and vice versa. 
 

@@ -1,4 +1,4 @@
-# Documentation Security Patterns
+﻿# Documentation Security Patterns
 
 ## Overview
 
@@ -37,7 +37,7 @@
 
 The `IERC677Receiver` interface documentation incorrectly references `ERC1363` instead of `ERC677`. This mismatch between the interface name and its documentation could lead to integration issues and developer confusion.
 
-The interface is named `IERC677Receiver` but its documentation comments reference `ERC1363`’s `transferAndCall` functionality. While both standards have similar purposes, they have different implementations and requirements. This inconsistency could cause:
+The interface is named `IERC677Receiver` but its documentation comments reference `ERC1363`s `transferAndCall` functionality. While both standards have similar purposes, they have different implementations and requirements. This inconsistency could cause:
 
 * Integration errors if developers implement the wrong standard based on the documentation
 * Confusion during code review and maintenance
@@ -58,7 +58,7 @@ interface IERC677Receiver {
 }
 ```
 
-The interface is used in `MergeTgt.sol` for handling token transfers, but it’s implementing ERC677 functionality despite the 
+The interface is used in `MergeTgt.sol` for handling token transfers, but its implementing ERC677 functionality despite the 
 
 *[Content truncated...]*
 
@@ -141,7 +141,7 @@ uint256 earlyExitFee = (uint256(yieldToWithdraw) * EARLY_EXIT_FEE) / BASIS_POINT
 
 **Description:** [Documentation](https://hackmd.io/CPINxScvSE2vo-t8mwY_Og#Risks) states the following:
 
-_"Closing the Contract: If the majority of the pets agree, they can vote to close the contract. Once closed, the remaining funds will be divided among the surviving pets. This is the most beneficial scenario for you, as you’ll earn the base rewards, early withdrawal rewards, and rewards from dead pets."_
+_"Closing the Contract: If the majority of the pets agree, they can vote to close the contract. Once closed, the remaining funds will be divided among the surviving pets. This is the most beneficial scenario for you, as youll earn the base rewards, early withdrawal rewards, and rewards from dead pets."_
 
 Inline comments for the [`StakePet::closedown`](https://github.com/Ranama/StakePet/blob/9ba301823b5062d657baa3462224da498dc4bb46/src/StakePet.sol#L398C2-L398C2) function state the following"
 

@@ -1,4 +1,4 @@
-# Code of Conduct
+﻿# Code of Conduct
 
 ## Our Pledge
 
@@ -37,14 +37,14 @@ Examples of unacceptable behavior:
 
 As a security-focused project, we have additional expectations:
 
-### DO ✅
+### DO 
 * Report vulnerabilities responsibly
 * Share knowledge to improve collective security
 * Give credit to original researchers
 * Use patterns for defensive purposes
 * Help others learn security concepts
 
-### DON'T ❌
+### DON'T 
 * Share active exploits against live systems
 * Use this knowledge to attack without authorization
 * Plagiarize from paid audit reports

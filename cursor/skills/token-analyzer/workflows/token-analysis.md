@@ -1,4 +1,4 @@
-# Token Integration Analysis Workflow
+﻿# Token Integration Analysis Workflow
 
 Systematic workflow for auditing protocol token integrations. Identifies vulnerabilities from weird token behaviors.
 
@@ -52,12 +52,12 @@ grep -rn "IERC20\|ERC20\|IERC721\|IERC1155" contracts/
 
 | Category | Supported | Notes |
 |----------|-----------|-------|
-| Standard ERC20 | ✅ | Full support |
-| Fee-on-Transfer | ⚠️ | See deposit() |
-| Rebasing | ❌ | Will break accounting |
-| ERC777 | ⚠️ | Reentrancy protected |
-| Pausable | ⚠️ | May lock funds |
-| Blacklistable | ⚠️ | Liquidation risk |
+| Standard ERC20 |  | Full support |
+| Fee-on-Transfer |  | See deposit() |
+| Rebasing |  | Will break accounting |
+| ERC777 |  | Reentrancy protected |
+| Pausable |  | May lock funds |
+| Blacklistable |  | Liquidation risk |
 ```
 
 ---
@@ -67,13 +67,13 @@ grep -rn "IERC20\|ERC20\|IERC721\|IERC1155" contracts/
 ### 2.1 Check Deposit Patterns
 
 ```solidity
-// ❌ VULNERABLE PATTERN
+//  VULNERABLE PATTERN
 function deposit(uint256 amount) external {
     token.transferFrom(msg.sender, address(this), amount);
     balances[msg.sender] += amount;  // Credits amount sent, not received
 }
 
-// ✅ SAFE PATTERN
+//  SAFE PATTERN
 function deposit(uint256 amount) external {
     uint256 before = token.balanceOf(address(this));
     token.safeTransferFrom(msg.sender, address(this), amount);
@@ -116,7 +116,7 @@ grep -n "balanceOf.*after\|balanceAfter" contracts/
 ### 3.1 Check Balance Caching
 
 ```solidity
-// ❌ VULNERABLE: Cached balance becomes stale
+//  VULNERABLE: Cached balance becomes stale
 mapping(address => uint256) public stakedBalance;
 
 function stake(uint256 amount) external {
@@ -124,7 +124,7 @@ function stake(uint256 amount) external {
     stakedBalance[msg.sender] = amount;  // Stale after rebase
 }
 
-// ✅ SAFE: Use share-based accounting
+//  SAFE: Use share-based accounting
 mapping(address => uint256) public shares;
 uint256 public totalShares;
 
@@ -178,13 +178,13 @@ grep -n "safeTransfer\|safeTransferFrom\|safeApprove" contracts/
 ### 4.2 Check Return Value Handling
 
 ```solidity
-// ❌ VULNERABLE: No return value check
+//  VULNERABLE: No return value check
 token.transfer(to, amount);
 
-// ❌ VULNERABLE: Assumes bool return
+//  VULNERABLE: Assumes bool return
 require(token.transfer(to, amount), "failed");  // USDT has no return
 
-// ✅ SAFE: Uses SafeERC20
+//  SAFE: Uses SafeERC20
 token.safeTransfer(to, amount);
 ```
 
@@ -195,10 +195,10 @@ token.safeTransfer(to, amount);
 
 | Token | Network | transfer() | approve() |
 |-------|---------|------------|-----------|
-| USDT | ETH | ❌ | ❌ |
-| BNB | ETH | ❌ | ✅ |
-| OMG | ETH | ❌ | ✅ |
-| MKR | ETH | ❌ | ❌ |
+| USDT | ETH |  |  |
+| BNB | ETH |  |  |
+| OMG | ETH |  |  |
+| MKR | ETH |  |  |
 ```
 
 ---
@@ -219,14 +219,14 @@ grep -n "approve.*0\)" contracts/  # Reset to 0 first
 ### 5.2 USDT Compatibility
 
 ```solidity
-// ❌ VULNERABLE: Fails if current allowance > 0
+//  VULNERABLE: Fails if current allowance > 0
 token.approve(spender, newAmount);
 
-// ✅ SAFE: Reset first
+//  SAFE: Reset first
 token.safeApprove(spender, 0);
 token.safeApprove(spender, newAmount);
 
-// ✅ SAFE: Use forceApprove (OZ 5.x)
+//  SAFE: Use forceApprove (OZ 5.x)
 token.forceApprove(spender, newAmount);
 ```
 
@@ -310,7 +310,7 @@ grep -Pzo "\-= .*\n.*transfer" contracts/  # Good: effects then interact
 ### 7.2 Mitigation Patterns
 
 ```solidity
-// ✅ Graceful degradation for blacklisted users
+//  Graceful degradation for blacklisted users
 function withdraw(address token, uint256 amount) external {
     balances[msg.sender] -= amount;
     
@@ -359,13 +359,13 @@ grep -n "/ .*\*" contracts/
 ### 8.2 Precision Analysis
 
 ```solidity
-// ❌ VULNERABLE: Division before multiplication
+//  VULNERABLE: Division before multiplication
 uint256 share = amount / totalSupply * totalShares;  // Truncates to 0 for small amounts
 
-// ✅ SAFE: Multiplication before division
+//  SAFE: Multiplication before division
 uint256 share = amount * totalShares / totalSupply;
 
-// ✅ SAFER: Use mulDiv for large numbers
+//  SAFER: Use mulDiv for large numbers
 uint256 share = Math.mulDiv(amount, totalShares, totalSupply);
 ```
 

@@ -1,4 +1,4 @@
-# Protocol-Specific Audit Patterns
+﻿# Protocol-Specific Audit Patterns
 
 > **AI Skill**: This file contains protocol-specific vulnerability patterns and audit focus areas based on 50+ real audit reports from production protocols.
 
@@ -556,16 +556,16 @@ Review this governance protocol for:
 
 ```
 For ANY protocol, always check:
-□ Access control on all state-changing functions
-□ Reentrancy protection on external calls
-□ Return value checks on token transfers
-□ Slippage/deadline protection on swaps
-□ Oracle staleness checks
-□ Proper event emission
-□ Pausability for emergencies
-□ Upgrade mechanism security (if upgradeable)
-□ Admin key management
-□ Input validation and bounds checking
+ Access control on all state-changing functions
+ Reentrancy protection on external calls
+ Return value checks on token transfers
+ Slippage/deadline protection on swaps
+ Oracle staleness checks
+ Proper event emission
+ Pausability for emergencies
+ Upgrade mechanism security (if upgradeable)
+ Admin key management
+ Input validation and bounds checking
 ```
 
 ---

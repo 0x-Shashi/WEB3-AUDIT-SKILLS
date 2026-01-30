@@ -1,4 +1,4 @@
-# Aptos Move Audit Workflow
+﻿# Aptos Move Audit Workflow
 
 ## Phase 1: Project Setup (30 min)
 
@@ -179,11 +179,11 @@ Check:
 
 | Resource/Action | Admin | Owner | User | Anyone |
 |-----------------|-------|-------|------|--------|
-| Initialize | ✓ | | | |
-| Deposit | | | ✓ | |
-| Withdraw | | ✓ | | |
-| Emergency Withdraw | ✓ | | | |
-| Upgrade | ✓ | | | |
+| Initialize |  | | | |
+| Deposit | | |  | |
+| Withdraw | |  | | |
+| Emergency Withdraw |  | | | |
+| Upgrade |  | | | |
 
 ### 7.2 Verify Each Permission
 - [ ] Can admin role be compromised?

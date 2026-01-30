@@ -1,4 +1,4 @@
-# StarkNet-Specific Security
+﻿# StarkNet-Specific Security
 
 Security considerations unique to StarkNet blockchain and Cairo smart contracts.
 
@@ -145,7 +145,7 @@ fn check_block_info() {
 
 ## L1-L2 Messaging Security
 
-### L1 → L2 Messages
+### L1  L2 Messages
 
 ```cairo
 // L1 Handler - receives messages from Ethereum
@@ -170,7 +170,7 @@ fn handle_l1_message(
 }
 ```
 
-### L2 → L1 Messages
+### L2  L1 Messages
 
 ```cairo
 use starknet::send_message_to_l1_syscall;
@@ -207,14 +207,14 @@ fn send_to_l1(
 ### Message Consumption
 
 ```
-L1 → L2 Flow:
+L1  L2 Flow:
 1. L1 contract calls starknetCore.sendMessageToL2()
-2. Message is added to L1→L2 message queue
+2. Message is added to L1L2 message queue
 3. StarkNet sequencer includes message in block
 4. L1 handler on L2 contract is invoked
 5. Message is consumed (one-time)
 
-L2 → L1 Flow:
+L2  L1 Flow:
 1. L2 contract calls send_message_to_l1_syscall()
 2. Message hash included in state diff
 3. State diff proven on L1
@@ -365,7 +365,7 @@ mod tests {
 
 - [ ] Account abstraction assumptions validated
 - [ ] L1 handler origin verification
-- [ ] L2→L1 message replay protection on L1 side
+- [ ] L2L1 message replay protection on L1 side
 - [ ] Zero address checks (get_caller_address can return zero)
 - [ ] Class hash verification for external calls
 - [ ] Upgrade protection (replace_class_syscall)

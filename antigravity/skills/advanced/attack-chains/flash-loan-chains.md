@@ -1,4 +1,4 @@
-# Flash Loan Attack Chains
+﻿# Flash Loan Attack Chains
 
 ## Overview
 
@@ -21,7 +21,7 @@ Flash loans provide unlimited capital for single-transaction attacks. Combined w
 **Attack Flow:**
 ```
 1. Flash borrow $100M USDC
-2. Dump into DEX pool → crash price
+2. Dump into DEX pool  crash price
 3. Liquidate underwater positions
 4. Buy back at crashed price
 5. Repay flash loan + profit
@@ -128,7 +128,7 @@ function vote(uint256 proposalId) {
 **Attack Flow:**
 ```
 1. Flash borrow large amount
-2. Buy illiquid token → pump price
+2. Buy illiquid token  pump price
 3. Deposit as collateral at inflated price
 4. Borrow max against inflated collateral
 5. Default on loan

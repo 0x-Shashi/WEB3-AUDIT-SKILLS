@@ -1,4 +1,4 @@
-# Code4rena - Audit Findings
+﻿# Code4rena - Audit Findings
 
 ## Overview
 
@@ -45,7 +45,7 @@ Consider a scenario where (1) the wallet is behind the checkpointer and (2) a ch
 
 ---
 
-### 2. [H-03] `ExecuteRequest`’s are not properly removed from the context queue
+### 2. [H-03] `ExecuteRequest`s are not properly removed from the context queue
 
 **Protocol**: Initia | **Impact**: HIGH
 
@@ -230,7 +230,7 @@ By applying reentrancy attack involving the functions `removeCollateral`, `start
 
 **Protocol**: Caviar | **Impact**: HIGH
 
-The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large “donation”.
+The attack vector and impact is the same as [TOB-YEARN-003](https://github.com/yearn/yearn-security/blob/master/audits/20210719\_ToB_yearn_vaultsv2/ToB\_-\_Yearn_Vault_v\_2\_Smart_Contracts_Audit_Report.pdf), where users may not receive shares in exchange for their deposits if the total asset amount has been manipulated through a large donation.
 
 ### Proof of Concept
 

@@ -1,34 +1,34 @@
-# Staking Protocol Template
+﻿# Staking Protocol Template
 
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     STAKING PROTOCOL                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌───────────────┐                       ┌───────────────┐      │
-│  │   STAKERS     │──── Stake ──────────▶│  STAKING      │      │
-│  │               │◀─── Rewards ─────────│  CONTRACT     │      │
-│  └───────────────┘                       └───────┬───────┘      │
-│                                                  │               │
-│  ┌───────────────┐                               │               │
-│  │  DELEGATORS   │──── Delegate ─────────────────┤               │
-│  │               │◀─── Share of Rewards ─────────│               │
-│  └───────────────┘                               │               │
-│                                                  │               │
-│  ┌───────────────┐                       ┌───────┴───────┐      │
-│  │  VALIDATORS   │◀───────────────────── │   VALIDATOR   │      │
-│  │  /OPERATORS   │                       │   MANAGER     │      │
-│  └───────────────┘                       └───────────────┘      │
-│         │                                                        │
-│         ▼                                                        │
-│  ┌───────────────┐                       ┌───────────────┐      │
-│  │   SLASHING    │                       │   REWARDS     │      │
-│  │   MODULE      │                       │   DISTRIBUTION│      │
-│  └───────────────┘                       └───────────────┘      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+                     STAKING PROTOCOL                             
+
+                                                                  
+                               
+     STAKERS      Stake   STAKING            
+                  Rewards   CONTRACT           
+                               
+                                                                 
+                                                
+    DELEGATORS    Delegate                
+                  Share of Rewards                
+                                                
+                                                                 
+                               
+    VALIDATORS       VALIDATOR         
+    /OPERATORS                             MANAGER           
+                               
+                                                                 
+                                                                 
+                               
+     SLASHING                              REWARDS           
+     MODULE                                DISTRIBUTION      
+                               
+                                                                  
+
 ```
 
 ---

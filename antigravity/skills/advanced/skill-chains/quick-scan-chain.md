@@ -1,4 +1,4 @@
-# Quick Scan Chain
+﻿# Quick Scan Chain
 
 ## Overview
 
@@ -22,29 +22,29 @@ Fast initial assessment to identify obvious issues and prioritize further review
 ## Chain Steps
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                    QUICK SCAN CHAIN                             │
-├────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Step 1: Auto-Detect                               [5 min]     │
-│  ├─ Identify chain/language                                    │
-│  ├─ Count files/lines                                          │
-│  └─ Identify framework                                         │
-│                                                                 │
-│  Step 2: High-Priority Patterns                    [15 min]    │
-│  ├─ Critical vulnerability patterns only                       │
-│  ├─ Known exploit signatures                                   │
-│  └─ Red flag detection                                         │
-│                                                                 │
-│  Step 3: Attack Surface Map                        [10 min]    │
-│  ├─ External entry points                                      │
-│  ├─ Value handling functions                                   │
-│  └─ Privileged functions                                       │
-│                                                                 │
-│  Step 4: Quick Report                              [5 min]     │
-│  └─ Summary of findings and recommendations                    │
-│                                                                 │
-└────────────────────────────────────────────────────────────────┘
+
+                    QUICK SCAN CHAIN                             
+
+                                                                 
+  Step 1: Auto-Detect                               [5 min]     
+   Identify chain/language                                    
+   Count files/lines                                          
+   Identify framework                                         
+                                                                 
+  Step 2: High-Priority Patterns                    [15 min]    
+   Critical vulnerability patterns only                       
+   Known exploit signatures                                   
+   Red flag detection                                         
+                                                                 
+  Step 3: Attack Surface Map                        [10 min]    
+   External entry points                                      
+   Value handling functions                                   
+   Privileged functions                                       
+                                                                 
+  Step 4: Quick Report                              [5 min]     
+   Summary of findings and recommendations                    
+                                                                 
+
 ```
 
 ---
@@ -217,25 +217,25 @@ echo "onlyOwner: $(grep -rn 'onlyOwner' --include='*.sol' | wc -l)"
 After quick scan, output:
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-QUICK SCAN COMPLETE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Risk Level: 🔴 HIGH
+QUICK SCAN COMPLETE
+
+
+Risk Level:  HIGH
 
 Critical Issues Found:
-  ❌ Reentrancy patterns detected (3)
-  ❌ Spot price oracle usage (2)
+   Reentrancy patterns detected (3)
+   Spot price oracle usage (2)
 
 Attack Surface:
-  📍 47 external functions
-  💰 12 value-handling functions
-  👑 8 admin functions
+   47 external functions
+   12 value-handling functions
+   8 admin functions
 
 Recommendation:
-  → Full audit required
-  → Prioritize: Reentrancy, Oracle manipulation
+   Full audit required
+   Prioritize: Reentrancy, Oracle manipulation
 
 Estimated Full Audit Time: 6-8 hours
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ```

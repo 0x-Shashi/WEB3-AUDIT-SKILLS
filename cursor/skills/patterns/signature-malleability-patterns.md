@@ -1,4 +1,4 @@
-# Signature Malleability Security Patterns
+﻿# Signature Malleability Security Patterns
 
 ## Overview
 
@@ -39,9 +39,9 @@
 
 ### Proof of Concept
 
-From the `README`, we see that `validators` aren’t trusted roles, they simply have to perform their duties and in case they are misbehaving `MANAGER` can remove them. It’s not expected they all to decide to perform a sybil attack.
+From the `README`, we see that `validators` arent trusted roles, they simply have to perform their duties and in case they are misbehaving `MANAGER` can remove them. Its not expected they all to decide to perform a sybil attack.
 
-But for this issue single validator can harm the entire protocol because signature verifiers don’t check for duplicated validators and one valid signature is enough to pass the check:
+But for this issue single validator can harm the entire protocol because signature verifiers dont check for duplicated validators and one valid signature is enough to pass the check:
 
 ### Solidity
 
@@ -160,7 +160,7 @@ Manual Analysis
 
 ## Recommended Mitigation Steps
 
-Consider using OpenZeppelin’s ECDSA library: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
+Consider using OpenZeppelins ECDSA library: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
 
 **Reference**: [View Original Finding](https://code4rena.com/reports/2021-04-meebits)
 
@@ -219,7 +219,7 @@ Good find and the fix seems straightforward. Upgrade
 ##### Description
 This issue has been identified within the signature verification flow of the `isValidSignature` function in the `P2pLendingProxy` contract. 
 
-Currently, signatures are verified against `s_client`, but the contract’s address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
+Currently, signatures are verified against `s_client`, but the contracts address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
 
 In the context of `Permit2`, such reuse could allow multiple proxies to be drained using a single signature. Moreover, any message a client signs for themselves may inadvertently be valid for their proxies, and vice versa. 
 

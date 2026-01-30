@@ -1,4 +1,4 @@
-# Chainlink Security Patterns
+﻿# Chainlink Security Patterns
 
 ## Overview
 
@@ -125,7 +125,7 @@ if (answer == 0 || answeredInRound < roundId || updateAt == 0) {
 }
 ```
 
-`updateAt` refers to the timestamp of the round. This value isn’t checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
+`updateAt` refers to the timestamp of the round. This value isnt checked to ensure it is recent. Additionally, it is important to be aware of the `minAnswer` and `maxAnswer` of the Chainlink oracle; these values are not allowed to be reached or surpassed. See the Chainlink API reference for documentation on `minAnswer` and `maxAnswer`, as well as this piece of code: `OffchainAggregator.sol`.
 
 ## Recommendation
 - Determine the tolerance threshold for `updateAt`. If `block.timestamp - updateAt` exceeds that threshold, return 0, which is consistent with how the current validations are handled.

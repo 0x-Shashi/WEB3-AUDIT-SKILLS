@@ -1,4 +1,4 @@
-# Output Template
+﻿# Output Template
 
 Copy and fill this template for each function analysis.
 
@@ -127,14 +127,14 @@ Copy and fill this template for each function analysis.
 
 | Risk | Likelihood | Impact | Current Mitigation | Status |
 |------|------------|--------|-------------------|--------|
-| [Risk 1] | Low/Med/High | Low/Med/High/Crit | [Mitigation or None] | ✅/⚠️/❌ |
-| [Risk 2] | Low/Med/High | Low/Med/High/Crit | [Mitigation or None] | ✅/⚠️/❌ |
-| [Risk 3] | Low/Med/High | Low/Med/High/Crit | [Mitigation or None] | ✅/⚠️/❌ |
+| [Risk 1] | Low/Med/High | Low/Med/High/Crit | [Mitigation or None] | // |
+| [Risk 2] | Low/Med/High | Low/Med/High/Crit | [Mitigation or None] | // |
+| [Risk 3] | Low/Med/High | Low/Med/High/Crit | [Mitigation or None] | // |
 
 **Status Legend:**
-- ✅ Fully mitigated
-- ⚠️ Partially mitigated
-- ❌ Not mitigated
+-  Fully mitigated
+-  Partially mitigated
+-  Not mitigated
 
 ---
 
@@ -160,16 +160,16 @@ Copy and fill this template for each function analysis.
 ### Notes & Observations
 
 **Concerns Identified:**
-- ⚠️ [Concern that warrants further investigation]
-- ⚠️ [Another concern]
+-  [Concern that warrants further investigation]
+-  [Another concern]
 
 **Questions for Protocol:**
-- ❓ [Question about intended behavior]
-- ❓ [Question about edge case handling]
+-  [Question about intended behavior]
+-  [Question about edge case handling]
 
 **Positive Observations:**
-- ✓ [Good practice observed]
-- ✓ [Another positive pattern]
+-  [Good practice observed]
+-  [Another positive pattern]
 
 ---
 
@@ -212,6 +212,6 @@ Copy and fill this template for each function analysis.
 2. **Use compact template** for simple getters, view functions, or trivial helpers
 3. **Never skip sections** - write "N/A" if truly not applicable
 4. **Always cite line numbers** - enables verification
-5. **Mark uncertainties** with ⚠️ or ❓
+5. **Mark uncertainties** with  or 
 6. **Apply analytical methods** - at least one First Principles OR 5 Whys OR 5 Hows per function
 

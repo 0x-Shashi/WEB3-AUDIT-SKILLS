@@ -1,4 +1,4 @@
-# Severity Scoring Guide - AI Reference
+﻿# Severity Scoring Guide - AI Reference
 
 > **For AI Assistants:** Use this guide to assign accurate severity scores to vulnerabilities.
 
@@ -8,12 +8,12 @@
 
 | Level | Score Range | Color | Description |
 |-------|-------------|-------|-------------|
-| CRITICAL | 9.0 - 10.0 | 🔴 | Direct, unconditional fund loss |
-| HIGH | 7.0 - 8.9 | 🟠 | Significant damage possible |
-| MEDIUM | 4.0 - 6.9 | 🟡 | Limited impact or conditional |
-| LOW | 2.0 - 3.9 | 🟢 | Minor issues, best practices |
-| INFO | 0.1 - 1.9 | ℹ️ | Suggestions, no security impact |
-| GAS | 0.0 - 0.5 | ⛽ | Gas optimization only |
+| CRITICAL | 9.0 - 10.0 |  | Direct, unconditional fund loss |
+| HIGH | 7.0 - 8.9 |  | Significant damage possible |
+| MEDIUM | 4.0 - 6.9 |  | Limited impact or conditional |
+| LOW | 2.0 - 3.9 |  | Minor issues, best practices |
+| INFO | 0.1 - 1.9 |  | Suggestions, no security impact |
+| GAS | 0.0 - 0.5 |  | Gas optimization only |
 
 ---
 
@@ -21,20 +21,20 @@
 
 ```
 Is there direct fund loss possible?
-├─ YES → Is it unconditional (anyone can exploit)?
-│        ├─ YES → CRITICAL
-│        └─ NO (needs conditions) → HIGH
-│
-└─ NO → Is there indirect fund loss or protocol damage?
-        ├─ YES → Is the attack practical?
-        │        ├─ YES → HIGH
-        │        └─ NO (theoretical) → MEDIUM
-        │
-        └─ NO → Does it affect protocol operation?
-                ├─ YES → MEDIUM
-                └─ NO → Is it a code quality issue?
-                        ├─ YES → LOW
-                        └─ NO → INFO/GAS
+ YES  Is it unconditional (anyone can exploit)?
+         YES  CRITICAL
+         NO (needs conditions)  HIGH
+
+ NO  Is there indirect fund loss or protocol damage?
+         YES  Is the attack practical?
+                 YES  HIGH
+                 NO (theoretical)  MEDIUM
+        
+         NO  Does it affect protocol operation?
+                 YES  MEDIUM
+                 NO  Is it a code quality issue?
+                         YES  LOW
+                         NO  INFO/GAS
 ```
 
 ---
@@ -123,47 +123,47 @@ Adjust based on protocol context:
 
 ### CRITICAL Examples
 ```
-✓ Reentrancy allowing drain of all pool funds
-✓ Missing access control on withdraw function
-✓ Unprotected selfdestruct
-✓ Arbitrary delegatecall to user-controlled address
-✓ Storage collision in proxy allowing takeover
+ Reentrancy allowing drain of all pool funds
+ Missing access control on withdraw function
+ Unprotected selfdestruct
+ Arbitrary delegatecall to user-controlled address
+ Storage collision in proxy allowing takeover
 ```
 
 ### HIGH Examples
 ```
-✓ tx.origin authentication (phishing possible)
-✓ Unchecked ERC20 transfer return value
-✓ Missing zero address check on token address
-✓ Oracle manipulation via flash loan
-✓ First depositor vault inflation attack
+ tx.origin authentication (phishing possible)
+ Unchecked ERC20 transfer return value
+ Missing zero address check on token address
+ Oracle manipulation via flash loan
+ First depositor vault inflation attack
 ```
 
 ### MEDIUM Examples
 ```
-✓ Centralization risk (single admin key)
-✓ Front-running on swap without slippage protection
-✓ Block timestamp used for deadline
-✓ Missing event emission on critical function
-✓ Approve race condition (standard ERC20 approve)
+ Centralization risk (single admin key)
+ Front-running on swap without slippage protection
+ Block timestamp used for deadline
+ Missing event emission on critical function
+ Approve race condition (standard ERC20 approve)
 ```
 
 ### LOW Examples
 ```
-✓ Floating pragma
-✓ Outdated Solidity version (0.7.x)
-✓ Variable shadowing
-✓ Magic numbers without constants
-✓ Missing NatSpec comments
+ Floating pragma
+ Outdated Solidity version (0.7.x)
+ Variable shadowing
+ Magic numbers without constants
+ Missing NatSpec comments
 ```
 
 ### INFO/GAS Examples
 ```
-✓ Storage read in loop (gas optimization)
-✓ Long revert strings
-✓ Public function could be external
-✓ Unused imports
-✓ Code style suggestions
+ Storage read in loop (gas optimization)
+ Long revert strings
+ Public function could be external
+ Unused imports
+ Code style suggestions
 ```
 
 ---
@@ -171,18 +171,18 @@ Adjust based on protocol context:
 ## Severity Adjustment Keywords
 
 **Increase severity if description contains:**
-- "steal", "drain" → +20%
-- "arbitrary" → +20%
-- "bypass" → +15%
-- "lock", "freeze" → +10%
-- "anyone can" → +30%
+- "steal", "drain"  +20%
+- "arbitrary"  +20%
+- "bypass"  +15%
+- "lock", "freeze"  +10%
+- "anyone can"  +30%
 
 **Decrease severity if description contains:**
-- "requires admin" → -40%
-- "requires owner" → -40%
-- "edge case" → -30%
-- "theoretical" → -50%
-- "unlikely" → -60%
+- "requires admin"  -40%
+- "requires owner"  -40%
+- "edge case"  -30%
+- "theoretical"  -50%
+- "unlikely"  -60%
 
 ---
 
@@ -191,7 +191,7 @@ Adjust based on protocol context:
 When prioritizing findings, compare:
 
 ```
-Priority Score = Severity × Likelihood × Impact × Context
+Priority Score = Severity  Likelihood  Impact  Context
 
 Where:
 - Severity: 0-10 base score
@@ -201,13 +201,13 @@ Where:
 ```
 
 ### Priority Ordering
-1. CRITICAL with high likelihood → Fix immediately
-2. HIGH with high likelihood → Fix before deployment
-3. CRITICAL with low likelihood → Fix before deployment
-4. HIGH with low likelihood → Fix recommended
-5. MEDIUM → Acknowledge and consider
-6. LOW → Best practice improvements
-7. INFO/GAS → Optional optimizations
+1. CRITICAL with high likelihood  Fix immediately
+2. HIGH with high likelihood  Fix before deployment
+3. CRITICAL with low likelihood  Fix before deployment
+4. HIGH with low likelihood  Fix recommended
+5. MEDIUM  Acknowledge and consider
+6. LOW  Best practice improvements
+7. INFO/GAS  Optional optimizations
 
 ---
 
@@ -225,8 +225,8 @@ When reporting findings, include:
 **Score Breakdown:**
 - Base: X/10 (from category)
 - Impact: +/- Y (funds/access affected)
-- Likelihood: ×Z (exploitability)
-- Context: ×W (protocol type)
+- Likelihood: Z (exploitability)
+- Context: W (protocol type)
 - **Final: X.X/10**
 
 **Impact:**

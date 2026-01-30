@@ -1,4 +1,4 @@
-# Vote Security Patterns
+﻿# Vote Security Patterns
 
 ## Overview
 
@@ -96,7 +96,7 @@ Due to the implementation of `OracleMembers.deleteItem`, the last item of the ar
 1. At T0, add member `m0` to the list of members: `members[0] = m0`.
 2. At T1, add member `m1` to the list of members: `members[1] = m1`.
 3. At T3, `m0` calls `reportBeacon(...)`. This action triggers a call to `ReportsPositions.register(uint256(0));` which registers that the member at index 0 has voted.
-4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`’s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
+4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
    - `members[0] = m0; members[1] = m1`
    - to `members[0] = m1;`.
 
@@ -505,7 +505,7 @@ Every allocator in `QVSimpleStrategy` has a maximum credit limit. An allocator s
 https://github.com/sherlock-audit/2023-09-Gitcoin/blob/main/allo-v2/contracts/strategies/qv-simple/QVSimpleStrategy.sol#L121
 ```solidity
     function _allocate(bytes memory _data, address _sender) internal virtual override {
-        …
+        
 
         // check that the recipient has voice credits left to allocate
         if (!_hasVoiceCreditsLeft(voiceCreditsToAllocate, allocator.voiceCredits)) revert INVALID();

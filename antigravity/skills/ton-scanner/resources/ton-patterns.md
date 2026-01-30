@@ -1,4 +1,4 @@
-# TON Vulnerability Patterns
+﻿# TON Vulnerability Patterns
 
 Detailed vulnerability patterns for TON blockchain smart contracts.
 
@@ -12,7 +12,7 @@ Processing messages without limiting computation or storage, allowing DoS.
 ### Vulnerable Code (FunC)
 ```func
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
-    ;; ❌ Processing unbounded data from message
+    ;;  Processing unbounded data from message
     int count = in_msg_body~load_uint(32);
     int i = 0;
     while (i < count) {  ;; Attacker sets count = huge number
@@ -29,7 +29,7 @@ int max_items() asm "100 PUSHINT";
 () recv_internal(...) impure {
     int count = in_msg_body~load_uint(32);
     
-    ;; ✅ Bound the processing
+    ;;  Bound the processing
     throw_if(400, count > max_items());
     
     int i = 0;
@@ -52,7 +52,7 @@ Not handling bounced messages can lead to double-spending or state corruption.
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
     slice cs = in_msg_full.begin_parse();
     int flags = cs~load_uint(4);
-    ;; ❌ Not checking bounce flag
+    ;;  Not checking bounce flag
     
     slice sender = cs~load_msg_addr();
     int op = in_msg_body~load_uint(32);
@@ -69,7 +69,7 @@ Not handling bounced messages can lead to double-spending or state corruption.
     slice cs = in_msg_full.begin_parse();
     int flags = cs~load_uint(4);
     
-    ;; ✅ Check bounce flag
+    ;;  Check bounce flag
     if (flags & 1) {
         ;; This is a bounced message
         on_bounce(in_msg_body);
@@ -108,10 +108,10 @@ External messages can be replayed if sequence number not properly checked.
     
     (int seqno, int pubkey, _, _) = load_data();
     
-    ;; ✅ Check signature
+    ;;  Check signature
     throw_unless(401, check_signature(hash, signature, pubkey));
     
-    ;; ❌ Not checking seqno
+    ;;  Not checking seqno
     accept_message();
     
     ;; Process message...
@@ -129,18 +129,18 @@ External messages can be replayed if sequence number not properly checked.
     
     (int stored_seqno, int pubkey, _, _) = load_data();
     
-    ;; ✅ Check sequence number
+    ;;  Check sequence number
     throw_unless(33, msg_seqno == stored_seqno);
     
-    ;; ✅ Check expiration
+    ;;  Check expiration
     throw_unless(34, valid_until > now());
     
-    ;; ✅ Check signature
+    ;;  Check signature
     throw_unless(35, check_signature(hash, signature, pubkey));
     
     accept_message();
     
-    ;; ✅ Increment seqno
+    ;;  Increment seqno
     save_data(stored_seqno + 1, pubkey, ...);
     
     ;; Process message...
@@ -160,7 +160,7 @@ Not validating message sender before processing privileged operations.
     int op = in_msg_body~load_uint(32);
     
     if (op == op::withdraw_all) {
-        ;; ❌ Anyone can withdraw!
+        ;;  Anyone can withdraw!
         (_, _, int balance, slice owner) = load_data();
         
         send_raw_message(begin_cell()
@@ -184,7 +184,7 @@ Not validating message sender before processing privileged operations.
     if (op == op::withdraw_all) {
         (_, _, int balance, slice owner) = load_data();
         
-        ;; ✅ Validate sender is owner
+        ;;  Validate sender is owner
         throw_unless(401, equal_slices(sender, owner));
         
         send_raw_message(begin_cell()
@@ -206,14 +206,14 @@ Incorrect comparison of addresses leading to auth bypass.
 ### Vulnerable Code
 ```func
 int equal_addr(slice a, slice b) {
-    ;; ❌ Only comparing first bits, not full address
+    ;;  Only comparing first bits, not full address
     return a~load_uint(256) == b~load_uint(256);
 }
 ```
 
 ### Secure Code
 ```func
-;; ✅ Use built-in equal_slices for full comparison
+;;  Use built-in equal_slices for full comparison
 int addr_equals(slice a, slice b) {
     return equal_slices(a, b);
 }
@@ -236,7 +236,7 @@ Not reserving enough gas for storage fees, contract becomes frozen.
 ### Vulnerable Code
 ```func
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
-    ;; ❌ No gas reservation
+    ;;  No gas reservation
     
     ;; Process and send all balance
     send_raw_message(msg, 128); ;; Mode 128 = send all remaining
@@ -248,7 +248,7 @@ Not reserving enough gas for storage fees, contract becomes frozen.
 const min_storage_fee = 10000000; ;; 0.01 TON
 
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
-    ;; ✅ Reserve gas for storage
+    ;;  Reserve gas for storage
     raw_reserve(min_storage_fee, 0);
     
     ;; Process and send remaining
@@ -266,7 +266,7 @@ Operations that can consume unlimited gas, making contract DoS-able.
 ### Vulnerable Code
 ```func
 () process_dict(cell dict) impure {
-    ;; ❌ Iterating entire dictionary
+    ;;  Iterating entire dictionary
     int key = -1;
     do {
         (key, slice val, int found) = dict.udict_get_next?(256, key);
@@ -285,7 +285,7 @@ const MAX_ITERATIONS = 20;
     int key = start_key;
     int count = 0;
     
-    ;; ✅ Bounded iteration
+    ;;  Bounded iteration
     while (count < MAX_ITERATIONS) {
         (key, slice val, int found) = dict.udict_get_next?(256, key);
         ifnot (found) {
@@ -314,7 +314,7 @@ Modifying state but not saving to storage.
 () process_deposit(int amount) impure {
     (int seqno, int pubkey, int balance, slice owner) = load_data();
     
-    ;; ❌ Balance updated but never saved!
+    ;;  Balance updated but never saved!
     balance += amount;
     
     ;; Missing: save_data(seqno, pubkey, balance, owner);
@@ -328,7 +328,7 @@ Modifying state but not saving to storage.
     
     balance += amount;
     
-    ;; ✅ Save updated state
+    ;;  Save updated state
     save_data(seqno, pubkey, balance, owner);
 }
 ```
@@ -354,7 +354,7 @@ Jetton wallet not properly validating transfer requests.
         int amount = in_msg_body~load_coins();
         slice destination = in_msg_body~load_msg_addr();
         
-        ;; ❌ Not checking sender is owner!
+        ;;  Not checking sender is owner!
         ;; Anyone can transfer from this wallet
         
         do_transfer(amount, destination, ...);
@@ -378,10 +378,10 @@ Jetton wallet not properly validating transfer requests.
         
         (int balance, slice owner, slice jetton_master, cell code) = load_data();
         
-        ;; ✅ Verify sender is wallet owner
+        ;;  Verify sender is wallet owner
         throw_unless(401, equal_slices(sender, owner));
         
-        ;; ✅ Verify sufficient balance
+        ;;  Verify sufficient balance
         throw_unless(402, balance >= amount);
         
         ;; Update balance and proceed
@@ -400,7 +400,7 @@ Functions marked impure modifying global state unexpectedly.
 
 ### Vulnerable Code
 ```func
-;; ❌ Inline function modifying global state
+;;  Inline function modifying global state
 (int, int) get_balances() inline {
     slice ds = get_data().begin_parse();
     int a = ds~load_coins();
@@ -418,7 +418,7 @@ Functions marked impure modifying global state unexpectedly.
 
 ### Secure Code
 ```func
-;; ✅ Pure function, no side effects
+;;  Pure function, no side effects
 (int, int) get_balances() inline {
     slice ds = get_data().begin_parse();
     return (ds~load_coins(), ds~load_coins());
@@ -450,7 +450,7 @@ contract Vault {
         // Handle withdraw
     }
     
-    // ❌ Missing: What happens with unknown messages?
+    //  Missing: What happens with unknown messages?
     // They will be silently ignored or cause issues
 }
 ```
@@ -466,18 +466,18 @@ contract Vault {
         // Handle withdraw
     }
     
-    // ✅ Handle empty messages
+    //  Handle empty messages
     receive() {
         // Handle TON deposits without data
     }
     
-    // ✅ Fallback for unknown messages
+    //  Fallback for unknown messages
     receive(msg: Slice) {
         // Log or handle unknown messages
         // Could revert or accept
     }
     
-    // ✅ Handle bounced messages
+    //  Handle bounced messages
     bounced(msg: bounced<Withdraw>) {
         // Restore state on failed withdrawal
     }
@@ -494,7 +494,7 @@ Not validating inputs with require statements.
 ### Vulnerable Code
 ```tact
 receive(msg: Transfer) {
-    // ❌ No validation
+    //  No validation
     self.balance = self.balance - msg.amount;
     
     send(SendParameters{
@@ -508,14 +508,14 @@ receive(msg: Transfer) {
 ### Secure Code
 ```tact
 receive(msg: Transfer) {
-    // ✅ Validate sender
+    //  Validate sender
     require(sender() == self.owner, "Only owner");
     
-    // ✅ Validate amount
+    //  Validate amount
     require(msg.amount > 0, "Zero amount");
     require(self.balance >= msg.amount, "Insufficient balance");
     
-    // ✅ Validate destination
+    //  Validate destination
     require(msg.to != myAddress(), "Cannot transfer to self");
     
     self.balance = self.balance - msg.amount;

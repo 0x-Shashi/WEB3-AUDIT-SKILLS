@@ -1,4 +1,4 @@
-# Chain Reorganization Attack Security Patterns
+﻿# Chain Reorganization Attack Security Patterns
 
 ## Overview
 
@@ -217,7 +217,7 @@ Calculate **proposalId** as a hash of the proposal p
 
 ---
 
-### Example 6: in3-server - should enforce safe settings for minBlockHeight  Won't Fix
+### Example 6: in3-server - should enforce safe settings for minBlockHeight Won't Fix
 
 **Source**: ConsenSys
 **Protocol**: Slock.it Incubed3
@@ -241,7 +241,7 @@ Client response:
 > We have discussed this, but decided to keep it flexible. This means:
 > 
 > 
-> 1. We have put the minBlockHeight into the registry (as part of the properties). Because these properties indicate the limit and capabilities of the node and give the client a chance to filter out nodes if they don’t match the requirements. So each client is able to filter out node who are not willing to take the risk and sign for example latest-6. Of course these nodes will most likely only store a low deposit ( you can not have a signature of a young block and a high deposit), but if you need a high security the nodes with a deposit will propably wait at least 10 or more blocks. In order to protect the owner of a node of using insecure settings, we will use our wizard to check the deposit and minBlockHeights and warn or educate the user. The reason why this flexibility is important, is because there use cases where dapps will not accept the let user wait 10 blocks before confirming a transaction. If the dapp developer needs a signature of a younger block, he will need to liv
+> 1. We have put the minBlockHeight into the registry (as part of the properties). Because these properties indicate the limit and capabilities of the node and give the client a chance to filter out nodes if they dont match the requirements. So each client is able to filter out node who are not willing to take the risk and sign for example latest-6. Of course these nodes will most likely only store a low deposit ( you can not have a signature of a young block and a high deposit), but if you need a high security the nodes with a deposit will propably wait at least 10 or more blocks. In order to protect the owner of a node of using insecure settings, we will use our wizard to check the deposit and minBlockHeights and warn or educate the user. The reason why this flexibility is important, is because there use cases where dapps will not accept the let user wait 10 blocks before confirming a transaction. If the dapp developer needs a signature of a younger block, he will need to liv
 
 *[Content truncated...]*
 
@@ -339,7 +339,7 @@ The PoolTogether team is aware of this issue but is yet to mitigate this attack 
 
 ---
 
-### Example 10: Malicious clients can use forks or reorgs to convict honest nodes  Won't Fix
+### Example 10: Malicious clients can use forks or reorgs to convict honest nodes Won't Fix
 
 **Source**: ConsenSys
 **Protocol**: Slock.it Incubed3
@@ -357,7 +357,7 @@ Default value for past signed blocks is changed to 10 blocks. Slockit plans to u
 #### Description
 
 
-In case of reorgs it is possible to have more than 6 blocks in a node that gets replaced by a new longer chain. Also for forks, such as upcoming [Istanbul fork](https://blog.infura.io/were-ready-for-the-istanbul-fork-e39afc2b1412), it’s common to have some nodes taking some time to update and they will be in the wrong chain for the time being. In both cases, in3-nodes are prone to sign blocks that are considered invalid in the main chain.
+In case of reorgs it is possible to have more than 6 blocks in a node that gets replaced by a new longer chain. Also for forks, such as upcoming [Istanbul fork](https://blog.infura.io/were-ready-for-the-istanbul-fork-e39afc2b1412), its common to have some nodes taking some time to update and they will be in the wrong chain for the time being. In both cases, in3-nodes are prone to sign blocks that are considered invalid in the main chain.
 Malicious nodes can catch these instances and convict the honest users in the main chain to get 50% of their deposits.
 
 
@@ -561,7 +561,7 @@ To mitigate this issue, consider integrating an external uptime feed such as [Ch
 
 ---
 
-### Example 16: Risk of double-spend attacks due to use of single-node Clique consensus without ﬁnality API
+### Example 16: Risk of double-spend attacks due to use of single-node Clique consensus without nality API
 
 **Source**: TrailOfBits
 **Protocol**: Scroll, l2geth
@@ -569,7 +569,7 @@ To mitigate this issue, consider integrating an external uptime feed such as [Ch
 
 **Details**:
 
-## Diﬃculty: Medium
+## Diculty: Medium
 
 ## Type: Denial of Service
 
@@ -578,11 +578,11 @@ l2geth uses the proof-of-authority Clique consensus protocol, defined by EIP-255
 
 The severity of this finding is compounded by the fact that there is no API for an end user to determine whether their transaction has been finalized by L1, forcing L2 users to use ineffective block/time delays to determine finality.
 
-Clique consensus was originally designed as a replacement for proof-of-work consensus for Ethereum testnets. It uses the same fork choice rule as Ethereum’s proof-of-work consensus; the fork with the highest “difficulty” should be considered the canonical fork.
+Clique consensus was originally designed as a replacement for proof-of-work consensus for Ethereum testnets. It uses the same fork choice rule as Ethereums proof-of-work consensus; the fork with the highest difficulty should be considered the canonical fork.
 
 Clique consensus does not use proof-of-work and cannot update block difficulty using the traditional calculation; instead, block difficulty may be one of two values:
-- “1” if the block was mined by the designated signer for the block height
-- “2” if the block was mined by a non-designated signer for the block height
+- 1 if the block was mined by the designated signer for the block height
+- 2 if the block was mined by a non-designated signer for the block height
 
 This means that in a network with only one authorized signer, all of the blocks and forks produced by the sequencer will have the same difficulty value, making it impossible for syncing nodes to determine which fork is canonical at the given block height.
 

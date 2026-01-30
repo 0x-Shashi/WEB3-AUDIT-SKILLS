@@ -1,4 +1,4 @@
-# Decimals Security Patterns
+﻿# Decimals Security Patterns
 
 ## Overview
 
@@ -55,7 +55,7 @@ LT swap proceeds = (scaledProceeds[last] - scaledProceeds[prev]) * (order.salesR
 
 The value 264 is referred to as the "scaling factor" and is intended to reduce precision loss in the division to determine the increment to the scaled proceeds.
 
-The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmetic—since only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
+The addition to increment the scaled proceeds and the subtraction to compute its net change is both intentionally done with unchecked arithmeticsince only the difference matters, so long as at most one overflow occurs between claim-of-proceeds events for any given order, the computed proceeds will be correct (up to rounding errors). If two or more overfl
 
 *[Content truncated...]*
 
@@ -508,7 +508,7 @@ Protocol users can be subject to market manipulations as Sense AMM result isn't 
 
 ---
 
-### Example 12: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying token’s decimals
+### Example 12: H-4: `ERC4626Oracle` Price will be wrong when the ERC4626's `decimals` is different from the underlying tokens decimals
 
 **Source**: Sherlock
 **Protocol**: Sentiment
@@ -528,9 +528,9 @@ EIP-4626 does not require the decimals must be the same as the underlying tokens
 
 In the current implementation, `IERC4626(token).decimals()` is used as the `IERC4626(token).asset()`'s decimals to calculate the ERC4626's price.
 
-However, while most ERC4626s are using the underlying token’s decimals as `decimals`, there are some ERC4626s use a different decimals from underlying token’s decimals since EIP-4626 does not require the decimals must be the same as the underlying token’s decimals:
+However, while most ERC4626s are using the underlying tokens decimals as `decimals`, there are some ERC4626s use a different decimals from underlying tokens decimals since EIP-4626 does not require the decimals must be the same as the underlying tokens decimals:
 
-> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vault’s decimals variable, it is still strongly recommended to mirror the underlying token’s decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
+> Although the convertTo functions should eliminate the need for any use of an EIP-4626 Vaults decimals variable, it is still strongly recommended to mirror the underlying tokens decimals if at all possible, to eliminate possible sources of confusion and simplify integration across front-ends and for other off-chain users.
 
 Ref: https://eips.ethereum.org/EIPS/eip-4626
 
@@ -849,7 +849,7 @@ uint40 finalVestingDurationSecs = _claim.endTimestamp - _claim.startTimestamp; /
 uint112 linearVestAmount = _claim.linearVestAmount * truncatedCurrentVestingDurationSecs / finalVestingDurationSecs;
 ```
 
-Let’s look at `truncatedCurrentVestingDurationSecs` as just the duration passed from the start of the vesting period for the PoC (this doesn’t omit important data in this context).
+Lets look at `truncatedCurrentVestingDurationSecs` as just the duration passed from the start of the vesting period for the PoC (this doesnt omit important data in this context).
 
 Now think of the following scenario:
 

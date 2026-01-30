@@ -1,4 +1,4 @@
-# Starknet Audit Workflow
+﻿# Starknet Audit Workflow
 
 ## Phase 1: Setup (30 min)
 
@@ -73,14 +73,14 @@ grep -rn "__validate__\|__execute__\|__validate_declare__\|__validate_deploy__" 
 
 ---
 
-## Phase 4: L1↔L2 Messaging (1-2 hours)
+## Phase 4: L1L2 Messaging (1-2 hours)
 
 ### 4.1 Find Message Handlers
 ```bash
 # L1 handlers
 grep -rn "#\[l1_handler\]" src/
 
-# L2→L1 messages
+# L2L1 messages
 grep -rn "send_message_to_l1" src/
 ```
 
@@ -90,7 +90,7 @@ grep -rn "send_message_to_l1" src/
 - [ ] Idempotent processing
 - [ ] Proper error handling
 
-### 4.3 L2→L1 Checklist
+### 4.3 L2L1 Checklist
 - [ ] State changes reversible if L1 fails
 - [ ] Timeout/cancellation mechanism
 - [ ] Proper event emission
@@ -258,7 +258,7 @@ grep -rn "assert(" src/
 
 - [ ] Entry point inventory
 - [ ] Account abstraction analysis (if applicable)
-- [ ] L1↔L2 message flow diagram
+- [ ] L1L2 message flow diagram
 - [ ] Storage layout documentation
 - [ ] Access control matrix
 - [ ] Finding report with severity ratings

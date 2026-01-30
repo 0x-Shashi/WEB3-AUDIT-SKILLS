@@ -1,4 +1,4 @@
-# GAS Severity Findings
+﻿# GAS Severity Findings
 
 ## Overview
 
@@ -104,7 +104,7 @@ uint256 aTokenBalance = IERC20(_aavePool.getReserveAToken(b.asset))
 _aavePool.withdraw(b.asset, aTokenBalance, address(this));
 ```
 
-Aave’s [recommended pattern](https://aave.com/docs/aave-v3/smart-contracts/pool?utm_source=chatgpt.com#write-methods-withdraw) for fully closing a position is to pass `type(uint256).max`, which is more robust against rounding/indexing edge cases. This also removes one external call as `withdraw` returns the amount withdrawn:
+Aaves [recommended pattern](https://aave.com/docs/aave-v3/smart-contracts/pool?utm_source=chatgpt.com#write-methods-withdraw) for fully closing a position is to pass `type(uint256).max`, which is more robust against rounding/indexing edge cases. This also removes one external call as `withdraw` returns the amount withdrawn:
 ```solidity
 uint256 aTokenBalance = _aavePool.withdraw(b.asset, type(uint256).max, address(this));
 ```

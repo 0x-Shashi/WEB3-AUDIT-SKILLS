@@ -1,4 +1,4 @@
-# Storage Collision Security Patterns
+﻿# Storage Collision Security Patterns
 
 ## Overview
 
@@ -39,7 +39,7 @@
 ManagedPool.sol#L75-L77, ManagedPool.sol#L84-L86, LegacyBasePool.sol, WordCodec.sol
 
 **Description:**  
-Balancer’s ManagedPool uses 32-bit values for `startTime` and `endTime`, but it does not verify if those values exist within that range. Values are stored in a 32-byte `_miscData` slot in BasePool via the `insertUint32()` function. Nevertheless, this function does not strip any excess bits, resulting in other fields stored in `_miscData` being overwritten. In the version that Aera Vault uses, only the "restrict LP" field can be overwritten, and by carefully crafting the value of `endTime`, the "restrict LP" boolean can be switched off, allowing anyone to use `joinPool`. 
+Balancers ManagedPool uses 32-bit values for `startTime` and `endTime`, but it does not verify if those values exist within that range. Values are stored in a 32-byte `_miscData` slot in BasePool via the `insertUint32()` function. Nevertheless, this function does not strip any excess bits, resulting in other fields stored in `_miscData` being overwritten. In the version that Aera Vault uses, only the "restrict LP" field can be overwritten, and by carefully crafting the value of `endTime`, the "restrict LP" boolean can be switched off, allowing anyone to use `joinPool`. 
 
 The Manager could cause this behavior via the `updateWeightsGradually()` function, while the Owner could do it via `enableTradingWithWeights()`.  
 **Note:** This issue has been reported to Balancer by the Spearbit team.

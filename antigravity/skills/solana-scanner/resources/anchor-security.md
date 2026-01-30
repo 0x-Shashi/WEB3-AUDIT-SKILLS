@@ -1,4 +1,4 @@
-# Anchor Security Guide
+﻿# Anchor Security Guide
 
 Security best practices and common pitfalls when using the Anchor framework.
 
@@ -10,17 +10,17 @@ Security best practices and common pitfalls when using the Anchor framework.
 
 ```
                     AccountInfo<'info>
-                          │
-                          │ (raw, no validation)
-                          ▼
-    ┌─────────────────────────────────────────┐
-    │                                         │
-    ▼                                         ▼
+                          
+                           (raw, no validation)
+                          
+    
+                                             
+                                             
 UncheckedAccount              Account<'info, T>
 (explicitly unchecked)        (validated + deserialized)
-                                     │
-                    ┌────────────────┼────────────────┐
-                    ▼                ▼                ▼
+                                     
+                    
+                                                    
             Signer<'info>    Program<'info, T>  SystemAccount
             (is_signer)      (executable)       (system owned)
 ```
@@ -29,12 +29,12 @@ UncheckedAccount              Account<'info, T>
 
 | Type | Owner Check | Type Check | Signer | Use Case |
 |------|-------------|------------|--------|----------|
-| `AccountInfo` | ❌ | ❌ | ❌ | Avoid - raw access |
-| `UncheckedAccount` | ❌ | ❌ | ❌ | Explicit bypass |
-| `Account<T>` | ✅ | ✅ | ❌ | Data accounts |
-| `Signer` | ❌ | ❌ | ✅ | Authority accounts |
-| `Program<T>` | ✅ | ✅ | ❌ | Program accounts |
-| `SystemAccount` | ✅ | ❌ | ❌ | SOL-only accounts |
+| `AccountInfo` |  |  |  | Avoid - raw access |
+| `UncheckedAccount` |  |  |  | Explicit bypass |
+| `Account<T>` |  |  |  | Data accounts |
+| `Signer` |  |  |  | Authority accounts |
+| `Program<T>` |  |  |  | Program accounts |
+| `SystemAccount` |  |  |  | SOL-only accounts |
 
 ---
 

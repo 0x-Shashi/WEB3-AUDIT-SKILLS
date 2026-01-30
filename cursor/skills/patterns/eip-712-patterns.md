@@ -1,4 +1,4 @@
-# EIP-712 Security Patterns
+﻿# EIP-712 Security Patterns
 
 ## Overview
 
@@ -158,7 +158,7 @@ bytes32 digest = _hashTypedDataV4(
 The [EIP-712 specification](https://eips.ethereum.org/EIPS/eip-712#specification) defines the encoding of a message as:
 
 ```
-"\x19\x01" ‖ domainSeparator ‖ hashStruct(message)
+"\x19\x01"  domainSeparator  hashStruct(message)
 ```
 In the current impl
 
@@ -267,7 +267,7 @@ Source: https://github.com/sherlock-audit/2024-04-titles-judging/issues/74
 0x73696d616f, T1MOH, ZanyBonzy, ast3ros, fugazzi, mt030d
 ## Summary
 
-The signature in `﻿TitleGraph.acknowledgeEdge()` and ﻿`TitleGraph.unacknowledgeEdge()` is generated based on a digest computed from ﻿`edgeId` and ﻿`data`. However, the ﻿`data` bytes argument is not correctly encoded according to the EIP712 specification. Consequently, a signature generated using common EIP712 tools would not pass validation in ﻿`TitleGraph.checkSignature()`.
+The signature in `TitleGraph.acknowledgeEdge()` and `TitleGraph.unacknowledgeEdge()` is generated based on a digest computed from `edgeId` and `data`. However, the `data` bytes argument is not correctly encoded according to the EIP712 specification. Consequently, a signature generated using common EIP712 tools would not pass validation in `TitleGraph.checkSignature()`.
 
 ## Vulnerability Detail
 According to [EIP712](https://eips.ethereum.org/EIPS/eip-712#definition-of-encodedata):
@@ -279,8 +279,8 @@ According to [EIP712](https://eips.ethereum.org/EIPS/eip-712#definition-of-encod
         ...
     }
 ```
-However, the `checkSignature()` modifier in the `TitlesGraph` contract reconstructs the digest by encoding the ﻿data bytes argument without first applying keccak256 hashing.
-As a result, a signature generated using common EIP712 tools (e.g. using the `signTypedData` function from `ethers.js`) would not pass validation in ﻿`TitleGraph.checkSignature()`.
+However, the `checkSignature()` modifier in the `TitlesGraph` contract reconstructs the digest by encoding the data bytes argument without first applying keccak256 hashing.
+As a result, a signature generated using common EIP712 tools (e.g. using the `signTypedData` function from `ethers.js`) would not pass validation in `TitleGraph.checkSignature()`.
 
 ### POC
 1. EIP712 signature computed by using ethers.js

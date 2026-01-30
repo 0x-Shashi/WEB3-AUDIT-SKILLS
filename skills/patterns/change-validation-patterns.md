@@ -1,4 +1,4 @@
-# Change Validation Security Patterns
+﻿# Change Validation Security Patterns
 
 ## Overview
 
@@ -276,7 +276,7 @@ Also some functions are not necessary and can lead to unintentional situations.
 Although we assume the admin is trusted, these issues can lead to unexpected loss by a mistake of an admin.
 
 **Impact**
-The admin can change the protocol’s behavior in unexpected ways.
+The admin can change the protocols behavior in unexpected ways.
 
 **Recommendation:**
 Add necessary validations to the admin functions and remove unnecessary functions.

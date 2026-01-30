@@ -1,4 +1,4 @@
-# Account Abstraction Security Patterns
+﻿# Account Abstraction Security Patterns
 
 ## Overview
 
@@ -44,7 +44,7 @@ Some parts of the codebase are not compliant with the EIP-4337 from the [EIP-433
 **Sender existence**
 
 ```text
-Create the account if it does not yet exist, using the initcode provided in the UserOperation. If the account does not exist, and the initcode is empty, or does not deploy a contract at the “sender” address, the call must fail.
+Create the account if it does not yet exist, using the initcode provided in the UserOperation. If the account does not exist, and the initcode is empty, or does not deploy a contract at the sender address, the call must fail.
 ```
 
 If we take a look at the [`_createSenderIfNeeded()`]() function, we can see that it's not properly implemented:
@@ -208,7 +208,7 @@ The team addressed in: `a429b0c9ce78be9294a27934e1a184261b88917a`, `2255f30c7f95
 
 **File(s) affected:**`contracts/factory.fc`, `contracts/master.fc`
 
-**Description:** In both the `factory`’s `op::create_master` and the `master`’s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
+**Description:** In both the `factory`s `op::create_master` and the `master`s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
 
 Generally, we should not expect a proposal to pass with zero votes.
 

@@ -1,4 +1,4 @@
-# Initialization Security Patterns
+﻿# Initialization Security Patterns
 
 ## Overview
 
@@ -104,7 +104,7 @@ However, the permissionless `executeInflationRateUpdate()` method does not check
 As a result, if `executeInflationRateUpdate()` is called before `startInflation()`:
 
 1. L190, the check of if `_INFLATION_DECAY_PERIOD` has passed since `lastInflationDecay` will be `true`, and `initialPeriodEnded` will be set to `true` right away;
-2. L188, since the `lastEvent` in `totalAvailableToNow += (currentTotalInflation * (block.timestamp - lastEvent));` is `0`, the `totalAvailableToNow` will be set to `totalAvailableToNow ≈ currentTotalInflation * 52 years`, which renders the constrains of `totalAvailableToNow` incorrect and useless.
+2. L188, since the `lastEvent` in `totalAvailableToNow += (currentTotalInflation * (block.timestamp - lastEvent));` is `0`, the `totalAvailableToNow` will be set to `totalAvailableToNow  currentTotalInflation * 52 years`, which renders the constrains of `totalAvailableToNow` incorrect and useless.
 
 https://github.com/code-423n4/2022-05-backd/blob/2a5664d35cde5b036074edef3c1369b984d10010/protoc
 
@@ -437,7 +437,7 @@ Looking at the method below, we highlight in green the parts that need to be ini
 #### Description
 
 
-In the contracts implement Openzeppelin’s UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, it’s recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
+In the contracts implement Openzeppelins UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, its recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
 
 
 #### Examples

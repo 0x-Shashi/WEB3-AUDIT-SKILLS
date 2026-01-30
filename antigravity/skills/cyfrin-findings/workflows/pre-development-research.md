@@ -1,4 +1,4 @@
-# Pre-Development Research Workflow
+﻿# Pre-Development Research Workflow
 
 Research common vulnerabilities BEFORE writing code to build security in from the start.
 
@@ -132,7 +132,7 @@ From each finding, extract:
 | Aspect | Details |
 |--------|---------|
 | Pattern | Using spot price from AMM |
-| Attack | Flash loan → manipulate pool → use wrong price |
+| Attack | Flash loan  manipulate pool  use wrong price |
 | Prevention | Use TWAP or Chainlink; add flash loan resistance |
 | Detection | Test with large swaps; check for manipulation scenarios |
 

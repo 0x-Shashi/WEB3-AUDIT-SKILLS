@@ -1,4 +1,4 @@
-# Spearbit - Audit Findings
+﻿# Spearbit - Audit Findings
 
 ## Overview
 
@@ -38,7 +38,7 @@
 Portfolio.sol#L489-L507
 
 ## Description
-When swapping, the registry is credited a `protocolFee`. However, this fee is always reinvested in the pool, meaning the `virtualX` or `virtualY` pool reserves per liquidity increase by `protocolFee / liquidity`. The protocol fee is now double-counted as the registry’s user balance and the pool reserve, while the global reserves are only increased by the protocol fee once in `_increaseReserves(_state.tokenInput, iteration.input)`. A protocol fee breaks the invariant that the global reserve should be greater than the...
+When swapping, the registry is credited a `protocolFee`. However, this fee is always reinvested in the pool, meaning the `virtualX` or `virtualY` pool reserves per liquidity increase by `protocolFee / liquidity`. The protocol fee is now double-counted as the registrys user balance and the pool reserve, while the global reserves are only increased by the protocol fee once in `_increaseReserves(_state.tokenInput, iteration.input)`. A protocol fee breaks the invariant that the global reserve should be greater than the...
 
 ---
 
@@ -157,12 +157,12 @@ This call returns the updated stack as `newStack` but then uses the function arg
 With the contract `GenericBridgeFacet`, the functions `swapAndStartBridgeTokensGeneric()` (via `LibSwap.swap()`) and `_startBridge()` allow arbitrary function calls, which enable anyone to call `transferFrom()` and steal tokens from users who have provided a large allowance to the LiFi protocol. This vulnerability has been exploited in the past.
 
 ### Additional Risks
-- Ability to call the LiFi Diamond itself via functions that don’t have `nonReentrant`.
+- Ability to call the LiFi Diamond itself via functions that dont have `nonReentrant`.
 - Potent...
 
 ---
 
-### 7. Tokens can get stuck in Executor contract if the destination doesn’t claim them all
+### 7. Tokens can get stuck in Executor contract if the destination doesnt claim them all
 
 **Protocol**: Connext | **Impact**: HIGH
 
@@ -299,10 +299,10 @@ If multiple orders are taken, the taker fee calculated is rounded up once, but t
 - takerFee = 100011 (10.0011%)
 - 2 maker orders of amounts 400000 and 377000
 - total amount = 400000 + 377000 = 777000
-- Taker fee taken = 777000 * 100011 / 1000000 = 77708.547 ≈ 77709 
+- Taker fee taken = 777000 * 100011 / 1000000 = 77708.547  77709 
 
 Maker fees would be:
-- 377000 * 100011 / 1000000 = 37704.147 ≈ 37705
+- 377000 * 100011 / 1000000 = 37704.147  37705
 - 400000 * 10...
 
 ---

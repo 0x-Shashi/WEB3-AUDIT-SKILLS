@@ -1,10 +1,10 @@
-# Contributing to WEB3-AUDIT-SKILLS
+﻿# Contributing to WEB3-AUDIT-SKILLS
 
-First off, thanks for considering contributing! 🎉 This project thrives on community knowledge from security researchers, auditors, and developers.
+First off, thanks for considering contributing!  This project thrives on community knowledge from security researchers, auditors, and developers.
 
 ---
 
-## 🤝 How You Can Contribute
+##  How You Can Contribute
 
 ### 1. Add New Vulnerability Patterns
 
@@ -52,11 +52,11 @@ Want to add a new blockchain? Create a scanner!
 **Required Files:**
 ```
 [chain]-scanner/
-├── SKILL.md              # Main skill file
-├── resources/
-│   └── [chain]-patterns.md
-└── workflows/
-    └── [chain]-audit.md
+ SKILL.md              # Main skill file
+ resources/
+    [chain]-patterns.md
+ workflows/
+     [chain]-audit.md
 ```
 
 ### 3. Add Protocol Templates
@@ -95,7 +95,7 @@ Discovered a multi-vulnerability exploit path? Document it!
 
 ---
 
-## 📋 Contribution Process
+##  Contribution Process
 
 ### Step 1: Fork & Clone
 
@@ -151,9 +151,9 @@ Then create a Pull Request on GitHub.
 
 ---
 
-## ✅ Contribution Guidelines
+##  Contribution Guidelines
 
-### DO ✅
+### DO 
 
 - **Use real examples** - Patterns should come from actual exploits
 - **Include references** - Link to sources (audits, post-mortems, etc.)
@@ -161,7 +161,7 @@ Then create a Pull Request on GitHub.
 - **Test detection commands** - Make sure grep/regex patterns work
 - **Keep it practical** - Focus on actionable patterns
 
-### DON'T ❌
+### DON'T 
 
 - **No theoretical-only patterns** - Must have real-world basis
 - **No proprietary content** - Don't copy paid audit reports verbatim
@@ -170,7 +170,7 @@ Then create a Pull Request on GitHub.
 
 ---
 
-## 🏷️ Pattern Naming Convention
+##  Pattern Naming Convention
 
 ```
 [CATEGORY]-[NUMBER]: [Name]
@@ -203,7 +203,7 @@ FL-02: Flash Loan Price Manipulation
 
 ---
 
-## 📊 Quality Checklist
+##  Quality Checklist
 
 Before submitting, ensure:
 
@@ -219,7 +219,7 @@ Before submitting, ensure:
 
 ---
 
-## 🎯 Priority Areas
+##  Priority Areas
 
 We especially need contributions in:
 
@@ -232,7 +232,7 @@ We especially need contributions in:
 
 ---
 
-## 💬 Getting Help
+##  Getting Help
 
 - **Questions?** Open a GitHub Discussion
 - **Found a bug?** Open an Issue
@@ -241,7 +241,7 @@ We especially need contributions in:
 
 ---
 
-## 🏆 Recognition
+##  Recognition
 
 Contributors will be:
 - Listed in CONTRIBUTORS.md
@@ -250,10 +250,10 @@ Contributors will be:
 
 ---
 
-## 📜 Legal
+##  Legal
 
 By contributing, you agree that your contributions will be licensed under the same license as this project (MIT License). You confirm that you have the right to submit the contribution.
 
 ---
 
-Thank you for helping make Web3 more secure! 🛡️
+Thank you for helping make Web3 more secure! 

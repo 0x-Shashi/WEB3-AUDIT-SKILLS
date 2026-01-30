@@ -1,4 +1,4 @@
-# Bridge Attack Chains
+﻿# Bridge Attack Chains
 
 ## Overview
 
@@ -159,7 +159,7 @@ function onEvent(bytes memory proof, uint256 blockNumber) {
 
 ---
 
-## Chain 5: L1↔L2 Message Spoofing
+## Chain 5: L1L2 Message Spoofing
 
 **Components:**
 1. L1 to L2 message passing

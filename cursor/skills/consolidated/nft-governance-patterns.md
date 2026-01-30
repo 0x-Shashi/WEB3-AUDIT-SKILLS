@@ -647,16 +647,16 @@ Use safeMint instead of mint for ERC721
 
 ## Vulnerability Detail
 
-TheÂ `msg.sender`Â will be minted as a proof of staking NFT whenÂ `_stakeToken()`Â is called. 
+The`msg.sender`will be minted as a proof of staking NFT when`_stakeToken()`is called. 
 
-However, ifÂ `msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
+However, if`msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
 
 As per the documentation of EIP-721:
 
 > A wallet/broker/auction application MUST implement the wallet interface if it will accept safe transfers.
 > 
 
-Ref:Â [https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
+Ref:[https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
 
 As per the documentation of ERC721.sol by Openzeppelin
 
@@ -1095,7 +1095,7 @@ ElKu, rvierdiiev, obront, pashov, ctf\_sec, joestakey, ak1, JohnnyTime, GimelSec
 
 ## Summary
 
-In past audits, we have seen contract admins claim that invalidated configuration setters are fine since â€œadmins are trustworthyâ€. However, cases such as [Nomad got drained for over $150M](https://twitter.com/samczsun/status/1554260106107179010) and [Misconfiguration in the Acala stablecoin project allows attacker to steal 1.2 billion aUSD](https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd) have shown again and again that even trustable entities can make mistakes. Thus any fields that might potentially result in insolvency of protocol should be thoroughly checked.
+In past audits, we have seen contract admins claim that invalidated configuration setters are fine since admins are trustworthy. However, cases such as [Nomad got drained for over $150M](https://twitter.com/samczsun/status/1554260106107179010) and [Misconfiguration in the Acala stablecoin project allows attacker to steal 1.2 billion aUSD](https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd) have shown again and again that even trustable entities can make mistakes. Thus any fields that might potentially result in insolvency of protocol should be thoroughly checked.
 
 NftPort template implementations often ignore checks for config fields. For the rest of the issue, we take `royalty` related fields as an example to illustrate potential consequences of misconfigurations. Notably, lack of check is not limited to `royalty`, but exists among most config fields.
 
@@ -1232,7 +1232,7 @@ Consider implementing the necessary functionality to allow for the collection of
 
 
 **[sofianeOuafir (Joyn) confirmed and commented](https://github.com/code-423n4/2022-03-joyn-findings/issues/130#issuecomment-1099679515):**
- > This is a great observation. Something we are aware of and intend to fix as well. ðŸ‘ 
+ > This is a great observation. Something we are aware of and intend to fix as well.  
 
 
 
@@ -1562,7 +1562,7 @@ Due to the implementation of `OracleMembers.deleteItem`, the last item of the ar
 1. At T0, add member `m0` to the list of members: `members[0] = m0`.
 2. At T1, add member `m1` to the list of members: `members[1] = m1`.
 3. At T3, `m0` calls `reportBeacon(...)`. This action triggers a call to `ReportsPositions.register(uint256(0));` which registers that the member at index 0 has voted.
-4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`â€™s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
+4. At T4, the oracle admin calls `removeMember(m0)`. This operation swaps `m0`s address from the last position of the array with the position of the member being deleted. After this, it pops the last position of the array. The state changes from:
    - `members[0] = m0; members[1] = m1`
    - to `members[0] = m1;`.
 
@@ -1971,7 +1971,7 @@ Every allocator in `QVSimpleStrategy` has a maximum credit limit. An allocator s
 https://github.com/sherlock-audit/2023-09-Gitcoin/blob/main/allo-v2/contracts/strategies/qv-simple/QVSimpleStrategy.sol#L121
 ```solidity
     function _allocate(bytes memory _data, address _sender) internal virtual override {
-        â€¦
+        
 
         // check that the recipient has voice credits left to allocate
         if (!_hasVoiceCreditsLeft(voiceCreditsToAllocate, allocator.voiceCredits)) revert INVALID();

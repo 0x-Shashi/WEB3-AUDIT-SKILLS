@@ -1,4 +1,4 @@
-# Time Rounding Security Patterns
+﻿# Time Rounding Security Patterns
 
 ## Overview
 
@@ -83,7 +83,7 @@ Fixed Term Tellers intend to mint tokens that expire once per day, to consolidat
 
 ## Vulnerability Detail
 
-In `BondFixedTermTeller.sol`, new tokenIds are deployed through the `_handlePayout()` function. The function calculates the expiry (rounded down to the nearest day), uses this expiry to create a tokenId, and — if that tokenId doesn't yet exist — deploys it.
+In `BondFixedTermTeller.sol`, new tokenIds are deployed through the `_handlePayout()` function. The function calculates the expiry (rounded down to the nearest day), uses this expiry to create a tokenId, and if that tokenId doesn't yet exist deploys it.
 
 ```solidity
 ...
@@ -131,13 +131,13 @@ Source: https://github.com/sherlock-audit/2023-06-bond-judging/issues/63
 BenRai, qandisa
 ## Summary
 
-When deploying an `optionToken` the parameter `expiry` is rounded down to the “nearest day at 0000 UTC” but since the end of an epoch is calculated by the `epochDuration` and the exact time the epoch has stared and the `optionToken` was created this can lead to an epoch still being active but the corresponding `optionToken` to be already expired. 
+When deploying an `optionToken` the parameter `expiry` is rounded down to the nearest day at 0000 UTC but since the end of an epoch is calculated by the `epochDuration` and the exact time the epoch has stared and the `optionToken` was created this can lead to an epoch still being active but the corresponding `optionToken` to be already expired. 
 
 ## Vulnerability Detail
 
 When starting a new epoch, the variable `epochStart` is set to the current time (`block.timestamp`) and the end of the epoch is calculated by adding the `epochDuration` to the `epochStart` variable. 
 
-The `optionToken` of the new epoch is deployed with the parameter `expire` calculated based on the current time stamp, the `timeUntilEligible` and the `eligibleDuration`. (`uint48(block.timestamp) + timeUntilEligible + eligibleDuration`). The final expiration date of the optionToken is rounded down to the “nearest day at 0000 UTC” before the token is deployed.
+The `optionToken` of the new epoch is deployed with the parameter `expire` calculated based on the current time stamp, the `timeUntilEligible` and the `eligibleDuration`. (`uint48(block.timestamp) + timeUntilEligible + eligibleDuration`). The final expiration date of the optionToken is rounded down to the nearest day at 0000 UTC before the token is deployed.
 
 Since the `epochDuration` can be as close as 1 second to the sum of `timeUntilEligible + eligibleDuration` this can lead to an epoch still being active but its `optionToken` to be already expired.
 

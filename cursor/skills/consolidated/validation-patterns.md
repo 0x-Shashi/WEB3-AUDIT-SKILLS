@@ -192,7 +192,7 @@ function decodeId(uint256 id) public pure returns (CloberOrderBook.OrderKey memo
 ## Description  
 The `onReceive()` function does not verify the integrity of `transferId` against all other parameters. Although the `onlyBridgeRouter` modifier checks that the call originates from another BridgeRouter (assuming a correct configuration of the whitelist) to the `onReceive()` function, it does not check that the call originates from another Connext Diamond.
 
-This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connextâ€™s `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
+This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connexts `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
 
 - **Alice** is a bridge user and makes an honest call to transfer funds over to the destination chain.  
 - **Bob** does not make a transfer but instead calls the `sendToHook()` function with the same `_extraData` but passes an `_amount` of `1 wei`.  
@@ -399,7 +399,7 @@ if (s.finalAuctionEnd != 0) {
 So in `_appendStack` we have:
 
 ```
-onew + on + ... + oj  â‰¤ Lj
+onew + on + ... + oj   Lj
 ```
 
 Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount for the stack slot plus the potential interest at the end of its term. 
@@ -407,7 +407,7 @@ Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount
 So it would make sense to enforce a stricter inequality for `Lnew`:
 
 ```
-(1 + r(tend âˆ’ tnow) / 10^18) Anew = onew â‰¤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 The big issue regarding the current lower bound is when the borrower only takes one lien and for this lien `liquidationInitialAsk == amount` (or they are close). Then at any point during the lien term (maybe very close to the end), the borrower can atomically self-liquidate and settle the Seaport auction in one transaction. This way the borrower can skip paying any interest (they would need to pay OpenSea fees and potentially royalty fees) and plus they would receive liquidation fees.
@@ -416,7 +416,7 @@ The big issue regarding the current lower bound is when the borrower only takes 
 Make sure the following stricter lower bound is used instead:
 
 ```
-(1 + r(tend âˆ’ tnow) / 10^18) Anew = onew â‰¤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 **Reference**: [View Original Finding](https://github.com/spearbit/portfolio/blob/master/pdfs/Astaria-Spearbit-Security-Review.pdf)
@@ -1045,7 +1045,7 @@ This becomes very problematic for revenue tokens that use push payments. An atta
 - **Lines**: 80-113, 115-167
 
 ## Description
-Routers can provide liquidity in the protocol to improve the UX of cross-chain transfers. Liquidity is sent to users under the routerâ€™s consent before the cross-chain message is settled on the optimistic message protocol, i.e., Nomad. The router can also borrow liquidity from AAVE if the router does not have enough of it. It is the routerâ€™s responsibility to repay the debt to AAVE.
+Routers can provide liquidity in the protocol to improve the UX of cross-chain transfers. Liquidity is sent to users under the routers consent before the cross-chain message is settled on the optimistic message protocol, i.e., Nomad. The router can also borrow liquidity from AAVE if the router does not have enough of it. It is the routers responsibility to repay the debt to AAVE.
 
 ### Code Snippet
 ```solidity
@@ -1162,7 +1162,7 @@ However, when `tokenIndexFrom == tokenIndexTo`, the second update overwrites the
 
 **Note:** The protection against this problem is located in the function `getY()`. However, this function is not called from `swapOut()`.
 
-**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnâ€™t an immediate risk here.
+**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnt an immediate risk here.
 
 ### Code Snippets
 ```solidity
@@ -1229,9 +1229,9 @@ Acknowledged.
 `RewardsManagerForAave.sol#L145-L147`
 
 ## Description
-Aave has 3 different types of tokens: aToken, stable debt token, and variable debt token (a/s/vToken). Aaveâ€™s incentive controller can define rewards for all of them, but Morpho never uses a stable-rate borrow token (sToken). 
+Aave has 3 different types of tokens: aToken, stable debt token, and variable debt token (a/s/vToken). Aaves incentive controller can define rewards for all of them, but Morpho never uses a stable-rate borrow token (sToken). 
 
-The public `accrueUserUnclaimedRewards` function allows passing arbitrary token addresses for which to accrue user rewards. Current code assumes that if the token is not the variable debt token, then it must be the aToken, and uses the userâ€™s supply balance for the reward calculation as follows:
+The public `accrueUserUnclaimedRewards` function allows passing arbitrary token addresses for which to accrue user rewards. Current code assumes that if the token is not the variable debt token, then it must be the aToken, and uses the users supply balance for the reward calculation as follows:
 
 ```solidity
 uint256 stakedByUser = reserve.variableDebtTokenAddress == asset
@@ -1242,7 +1242,7 @@ uint256 stakedByUser = reserve.variableDebtTokenAddress == asset
 An attacker can accrue rewards by passing in an sToken address and steal from the contract. The steps are as follows:
 1. Attacker supplies a large amount of tokens for which sToken rewards are defined.
 2. The aToken reward index is updated to the latest index, but the sToken index is not initialized.
-3. Attacker calls `accrueUserUnclaimedRewards([sToken])`, which will compute the difference between the current Aave reward index and the userâ€™s sToken index, then multiply it by their supply balance.
+3. Attacker calls `accrueUserUnclaimedRewards([sToken])`, which will compute the difference between the current Aave reward index and the users sToken index, then multiply it by their supply balance.
 4. The user-accumulated rewards in `userUnclaimedRewards[user]` can be withdrawn by calling `PositionManager.claimRewards([sToken, ...])`.
 5. Attac
 
@@ -1428,7 +1428,7 @@ If a delegator calls `undelegate()` with `type(uint256).max`, `operatorTokenToDa
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelinâ€™s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.
@@ -1907,7 +1907,7 @@ Also some functions are not necessary and can lead to unintentional situations.
 Although we assume the admin is trusted, these issues can lead to unexpected loss by a mistake of an admin.
 
 **Impact**
-The admin can change the protocolâ€™s behavior in unexpected ways.
+The admin can change the protocols behavior in unexpected ways.
 
 **Recommendation:**
 Add necessary validations to the admin functions and remove unnecessary functions.
@@ -2674,7 +2674,7 @@ Also some functions are not necessary and can lead to unintentional situations.
 Although we assume the admin is trusted, these issues can lead to unexpected loss by a mistake of an admin.
 
 **Impact**
-The admin can change the protocolâ€™s behavior in unexpected ways.
+The admin can change the protocols behavior in unexpected ways.
 
 **Recommendation:**
 Add necessary validations to the admin functions and remove unnecessary functions.
@@ -3145,7 +3145,7 @@ returns the wrong value at the bounds of `x` and `y`.
 If `x` or `y` is at these bounds, the corresponding term's computation is skipped and therefore implicitly set to 0, its initialization value.
 
 ```solidity
-int256 invariantTermX; // Î¦Â¹(1-x)
+int256 invariantTermX; // (1-x)
 // @audit if x is at the bounds, the term remains 0
 if (self.reserveXPerWad.isBetween(lowerBoundX + 1, upperBoundX - 1)) {
     invariantTermX = Gaussian.ppf(int256(WAD - self.reserveXPerWad));
@@ -3153,7 +3153,7 @@ if (self.reserveXPerWad.isBetween(lowerBoundX + 1, upperBoundX - 1)) {
 ```
 
 ```solidity
-int256 invariantTermY; // Î¦Â¹(y/K)
+int256 invariantTermY; // (y/K)
 // @audit if y is at the bounds, the term remains 0
 if (self.reserveYPerWad.isBetween(lowerBoundY + 1, upperBoundY - 1)) {
     invariantTermY = Gaussian.ppf(
@@ -3521,13 +3521,13 @@ https://github.com/sherlock-audit/2023-02-
 
 **Severity:** Medium
 
-**Context:** [`MUSDManager.sol#L249`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [`MUSDManager.sol#L299`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 "â€Œ"), [`MintRewards.sol#L121`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L121 "â€Œ"), [`MintRewards.sol#L92`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L92 "â€Œ")
+**Context:** [`MUSDManager.sol#L249`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [`MUSDManager.sol#L299`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 ""), [`MintRewards.sol#L121`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L121 ""), [`MintRewards.sol#L92`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L92 "")
 
 **Description:**
 
-With the current implementation, it is possible that the borrowers are in bad debt. As confirmed with the protocol team, _â€œWhen user's collateral position is under 100%, only the respective amount of mUSD which is equivalent of GLP\*price which is less than is debt position is closed.â€_ ([MUSDManager.sol#L249](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [MUSDManager.sol#L299](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 "â€Œ"))
+With the current implementation, it is possible that the borrowers are in bad debt. As confirmed with the protocol team, _When user's collateral position is under 100%, only the respective amount of mUSD which is equivalent of GLP\*price which is less than is debt position is closed._ ([MUSDManager.sol#L249](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [MUSDManager.sol#L299](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 ""))
 
-On the other hand, by the protocolâ€™s design, anyone with positive `borrowed` is considered as a mUSD holder and can claim the mint reward. Note that the user does not need to mint additional mUSD. ([MintRewards.sol#L121](https://github.com/getmetafinance/
+On the other hand, by the protocols design, anyone with positive `borrowed` is considered as a mUSD holder and can claim the mint reward. Note that the user does not need to mint additional mUSD. ([MintRewards.sol#L121](https://github.com/getmetafinance/
 
 *[Content truncated...]*
 
@@ -3548,7 +3548,7 @@ On the other hand, by the protocolâ€™s design, anyone with positive `borrow
 **Context:** [`MetaManager.sol#L117-L126`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/meta/MetaManager.sol#L117-L126)
 
 **Description:**
-In `MetaManager::reStake`, `toMint` is calculated as `getReservedForVesting(caller) + getClaimable(caller)` and itâ€™s essentially the same to `unstakeRate[_user] * (time2fullRedemption[_user] - lastWithdrawTime[_user])`. The problem is that this should be â€œunslashedâ€ using the `lastSlashRate` to be fair.
+In `MetaManager::reStake`, `toMint` is calculated as `getReservedForVesting(caller) + getClaimable(caller)` and its essentially the same to `unstakeRate[_user] * (time2fullRedemption[_user] - lastWithdrawTime[_user])`. The problem is that this should be unslashed using the `lastSlashRate` to be fair.
 
 For example, a user starts unstaking 100e18 esMETA with 10 days vesting period and after a day he decided to stop unstaking and restake.
 
@@ -4244,7 +4244,7 @@ We will add checks regarding the `ERC721A` limits. A restraint has been implemen
 
 ---
 
-### Example 8: [M-01] Attacker can list an NFT they own and inflate to zero all usersâ€™ contributions, keeping the NFT and all the money
+### Example 8: [M-01] Attacker can list an NFT they own and inflate to zero all users contributions, keeping the NFT and all the money
 
 **Source**: Code4rena
 **Protocol**: PartyDAO
@@ -4358,7 +4358,7 @@ Source: https://github.com/sherlock-audit/2022-11-bond-judging/issues/38
 bin2chen
 
 ## Summary
-BondAggregator#findMarketFor() minAmountOut_ does not actually take effectï¼Œmay return a market's "payout" smaller than minAmountOut_ , Causes users to waste gas calls to purchase
+BondAggregator#findMarketFor() minAmountOut_ does not actually take effectmay return a market's "payout" smaller than minAmountOut_ , Causes users to waste gas calls to purchase
 
 ## Vulnerability Detail
 BondAggregator#findMarketFor() has check minAmountOut_ <= maxPayout
@@ -4650,7 +4650,7 @@ However, when `tokenIndexFrom == tokenIndexTo`, the second update overwrites the
 
 **Note:** The protection against this problem is located in the function `getY()`. However, this function is not called from `swapOut()`.
 
-**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnâ€™t an immediate risk here.
+**Note:** The same issue exists in `swapInternalOut()`, which is called from `swapFromLocalAssetIfNeededForExactOut()` via `_swapAssetOut()`. However, via this route, it is not possible to specify arbitrary token indexes. Therefore, there isnt an immediate risk here.
 
 ### Code Snippets
 ```solidity
@@ -4729,7 +4729,7 @@ Recommend that a `require` check should be imposed prohibiting the `from` and `t
 
 ---
 
-### Example 6: [H-03] transferNotionalFrom doesnâ€™t check from != to
+### Example 6: [H-03] transferNotionalFrom doesnt check from != to
 
 **Source**: Code4rena
 **Protocol**: Swivel
@@ -5009,7 +5009,7 @@ To have the inequality `assets < s.depositCap` to be always correct, we would ne
 
 ---
 
-### Example 6: [M-04] Lender can trade claimToken in a malicious way to steal the borrowerâ€™s money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
+### Example 6: [M-04] Lender can trade claimToken in a malicious way to steal the borrowers money via claimAndRepay() in SpigotedLine by using malicious zeroExTradeData
 
 **Source**: Code4rena
 **Protocol**: Debt DAO
@@ -5075,7 +5075,7 @@ function _claimAndTrade(
 
 ---
 
-### Example 7: [M-07] Oracleâ€™s two-day feature can be gamed
+### Example 7: [M-07] Oracles two-day feature can be gamed
 
 **Source**: Code4rena
 **Protocol**: Inverse Finance
@@ -5117,7 +5117,7 @@ If you increase it to a three-day interval you can fix this issue. Then, the ora
 
 ---
 
-### Example 8: enableTradingWithWeights allow the Treasury to change the poolâ€™s weights even if the swap is not disabled
+### Example 8: enableTradingWithWeights allow the Treasury to change the pools weights even if the swap is not disabled
 
 **Source**: Spearbit
 **Protocol**: Gauntlet
@@ -5131,10 +5131,10 @@ If you increase it to a three-day interval you can fix this issue. Then, the ora
 AeraVaultV1.sol#L574-L583
 
 ## Description
-`enableTradingWithWeights` is a function that can only be called by the owner of the Aera Vault contract and that should be used only to re-enable the swap feature on the pool while updating token weights. The function does not verify if the poolâ€™s swap feature is enabled and for this reason, it allows the Treasury to act as the manager who is the only actor allowed to change the pool weights. The function should add a check to ensure that it is only callable when the poolâ€™s swap is disabled.
+`enableTradingWithWeights` is a function that can only be called by the owner of the Aera Vault contract and that should be used only to re-enable the swap feature on the pool while updating token weights. The function does not verify if the pools swap feature is enabled and for this reason, it allows the Treasury to act as the manager who is the only actor allowed to change the pool weights. The function should add a check to ensure that it is only callable when the pools swap is disabled.
 
 ## Recommendation
-Update the function to revert when the poolâ€™s swap is enabled.
+Update the function to revert when the pools swap is enabled.
 
 ```solidity
 function enableTradingWithWeights(uint256[] calldata weights)

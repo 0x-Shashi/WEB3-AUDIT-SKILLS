@@ -1,4 +1,4 @@
-# Read-only Reentrancy Security Patterns
+﻿# Read-only Reentrancy Security Patterns
 
 ## Overview
 
@@ -192,7 +192,7 @@ Install the mitigation into the aforementioned methods, changing them to non-vie
 ### Example 6: Potential Reentrancy Into Strategies
 
 **Source**: ConsenSys
-**Protocol**: EigenLabs — EigenLayer
+**Protocol**: EigenLabs  EigenLayer
 **Impact**: MEDIUM
 
 **Details**:
@@ -212,7 +212,7 @@ Install the mitigation into the aforementioned methods, changing them to non-vie
 #### Description
 
 
-The `StrategyManager` contract is the entry point for deposits into and withdrawals from strategies. More specifically, to deposit into a strategy, a staker calls `depositIntoStrategy` (or anyone calls `depositIntoStrategyWithSignature` with the staker’s signature) then the asset is transferred from the staker to the strategy contract. After that, the strategy’s `deposit` function is called, followed by some bookkeeping in the `StrategyManager`. For withdrawals (and slashing), the `StrategyManager` calls the strategy’s `withdraw` function, which transfers the given amount of the asset to the given recipient. Both token transfers are a potential source of reentrancy if the token allows it.
+The `StrategyManager` contract is the entry point for deposits into and withdrawals from strategies. More specifically, to deposit into a strategy, a staker calls `depositIntoStrategy` (or anyone calls `depositIntoStrategyWithSignature` with the stakers signature) then the asset is transferred from the staker to the strategy contract. After that, the strategys `deposit` function is called, followed by some bookkeeping in the `StrategyManager`. For withdrawals (and slashing), the `StrategyManager` calls the strategys `withdraw` function, which transfers the given amount of the asset to the given recipient. Both token transfers are a potential source of reentrancy if the token allows it.
 
 
 The `StrategyManager` us

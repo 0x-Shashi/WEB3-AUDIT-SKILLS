@@ -1,4 +1,4 @@
----
+﻿---
 name: Move Scanner
 description: Aptos/Sui Move smart contract vulnerability scanner with 50+ security patterns
 version: 1.0.0
@@ -125,12 +125,12 @@ struct ImportantData has key {
     value: u64
 }
 
-// ✅ CORRECT - Resource explicitly moved
+//  CORRECT - Resource explicitly moved
 public fun transfer(data: ImportantData, recipient: address) {
     move_to(recipient, data);  // Moved to storage
 }
 
-// ❌ ERROR - Resource would be dropped
+//  ERROR - Resource would be dropped
 public fun bad_function(data: ImportantData) {
     // Function ends without using data - COMPILE ERROR
 }

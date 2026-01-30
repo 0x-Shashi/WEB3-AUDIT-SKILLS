@@ -1,4 +1,4 @@
-# Anchor Program Audit Workflow
+﻿# Anchor Program Audit Workflow
 
 Systematic workflow for auditing Anchor-based Solana programs.
 
@@ -82,9 +82,9 @@ For each instruction's account struct:
 
 | Account | Type | Signer | Mut | Seeds | has_one | Constraint |
 |---------|------|--------|-----|-------|---------|------------|
-| user | Signer | ✅ | ❌ | ❌ | ❌ | ❌ |
-| pool | Account<Pool> | ❌ | ✅ | ✅ | ✅ auth | ❌ |
-| user_token | Account<TA> | ❌ | ✅ | ❌ | ❌ | owner, mint |
+| user | Signer |  |  |  |  |  |
+| pool | Account<Pool> |  |  |  |  auth |  |
+| user_token | Account<TA> |  |  |  |  | owner, mint |
 
 ### Missing Validations
 - [ ] None / [Issue found]
@@ -117,13 +117,13 @@ For each instruction's account struct:
 ### Arithmetic Operations
 | Operation | Type | Safe? | Notes |
 |-----------|------|-------|-------|
-| a + b | Addition | ✅ checked_add | |
-| a - b | Subtraction | ❌ | Potential underflow |
+| a + b | Addition |  checked_add | |
+| a - b | Subtraction |  | Potential underflow |
 
 ### CPI Calls
 | Target | Purpose | Secure? |
 |--------|---------|---------|
-| Token::transfer | Move tokens | ✅ |
+| Token::transfer | Move tokens |  |
 
 ### State Changes
 | Account | Field | Before | After |
@@ -144,15 +144,15 @@ For each instruction's account struct:
 ## State Transitions
 
 ### Pool Lifecycle
-1. initialize → Pool created, authority set
-2. deposit → total increases
-3. withdraw → total decreases
+1. initialize  Pool created, authority set
+2. deposit  total increases
+3. withdraw  total decreases
 4. [other transitions]
 
 ### Invariant Verification
 | Invariant | Maintained By | Violation Possible? |
 |-----------|---------------|---------------------|
-| total = Σ deposits | deposit, withdraw | Check arithmetic |
+| total =  deposits | deposit, withdraw | Check arithmetic |
 ```
 
 ### 4.2 Ordering Attacks
@@ -163,9 +163,9 @@ For each instruction's account struct:
 ### Tested Sequences
 | Sequence | Expected | Actual | Issue? |
 |----------|----------|--------|--------|
-| init → deposit → withdraw | Normal | Normal | ✅ |
-| deposit → close → withdraw | Fail | ? | Check |
-| init → init | Fail | ? | Check reinit |
+| init  deposit  withdraw | Normal | Normal |  |
+| deposit  close  withdraw | Fail | ? | Check |
+| init  init | Fail | ? | Check reinit |
 ```
 
 ---

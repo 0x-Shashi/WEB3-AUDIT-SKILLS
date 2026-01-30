@@ -1,4 +1,4 @@
----
+﻿---
 name: protocol-templates
 description: "Deep specialized patterns for auditing specific protocol types. Load after context detection identifies the protocol type."
 allowed-tools:
@@ -42,12 +42,12 @@ Each template contains:
 
 ```
 template-name.md
-├── Architecture Overview
-├── Critical Functions
-├── Common Vulnerabilities
-├── Real Exploit Examples
-├── Audit Checklist
-└── Detection Commands
+ Architecture Overview
+ Critical Functions
+ Common Vulnerabilities
+ Real Exploit Examples
+ Audit Checklist
+ Detection Commands
 ```
 
 ---

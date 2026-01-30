@@ -1,4 +1,4 @@
-# Cantina - Audit Findings
+﻿# Cantina - Audit Findings
 
 ## Overview
 
@@ -54,7 +54,7 @@ The `NativeLoadStoreCoreAir::eval` function does not constrain anything except t
 
 ---
 
-### 3. Incorrect upper bound check in wExp(x) can produce an overﬂowed result 
+### 3. Incorrect upper bound check in wExp(x) can produce an overowed result 
 
 **Protocol**: Morpho | **Impact**: HIGH
 
@@ -86,7 +86,7 @@ An...
 
 ---
 
-### 4. Blast is conﬁgured in the implementation contract constructor, not the proxy 
+### 4. Blast is congured in the implementation contract constructor, not the proxy 
 
 **Protocol**: Particle | **Impact**: HIGH
 
@@ -115,7 +115,7 @@ function configure() external {
 
 ---
 
-### 5. TroveManager's RewardIntegral update logic is ﬂawed, users may be receiving less rewards than expected 
+### 5. TroveManager's RewardIntegral update logic is awed, users may be receiving less rewards than expected 
 
 **Protocol**: Bima | **Impact**: HIGH
 
@@ -240,7 +240,7 @@ Unfortunately, `imm_sign` is not constrained, thus the prover can decide to make
 
 ---
 
-### 11. Heap pointer can overﬂow 
+### 11. Heap pointer can overow 
 
 **Protocol**: OpenVM | **Impact**: HIGH
 
@@ -288,7 +288,7 @@ This means that the actual row hashing is constrained by a series of `inside_row
 
 ---
 
-### 13. Poseidon2 verify batch: Incorporate sibling row can also be ﬁrst of top level phase, skipping row incorporation 
+### 13. Poseidon2 verify batch: Incorporate sibling row can also be rst of top level phase, skipping row incorporation 
 
 **Protocol**: OpenVM | **Impact**: HIGH
 

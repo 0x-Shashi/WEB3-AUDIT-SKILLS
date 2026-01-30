@@ -1,4 +1,4 @@
-# Report Writing Workflow
+﻿# Report Writing Workflow
 
 Systematic workflow for documenting findings and generating professional audit reports.
 
@@ -35,13 +35,13 @@ Systematic workflow for documenting findings and generating professional audit r
 ## Quick Severity Check
 
 Ask yourself:
-1. Can an attacker steal funds? → Critical/High
-2. Can an attacker cause permanent damage? → Critical/High
-3. Is user action required for exploitation? → Reduce severity
-4. Are special conditions needed? → Reduce severity
-5. Is it a best practice violation? → Low/Informational
+1. Can an attacker steal funds?  Critical/High
+2. Can an attacker cause permanent damage?  Critical/High
+3. Is user action required for exploitation?  Reduce severity
+4. Are special conditions needed?  Reduce severity
+5. Is it a best practice violation?  Low/Informational
 
-### Likelihood × Impact Matrix
+### Likelihood  Impact Matrix
 |              | Low Impact | Med Impact | High Impact | Critical Impact |
 |--------------|------------|------------|-------------|-----------------|
 | High Like.   | Low        | Medium     | High        | Critical        |
@@ -160,7 +160,7 @@ contract FixVerificationTest is Test {
 ## [C-01] Reentrancy in withdraw() Allows Complete Fund Drainage
 
 ### Severity
-**Critical** 🔴
+**Critical** 
 
 ### Location
 - **File:** `src/Vault.sol`
@@ -249,7 +249,7 @@ function withdraw(uint256 amount) external nonReentrant {
 - [Consensys: Reentrancy](https://consensys.github.io/smart-contract-best-practices/attacks/reentrancy/)
 
 ### Status
-**Fixed** ✅
+**Fixed** 
 
 ### Team Response
 > We have implemented both recommendations: checks-effects-interactions 
@@ -269,7 +269,7 @@ Verified in commit `def5678`. The fix correctly:
 ### 4.1 Report Assembly Order
 
 1. **Collect all finalized findings**
-2. **Sort by severity** (Critical → High → Medium → Low → Info)
+2. **Sort by severity** (Critical  High  Medium  Low  Info)
 3. **Number findings** (C-01, C-02, H-01, etc.)
 4. **Generate summary tables**
 5. **Write executive summary** (last, after all findings known)

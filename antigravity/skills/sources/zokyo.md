@@ -1,4 +1,4 @@
-# Zokyo - Audit Findings
+﻿# Zokyo - Audit Findings
 
 ## Overview
 
@@ -38,7 +38,7 @@ function addVault(address vault) external onlyOwner {
 
 ---
 
-### 2. convertToAssets is receiving asset’s decimals instead of share’s decimals, possibly leading to a miscalculation
+### 2. convertToAssets is receiving assets decimals instead of shares decimals, possibly leading to a miscalculation
 
 **Protocol**: Vaultcraft | **Impact**: HIGH
 
@@ -48,7 +48,7 @@ function addVault(address vault) external onlyOwner {
 
 **Description**
 
-When calculating how much worth a share is in the protocol (for example when calculating fees) we perform the following →
+When calculating how much worth a share is in the protocol (for example when calculating fees) we perform the following 
 ```solidity
 function _accruedPerformanceFee(
         Fees memory fees_
@@ -72,7 +72,7 @@ But the function convertToAssets is being passed one asset instead of one share 
 
 Fee is accrued when the share value increases / accrues value , then anyone can call the takeFees function which will accrue performance and management fee and send it to the fee recipient. 
 
-But an attacker can do the following →
+But an attacker can do the following 
 
 Call takeFees even when the share value has not increased, therefore no fee shares would be minted to the fee recipient but the feesUpdatedAt parameter would be updated anyhow.
 ```solidity
@@ -177,7 +177,7 @@ function beneficiaryWithdraw(uint256 serviceID, address token) public virtual no
 
 **Status** - Acknowledged
 
-The winning option shares is calculated as follows →
+The winning option shares is calculated as follows 
 ```solidity
 function _getUserDuelOptionShare(
         string memory _duelId,
@@ -205,16 +205,16 @@ I...
 
 **Description**
 
-Consider the following →
+Consider the following 
 
 UserA joins a duel (say duelId = 1)  , provides an option and an option index , and as amount provides 1000 USDC
-This would deploy a new options token , like this →
+This would deploy a new options token , like this 
 OptionToken newOptionToken = new OptionToken(_option, _option);
 
-And mapping will be updated for the optionIndex →
+And mapping will be updated for the optionIndex 
 optionIndexToOptionToken[_duelId][_optionsIndex] = address(newOptionToken);
 
-And this newOptionToken is minted to the user →
+And this newOptionToken is minted to the user 
 
 newOptionToken.mint(msg.sender, amountTokenToMint);
 
@@ -232,7 +232,7 @@ Now userB arrives and joins the same duel i.e. due...
 
 **Description**
 
-When joining a duel the amount put up as wager is compared against an options price and can’t be lower than that price. But since the options price is controlled by the user →
+When joining a duel the amount put up as wager is compared against an options price and cant be lower than that price. But since the options price is controlled by the user 
 ```solidity
 function joinDuel(
         string memory _duelId,
@@ -243,7 +243,7 @@ function joinDuel(
     )
 ```
 
-The user can provide a very low value as the option price( 1 wei)  , in that case the amountTokenToMint would be large →
+The user can provide a very low value as the option price( 1 wei)  , in that case the amountTokenToMint would be large 
 ```solidity
 uint256 amountTokenToMint = (_amoun...
 
@@ -280,7 +280,7 @@ function transfer(
 
 **Description**
 
-The `TokenBridge.Base.sol` smart contract implements a `getChainlinkDataFeedLatestAnswer()` function which uses Chainlink Price Feeds to retrieve asset’s prices:
+The `TokenBridge.Base.sol` smart contract implements a `getChainlinkDataFeedLatestAnswer()` function which uses Chainlink Price Feeds to retrieve assets prices:
 ```solidity
 /**
     * Returns the latest answer
@@ -308,7 +308,7 @@ The `TokenBridge.Base.sol` smart contract implements a `getChainlinkDataFeedLate
 
 **Description**: 
 
-In TeaVaultAmbient.sol, the lastCollectedManagementFee should be initialized as block.timestamp , if not when the management fee is accrued for the first time it will be accrued as →
+In TeaVaultAmbient.sol, the lastCollectedManagementFee should be initialized as block.timestamp , if not when the management fee is accrued for the first time it will be accrued as 
 ```solidity
 function _collectManagementFee() internal returns (uint256 collectedShares) {
         uint256 timeDiff = block.timestamp - lastCollectManagementFee;
@@ -336,7 +336,7 @@ The _fractionOfShares function is used in the TeaVaultAbient contract to aid the
 
 **Recommendation**
 
-It’s recommen...
+Its recommen...
 
 ---
 
@@ -370,7 +370,7 @@ uint256 diff1 = game.initiatorPrice > uint192(finalPrice) / 1e14
 
 **Description**
 
-In the `UpDown` game, players can bet that an asset’s price will be up or down compared to the current price. If the price is up, players that voted for it will win and vice versa. However, the current implementation of the `finalizeGame()` function within the `UpDown.sol` smart contract allocates more probability of winning to the players that voted down, instead of allocating it 50/50.
+In the `UpDown` game, players can bet that an assets price will be up or down compared to the current price. If the price is up, players that voted for it will win and vice versa. However, the current implementation of the `finalizeGame()` function within the `UpDown.sol` smart contract allocates more probability of winning to the players that voted down, instead of allocating it 50/50.
 
 
 ```solidity

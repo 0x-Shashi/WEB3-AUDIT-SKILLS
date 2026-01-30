@@ -1,4 +1,4 @@
-# TrailOfBits - Audit Findings
+﻿# TrailOfBits - Audit Findings
 
 ## Overview
 
@@ -32,7 +32,7 @@
 
 **Protocol**: Bunni v2 | **Impact**: HIGH
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -48,7 +48,7 @@ The `computeSwap` function in the BunniSwapMath library allows users to swap tok
 
 **Protocol**: Bunni v2 | **Impact**: HIGH
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -68,13 +68,13 @@ The `computeSwap` function in the BunniSwapMath library executes swap operations
 
 ## Denial of Service: _burnGroupBalances Function
 
-**Diﬃculty:** Medium  
+**Diculty:** Medium  
 **Type:** Denial of Service  
 
 ## Description
 The `_burnGroupBalances` function fails to validate that the burn operation completes successfully when expired tokens are present, potentially creating inconsistencies between ERC1155 balance tracking and group array tracking. The function skips over expired token groups during burning but does not verify that the burn was completed successfully.
 
-The `_burnGroupBalances` function iterates through the account’s token groups in FIFO order to burn the requested amount. However...
+The `_burnGroupBalances` function iterates through the accounts token groups in FIFO order to burn the requested amount. However...
 
 ---
 
@@ -102,7 +102,7 @@ modifier onlyGovernance() {
 
 ---
 
-### 5. Minter user can conﬁscate any user tokens
+### 5. Minter user can conscate any user tokens
 
 **Protocol**: Curve DAO | **Impact**: HIGH
 
@@ -113,7 +113,7 @@ modifier onlyGovernance() {
 **Difficulty:** Low  
 
 ## Description
-ERC20CV’s minter has the unexpected right to move tokens from any users, increasing the risks associated with the minter account.
+ERC20CVs minter has the unexpected right to move tokens from any users, increasing the risks associated with the minter account.
 
 The administrator of the contract can design a special user called a minter:
 ```python
@@ -135,7 +135,7 @@ def mint(_to: address,...
 
 **Protocol**: Balancer v3 | **Impact**: HIGH
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -161,7 +161,7 @@ nonReentrant withRegisteredPool(pool) {
 **Target:** `protocol/contracts/farm/facets/OwnershipFacet.sol`  
 
 ## Description
-The `transferOwnership()` function is used to change the owner of the Beanstalk protocol. This function calls the `setContractOwner()` function, which immediately sets the contract’s new owner. Transferring ownership in one function call is error-prone and could result in irrevocable mistakes.
+The `transferOwnership()` function is used to change the owner of the Beanstalk protocol. This function calls the `setContractOwner()` function, which immediately sets the contracts new owner. Transferring ownership in one function call is error-prone and could result in irrevocable mistakes.
 
 ```solidity
 function transferOwnership(address _newOwner) external override {
@@ -199,7 +199,7 @@ Even though the contract prevents VET from being received via normal transfers, 
 
 The `_transferGroups` function fails to complete group transfers when expired tokens are present, creating an inconsistency between the ERC1155 balance tracking and the group array tracking. The function skips over expired token groups during transfer but does not verify that the transfer was completed successfully.
 
-The `_transferGroups` function iterates through the sender’s token groups in the FIFO order to transfer the requested amount. However, it skips over expired token groups without accounting for them in the transfer ca...
+The `_transferGroups` function iterates through the senders token groups in the FIFO order to transfer the requested amount. However, it skips over expired token groups without accounting for them in the transfer ca...
 
 ---
 
@@ -207,7 +207,7 @@ The `_transferGroups` function iterates through the sender’s token groups in t
 
 **Protocol**: Radius Technology EVMAuth | **Impact**: HIGH
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -222,7 +222,7 @@ The contract maintains two separate balance tracking systems: the standard ERC11
 
 **Protocol**: Radius Technology EVMAuth | **Impact**: HIGH
 
-## Diﬃculty: Low
+## Diculty: Low
 
 ## Type: Data Validation
 
@@ -258,7 +258,7 @@ if ((min_collateral_amount > max_allowed_liquidation) | (msg_value < enough_fee)
 
 **Protocol**: Gemini Smart Wallet | **Impact**: HIGH
 
-## Diﬃculty: High
+## Diculty: High
 
 ## Type: Data Validation
 
@@ -281,14 +281,14 @@ A malicious dapp embeds the wallet in an iframe and overlays it with transparent
 ## Type: Data Validation
 
 ## Description
-The API keys are exposed in client-side code, allowing malicious users to extract and abuse them. The API keys are used to create a Pimlico client for bundling transactions and to get on-chain information using Alchemy. However, the API key is currently being sent to the client browser, where it can be accessed through browser developer tools. This enables unauthorized users to make API calls using Gemini’s API key, potentially exhausting the API quota or incurring unexpected costs.
+The API keys are exposed in client-side code, allowing malicious users to extract and abuse them. The API keys are used to create a Pimlico client for bundling transactions and to get on-chain information using Alchemy. However, the API key is currently being sent to the client browser, where it can be accessed through browser developer tools. This enables unauthorized users to make API calls using Geminis API key, potentially exhausting the API quota or incurring unexpected costs.
 
 ```javascript
 // Crea...
 
 ---
 
-### 15. Arbitrary messages can be executed via vault notiﬁcation messages
+### 15. Arbitrary messages can be executed via vault notication messages
 
 **Protocol**: Swap Coffee TON DEX | **Impact**: HIGH
 

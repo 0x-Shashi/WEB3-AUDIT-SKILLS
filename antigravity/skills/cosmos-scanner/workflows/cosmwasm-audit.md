@@ -1,4 +1,4 @@
-# CosmWasm Audit Workflow
+﻿# CosmWasm Audit Workflow
 
 Systematic workflow for auditing CosmWasm smart contracts.
 
@@ -78,8 +78,8 @@ cargo schema
 ### Input Validation
 | Field | Type | Validated? | How? |
 |-------|------|------------|------|
-| recipient | String | ✅ | addr_validate |
-| amount | Uint128 | ❌ | ISSUE |
+| recipient | String |  | addr_validate |
+| amount | Uint128 |  | ISSUE |
 
 ### Funds Handling
 - Expected: [denom, amount] or none
@@ -112,10 +112,10 @@ cargo schema
 ```markdown
 | Handler | Auth Type | Verified? | Location |
 |---------|-----------|-----------|----------|
-| transfer | Sender owns balance | ✅ | L45 |
-| withdraw | Only owner | ✅ | L78 |
-| update_config | Only admin | ❌ ISSUE | L112 |
-| mint | Only minter role | ✅ | L156 |
+| transfer | Sender owns balance |  | L45 |
+| withdraw | Only owner |  | L78 |
+| update_config | Only admin |  ISSUE | L112 |
+| mint | Only minter role |  | L156 |
 ```
 
 ### 3.2 Access Control Patterns
@@ -172,7 +172,7 @@ fn only_admin(deps: Deps, info: &MessageInfo) -> Result<(), ContractError> {
 ### Initialization
 | Storage | Initialized In | Required? |
 |---------|----------------|-----------|
-| CONFIG | instantiate | ✅ Yes |
+| CONFIG | instantiate |  Yes |
 | BALANCES | on first deposit | Optional |
 
 ### Migration Safety
@@ -190,21 +190,21 @@ fn only_admin(deps: Deps, info: &MessageInfo) -> Result<(), ContractError> {
 ```markdown
 | Location | Operation | Type | Checked? |
 |----------|-----------|------|----------|
-| L45 | a + b | Uint128 | ✅ checked_add |
-| L78 | a - b | Uint128 | ❌ ISSUE |
-| L112 | a * b / c | Uint128 | ⚠️ precision |
+| L45 | a + b | Uint128 |  checked_add |
+| L78 | a - b | Uint128 |  ISSUE |
+| L112 | a * b / c | Uint128 |  precision |
 ```
 
 ### 5.2 Safe Patterns
 
 ```rust
-// ✅ All arithmetic should use checked operations
+//  All arithmetic should use checked operations
 amount.checked_add(other)?;
 amount.checked_sub(other)?;
 amount.checked_mul(other)?;
 amount.checked_div(other)?;
 
-// ✅ For precision-sensitive calculations
+//  For precision-sensitive calculations
 use cosmwasm_std::{Uint256, Decimal};
 
 let result = Uint256::from(a)
@@ -224,8 +224,8 @@ let result = Uint256::from(a)
 ### Incoming Funds
 | Handler | Expected Denom | Validated? |
 |---------|----------------|------------|
-| deposit | uatom | ✅ |
-| buy | config.denom | ✅ |
+| deposit | uatom |  |
+| buy | config.denom |  |
 
 ### Outgoing Funds
 | Handler | Method | Amount Source |
@@ -242,7 +242,7 @@ let result = Uint256::from(a)
 ### 6.2 Funds Validation Pattern
 
 ```rust
-// ✅ Proper funds validation
+//  Proper funds validation
 fn validate_funds(
     info: &MessageInfo,
     expected_denom: &str,
@@ -294,7 +294,7 @@ fn validate_funds(
 ### 7.2 Reply Security
 
 ```rust
-// ✅ Proper reply handling
+//  Proper reply handling
 #[entry_point]
 pub fn reply(
     deps: DepsMut,
@@ -312,15 +312,15 @@ fn handle_swap_reply(
     deps: DepsMut,
     msg: Reply,
 ) -> Result<Response, ContractError> {
-    // ✅ Check result
+    //  Check result
     let result = msg.result.into_result()
         .map_err(|e| ContractError::SubMsgFailed { reason: e })?;
     
-    // ✅ Parse response data if needed
+    //  Parse response data if needed
     let data = result.data
         .ok_or(ContractError::NoResponseData {})?;
     
-    // ✅ Validate and process
+    //  Validate and process
     // ...
     
     Ok(Response::new())
@@ -351,15 +351,15 @@ See [ibc-security.md](resources/ibc-security.md) for detailed IBC audit process.
 ```markdown
 | Query | Pagination? | Max Limit | Sensitive? |
 |-------|-------------|-----------|------------|
-| all_users | ✅ | 30 | No |
+| all_users |  | 30 | No |
 | user_balance | N/A | N/A | No |
-| config | N/A | N/A | ⚠️ Admin addr |
+| config | N/A | N/A |  Admin addr |
 ```
 
 ### 9.2 Query Patterns
 
 ```rust
-// ✅ Paginated query
+//  Paginated query
 pub fn query_all_items(
     deps: Deps,
     start_after: Option<String>,

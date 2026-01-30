@@ -502,7 +502,7 @@ Diffchecker
 
 ### Description
 
-The non-upgradeable standard version of OpenZeppelinâ€™s library, such as `Ownable`, `Pausable`, `Address`, `Context`, `SafeERC20`, `ERC1967Upgrade` etc, are inherited / used by both the proxy and the implementation contracts.
+The non-upgradeable standard version of OpenZeppelins library, such as `Ownable`, `Pausable`, `Address`, `Context`, `SafeERC20`, `ERC1967Upgrade` etc, are inherited / used by both the proxy and the implementation contracts.
 
 As a result, when attempting to use the upgrades plugin mentioned, the following errors are raised:
 
@@ -677,7 +677,7 @@ However, the permissionless `executeInflationRateUpdate()` method does not check
 As a result, if `executeInflationRateUpdate()` is called before `startInflation()`:
 
 1. L190, the check of if `_INFLATION_DECAY_PERIOD` has passed since `lastInflationDecay` will be `true`, and `initialPeriodEnded` will be set to `true` right away;
-2. L188, since the `lastEvent` in `totalAvailableToNow += (currentTotalInflation * (block.timestamp - lastEvent));` is `0`, the `totalAvailableToNow` will be set to `totalAvailableToNow â‰ˆ currentTotalInflation * 52 years`, which renders the constrains of `totalAvailableToNow` incorrect and useless.
+2. L188, since the `lastEvent` in `totalAvailableToNow += (currentTotalInflation * (block.timestamp - lastEvent));` is `0`, the `totalAvailableToNow` will be set to `totalAvailableToNow  currentTotalInflation * 52 years`, which renders the constrains of `totalAvailableToNow` incorrect and useless.
 
 https://github.com/code-423n4/2022-05-backd/blob/2a5664d35cde5b036074edef3c1369b984d10010/protoc
 
@@ -1010,7 +1010,7 @@ Looking at the method below, we highlight in green the parts that need to be ini
 #### Description
 
 
-In the contracts implement Openzeppelinâ€™s UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, itâ€™s recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
+In the contracts implement Openzeppelins UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, its recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
 
 
 #### Examples
@@ -1499,7 +1499,7 @@ th
 #### Description
 
 
-In the contracts implement Openzeppelinâ€™s UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, itâ€™s recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
+In the contracts implement Openzeppelins UUPS model, uninitialized implementation contract can be taken over by an attacker with `initialize` function, its recommended to invoke the `_disableInitializers` function in the constructor to prevent the implementation contract from being used by the attacker. However all the contracts which implements `OwnablePausableUpgradeable` do not call `_disableInitializers` in the constructors
 
 
 #### Examples
@@ -1605,7 +1605,7 @@ MerkleDistributor
 ManagedPool.sol#L75-L77, ManagedPool.sol#L84-L86, LegacyBasePool.sol, WordCodec.sol
 
 **Description:**  
-Balancerâ€™s ManagedPool uses 32-bit values for `startTime` and `endTime`, but it does not verify if those values exist within that range. Values are stored in a 32-byte `_miscData` slot in BasePool via the `insertUint32()` function. Nevertheless, this function does not strip any excess bits, resulting in other fields stored in `_miscData` being overwritten. In the version that Aera Vault uses, only the "restrict LP" field can be overwritten, and by carefully crafting the value of `endTime`, the "restrict LP" boolean can be switched off, allowing anyone to use `joinPool`. 
+Balancers ManagedPool uses 32-bit values for `startTime` and `endTime`, but it does not verify if those values exist within that range. Values are stored in a 32-byte `_miscData` slot in BasePool via the `insertUint32()` function. Nevertheless, this function does not strip any excess bits, resulting in other fields stored in `_miscData` being overwritten. In the version that Aera Vault uses, only the "restrict LP" field can be overwritten, and by carefully crafting the value of `endTime`, the "restrict LP" boolean can be switched off, allowing anyone to use `joinPool`. 
 
 The Manager could cause this behavior via the `updateWeightsGradually()` function, while the Owner could do it via `enableTradingWithWeights()`.  
 **Note:** This issue has been reported to Balancer by the Spearbit team.
@@ -2140,7 +2140,7 @@ contract AxelarFacet {
 AxelarFacet.sol#L30-L89
 
 ## Description
-The functions `executeCallViaAxelar()` and `executeCallWithTokenViaAxelar()` call a `destinationAddress` on the `destinationChain`. This `destinationAddress` needs to have specific Axelar functions (`_execute()` and `_executeWithTokento()`) to be able to receive the calls. This is implemented in the Executor. If these functions donâ€™t exist at the `destinationAddress`, the transferred tokens will be lost.
+The functions `executeCallViaAxelar()` and `executeCallWithTokenViaAxelar()` call a `destinationAddress` on the `destinationChain`. This `destinationAddress` needs to have specific Axelar functions (`_execute()` and `_executeWithTokento()`) to be able to receive the calls. This is implemented in the Executor. If these functions dont exist at the `destinationAddress`, the transferred tokens will be lost.
 
 ```solidity
 /// @param destinationAddress the address of the LiFi contract on the destinationChain
@@ -2150,7 +2150,7 @@ function executeCallViaAxelar(..., string memory destinationAddress, ...) ... {
 }
 ```
 
-**Note:** The comment "the address of the LiFi contract" isnâ€™t clear; it could either be the LiFi Diamond or the Executor.
+**Note:** The comment "the address of the LiFi contract" isnt clear; it could either be the LiFi Diamond or the Executor.
 
 ## Recommendation
 Hardcode or whitelist the `destinationAddress`. Doublecheck the `@param` comment for `destinationAddress` (for both functions).
@@ -3504,7 +3504,7 @@ Diffchecker
 
 ### Description
 
-The non-upgradeable standard version of OpenZeppelinâ€™s library, such as `Ownable`, `Pausable`, `Address`, `Context`, `SafeERC20`, `ERC1967Upgrade` etc, are inherited / used by both the proxy and the implementation contracts.
+The non-upgradeable standard version of OpenZeppelins library, such as `Ownable`, `Pausable`, `Address`, `Context`, `SafeERC20`, `ERC1967Upgrade` etc, are inherited / used by both the proxy and the implementation contracts.
 
 As a result, when attempting to use the upgrades plugin mentioned, the following errors are raised:
 

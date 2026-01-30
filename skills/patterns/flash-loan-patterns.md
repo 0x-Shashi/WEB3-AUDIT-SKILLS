@@ -1,4 +1,4 @@
-# Flash Loan Security Patterns
+﻿# Flash Loan Security Patterns
 
 ## Overview
 
@@ -161,7 +161,7 @@ https://woo.org/blog/en/woofi-spmm-exploit-post-mortem
 https://rekt.news/woo-rekt/
 
 Flashloan 99989999999999999990000 (99_990) WOO
-Sell WOO partially (in 10 pieces) assuming maxGamma | maxNotionalSwap doesnt allow us to do it in one go
+Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
 Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
 Repay flashloan, pocket the rest of the 100K WOO.
 
@@ -169,7 +169,7 @@ Repay flashloan, pocket the rest of the 100K WOO.
 ```solidity
 function test_Exploit() public {
         // Flashloan 99989999999999999990000 (99_990) WOO
-        // Sell WOO partially (in 10 pieces) assuming maxGamma | maxNotionalSwap doesnt allow us to do it in one go
+        // Sell WOO partially (in 10 pieces) assuming maxGamma |maxNotionalSwap doesnt allow us to do it in one go
         // Sell 20 USDC and get 199779801821639475527975 (199_779) WOO
         // Repay flashloan, pocket the rest of the 100K WOO. 
 
@@ -411,7 +411,7 @@ The attack process is as follows:
 
 **Details**:
 
-[`LBPair.flashLoan()`](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2abc9c5f57db93/src/LBPair.sol#L415-L456) utilizes an “unfair” fee mechanism in which the whole pair liquidity can be loaned but only the liquidity providers of the active bin receive the fees. Although one can argue that this unfair structure is to incentivize greater liquidity around the active price range, it nonetheless opens up a way to easily manipulate fees. The current structure allows a user to provide liquidity to an active bin right before a flashloan to receive most of the fees. This trick can be used both by the borrower themselves, or by a third party miner or a node operator frontrunning the flashloan transactions. In either case, this is in detriment to the liquidity providers, who would be providing the bulk of the flashloan, but receiving a much less fraction of the fees.
+[`LBPair.flashLoan()`](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2abc9c5f57db93/src/LBPair.sol#L415-L456) utilizes an unfair fee mechanism in which the whole pair liquidity can be loaned but only the liquidity providers of the active bin receive the fees. Although one can argue that this unfair structure is to incentivize greater liquidity around the active price range, it nonetheless opens up a way to easily manipulate fees. The current structure allows a user to provide liquidity to an active bin right before a flashloan to receive most of the fees. This trick can be used both by the borrower themselves, or by a third party miner or a node operator frontrunning the flashloan transactions. In either case, this is in detriment to the liquidity providers, who would be providing the bulk of the flashloan, but receiving a much less fraction of the fees.
 
 ### Proof of Concept
 
@@ -422,7 +422,7 @@ The attack process is as follows:
         tokenY.safeTransfer(_to, _amountYOut);
 ```
 
-This means that a liquidity provider’s tokens can be used regardless of which bin their liquidity is in. However, the loan fee [is only paid to the active bin’s liquidity providers](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2a
+This means that a liquidity providers tokens can be used regardless of which bin their liquidity is in. However, the loan fee [is only paid to the active bins liquidity providers](https://github.com/code-423n4/2022-10-traderjoe/blob/79f25d48b907f9d0379dd803fc2a
 
 *[Content truncated...]*
 
@@ -883,11 +883,11 @@ https://github.com/code-423n4/2023-04-caviar/blob/main/src/PrivatePool.sol#L623-
 Let's say that Bob is the attacker and Alice is a regular user.
 
 1.Bob creates a `PrivatePool.sol` where he deposits 5 ERC721 tokens and 500 USDC.
-2.Then Bob creates a malicious contract (let's call it `PrivatePoolExploit.sol`) and this contract contains `onFlashLoan` (IERC3156FlashBorrower), `transferFrom` , `ownerOf`, `onERC721Received` functions (like ERC721 does) and an additional `attack` function.
+2.Then Bob creates a malicious contract (let's call it `PrivatePoolExploit.sol`) and this contract contains `onFlashLoan` (IERC3156FlashBorrower), `transferFrom` ,`ownerOf`, `onERC721Received` functions (like ERC721 does) and an additional `attack` function.
 3.Via `PrivatePool.execute` function Bob approves USDC spending (`type(uint).max`) and `setApprovalForAll` for ERC721 tokens
 4.Since the ownership of `PrivatePool` is stored in `Factory.sol` as an ERC721 token, ownership can be sold on any ERC721 marketplace. Alice decides to buy Bob's `PrivatePool` and ownership is transferred to Alice.
 5.Right after the ownership is transferred, Bob runs `PrivatePoolExploit.attack` function, which calls `PrivatePool.flashLoan` where `PrivatePoolExploit.transferFrom` will be called since the flash loan can be called on any address.
-6. All the funds are stolen by Bob and Alice's `PrivatePool` is left with nothing.
+6. All the funds are stolen by Bob and Alice's`PrivatePool` is left with nothing.
 
 ### Here is a 
 

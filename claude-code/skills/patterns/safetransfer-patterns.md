@@ -1,4 +1,4 @@
-# SafeTransfer Security Patterns
+﻿# SafeTransfer Security Patterns
 
 ## Overview
 
@@ -35,9 +35,9 @@
 
 _Submitted by [axic](https://twitter.com/alexberegszaszi), also found by [gpersoon](https://twitter.com/gpersoon), [pauliax](https://twitter.com/SolidityDev), [Jmukesh](https://twitter.com/MukeshJ_eth), [a_delamo](https://twitter.com/a_delamo), [s1m0](https://twitter.com/_smonica_), [cmichel](https://twitter.com/cmichelio), and [shw](https://github.com/x9453)_
 
-Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return “true” on success. However, not every token claiming ERC20-compatibility is doing this — some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
+Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return true on success. However, not every token claiming ERC20-compatibility is doing this  some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
 
-Today many tools, including OpenZeppelin, offer [a wrapper for “safe ERC20 transfer”](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
+Today many tools, including OpenZeppelin, offer [a wrapper for safe ERC20 transfer](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
 
 RealityCards is not using such a wrapper, but instead tries to ensure successful transfers via the `balancedBooks` modifier:
 
@@ -434,9 +434,9 @@ https://github.com/code-423n4/2022-05-rubicon/blob/8c312a63a91193c6a192a9aab44ff
 
 ## Impact
 
-It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelin’s `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
+It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelins `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
 
-However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelin’s `safeTransfer()`/`safeTransferFrom()`.
+However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelins `safeTransfer()`/`safeTransferFrom()`.
 
 ## Proof of Concept
 
@@ -464,7 +464,7 @@ However, using `require()` to check transfer return values could lead to issues 
 _Submitted by jayjonah8, also found by cccz, cmichel, Dravee, gzeon, hyh, IllIllI, leastwood, NoamYakov, and Omik_
 
 In BribeVault.sol the transferBribes() function uses token.transfer() instead of token.safeTransfer.
-Tokens that don’t correctly implement the latest EIP20 spec, like USDT, will be unusable in the protocol as they revert the transaction because of the missing return value.  The fact that the SafeERC20.sol library is imported at the top of the BribeVault.sol implies that safeTransfer should be being used but may have been forgotten.
+Tokens that dont correctly implement the latest EIP20 spec, like USDT, will be unusable in the protocol as they revert the transaction because of the missing return value.  The fact that the SafeERC20.sol library is imported at the top of the BribeVault.sol implies that safeTransfer should be being used but may have been forgotten.
 
 ### Proof of Concept
 
@@ -472,7 +472,7 @@ Tokens that don’t correctly implement the latest EIP20 spec, like USDT, will b
 
 ### Recommended Mitigation Steps
 
-It's recommended to use OpenZeppelin’s SafeERC20 versions with the safeTransfer and safeTransferFrom functions that handle the return value check as well as non-standard-compliant tokens.
+It's recommended to use OpenZeppelins SafeERC20 versions with the safeTransfer and safeTransferFrom functions that handle the return value check as well as non-standard-compliant tokens.
 
 **[kphed (Redacted Cartel) confirmed and commented](https://github.com/code-423n4/2022-02-redacted-cartel-findings/issues/4#issuecomment-1040506429):**
  > Good catch!

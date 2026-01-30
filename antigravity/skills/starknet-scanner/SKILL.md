@@ -1,6 +1,6 @@
----
+﻿---
 name: starknet-scanner
-description: "Comprehensive Starknet Cairo 1.0 vulnerability scanner for smart contracts. Covers storage proofs, L1↔L2 messaging, account abstraction, and Starknet-specific attack vectors. Use this skill when auditing Starknet contracts."
+description: "Comprehensive Starknet Cairo 1.0 vulnerability scanner for smart contracts. Covers storage proofs, L1L2 messaging, account abstraction, and Starknet-specific attack vectors. Use this skill when auditing Starknet contracts."
 allowed-tools:
   - Read
   - Grep
@@ -14,7 +14,7 @@ allowed-tools:
 
 This skill provides systematic vulnerability scanning for Starknet Cairo 1.0 smart contracts. It includes:
 - 50+ Starknet-specific vulnerability patterns
-- L1↔L2 messaging security
+- L1L2 messaging security
 - Account abstraction vulnerabilities
 - Storage and proof security
 - Cairo 1.0-specific attack vectors
@@ -25,7 +25,7 @@ This skill provides systematic vulnerability scanning for Starknet Cairo 1.0 sma
 
 **Use when:**
 - Auditing Starknet contracts (Cairo 1.0+)
-- Reviewing L1↔L2 bridge security
+- Reviewing L1L2 bridge security
 - Analyzing account abstraction implementations
 - Checking storage proof systems
 - Scanning for Starknet-specific attacks
@@ -53,24 +53,24 @@ Do NOT use this skill for:
 ### Key Concepts
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                 STARKNET SECURITY MODEL                  │
-├─────────────────────────────────────────────────────────┤
-│ ACCOUNT ABSTRACTION                                      │
-│ • All accounts are smart contracts                      │
-│ • Custom signature validation                           │
-│ • Multicall native support                              │
-├─────────────────────────────────────────────────────────┤
-│ L1 ↔ L2 MESSAGING                                       │
-│ • Asynchronous message passing                          │
-│ • L1→L2: Eventual inclusion                             │
-│ • L2→L1: Withdrawal proofs                              │
-├─────────────────────────────────────────────────────────┤
-│ STORAGE MODEL                                            │
-│ • Contract storage slots (felt252)                      │
-│ • Pedersen hash for addresses                           │
-│ • Storage proofs for verification                       │
-└─────────────────────────────────────────────────────────┘
+
+                 STARKNET SECURITY MODEL                  
+
+ ACCOUNT ABSTRACTION                                      
+  All accounts are smart contracts                      
+  Custom signature validation                           
+  Multicall native support                              
+
+ L1  L2 MESSAGING                                       
+  Asynchronous message passing                          
+  L1L2: Eventual inclusion                             
+  L2L1: Withdrawal proofs                              
+
+ STORAGE MODEL                                            
+  Contract storage slots (felt252)                      
+  Pedersen hash for addresses                           
+  Storage proofs for verification                       
+
 ```
 
 ---
@@ -148,13 +148,13 @@ fn __execute__(
 
 ---
 
-### Category 2: L1↔L2 Messaging Vulnerabilities
+### Category 2: L1L2 Messaging Vulnerabilities
 
 | ID | Pattern | Severity | Detection |
 |----|---------|----------|-----------|
 | L2-01 | Message replay | Critical | Message consumed check missing |
 | L2-02 | Cross-domain spoofing | Critical | L1 sender not verified |
-| L2-03 | Incomplete withdrawal | High | L2→L1 message not finalized |
+| L2-03 | Incomplete withdrawal | High | L2L1 message not finalized |
 | L2-04 | Message ordering | Medium | Dependency on message order |
 | L2-05 | Stuck messages | Medium | No recovery for failed L1 tx |
 
@@ -189,7 +189,7 @@ fn handle_deposit(
     assert(from_address == self.l1_bridge.read().into(), 'Invalid L1 sender');
     
     // Message automatically consumed by Starknet
-    // Each L1→L2 message can only be processed once
+    // Each L1L2 message can only be processed once
     
     self.balances.write(user, self.balances.read(user) + amount);
 }
@@ -206,7 +206,7 @@ fn handle_admin_action(
     from_address: felt252,  // Not checked!
     action: felt252
 ) {
-    // Anyone who sends L1→L2 message can call this
+    // Anyone who sends L1L2 message can call this
     execute_admin_action(action);
 }
 ```
@@ -438,12 +438,12 @@ grep -r "#\[l1_handler\]" src/
 4. Review multicall handling
 ```
 
-### Step 3: L1↔L2 Security
+### Step 3: L1L2 Security
 ```
 1. Find all l1_handler functions
 2. Verify L1 sender checks
 3. Check message consumption
-4. Review L2→L1 message flows
+4. Review L2L1 message flows
 ```
 
 ### Step 4: Storage Analysis
@@ -465,10 +465,10 @@ grep -r "#\[l1_handler\]" src/
 - [ ] Multicall is reentrancy-safe
 - [ ] Fee estimation is bounded
 
-### L1↔L2 Checklist
+### L1L2 Checklist
 - [ ] L1 handler verifies from_address
 - [ ] Messages are not replayable
-- [ ] L2→L1 withdrawals finalize correctly
+- [ ] L2L1 withdrawals finalize correctly
 - [ ] Message cancellation handled
 - [ ] Stuck message recovery exists
 

@@ -1,4 +1,4 @@
-# Auditing and Logging Security Patterns
+﻿# Auditing and Logging Security Patterns
 
 ## Overview
 
@@ -140,7 +140,7 @@ The team addressed in: `a429b0c9ce78be9294a27934e1a184261b88917a`, `2255f30c7f95
 
 **File(s) affected:**`contracts/factory.fc`, `contracts/master.fc`
 
-**Description:** In both the `factory`’s `op::create_master` and the `master`’s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
+**Description:** In both the `factory`s `op::create_master` and the `master`s `op::change_success_percentage`, the code checks that `success_percentage` does not exceed 100%, but it does not enforce a minimum above zero.
 
 Generally, we should not expect a proposal to pass with zero votes.
 

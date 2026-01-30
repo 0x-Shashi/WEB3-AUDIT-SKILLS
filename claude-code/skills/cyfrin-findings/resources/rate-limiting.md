@@ -1,4 +1,4 @@
-# Rate Limiting Guide
+﻿# Rate Limiting Guide
 
 Best practices for handling Cyfrin Solodit API rate limits.
 
@@ -315,7 +315,7 @@ function logRateLimitStatus(rateLimit) {
   const pct = Math.round((remaining / total) * 100);
   
   if (remaining < 5) {
-    console.warn(`⚠️ Low rate limit: ${remaining}/${total} (${pct}%)`);
+    console.warn(` Low rate limit: ${remaining}/${total} (${pct}%)`);
   } else {
     console.log(`Rate limit: ${remaining}/${total} (${pct}%)`);
   }

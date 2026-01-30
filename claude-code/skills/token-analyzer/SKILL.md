@@ -1,4 +1,4 @@
----
+﻿---
 name: Token Integration Analyzer
 description: Comprehensive analyzer for weird ERC20 behaviors and token integration security
 version: 1.0.0
@@ -26,7 +26,7 @@ Comprehensive analyzer for detecting and handling non-standard ERC20 token behav
 
 | ID | Behavior | Impact | Common Tokens |
 |----|----------|--------|---------------|
-| T-01 | Fee-on-Transfer | Amount received ≠ amount sent | SAFEMOON, SHIB variants |
+| T-01 | Fee-on-Transfer | Amount received  amount sent | SAFEMOON, SHIB variants |
 | T-02 | Rebasing (Up) | Balances increase automatically | stETH, AMPL (positive) |
 | T-03 | Rebasing (Down) | Balances decrease automatically | AMPL (negative) |
 | T-04 | Transfer Hooks | Arbitrary code execution | ERC777, some ERC20 |
@@ -44,7 +44,7 @@ Comprehensive analyzer for detecting and handling non-standard ERC20 token behav
 | B-01 | Reflection | Balance changes based on total tx | RFI, SAFEMOON |
 | B-02 | Elastic Supply | Total supply changes | AMPL, OHM |
 | B-03 | Balance Caching Issues | stale balanceOf | Some rebasing |
-| B-04 | Virtual Balance | Displayed ≠ actual | Some yield tokens |
+| B-04 | Virtual Balance | Displayed  actual | Some yield tokens |
 | B-05 | Shares vs Assets | Underlying value differs | Wrapped tokens |
 
 ### Category 3: Approval Behaviors
@@ -102,7 +102,7 @@ function checkFeeOnTransfer(IERC20 token) external {
 ### Safe Integration Patterns
 
 ```solidity
-// ✅ Fee-on-transfer safe pattern
+//  Fee-on-transfer safe pattern
 function deposit(IERC20 token, uint256 amount) external {
     uint256 balanceBefore = token.balanceOf(address(this));
     token.safeTransferFrom(msg.sender, address(this), amount);
@@ -112,7 +112,7 @@ function deposit(IERC20 token, uint256 amount) external {
     userDeposits[msg.sender] += received;
 }
 
-// ✅ Rebasing token safe pattern
+//  Rebasing token safe pattern
 function getActualBalance(address token, address account) internal view returns (uint256) {
     // For share-based tokens, convert shares to assets
     if (isShareBasedToken[token]) {
@@ -121,7 +121,7 @@ function getActualBalance(address token, address account) internal view returns 
     return IERC20(token).balanceOf(account);
 }
 
-// ✅ Return value safe pattern (using SafeERC20)
+//  Return value safe pattern (using SafeERC20)
 using SafeERC20 for IERC20;
 
 function safeTransfer(IERC20 token, address to, uint256 amount) internal {
@@ -210,30 +210,30 @@ function safeTransfer(IERC20 token, address to, uint256 amount) internal {
 
 | Token | Behaviors | Caution Level |
 |-------|-----------|---------------|
-| USDT | No return, pausable, blacklist, non-zero approval | ⚠️ High |
-| USDC | Pausable, blacklist, upgradeable, permit | ⚠️ High |
-| DAI | Permit, standard | ✅ Low |
-| FRAX | Rebasing possible, permit | ⚠️ Medium |
-| BUSD | Pausable, blacklist | ⚠️ Medium |
+| USDT | No return, pausable, blacklist, non-zero approval |  High |
+| USDC | Pausable, blacklist, upgradeable, permit |  High |
+| DAI | Permit, standard |  Low |
+| FRAX | Rebasing possible, permit |  Medium |
+| BUSD | Pausable, blacklist |  Medium |
 
 ### Wrapped/Yield Tokens
 
 | Token | Behaviors | Caution Level |
 |-------|-----------|---------------|
-| WETH | Standard, but deposit/withdraw | ✅ Low |
-| wstETH | Share-based (not rebasing) | ⚠️ Medium |
-| stETH | Rebasing | 🔴 High |
-| aTokens | Rebasing (Aave) | 🔴 High |
-| cTokens | Share-based (Compound) | ⚠️ Medium |
+| WETH | Standard, but deposit/withdraw |  Low |
+| wstETH | Share-based (not rebasing) |  Medium |
+| stETH | Rebasing |  High |
+| aTokens | Rebasing (Aave) |  High |
+| cTokens | Share-based (Compound) |  Medium |
 
 ### Exotic Tokens
 
 | Token | Behaviors | Caution Level |
 |-------|-----------|---------------|
-| AMPL | Rebasing (elastic supply) | 🔴 Critical |
-| OHM | Rebasing, staking mechanics | 🔴 Critical |
-| RFI/SAFEMOON | Reflection, fee-on-transfer | 🔴 Critical |
-| ERC777 | Transfer hooks, reentrancy | 🔴 Critical |
+| AMPL | Rebasing (elastic supply) |  Critical |
+| OHM | Rebasing, staking mechanics |  Critical |
+| RFI/SAFEMOON | Reflection, fee-on-transfer |  Critical |
+| ERC777 | Transfer hooks, reentrancy |  Critical |
 
 ---
 

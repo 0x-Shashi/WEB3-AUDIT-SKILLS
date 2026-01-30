@@ -1,4 +1,4 @@
----
+﻿---
 name: Spec Compliance Checker
 description: Verify smart contract compliance with EIP/ERC standards and specifications
 version: 1.0.0
@@ -79,12 +79,12 @@ interface IERC20Metadata is IERC20 {
 - [ ] Underflow protection on balances
 
 ### Common Violations
-- ❌ No return value (USDT-style)
-- ❌ Returns false instead of reverting
-- ❌ Missing Transfer event on mint/burn
-- ❌ Missing Approval event
-- ❌ Reverts on zero transfer
-- ❌ Non-indexed event parameters
+-  No return value (USDT-style)
+-  Returns false instead of reverting
+-  Missing Transfer event on mint/burn
+-  Missing Approval event
+-  Reverts on zero transfer
+-  Non-indexed event parameters
 ```
 
 ### ERC20 Grep Patterns
@@ -168,11 +168,11 @@ interface IERC721Receiver {
 - [ ] Reverts if recipient is contract that doesn't implement receiver
 
 ### Common Violations
-- ❌ safeTransferFrom doesn't check receiver
-- ❌ Missing indexed on event parameters
-- ❌ Approval not cleared on transfer
-- ❌ Non-existent token doesn't revert
-- ❌ Zero address check missing
+-  safeTransferFrom doesn't check receiver
+-  Missing indexed on event parameters
+-  Approval not cleared on transfer
+-  Non-existent token doesn't revert
+-  Zero address check missing
 ```
 
 ### ERC721 Extensions
@@ -192,9 +192,9 @@ interface IERC721Receiver {
 - [ ] All three functions remain consistent
 
 ### Common Metadata Issues
-- ❌ tokenURI doesn't revert for non-existent tokens
-- ❌ baseURI not properly concatenated
-- ❌ tokenURI returns empty string instead of reverting
+-  tokenURI doesn't revert for non-existent tokens
+-  baseURI not properly concatenated
+-  tokenURI returns empty string instead of reverting
 ```
 
 ---
@@ -242,10 +242,10 @@ interface IERC1155 {
 - [ ] Array length validation
 
 ### Common Violations
-- ❌ Missing receiver check on transfers
-- ❌ Non-atomic batch transfers
-- ❌ Missing URI event on metadata changes
-- ❌ Inconsistent batch behavior
+-  Missing receiver check on transfers
+-  Non-atomic batch transfers
+-  Missing URI event on metadata changes
+-  Inconsistent batch behavior
 ```
 
 ---
@@ -290,12 +290,12 @@ interface IERC4626 is IERC20 {
 ## ERC4626 Requirements
 
 ### Core Invariants
-- [ ] convertToShares(convertToAssets(shares)) ≈ shares
-- [ ] convertToAssets(convertToShares(assets)) ≈ assets
-- [ ] deposit(assets) ≤ previewDeposit(assets) (may get more shares)
-- [ ] mint(shares) ≥ previewMint(shares) (may need more assets)
-- [ ] withdraw(assets) ≤ previewWithdraw(assets) (may burn fewer shares)
-- [ ] redeem(shares) ≥ previewRedeem(shares) (may get more assets)
+- [ ] convertToShares(convertToAssets(shares))  shares
+- [ ] convertToAssets(convertToShares(assets))  assets
+- [ ] deposit(assets)  previewDeposit(assets) (may get more shares)
+- [ ] mint(shares)  previewMint(shares) (may need more assets)
+- [ ] withdraw(assets)  previewWithdraw(assets) (may burn fewer shares)
+- [ ] redeem(shares)  previewRedeem(shares) (may get more assets)
 
 ### Preview Functions
 - [ ] previewDeposit MUST NOT revert
@@ -320,12 +320,12 @@ interface IERC4626 is IERC20 {
 - [ ] previewRedeem rounds DOWN (get fewer assets)
 
 ### Common Violations
-- ❌ Rounding direction incorrect
-- ❌ Preview functions revert unexpectedly
-- ❌ convertTo functions don't round trip
-- ❌ Max functions return wrong values
-- ❌ Missing or incorrect events
-- ❌ Inflation attack vulnerability
+-  Rounding direction incorrect
+-  Preview functions revert unexpectedly
+-  convertTo functions don't round trip
+-  Max functions return wrong values
+-  Missing or incorrect events
+-  Inflation attack vulnerability
 ```
 
 ### ERC4626 Security Issues
@@ -340,7 +340,7 @@ interface IERC4626 is IERC20 {
 - [ ] Mitigation: virtual shares/assets, minimum deposit
 
 ### Rounding Exploitation
-- [ ] Deposit 0 assets → get shares?
+- [ ] Deposit 0 assets  get shares?
 - [ ] Small withdrawals lose value to rounding?
 - [ ] Repeated deposit/withdraw drains vault?
 
@@ -413,11 +413,11 @@ function hashStruct(Permit memory permit) internal pure returns (bytes32) {
 - [ ] Deadline checked before signature verification
 
 ### Common Violations
-- ❌ DOMAIN_SEPARATOR cached at deploy (chain fork issue)
-- ❌ Wrong type string format
-- ❌ Missing chain ID check
-- ❌ Signature replay across contracts
-- ❌ Missing deadline validation
+-  DOMAIN_SEPARATOR cached at deploy (chain fork issue)
+-  Wrong type string format
+-  Missing chain ID check
+-  Signature replay across contracts
+-  Missing deadline validation
 ```
 
 ---
@@ -449,10 +449,10 @@ interface IERC2612 {
 ## EIP2612 Requirements
 
 ### Function Behavior
-- [ ] Sets allowance to value for owner→spender
+- [ ] Sets allowance to value for ownerspender
 - [ ] Reverts if deadline < block.timestamp
 - [ ] Reverts if signature invalid
-- [ ] Reverts if recovered signer ≠ owner
+- [ ] Reverts if recovered signer  owner
 - [ ] Increments nonce after use
 - [ ] Emits Approval event
 
@@ -463,11 +463,11 @@ interface IERC2612 {
 - [ ] No gaps in nonces
 
 ### Common Violations
-- ❌ Deadline checked after ecrecover
-- ❌ Zero address allowed as owner
-- ❌ Nonce not incremented
-- ❌ Missing Approval event
-- ❌ Front-runnable (though inherent to design)
+-  Deadline checked after ecrecover
+-  Zero address allowed as owner
+-  Nonce not incremented
+-  Missing Approval event
+-  Front-runnable (though inherent to design)
 ```
 
 ---
@@ -516,10 +516,10 @@ bytes32 constant BEACON_SLOT =
 - [ ] Storage layout compatible between versions
 
 ### Common Violations
-- ❌ Wrong storage slot calculation
-- ❌ Missing upgrade events
-- ❌ Uninitialized implementation
-- ❌ Storage collision on upgrade
+-  Wrong storage slot calculation
+-  Missing upgrade events
+-  Uninitialized implementation
+-  Storage collision on upgrade
 ```
 
 ---

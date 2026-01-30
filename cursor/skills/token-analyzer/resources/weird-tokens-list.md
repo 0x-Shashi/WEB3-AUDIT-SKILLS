@@ -1,4 +1,4 @@
-# Comprehensive Weird ERC20 Tokens List
+﻿# Comprehensive Weird ERC20 Tokens List
 
 This document catalogs all known non-standard ERC20 token behaviors that can cause issues in DeFi protocol integrations.
 
@@ -12,7 +12,7 @@ This document catalogs all known non-standard ERC20 token behaviors that can cau
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Assumes amount received equals amount sent
+//  VULNERABLE: Assumes amount received equals amount sent
 function deposit(uint256 amount) external {
     token.transferFrom(msg.sender, address(this), amount);
     userBalance[msg.sender] += amount;  // BUG: User credited with more than received
@@ -27,7 +27,7 @@ function withdraw(uint256 amount) external {
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Measures actual received amount
+//  SECURE: Measures actual received amount
 function deposit(uint256 amount) external {
     uint256 balanceBefore = token.balanceOf(address(this));
     token.transferFrom(msg.sender, address(this), amount);
@@ -81,7 +81,7 @@ received.*=.*balanceOf.*-
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Caches balance that will become stale
+//  VULNERABLE: Caches balance that will become stale
 mapping(address => uint256) public stakedBalance;
 
 function stake(uint256 amount) external {
@@ -97,7 +97,7 @@ function unstake() external {
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Use shares for rebasing tokens
+//  SECURE: Use shares for rebasing tokens
 mapping(address => uint256) public shares;
 uint256 public totalShares;
 
@@ -152,7 +152,7 @@ IWstETH(wstETH).unwrap(wstETHAmount);  // Convert back
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Stored balance may exceed actual balance after negative rebase
+//  VULNERABLE: Stored balance may exceed actual balance after negative rebase
 function withdraw(uint256 storedAmount) external {
     require(userBalance[msg.sender] >= storedAmount);
     userBalance[msg.sender] -= storedAmount;
@@ -177,7 +177,7 @@ function withdraw(uint256 storedAmount) external {
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: No reentrancy protection on ERC777
+//  VULNERABLE: No reentrancy protection on ERC777
 function deposit(uint256 amount) external {
     token.transferFrom(msg.sender, address(this), amount);
     userBalance[msg.sender] += amount;
@@ -192,7 +192,7 @@ function withdraw(uint256 amount) external {
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Use reentrancy guard and CEI pattern
+//  SECURE: Use reentrancy guard and CEI pattern
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract SecureVault is ReentrancyGuard {
@@ -238,7 +238,7 @@ function isERC777(address token) view returns (bool) {
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Doesn't handle blacklist failures
+//  VULNERABLE: Doesn't handle blacklist failures
 function distributeRewards(address[] calldata users, uint256[] calldata amounts) external {
     for (uint i = 0; i < users.length; i++) {
         token.transfer(users[i], amounts[i]);  // Reverts if any user is blacklisted
@@ -248,7 +248,7 @@ function distributeRewards(address[] calldata users, uint256[] calldata amounts)
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Handle potential blacklist failures
+//  SECURE: Handle potential blacklist failures
 function distributeRewards(address[] calldata users, uint256[] calldata amounts) external {
     for (uint i = 0; i < users.length; i++) {
         try token.transfer(users[i], amounts[i]) {
@@ -317,7 +317,7 @@ function emergencyWithdraw(IERC20[] calldata tokens) external onlyEmergency {
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Expects return value
+//  VULNERABLE: Expects return value
 function transferToken(address token, address to, uint256 amount) external {
     require(IERC20(token).transfer(to, amount), "Transfer failed");  // Reverts for USDT
 }
@@ -325,7 +325,7 @@ function transferToken(address token, address to, uint256 amount) external {
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Use SafeERC20
+//  SECURE: Use SafeERC20
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 using SafeERC20 for IERC20;
@@ -354,7 +354,7 @@ function transferToken(IERC20 token, address to, uint256 amount) external {
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Direct approval change
+//  VULNERABLE: Direct approval change
 function setAllowance(address spender, uint256 amount) external {
     token.approve(spender, amount);  // Reverts if current allowance != 0
 }
@@ -362,7 +362,7 @@ function setAllowance(address spender, uint256 amount) external {
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Reset to zero first
+//  SECURE: Reset to zero first
 function setAllowance(IERC20 token, address spender, uint256 amount) external {
     token.safeApprove(spender, 0);  // Reset first
     token.safeApprove(spender, amount);  // Then set new value
@@ -388,7 +388,7 @@ token.forceApprove(spender, amount);
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Precision loss with low decimals
+//  VULNERABLE: Precision loss with low decimals
 function calculateShare(uint256 amount, uint256 totalSupply, uint256 myBalance) external view returns (uint256) {
     return (amount * myBalance) / totalSupply;  // May truncate to 0 for small amounts
 }
@@ -396,7 +396,7 @@ function calculateShare(uint256 amount, uint256 totalSupply, uint256 myBalance) 
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Scale up for precision
+//  SECURE: Scale up for precision
 uint256 constant PRECISION = 1e18;
 
 function calculateShare(uint256 amount, uint256 totalSupply, uint256 myBalance) external view returns (uint256) {
@@ -432,7 +432,7 @@ function normalizeAmount(uint256 amount, uint8 tokenDecimals) internal pure retu
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: May overflow with high decimals
+//  VULNERABLE: May overflow with high decimals
 function calculateValue(uint256 amount, uint256 price) external pure returns (uint256) {
     return amount * price;  // Overflow if amount and price are both large
 }
@@ -440,7 +440,7 @@ function calculateValue(uint256 amount, uint256 price) external pure returns (ui
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Use mulDiv for large numbers
+//  SECURE: Use mulDiv for large numbers
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
 function calculateValue(uint256 amount, uint256 price, uint256 decimals) external pure returns (uint256) {
@@ -458,7 +458,7 @@ function calculateValue(uint256 amount, uint256 price, uint256 decimals) externa
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: Uses balanceOf for voting power snapshot
+//  VULNERABLE: Uses balanceOf for voting power snapshot
 function captureVotingPower() external {
     votingPower[msg.sender] = token.balanceOf(msg.sender);  // Can be manipulated with flash mint
 }
@@ -502,7 +502,7 @@ function captureVotingPower() external {
 
 ### Vulnerable Code
 ```solidity
-// ❌ VULNERABLE: May revert on zero amount
+//  VULNERABLE: May revert on zero amount
 function distributeProRata(address[] calldata users) external {
     uint256 totalRewards = getRewards();
     for (uint i = 0; i < users.length; i++) {
@@ -514,7 +514,7 @@ function distributeProRata(address[] calldata users) external {
 
 ### Secure Code
 ```solidity
-// ✅ SECURE: Skip zero transfers
+//  SECURE: Skip zero transfers
 function distributeProRata(address[] calldata users) external {
     uint256 totalRewards = getRewards();
     for (uint i = 0; i < users.length; i++) {
@@ -538,14 +538,14 @@ function distributeProRata(address[] calldata users) external {
 
 | Token | Fee | Rebase | Hooks | Blacklist | Pause | NoReturn | Approval | LowDec | Upgradeable |
 |-------|-----|--------|-------|-----------|-------|----------|----------|--------|-------------|
-| USDT | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ | Partial |
-| USDC | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
-| DAI | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| stETH | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| SAFEMOON | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| ERC777 | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| AMPL | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| WBTC | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅(8) | ❌ |
+| USDT |  |  |  |  |  |  |  |  | Partial |
+| USDC |  |  |  |  |  |  |  |  |  |
+| DAI |  |  |  |  |  |  |  |  |  |
+| stETH |  |  |  |  |  |  |  |  |  |
+| SAFEMOON |  |  |  |  |  |  |  |  |  |
+| ERC777 |  |  |  |  |  |  |  |  |  |
+| AMPL |  |  |  |  |  |  |  |  |  |
+| WBTC |  |  |  |  |  |  |  | (8) |  |
 
 ---
 

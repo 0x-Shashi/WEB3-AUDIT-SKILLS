@@ -1,4 +1,4 @@
----
+﻿---
 name: web3-audit
 description: "Master orchestrator for Web3 smart contract security auditing. Routes to specialized skills based on task: vulnerability scanning, findings research, deep context analysis, token security, spec compliance, static analysis, and audit reporting. Use as the primary entry point for any blockchain security task."
 ---
@@ -78,42 +78,42 @@ Step 5: Report Generation
 
 ```
 START
-  │
-  ├─► Need to understand code deeply first?
-  │     └─► Use: audit-context-building
-  │
-  ├─► Want to learn from real audit findings?
-  │     └─► Use: cyfrin-findings
-  │
-  ├─► Need to scan for vulnerabilities?
-  │     │
-  │     ├─► Solidity/EVM? → solidity-scanner
-  │     ├─► Solana/Anchor? → solana-scanner  
-  │     ├─► Cairo/StarkNet? → cairo-scanner
-  │     ├─► Move/Aptos/Sui? → move-scanner
-  │     ├─► Cosmos SDK? → cosmos-scanner
-  │     └─► TON/FunC? → ton-scanner
-  │
-  ├─► Working with tokens?
-  │     └─► Use: token-integration
-  │
-  ├─► Verifying implementation matches spec?
-  │     └─► Use: spec-compliance
-  │
-  ├─► Need automated tooling?
-  │     └─► Use: static-analysis
-  │
-  ├─► Looking for similar bugs?
-  │     └─► Use: variant-analysis
-  │
-  ├─► Reviewing audit fixes?
-  │     └─► Use: fix-review
-  │
-  ├─► Reviewing code changes/PRs?
-  │     └─► Use: differential-review
-  │
-  └─► Need to write report?
-        └─► Use: audit-report-writer
+  
+   Need to understand code deeply first?
+        Use: audit-context-building
+  
+   Want to learn from real audit findings?
+        Use: cyfrin-findings
+  
+   Need to scan for vulnerabilities?
+       
+        Solidity/EVM?  solidity-scanner
+        Solana/Anchor?  solana-scanner  
+        Cairo/StarkNet?  cairo-scanner
+        Move/Aptos/Sui?  move-scanner
+        Cosmos SDK?  cosmos-scanner
+        TON/FunC?  ton-scanner
+  
+   Working with tokens?
+        Use: token-integration
+  
+   Verifying implementation matches spec?
+        Use: spec-compliance
+  
+   Need automated tooling?
+        Use: static-analysis
+  
+   Looking for similar bugs?
+        Use: variant-analysis
+  
+   Reviewing audit fixes?
+        Use: fix-review
+  
+   Reviewing code changes/PRs?
+        Use: differential-review
+  
+   Need to write report?
+         Use: audit-report-writer
 ```
 
 ---
@@ -182,24 +182,24 @@ I use consistent severity levels across all skills:
 
 Skills work together seamlessly:
 
-### Context → Scan → Report
+### Context  Scan  Report
 1. `audit-context-building` builds mental model
 2. `solidity-scanner` finds vulnerabilities
 3. `audit-report-writer` generates report
 
-### Research → Scan → Verify
+### Research  Scan  Verify
 1. `cyfrin-findings` identifies relevant patterns
 2. `solidity-scanner` checks for patterns
 3. `fix-review` verifies remediation
 
-### Spec → Code → Compliance
+### Spec  Code  Compliance
 1. `spec-compliance` extracts requirements
 2. `audit-context-building` analyzes implementation
 3. Gap analysis and findings
 
 ---
 
-## 📚 Comprehensive Knowledge Base (NEW)
+##  Comprehensive Knowledge Base (NEW)
 
 ### Master Index
 Start here for all patterns: [INDEX.md](INDEX.md)
@@ -214,7 +214,7 @@ Start here for all patterns: [INDEX.md](INDEX.md)
 | [patterns/protocol-specific-patterns.md](patterns/protocol-specific-patterns.md) | GMX, Synthetix, AMM, vault |
 | [patterns/l2-security.md](patterns/l2-security.md) | Arbitrum, Optimism, zkSync, Base |
 | [patterns/bridge-security.md](patterns/bridge-security.md) | Cross-chain, replay attacks |
-| [patterns/evm-gas-dos.md](patterns/evm-gas-dos.md) | Gas, DoS, L1↔L2 |
+| [patterns/evm-gas-dos.md](patterns/evm-gas-dos.md) | Gas, DoS, L1L2 |
 | [patterns/invariant-testing.md](patterns/invariant-testing.md) | Foundry fuzz/invariant templates |
 
 ### Checklists

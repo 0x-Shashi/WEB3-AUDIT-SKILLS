@@ -1,4 +1,4 @@
-# Finding Templates
+﻿# Finding Templates
 
 Standardized templates for documenting security findings across different categories.
 
@@ -10,7 +10,7 @@ Standardized templates for documenting security findings across different catego
 ## [C-XX] [Descriptive Title]
 
 ### Severity
-**Critical** 🔴
+**Critical** 
 
 ### Location
 - **File:** `path/to/Contract.sol`
@@ -91,7 +91,7 @@ Verified in commit: `abc1234`
 ## [H-XX] [Descriptive Title]
 
 ### Severity
-**High** 🟠
+**High** 
 
 ### Location
 - **File:** `path/to/Contract.sol`
@@ -129,7 +129,7 @@ function fixed() external {
 ## [M-XX] [Descriptive Title]
 
 ### Severity
-**Medium** 🟡
+**Medium** 
 
 ### Location
 `path/to/Contract.sol#LXXX`
@@ -155,7 +155,7 @@ function fixed() external {
 ## [L-XX] [Descriptive Title]
 
 ### Severity
-**Low** 🟢
+**Low** 
 
 ### Location
 `path/to/Contract.sol#LXXX`
@@ -178,7 +178,7 @@ function fixed() external {
 ## [I-XX] [Descriptive Title]
 
 ### Type
-**Informational** ℹ️
+**Informational** 
 
 ### Location
 `path/to/Contract.sol#LXXX`

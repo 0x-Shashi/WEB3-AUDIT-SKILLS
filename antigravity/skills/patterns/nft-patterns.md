@@ -1,4 +1,4 @@
-# NFT Security Patterns
+﻿# NFT Security Patterns
 
 ## Overview
 
@@ -557,16 +557,16 @@ Use safeMint instead of mint for ERC721
 
 ## Vulnerability Detail
 
-The `msg.sender` will be minted as a proof of staking NFT when `_stakeToken()` is called. 
+The`msg.sender`will be minted as a proof of staking NFT when`_stakeToken()`is called. 
 
-However, if `msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
+However, if`msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
 
 As per the documentation of EIP-721:
 
 > A wallet/broker/auction application MUST implement the wallet interface if it will accept safe transfers.
 > 
 
-Ref: [https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
+Ref:[https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
 
 As per the documentation of ERC721.sol by Openzeppelin
 

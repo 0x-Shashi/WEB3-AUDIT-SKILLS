@@ -1,4 +1,4 @@
----
+﻿---
 name: solana-scanner
 description: "Comprehensive Solana program vulnerability scanner for Rust and Anchor programs. Covers account validation, PDA security, CPI vulnerabilities, and Solana-specific attack vectors. Use this skill when auditing Solana programs."
 allowed-tools:
@@ -53,24 +53,24 @@ Do NOT use this skill for:
 ### Key Concepts
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    SOLANA SECURITY MODEL                 │
-├─────────────────────────────────────────────────────────┤
-│ ACCOUNTS                                                 │
-│ • Owned by programs (executable code)                   │
-│ • Hold data and lamports                                │
-│ • Must be validated on every instruction                │
-├─────────────────────────────────────────────────────────┤
-│ PROGRAMS                                                 │
-│ • Stateless - all state in accounts                     │
-│ • Can only write to accounts they own                   │
-│ • Use PDAs for deterministic addresses                  │
-├─────────────────────────────────────────────────────────┤
-│ CROSS-PROGRAM INVOCATION (CPI)                          │
-│ • Programs calling other programs                       │
-│ • Privileges can be delegated                           │
-│ • Critical security boundary                            │
-└─────────────────────────────────────────────────────────┘
+
+                    SOLANA SECURITY MODEL                 
+
+ ACCOUNTS                                                 
+  Owned by programs (executable code)                   
+  Hold data and lamports                                
+  Must be validated on every instruction                
+
+ PROGRAMS                                                 
+  Stateless - all state in accounts                     
+  Can only write to accounts they own                   
+  Use PDAs for deterministic addresses                  
+
+ CROSS-PROGRAM INVOCATION (CPI)                          
+  Programs calling other programs                       
+  Privileges can be delegated                           
+  Critical security boundary                            
+
 ```
 
 ---
@@ -582,9 +582,9 @@ For each instruction:
 ### Accounts
 | Account | Type | Checks Present | Status |
 |---------|------|----------------|--------|
-| authority | Signer | Signer<'info> | ✅ |
-| pool | Data | seeds, bump, has_one | ✅ |
-| user_token | Token | owner, mint constraints | ✅ |
+| authority | Signer | Signer<'info> |  |
+| pool | Data | seeds, bump, has_one |  |
+| user_token | Token | owner, mint constraints |  |
 
 ### Missing Validations
 - [None or list issues]

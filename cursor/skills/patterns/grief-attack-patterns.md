@@ -1,4 +1,4 @@
-# Grief Attack Security Patterns
+﻿# Grief Attack Security Patterns
 
 ## Overview
 
@@ -305,12 +305,12 @@ Sherlock stakers who unstaked will in
 To liquidate an unhealthy loan position the liquidate() function inside CreditorNFT can be called by anyone where the debtAmount of debt token is paid out by the liquidator.
 This function in turn calls the liquidate function of LoanVault at L133.
 
-Inside LoanVault.sol’s liquidate() it is checked if the debtAmount (initial debt amount when loan was created) is now equal to the balance of debt token in the vault , if not revert (L163)
+Inside LoanVault.sols liquidate() it is checked if the debtAmount (initial debt amount when loan was created) is now equal to the balance of debt token in the vault , if not revert (L163)
 
 An attacker can see a liquidation() call in the mempool and ->
 
 a.) Frontruns this call to send the lowest amount of debt token to the vault , say 1
-b.) Now when the liquidator tries to liquidate he sends out debtAmount of tokens to the vault , let’s say they were 100
+b.) Now when the liquidator tries to liquidate he sends out debtAmount of tokens to the vault , lets say they were 100
 c.) It is checked that debt amount and balance of debt token balance in the vault is equal
 d.) But they are not since there are a total of 101 debt tokens now , liquidation reverts.
 

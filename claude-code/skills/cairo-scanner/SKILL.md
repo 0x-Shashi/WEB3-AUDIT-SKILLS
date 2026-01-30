@@ -1,4 +1,4 @@
----
+﻿---
 name: Cairo Scanner
 description: StarkNet Cairo smart contract vulnerability scanner with 50+ security patterns
 version: 1.0.0
@@ -163,14 +163,14 @@ mod MyContract {
 
 **Access Control:**
 ```cairo
-// ✅ Owner check
+//  Owner check
 fn only_owner(self: @ContractState) {
     let caller = get_caller_address();
     let owner = self.owner.read();
     assert(caller == owner, 'Caller is not owner');
 }
 
-// ✅ Zero address check
+//  Zero address check
 fn assert_valid_address(address: ContractAddress) {
     assert(!address.is_zero(), 'Invalid zero address');
 }
@@ -178,7 +178,7 @@ fn assert_valid_address(address: ContractAddress) {
 
 **Safe Arithmetic:**
 ```cairo
-// ✅ Use checked arithmetic when needed
+//  Use checked arithmetic when needed
 use core::integer::u256_checked_add;
 use core::integer::u256_checked_sub;
 

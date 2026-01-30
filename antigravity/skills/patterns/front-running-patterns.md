@@ -1,4 +1,4 @@
-# Front-Running Security Patterns
+﻿# Front-Running Security Patterns
 
 ## Overview
 
@@ -43,7 +43,7 @@
 ## Description  
 The `onReceive()` function does not verify the integrity of `transferId` against all other parameters. Although the `onlyBridgeRouter` modifier checks that the call originates from another BridgeRouter (assuming a correct configuration of the whitelist) to the `onReceive()` function, it does not check that the call originates from another Connext Diamond.
 
-This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connext’s `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
+This allows anyone to send arbitrary data to `BridgeRouter.sendToHook()`, which is later interpreted as the `transferId` on Connexts `NomadFacet.sol` contract. This can be abused by a front-running attack as described in the following scenario:
 
 - **Alice** is a bridge user and makes an honest call to transfer funds over to the destination chain.  
 - **Bob** does not make a transfer but instead calls the `sendToHook()` function with the same `_extraData` but passes an `_amount` of `1 wei`.  
@@ -1000,7 +1000,7 @@ This issue is similar to "The reportBeacon is prone to front-runnin
 
 ---
 
-### Example 23: [M-03] Grieving attack by failing user’s transactions
+### Example 23: [M-03] Grieving attack by failing users transactions
 
 **Source**: Code4rena
 **Protocol**: Backed Protocol

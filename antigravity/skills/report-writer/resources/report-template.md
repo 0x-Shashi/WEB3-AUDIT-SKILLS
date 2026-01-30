@@ -1,4 +1,4 @@
-# Full Audit Report Template
+﻿# Full Audit Report Template
 
 Complete template for a professional security audit report.
 
@@ -52,11 +52,11 @@ security vulnerabilities and provide recommendations for improvement.
 
 | Severity | Count | Fixed | Acknowledged | Open |
 |----------|-------|-------|--------------|------|
-| 🔴 Critical | X | X | X | X |
-| 🟠 High | X | X | X | X |
-| 🟡 Medium | X | X | X | X |
-| 🟢 Low | X | X | X | X |
-| ℹ️ Informational | X | X | X | X |
+|  Critical | X | X | X | X |
+|  High | X | X | X | X |
+|  Medium | X | X | X | X |
+|  Low | X | X | X | X |
+|  Informational | X | X | X | X |
 
 ## Overall Assessment
 
@@ -200,11 +200,11 @@ security vulnerabilities and provide recommendations for improvement.
 
 | Severity | Description |
 |----------|-------------|
-| 🔴 **Critical** | Direct loss of funds, protocol insolvency, governance takeover |
-| 🟠 **High** | Theft of yield, significant economic damage, temporary freeze |
-| 🟡 **Medium** | Conditional theft, minor economic impact, limited DoS |
-| 🟢 **Low** | Best practice violations, minor issues, edge cases |
-| ℹ️ **Informational** | Code quality, documentation, gas optimizations |
+|  **Critical** | Direct loss of funds, protocol insolvency, governance takeover |
+|  **High** | Theft of yield, significant economic damage, temporary freeze |
+|  **Medium** | Conditional theft, minor economic impact, limited DoS |
+|  **Low** | Best practice violations, minor issues, edge cases |
+|  **Informational** | Code quality, documentation, gas optimizations |
 
 ---
 
@@ -214,13 +214,13 @@ security vulnerabilities and provide recommendations for improvement.
 
 | ID | Title | Severity | Status |
 |----|-------|----------|--------|
-| [C-01](#c-01-title) | [Title] | 🔴 Critical | Fixed |
-| [H-01](#h-01-title) | [Title] | 🟠 High | Fixed |
-| [H-02](#h-02-title) | [Title] | 🟠 High | Acknowledged |
-| [M-01](#m-01-title) | [Title] | 🟡 Medium | Fixed |
-| [M-02](#m-02-title) | [Title] | 🟡 Medium | Fixed |
-| [L-01](#l-01-title) | [Title] | 🟢 Low | Fixed |
-| [L-02](#l-02-title) | [Title] | 🟢 Low | Acknowledged |
+| [C-01](#c-01-title) | [Title] |  Critical | Fixed |
+| [H-01](#h-01-title) | [Title] |  High | Fixed |
+| [H-02](#h-02-title) | [Title] |  High | Acknowledged |
+| [M-01](#m-01-title) | [Title] |  Medium | Fixed |
+| [M-02](#m-02-title) | [Title] |  Medium | Fixed |
+| [L-01](#l-01-title) | [Title] |  Low | Fixed |
+| [L-02](#l-02-title) | [Title] |  Low | Acknowledged |
 
 ## By Category
 
@@ -240,7 +240,7 @@ security vulnerabilities and provide recommendations for improvement.
 
 ### [C-01] [Finding Title]
 
-**Severity:** 🔴 Critical
+**Severity:**  Critical
 
 **Location:** `src/Vault.sol#L150-165`
 
@@ -270,7 +270,7 @@ security vulnerabilities and provide recommendations for improvement.
 // Fixed code
 ```
 
-**Status:** ✅ Fixed
+**Status:**  Fixed
 
 **Team Response:**
 > [Team's comment on the finding]
@@ -284,7 +284,7 @@ Verified fixed in commit `abc1234`.
 
 ### [H-01] [Finding Title]
 
-**Severity:** 🟠 High
+**Severity:**  High
 
 [Continue with same format...]
 
@@ -294,7 +294,7 @@ Verified fixed in commit `abc1234`.
 
 ### [M-01] [Finding Title]
 
-**Severity:** 🟡 Medium
+**Severity:**  Medium
 
 [Continue with same format...]
 
@@ -304,7 +304,7 @@ Verified fixed in commit `abc1234`.
 
 ### [L-01] [Finding Title]
 
-**Severity:** 🟢 Low
+**Severity:**  Low
 
 [Continue with same format...]
 
@@ -314,7 +314,7 @@ Verified fixed in commit `abc1234`.
 
 ### [I-01] [Finding Title]
 
-**Type:** ℹ️ Informational
+**Type:**  Informational
 
 [Continue with same format...]
 
@@ -364,10 +364,10 @@ Verified fixed in commit `abc1234`.
 
 | Aspect | Rating | Notes |
 |--------|--------|-------|
-| Documentation | ⭐⭐⭐⭐ | Good NatSpec coverage |
-| Code Style | ⭐⭐⭐⭐⭐ | Consistent formatting |
-| Complexity | ⭐⭐⭐ | Some complex functions |
-| Error Handling | ⭐⭐⭐⭐ | Custom errors used |
+| Documentation |  | Good NatSpec coverage |
+| Code Style |  | Consistent formatting |
+| Complexity |  | Some complex functions |
+| Error Handling |  | Custom errors used |
 
 ## Observations
 
@@ -431,6 +431,6 @@ the audited protocol.
 
 ---
 
-**© [Year] [Auditor Name]. All rights reserved.**
+** [Year] [Auditor Name]. All rights reserved.**
 ```
 

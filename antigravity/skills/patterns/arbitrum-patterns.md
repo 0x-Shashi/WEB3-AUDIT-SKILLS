@@ -1,4 +1,4 @@
-# Arbitrum Security Patterns
+﻿# Arbitrum Security Patterns
 
 ## Overview
 
@@ -42,7 +42,7 @@
 - **Lines:** 97-113
 
 ### Description
-The `OptimismBridgeFacet` uses Optimism’s bridge with user-provided `l2Gas`.
+The `OptimismBridgeFacet` uses Optimisms bridge with user-provided `l2Gas`.
 
 ```solidity
 function _startBridge(
@@ -68,7 +68,7 @@ function _startBridge(
 }
 ```
 
-Optimism’s standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
+Optimisms standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
 
 - **File:** L1StandardBridge.sol
 - **Lines:** 114-123
@@ -93,7 +93,7 @@ sendCrossDomainMessage(l2TokenBridge, _l2Gas, message);
 If the `l2Gas` is underpaid, `finalizeDeposit` will fail and user funds will be lost.
 
 ### Recommendation
-Given the potential risks of losing users’ funds, it is recommend
+Given the potential risks of losing users funds, it is recommend
 
 *[Content truncated...]*
 
@@ -233,7 +233,7 @@ The team fixed the issue as recommended. Addressed in: `3be95dd540da57f9f2a1e20d
 
 **File(s) affected:**`contracts/factory.fc`
 
-**Description:** In the `factory`’s `op::create_master`, the initial check requires `msg_value > service_fee + BASE_FEE * (6 + mint_messages_count)`, but the refund calculation deducts `service_fee + BASE_FEE * (8 + mint_messages_count)`. This discrepancy allows transactions that pass validation to fail later or refund less than expected, leading to user confusion and potential loss of funds.
+**Description:** In the `factory`s `op::create_master`, the initial check requires `msg_value > service_fee + BASE_FEE * (6 + mint_messages_count)`, but the refund calculation deducts `service_fee + BASE_FEE * (8 + mint_messages_count)`. This discrepancy allows transactions that pass validation to fail later or refund less than expected, leading to user confusion and potential loss of funds.
 
 **Exploit Scenario:**
 

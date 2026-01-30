@@ -1,4 +1,4 @@
-# Min/Max Cap Validation Security Patterns
+﻿# Min/Max Cap Validation Security Patterns
 
 ## Overview
 
@@ -318,7 +318,7 @@ We will add checks regarding the `ERC721A` limits. A restraint has been implemen
 
 ---
 
-### Example 8: [M-01] Attacker can list an NFT they own and inflate to zero all users’ contributions, keeping the NFT and all the money
+### Example 8: [M-01] Attacker can list an NFT they own and inflate to zero all users contributions, keeping the NFT and all the money
 
 **Source**: Code4rena
 **Protocol**: PartyDAO

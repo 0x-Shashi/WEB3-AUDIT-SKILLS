@@ -1,4 +1,4 @@
----
+﻿---
 name: aztec-scanner
 description: "Comprehensive Aztec Network (Noir) vulnerability scanner for private smart contracts. Covers private state management, nullifiers, note lifecycle, and ZK-specific attack vectors. Use this skill when auditing Aztec contracts."
 allowed-tools:
@@ -53,24 +53,24 @@ Do NOT use this skill for:
 ### Key Concepts
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                 AZTEC SECURITY MODEL                     │
-├─────────────────────────────────────────────────────────┤
-│ PRIVATE STATE                                            │
-│ • State stored as encrypted notes                       │
-│ • Notes are consumed (nullified) and created            │
-│ • UTXO-like model with privacy                          │
-├─────────────────────────────────────────────────────────┤
-│ NULLIFIERS                                               │
-│ • Prevent double-spending of notes                      │
-│ • Must be deterministically derived                     │
-│ • Revealed on-chain (privacy-preserving)                │
-├─────────────────────────────────────────────────────────┤
-│ NOTE LIFECYCLE                                           │
-│ • Creation: Encrypted, added to tree                    │
-│ • Reading: Decrypted by owner                           │
-│ • Spending: Nullifier revealed, note consumed           │
-└─────────────────────────────────────────────────────────┘
+
+                 AZTEC SECURITY MODEL                     
+
+ PRIVATE STATE                                            
+  State stored as encrypted notes                       
+  Notes are consumed (nullified) and created            
+  UTXO-like model with privacy                          
+
+ NULLIFIERS                                               
+  Prevent double-spending of notes                      
+  Must be deterministically derived                     
+  Revealed on-chain (privacy-preserving)                
+
+ NOTE LIFECYCLE                                           
+  Creation: Encrypted, added to tree                    
+  Reading: Decrypted by owner                           
+  Spending: Nullifier revealed, note consumed           
+
 ```
 
 ---
@@ -483,8 +483,8 @@ grep -r "#\[aztec(private)\]" src/
 
 ### Privacy vs Functionality Trade-offs
 ```
-More Privacy → More Constraints → Higher Proving Cost
-Less Privacy → Simpler → Cheaper but Weaker
+More Privacy  More Constraints  Higher Proving Cost
+Less Privacy  Simpler  Cheaper but Weaker
 
 Balance based on use case:
 - DeFi: May need some disclosure for liquidations

@@ -1,4 +1,4 @@
-# Protocol Reserve Security Patterns
+﻿# Protocol Reserve Security Patterns
 
 ## Overview
 
@@ -42,7 +42,7 @@
 `MarketsManagerForAave.sol#L413-L418`
 
 ## Description
-The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. It’s currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
+The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. Its currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
 
 ```solidity
 supplyP2PSPY[_marketAddress] =
@@ -55,8 +55,8 @@ MAX_BASIS_POINTS;
 ```
 
 ## Recommendation
-Fix the computation. The real reserve factor should apply only on the spread so you’re right that this formula is wrong and needs to be updated: 
-`a + (1/2 ± f)(b-a)` where f is the reserve factor.
+Fix the computation. The real reserve factor should apply only on the spread so youre right that this formula is wrong and needs to be updated: 
+`a + (1/2  f)(b-a)` where f is the reserve factor.
 
 ## Spearbit
 Acknowledged, fixed in PR #565.

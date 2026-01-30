@@ -1,4 +1,4 @@
-# Denial-Of-Service Security Patterns
+﻿# Denial-Of-Service Security Patterns
 
 ## Overview
 
@@ -871,7 +871,7 @@ is executed:
         reserve1CumulativeLast += _reserve1 * timeElapsed;
      }
 ```
-This is forked from UniswapV2 source code, and it’s meant and known to overflow. It works 
+This is forked from UniswapV2 source code, and its meant and known to overflow. It works 
 fine if solidity < 0.8.0 is used but reverts when solidity >= 0.8.0 is used.
 If this happens all the core functionalities of the pool would break, including `mint()`, `burn()`, 
 and `swap()`.
@@ -986,7 +986,7 @@ The protocol has acknowledged this issue.
 0k, 0xMojito, 0xRstStn, 0xloscar01, Stoicov, ZanyBonzy, den\_sosnovskyi, deth, fibonacci, giraffe, mahmud, n1punp, santiellena, sunill\_eth, tank
 ## Summary
 
-In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and it’s meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
+In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and its meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
 
 ## Vulnerability Detail
 

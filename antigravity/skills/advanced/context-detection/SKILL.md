@@ -1,4 +1,4 @@
----
+﻿---
 name: context-detection
 description: "Automatically detects the context of code being audited: chain, language, protocol type, and risk profile. Use this skill first to load appropriate scanners and patterns."
 allowed-tools:
@@ -30,25 +30,25 @@ Automatically analyze a codebase to determine:
 ## Detection Flow
 
 ```
-┌─────────────────┐
-│  Read Project   │
-│  Structure      │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐    ┌─────────────────┐
-│  Detect Chain   │───▶│  Load Scanner   │
-└────────┬────────┘    └─────────────────┘
-         │
-         ▼
-┌─────────────────┐    ┌─────────────────┐
-│ Detect Protocol │───▶│ Load Template   │
-└────────┬────────┘    └─────────────────┘
-         │
-         ▼
-┌─────────────────┐    ┌─────────────────┐
-│ Assess Risk     │───▶│ Prioritize      │
-└─────────────────┘    └─────────────────┘
+
+  Read Project   
+  Structure      
+
+         
+         
+    
+  Detect Chain     Load Scanner   
+    
+         
+         
+    
+ Detect Protocol  Load Template   
+    
+         
+         
+    
+ Assess Risk      Prioritize      
+    
 ```
 
 ---

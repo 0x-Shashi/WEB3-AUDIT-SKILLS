@@ -1,4 +1,4 @@
-# Hardcoded Address Security Patterns
+﻿# Hardcoded Address Security Patterns
 
 ## Overview
 
@@ -89,7 +89,7 @@ contract AxelarFacet {
 AxelarFacet.sol#L30-L89
 
 ## Description
-The functions `executeCallViaAxelar()` and `executeCallWithTokenViaAxelar()` call a `destinationAddress` on the `destinationChain`. This `destinationAddress` needs to have specific Axelar functions (`_execute()` and `_executeWithTokento()`) to be able to receive the calls. This is implemented in the Executor. If these functions don’t exist at the `destinationAddress`, the transferred tokens will be lost.
+The functions `executeCallViaAxelar()` and `executeCallWithTokenViaAxelar()` call a `destinationAddress` on the `destinationChain`. This `destinationAddress` needs to have specific Axelar functions (`_execute()` and `_executeWithTokento()`) to be able to receive the calls. This is implemented in the Executor. If these functions dont exist at the `destinationAddress`, the transferred tokens will be lost.
 
 ```solidity
 /// @param destinationAddress the address of the LiFi contract on the destinationChain
@@ -99,7 +99,7 @@ function executeCallViaAxelar(..., string memory destinationAddress, ...) ... {
 }
 ```
 
-**Note:** The comment "the address of the LiFi contract" isn’t clear; it could either be the LiFi Diamond or the Executor.
+**Note:** The comment "the address of the LiFi contract" isnt clear; it could either be the LiFi Diamond or the Executor.
 
 ## Recommendation
 Hardcode or whitelist the `destinationAddress`. Doublecheck the `@param` comment for `destinationAddress` (for both functions).

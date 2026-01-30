@@ -1,4 +1,4 @@
-# Cairo Contract Audit Workflow
+﻿# Cairo Contract Audit Workflow
 
 Systematic workflow for auditing StarkNet Cairo smart contracts.
 
@@ -103,10 +103,10 @@ grep "cairo-version" Scarb.toml
 
 | Function | Signer Check | Owner Check | Other Check |
 |----------|--------------|-------------|-------------|
-| transfer | ✅ caller | ❌ | ❌ |
-| mint | ✅ caller | ✅ | ❌ |
-| upgrade | ✅ caller | ✅ | ❌ |
-| handle_deposit | N/A (L1) | ❌ | ✅ L1 origin |
+| transfer |  caller |  |  |
+| mint |  caller |  |  |
+| upgrade |  caller |  |  |
+| handle_deposit | N/A (L1) |  |  L1 origin |
 
 ### Issues Found
 - [ ] None / [Issue description]
@@ -150,16 +150,16 @@ fn only_role(self: @ContractState, role: felt252) {
 ### Initialization Check
 | Field | Initialized In | Zero Check |
 |-------|----------------|------------|
-| owner | constructor | ✅ |
-| l1_contract | initialize | ✅ |
-| token | initialize | ❌ ISSUE |
+| owner | constructor |  |
+| l1_contract | initialize |  |
+| token | initialize |  ISSUE |
 
 ### Upgrade Safety
 | Field | Same Position | Type Change |
 |-------|---------------|-------------|
-| owner | ✅ v1 slot 0 | ❌ |
-| balances | ✅ v1 slot 1 | ❌ |
-| new_field | ✅ appended | N/A |
+| owner |  v1 slot 0 |  |
+| balances |  v1 slot 1 |  |
+| new_field |  appended | N/A |
 ```
 
 ### 4.2 Grep for Storage Issues
@@ -186,9 +186,9 @@ grep -rn ".write(" src/
 
 | Location | Operation | Type | Checked? |
 |----------|-----------|------|----------|
-| token:45 | a + b | u256 | ✅ |
-| vault:78 | a - b | u256 | ❌ ISSUE |
-| fees:23 | a * b / c | u128 | ✅ |
+| token:45 | a + b | u256 |  |
+| vault:78 | a - b | u256 |  ISSUE |
+| fees:23 | a * b / c | u128 |  |
 ```
 
 ### 5.2 Cairo Arithmetic Patterns
@@ -196,18 +196,18 @@ grep -rn ".write(" src/
 ```cairo
 // VERIFY: Overflow-safe patterns used
 
-// ✅ Checked add
+//  Checked add
 use core::integer::u256_checked_add;
 let result = u256_checked_add(a, b).expect('Overflow');
 
-// ✅ Checked sub
+//  Checked sub
 let result = u256_checked_sub(a, b).expect('Underflow');
 
-// ✅ Safe division (check divisor)
+//  Safe division (check divisor)
 assert(divisor > 0, 'Division by zero');
 let result = a / divisor;
 
-// ❌ Unsafe
+//  Unsafe
 let result = a + b;  // May overflow in some contexts
 ```
 
@@ -240,10 +240,10 @@ fn handle_deposit(...) {
 - [None or findings]
 ```
 
-### 6.2 L2 → L1 Message Analysis
+### 6.2 L2  L1 Message Analysis
 
 ```markdown
-## L2 → L1 Message: withdraw
+## L2  L1 Message: withdraw
 
 ### Validation Checklist
 - [ ] Caller authorized
@@ -277,8 +277,8 @@ fn handle_deposit(...) {
 ### Input Validation
 | Parameter | Type | Validated? | How? |
 |-----------|------|------------|------|
-| amount | u256 | ✅ | > 0 check |
-| recipient | Addr | ✅ | !is_zero() |
+| amount | u256 |  | > 0 check |
+| recipient | Addr |  | !is_zero() |
 
 ### State Changes
 | Variable | Before | After |
@@ -314,8 +314,8 @@ fn handle_deposit(...) {
 ### Conversions Found
 | Location | From | To | Safe? |
 |----------|------|-----|-------|
-| line 45 | u256 | felt252 | ❌ |
-| line 78 | felt252 | u128 | ✅ handled |
+| line 45 | u256 | felt252 |  |
+| line 78 | felt252 | u128 |  handled |
 ```
 
 ### 8.2 Option/Result Handling
@@ -335,8 +335,8 @@ grep -rn "Option::" src/ | grep -v "Some\|None\|match\|if let"
 
 | Component | Initialized? | Events Emitted? |
 |-----------|--------------|-----------------|
-| Ownable | ✅ constructor | ✅ |
-| ERC20 | ✅ constructor | ✅ |
+| Ownable |  constructor |  |
+| ERC20 |  constructor |  |
 ```
 
 ---

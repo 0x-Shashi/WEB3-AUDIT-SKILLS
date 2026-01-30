@@ -127,9 +127,9 @@ bytes32 DOMAIN_SEPARATOR = keccak256(abi.encode(
 
 ### Proof of Concept
 
-From the `README`, we see that `validators` arenâ€™t trusted roles, they simply have to perform their duties and in case they are misbehaving `MANAGER` can remove them. Itâ€™s not expected they all to decide to perform a sybil attack.
+From the `README`, we see that `validators` arent trusted roles, they simply have to perform their duties and in case they are misbehaving `MANAGER` can remove them. Its not expected they all to decide to perform a sybil attack.
 
-But for this issue single validator can harm the entire protocol because signature verifiers donâ€™t check for duplicated validators and one valid signature is enough to pass the check:
+But for this issue single validator can harm the entire protocol because signature verifiers dont check for duplicated validators and one valid signature is enough to pass the check:
 
 ### Solidity
 
@@ -248,7 +248,7 @@ Manual Analysis
 
 ## Recommended Mitigation Steps
 
-Consider using OpenZeppelinâ€™s ECDSA library: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
+Consider using OpenZeppelins ECDSA library: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
 
 **Reference**: [View Original Finding](https://code4rena.com/reports/2021-04-meebits)
 
@@ -307,7 +307,7 @@ Good find and the fix seems straightforward. Upgrade
 ##### Description
 This issue has been identified within the signature verification flow of the `isValidSignature` function in the `P2pLendingProxy` contract. 
 
-Currently, signatures are verified against `s_client`, but the contractâ€™s address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
+Currently, signatures are verified against `s_client`, but the contracts address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
 
 In the context of `Permit2`, such reuse could allow multiple proxies to be drained using a single signature. Moreover, any message a client signs for themselves may inadvertently be valid for their proxies, and vice versa. 
 
@@ -803,7 +803,7 @@ BridgeFacet.sol#L476-496
 Connext bridge supports near-instant transfers by allowing users to pay a small fee to routers for providing them with liquidity. Gelato relayers are tasked with taking in bids from liquidity providers who sign a message consisting of the `transferId` and path length. The path length variable only guarantees that the message they signed will only be valid if `_args.routers.length - 1` routers are also selected. However, it does not prevent Gelato relayers from re-using the same signature multiple times. As a result, routers may unintentionally provide more liquidity than expected.
 
 ## Recommendation
-Consider ensuring that a routerâ€™s signed message can only be used once for a given `transferId`. It may be useful to track these in a boolean mapping.
+Consider ensuring that a routers signed message can only be used once for a given `transferId`. It may be useful to track these in a boolean mapping.
 
 ## Connext
 Solved in PR 1626.
@@ -814,7 +814,7 @@ Verified.
 ## Note
 This still assumes that the sequencer is a centralized role maintained by the Connext team. We understand that this will be addressed in future on-chain changes to incentivize honest behavior and further decentralize the sequencer role. Currently, the sequencer is a centralized role, and will be decentralized in the future.
 
-Consider that the only "attack vector" here (really more of a griefing vector) is that the sequencer has only the potential to favor certain routers over others and cannot steal anyoneâ€™s funds. Additionally, we know that the â€œrandomnessâ€ of the sequen
+Consider that the only "attack vector" here (really more of a griefing vector) is that the sequencer has only the potential to favor certain routers over others and cannot steal anyones funds. Additionally, we know that the randomness of the sequen
 
 *[Content truncated...]*
 
@@ -873,7 +873,7 @@ This is true assuming the contract address is the same across other chains. Conf
 ##### Description
 This issue has been identified within the signature verification flow of the `isValidSignature` function in the `P2pLendingProxy` contract. 
 
-Currently, signatures are verified against `s_client`, but the contractâ€™s address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
+Currently, signatures are verified against `s_client`, but the contracts address or any unique identifier is not included in the signed data. An attacker can replay the same signature across multiple `P2pLendingProxy` instances owned by the same user. For example, the replayed signature could authorize unwanted or additional transfers. 
 
 In the context of `Permit2`, such reuse could allow multiple proxies to be drained using a single signature. Moreover, any message a client signs for themselves may inadvertently be valid for their proxies, and vice versa. 
 
@@ -1571,7 +1571,7 @@ bytes32 digest = _hashTypedDataV4(
 The [EIP-712 specification](https://eips.ethereum.org/EIPS/eip-712#specification) defines the encoding of a message as:
 
 ```
-"\x19\x01" â€– domainSeparator â€– hashStruct(message)
+"\x19\x01"  domainSeparator  hashStruct(message)
 ```
 In the current impl
 
@@ -1680,7 +1680,7 @@ Source: https://github.com/sherlock-audit/2024-04-titles-judging/issues/74
 0x73696d616f, T1MOH, ZanyBonzy, ast3ros, fugazzi, mt030d
 ## Summary
 
-The signature in `ï»¿TitleGraph.acknowledgeEdge()` and ï»¿`TitleGraph.unacknowledgeEdge()` is generated based on a digest computed from ï»¿`edgeId` and ï»¿`data`. However, the ï»¿`data` bytes argument is not correctly encoded according to the EIP712 specification. Consequently, a signature generated using common EIP712 tools would not pass validation in ï»¿`TitleGraph.checkSignature()`.
+The signature in `TitleGraph.acknowledgeEdge()` and `TitleGraph.unacknowledgeEdge()` is generated based on a digest computed from `edgeId` and `data`. However, the `data` bytes argument is not correctly encoded according to the EIP712 specification. Consequently, a signature generated using common EIP712 tools would not pass validation in `TitleGraph.checkSignature()`.
 
 ## Vulnerability Detail
 According to [EIP712](https://eips.ethereum.org/EIPS/eip-712#definition-of-encodedata):
@@ -1692,8 +1692,8 @@ According to [EIP712](https://eips.ethereum.org/EIPS/eip-712#definition-of-encod
         ...
     }
 ```
-However, the `checkSignature()` modifier in the `TitlesGraph` contract reconstructs the digest by encoding the ï»¿data bytes argument without first applying keccak256 hashing.
-As a result, a signature generated using common EIP712 tools (e.g. using the `signTypedData` function from `ethers.js`) would not pass validation in ï»¿`TitleGraph.checkSignature()`.
+However, the `checkSignature()` modifier in the `TitlesGraph` contract reconstructs the digest by encoding the data bytes argument without first applying keccak256 hashing.
+As a result, a signature generated using common EIP712 tools (e.g. using the `signTypedData` function from `ethers.js`) would not pass validation in `TitleGraph.checkSignature()`.
 
 ### POC
 1. EIP712 signature computed by using ethers.js

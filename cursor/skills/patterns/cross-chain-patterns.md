@@ -1,4 +1,4 @@
-# Cross Chain Security Patterns
+﻿# Cross Chain Security Patterns
 
 ## Overview
 
@@ -155,9 +155,9 @@ https://github.com/code-423n4/2022-11-stakehouse/blob/main/contracts/liquid-stak
 ### Impact
 Mistakes made on one chain can be re-applied to a new chain
 
-There is no chain.id in the data
+There is nochain.idin the data
 
-If a user does `deployLPToken` using the wrong network, an attacker can replay the action on the correct chain, and steal the funds a-la the wintermute gnosis safe attack, where the attacker can create the same address that the user tried to, and steal the funds from there
+If a user does `deployLPToken`using the wrong network, an attacker can replay the action on the correct chain, and steal the funds a-la the wintermute gnosis safe attack, where the attacker can create the same address that the user tried to, and steal the funds from there
 
 
 https://mirror.xyz/0xbuidlerdao.eth/lOE5VN-BHI0olGOXe27F0auviIuoSlnou_9t3XRJseY
@@ -291,7 +291,7 @@ Source: https://github.com/sherlock-audit/2024-11-autonomint-judging/issues/998
 
 ### Summary
 
-In the Liquidation Type 1 process, Ether refunds are being sent to an incorrect [recipient address](https://github.com/sherlock-audit/2024-11-autonomint-bluenights004/blob/main/Blockchain/Blockchian/contracts/Core_logic/borrowLiquidation.sol#L303). Specifically, refunds should be directed to the admin user, who acts as the liquidation operator and is the legitimate recipient. However, the current implementation mistakenly sends the refund to the borrower’s address.
+In the Liquidation Type 1 process, Ether refunds are being sent to an incorrect [recipient address](https://github.com/sherlock-audit/2024-11-autonomint-bluenights004/blob/main/Blockchain/Blockchian/contracts/Core_logic/borrowLiquidation.sol#L303). Specifically, refunds should be directed to the admin user, who acts as the liquidation operator and is the legitimate recipient. However, the current implementation mistakenly sends the refund to the borrowers address.
 
 ```Solidity
 File: borrowLiquidation.sol
@@ -303,7 +303,7 @@ File: borrowLiquidation.sol
 
 ### Root Cause
 
-When liqAmountToGetFromOtherChain is zero or cross-chain operations are unnecessary, the Ether refund is incorrectly sent to the borrower’s address instead of the admin’s address. This misdirection can result in the admin losing funds that should rightfully be refunded to them.
+When liqAmountToGetFromOtherChain is zero or cross-chain operations are unnecessary, the Ether refund is incorrectly sent to the borrowers address instead of the admins address. This misdirection can result in the admin losing funds that should rightfully be refunded to them.
 
 ### Internal pre-conditions
 

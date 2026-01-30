@@ -1,4 +1,4 @@
-# Approve Security Patterns
+﻿# Approve Security Patterns
 
 ## Overview
 
@@ -465,7 +465,7 @@ The parameter names change depending on the context. So for any ERC20 token that
 - Call any of the functions in these facets to approve another address for that token.
 - Use the approved address to transfer tokens out of the `LifiDiamond` contract.
 
-**Note:** Normally, there shouldn’t be any tokens in the `LiFi Diamond` contract, so the risk is limited. Also, see "Hardcode bridge addresses via immutable."
+**Note:** Normally, there shouldnt be any tokens in the `LiFi Diamond` contract, so the risk is limited. Also, see "Hardcode bridge addresses via immutable."
 
 ## Recommendation
 For each bridge facet, the bridge approval contract address is already known. Store these addresses in an immutable or a storage variable instead of taking them as user input. Only approve and interact with these pre-defined addresses.

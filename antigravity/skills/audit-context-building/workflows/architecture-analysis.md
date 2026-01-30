@@ -1,4 +1,4 @@
-# Architecture Analysis Workflow
+﻿# Architecture Analysis Workflow
 
 Build context for complex, multi-contract systems by understanding architectural patterns and component interactions.
 
@@ -83,30 +83,30 @@ Based on identified patterns:
 
 ### Layer Diagram
 ```
-┌─────────────────────────────────────────────┐
-│ Layer 4: User Interface                     │
-│   Frontend, SDK, Scripts                    │
-├─────────────────────────────────────────────┤
-│ Layer 3: Entry Points                       │
-│   Router.sol, Periphery.sol                 │
-├─────────────────────────────────────────────┤
-│ Layer 2: Core Logic                         │
-│   Pool.sol, Position.sol, Strategy.sol      │
-├─────────────────────────────────────────────┤
-│ Layer 1: Data & Storage                     │
-│   State.sol, Storage.sol, Mappings          │
-├─────────────────────────────────────────────┤
-│ Layer 0: External Integrations              │
-│   Oracles, Other Protocols, Bridges         │
-└─────────────────────────────────────────────┘
+
+ Layer 4: User Interface                     
+   Frontend, SDK, Scripts                    
+
+ Layer 3: Entry Points                       
+   Router.sol, Periphery.sol                 
+
+ Layer 2: Core Logic                         
+   Pool.sol, Position.sol, Strategy.sol      
+
+ Layer 1: Data & Storage                     
+   State.sol, Storage.sol, Mappings          
+
+ Layer 0: External Integrations              
+   Oracles, Other Protocols, Bridges         
+
 ```
 
 ### Layer Interactions
 | From Layer | To Layer | Interaction Type |
 |------------|----------|------------------|
-| 3 → 2 | Entry → Core | Function calls |
-| 2 → 1 | Core → Data | State access |
-| 2 → 0 | Core → External | External calls |
+| 3  2 | Entry  Core | Function calls |
+| 2  1 | Core  Data | State access |
+| 2  0 | Core  External | External calls |
 ```
 
 ---
@@ -180,19 +180,19 @@ interface IPool {
 ### Contract Dependencies
 ```
 Router.sol
-├── Pool.sol
-│   ├── Oracle.sol
-│   │   └── Chainlink
-│   ├── Token.sol
-│   └── Math.sol
-└── Periphery.sol
-    ├── Pool.sol (shared)
-    └── WETH.sol
+ Pool.sol
+    Oracle.sol
+       Chainlink
+    Token.sol
+    Math.sol
+ Periphery.sol
+     Pool.sol (shared)
+     WETH.sol
 ```
 
 ### Circular Dependency Check
 - [ ] No circular dependencies found
-- [ ] Circular: [A → B → C → A]
+- [ ] Circular: [A  B  C  A]
 
 ### Dependency Risks
 | Dependency | If Fails | Impact |
@@ -212,20 +212,20 @@ Router.sol
 
 ### System States
 ```
-┌─────────┐    initialize()    ┌────────┐
-│ CREATED ├───────────────────►│ ACTIVE │
-└─────────┘                    └───┬────┘
-                                   │
-                    pause()        │ unpause()
-                         ▼         │
-                    ┌────────┐◄────┘
-                    │ PAUSED │
-                    └───┬────┘
-                        │ shutdown()
-                        ▼
-                    ┌──────────┐
-                    │ SHUTDOWN │
-                    └──────────┘
+    initialize()    
+ CREATED  ACTIVE 
+                    
+                                   
+                    pause()         unpause()
+                                  
+                    
+                     PAUSED 
+                    
+                         shutdown()
+                        
+                    
+                     SHUTDOWN 
+                    
 ```
 
 ### State Transitions
@@ -253,37 +253,37 @@ Router.sol
 ### Primary Value Flow: User Deposit
 ```
 User Wallet
-    │
-    │ approve(Router, amount)
-    ▼
-ERC20 Token ─────────────────────────────────┐
-    │                                         │
-    │ transferFrom(User, Pool, amount)       │
-    ▼                                         │
-Pool Contract                                 │
-    │                                         │
-    │ mint(User, shares)                     │
-    ▼                                         │
-Share Token                                   │
-    │                                         │
-    └────── Update: balances[User] ◄─────────┘
+    
+     approve(Router, amount)
+    
+ERC20 Token 
+                                             
+     transferFrom(User, Pool, amount)       
+                                             
+Pool Contract                                 
+                                             
+     mint(User, shares)                     
+                                             
+Share Token                                   
+                                             
+     Update: balances[User] 
 ```
 
 ### Fee Flow
 ```
 Transaction
-    │
-    │ calculate fee
-    ▼
-Fee Amount ──► Protocol Treasury
-    │
-    └──► LP Rewards (partial)
+    
+     calculate fee
+    
+Fee Amount  Protocol Treasury
+    
+     LP Rewards (partial)
 ```
 
 ### External Value Flows
 ```
-Protocol ──[collateral]──► External Lending
-           ◄──[yield]────
+Protocol [collateral] External Lending
+           [yield]
 ```
 ```
 
@@ -294,19 +294,19 @@ Protocol ──[collateral]──► External Lending
 
 ### Oracle Data Flow
 ```
-Chainlink ──[price]──► OracleWrapper ──[price]──► Pool
-                           │
-                           └── validate, transform
+Chainlink [price] OracleWrapper [price] Pool
+                           
+                            validate, transform
 ```
 
 ### Configuration Data Flow
 ```
-Owner ──[setConfig]──► Config Contract ──[read]──► Core Contracts
+Owner [setConfig] Config Contract [read] Core Contracts
 ```
 
 ### Event Data Flow
 ```
-Core Contracts ──[emit]──► Events ──[index]──► Off-chain
+Core Contracts [emit] Events [index] Off-chain
 ```
 ```
 
@@ -321,28 +321,28 @@ Core Contracts ──[emit]──► Events ──[index]──► Off-chain
 
 ### Boundary Diagram
 ```
-┌─────────────────────────────────────────────────────┐
-│ EXTERNAL (Untrusted)                                │
-│   Users, External Contracts, MEV Bots               │
-├─────────────────────────────────────────────────────┤
-│ BOUNDARY: Input Validation, Access Control          │
-├─────────────────────────────────────────────────────┤
-│ INTERNAL (Trusted after validation)                 │
-│   Core Logic, State Changes, Calculations           │
-├─────────────────────────────────────────────────────┤
-│ BOUNDARY: Output Validation, Reentrancy Guards      │
-├─────────────────────────────────────────────────────┤
-│ EXTERNAL INTEGRATIONS (Semi-trusted)                │
-│   Oracles, DEXes, Lending Protocols                 │
-└─────────────────────────────────────────────────────┘
+
+ EXTERNAL (Untrusted)                                
+   Users, External Contracts, MEV Bots               
+
+ BOUNDARY: Input Validation, Access Control          
+
+ INTERNAL (Trusted after validation)                 
+   Core Logic, State Changes, Calculations           
+
+ BOUNDARY: Output Validation, Reentrancy Guards      
+
+ EXTERNAL INTEGRATIONS (Semi-trusted)                
+   Oracles, DEXes, Lending Protocols                 
+
 ```
 
 ### Boundary Crossings
 | Crossing Point | Protection | Verified |
 |----------------|------------|----------|
-| User → Router | Input validation | ⏳ |
-| Pool → Oracle | Return validation | ⏳ |
-| Core → External | Error handling | ⏳ |
+| User  Router | Input validation |  |
+| Pool  Oracle | Return validation |  |
+| Core  External | Error handling |  |
 ```
 
 ### Step 4.2: Access Control Architecture
@@ -353,14 +353,14 @@ Core Contracts ──[emit]──► Events ──[index]──► Off-chain
 ### Role Hierarchy
 ```
 DEFAULT_ADMIN_ROLE (Multisig)
-├── OPERATOR_ROLE
-│   └── harvest(), compound(), rebalance()
-├── PAUSER_ROLE
-│   └── pause(), unpause()
-├── UPGRADER_ROLE
-│   └── upgradeTo()
-└── FEE_SETTER_ROLE
-    └── setFee(), setTreasury()
+ OPERATOR_ROLE
+    harvest(), compound(), rebalance()
+ PAUSER_ROLE
+    pause(), unpause()
+ UPGRADER_ROLE
+    upgradeTo()
+ FEE_SETTER_ROLE
+     setFee(), setTreasury()
 ```
 
 ### Role Assignment
@@ -370,8 +370,8 @@ DEFAULT_ADMIN_ROLE (Multisig)
 | OPERATOR | Bot wallet | grantRole() |
 
 ### Privilege Escalation Paths
-- ⚠️ ADMIN can grant any role
-- ⚠️ [Other escalation concern]
+-  ADMIN can grant any role
+-  [Other escalation concern]
 
 ### Time Locks
 | Action | Delay | Bypass Possible |
@@ -393,19 +393,19 @@ DEFAULT_ADMIN_ROLE (Multisig)
 
 ### Upgrade Flow
 ```
-Owner ──[propose]──► Timelock ──[execute after delay]──► Proxy
-                        │                                   │
-                        │                                   │
+Owner [propose] Timelock [execute after delay] Proxy
+                                                           
+                                                           
                     48h delay                          upgradeTo()
 ```
 
 ### Upgrade Risks
 | Risk | Mitigation | Status |
 |------|------------|--------|
-| Storage collision | Gap variables | ✅ |
-| Function collision | Selector check | ✅ |
-| Malicious upgrade | Timelock | ✅ |
-| Initialization | initializer modifier | ⏳ |
+| Storage collision | Gap variables |  |
+| Function collision | Selector check |  |
+| Malicious upgrade | Timelock |  |
+| Initialization | initializer modifier |  |
 
 ### Storage Layout
 ```
@@ -436,17 +436,17 @@ Slot 50-99: __gap (reserved)
 4. [Other key components]
 
 ### Critical Paths
-1. Deposit: Router → Pool → Token Transfer
-2. Withdraw: Router → Pool → Share Burn → Token Transfer
-3. Liquidation: Keeper → Pool → Oracle → Position Close
+1. Deposit: Router  Pool  Token Transfer
+2. Withdraw: Router  Pool  Share Burn  Token Transfer
+3. Liquidation: Keeper  Pool  Oracle  Position Close
 
 ### Architecture Strengths
 - [Positive architectural decision]
 - [Another strength]
 
 ### Architecture Concerns
-- ⚠️ [Architectural weakness]
-- ⚠️ [Another concern]
+-  [Architectural weakness]
+-  [Another concern]
 ```
 
 ### Step 5.2: Attack Surface Summary
@@ -508,12 +508,12 @@ Functions/Components to analyze first:
 With architecture context complete:
 
 ### You Now Understand:
-✅ System patterns and structure  
-✅ Component responsibilities  
-✅ Data and value flows  
-✅ Trust boundaries  
-✅ Access control model  
-✅ Upgrade mechanics  
+ System patterns and structure  
+ Component responsibilities  
+ Data and value flows  
+ Trust boundaries  
+ Access control model  
+ Upgrade mechanics  
 
 ### Next Steps:
 1. **deep-code-review** workflow for critical functions

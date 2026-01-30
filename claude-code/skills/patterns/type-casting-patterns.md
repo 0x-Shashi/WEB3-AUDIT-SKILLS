@@ -1,4 +1,4 @@
-# Type casting Security Patterns
+﻿# Type casting Security Patterns
 
 ## Overview
 
@@ -402,14 +402,14 @@ A malicious user can exploit this in the following way:
 See below
 
 ## Description
-Throughout the contract we’ve encountered various unsafe type-castings.
+Throughout the contract weve encountered various unsafe type-castings.
 
-- **invariant**: Within the `_swap` function, the next invariant is an `int256` variable and is calculated within the `checkInvariant` function implemented in the `RMM01Portfolio`. This variable then is dangerously typecasted to `int128` and assigned to an `int256` variable in the iteration struct (L539). The down-casting from `int256` to `int128` assumes that the `nextInvariantWad` fits in an `int128`; in case it won’t fit, it will overflow. The updated iteration object is passed to the `_feeSavingEffects` function, which based on the RMM implementation can lead to bad consequences.
+- **invariant**: Within the `_swap` function, the next invariant is an `int256` variable and is calculated within the `checkInvariant` function implemented in the `RMM01Portfolio`. This variable then is dangerously typecasted to `int128` and assigned to an `int256` variable in the iteration struct (L539). The down-casting from `int256` to `int128` assumes that the `nextInvariantWad` fits in an `int128`; in case it wont fit, it will overflow. The updated iteration object is passed to the `_feeSavingEffects` function, which based on the RMM implementation can lead to bad consequences.
   - `iteration.nextInvariant`
   - `_getLatestInvariantAndVirtualPrice`
   - `getNetBalance`
 
-During account settlement, `getNetBalance` is called to compute the difference between the "physical reserves" (contract balance) and the internal reserves: `net = int256(physicalBalance) - int256(internalBalance)`. If the `internalBalance > int256.max`, it overflows into a negative value and the attacker is credited the entire physical balance + overflow upon settlement (and doesn’t have to pay anything in settle). This might happen if an attacker allocates or swaps in very high amounts before settlement is called. Consider doing a safe typecast here as a legitimate possible revert would cause less issues than an actual overflow.
+During account settlement, `getNetBalance` is called to compute the difference between the "physical reserves" (contract balance) and the internal reserves: `net = int256(physicalBalance) - int256(internalBalance)`. If the `internalBalance > int256.max`, it overflows into a negative value and the attacker is credited the entire physical balance + overflow upon settlement (and doesnt have to pay anything in settle). This might happen if an attacker allocates or swaps in very high amounts before settlement is called. Consider doing a safe typecast here as a legitimate possible revert would cause less issues than an actual overflow.
   - `getNetBalance`
 
 ### Encoding / Decoding
@@ -499,7 +499,7 @@ Lambda, Tomo, hickuphh3, IllIllI, defsec, sirhashalot
 
 ## Summary
 
-The unsafe casting of the recovered amount from `uint256` to `uint128` means the users’ funds will be lost.
+The unsafe casting of the recovered amount from `uint256` to `uint128` means the users funds will be lost.
 
 ## Vulnerability Detail
 
@@ -521,7 +521,7 @@ The user's balance is `type(uint128).max = 2**128`, but the incremented amount w
 
 ## Recommendation
 
-`amountStored` should be of type `uint256`. Alternatively, use [OpenZeppelin’s SafeCast library](https://docs.openzeppelin.com/contracts/4.x/api/utils#SafeCast) when casting from `uint256` to `uint128`.
+`amountStored` should be of type `uint256`. Alternatively, use [OpenZeppelins SafeCast library](https://docs.openzeppelin.com/contracts/4.x/api/utils#SafeCast) when casting from `uint256` to `uint128`.
 
 ## Lead Senior Watson
 Not sure, any tokens which would have a token supply over `type(uint128).max` but I guess it's best to be proactive. The proposed fix does create some issues. Instead of having less tokens transferred to the vault, the contract will revert and prevent the transfer entirely. Arguably more funds would be at risk, so you may as well use `uint256` then or accept the risk and keep the slot packing.

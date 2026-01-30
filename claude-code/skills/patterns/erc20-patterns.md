@@ -1,4 +1,4 @@
-# ERC20 Security Patterns
+﻿# ERC20 Security Patterns
 
 ## Overview
 
@@ -35,9 +35,9 @@
 
 _Submitted by [axic](https://twitter.com/alexberegszaszi), also found by [gpersoon](https://twitter.com/gpersoon), [pauliax](https://twitter.com/SolidityDev), [Jmukesh](https://twitter.com/MukeshJ_eth), [a_delamo](https://twitter.com/a_delamo), [s1m0](https://twitter.com/_smonica_), [cmichel](https://twitter.com/cmichelio), and [shw](https://github.com/x9453)_
 
-Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return “true” on success. However, not every token claiming ERC20-compatibility is doing this — some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
+Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return true on success. However, not every token claiming ERC20-compatibility is doing this  some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
 
-Today many tools, including OpenZeppelin, offer [a wrapper for “safe ERC20 transfer”](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
+Today many tools, including OpenZeppelin, offer [a wrapper for safe ERC20 transfer](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
 
 RealityCards is not using such a wrapper, but instead tries to ensure successful transfers via the `balancedBooks` modifier:
 
@@ -91,7 +91,7 @@ if (auctioneerCut > 0) {
 
 This line will revert if `auctioneer` is set to `address(0)` on some tokens (revert on transferring to address(0) is a [default behaviour of the OpenZeppelin template](https://www.notion.so/Yield-Witch-555e6981c26b41008d03a504077b4770)). So if someone start an `auction` with `to = address(0)`, this auction becomes un-liquidatable.
 
-A malicious user can run a bot to monitor his own vault, and if the got underwater and they don’t have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
+A malicious user can run a bot to monitor his own vault, and if the got underwater and they dont have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
 
 
 ## Recommended Mitigation Steps
@@ -256,7 +256,7 @@ Note that this function assumes that the `amount` of ERC20 token is always 18 de
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelin’s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.

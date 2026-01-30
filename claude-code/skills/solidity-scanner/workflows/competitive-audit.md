@@ -1,4 +1,4 @@
-# Competitive Audit Workflow
+﻿# Competitive Audit Workflow
 
 Optimized workflow for competitive audit platforms where speed and finding unique bugs matters.
 
@@ -91,10 +91,10 @@ Rapid categorize:
 
 | Function | Risk Level | Why |
 |----------|------------|-----|
-| deposit() | 🔴 Critical | Receives value |
-| withdraw() | 🔴 Critical | Sends value |
-| setConfig() | 🟡 Medium | Admin only |
-| getBalance() | 🟢 Low | View only |
+| deposit() |  Critical | Receives value |
+| withdraw() |  Critical | Sends value |
+| setConfig() |  Medium | Admin only |
+| getBalance() |  Low | View only |
 
 ### Minutes 45-60: High-Value Target Selection
 
@@ -133,11 +133,11 @@ Focus on finding ONE good bug rather than surface-level coverage.
 - State Changes: [What?]
 
 ### Red Flag Check
-- [ ] External call + state after? → Reentrancy
-- [ ] User input in calculation? → Manipulation
-- [ ] Access control present? → Auth issues
-- [ ] Token interaction? → Weird token issues
-- [ ] Oracle used? → Price manipulation
+- [ ] External call + state after?  Reentrancy
+- [ ] User input in calculation?  Manipulation
+- [ ] Access control present?  Auth issues
+- [ ] Token interaction?  Weird token issues
+- [ ] Oracle used?  Price manipulation
 
 ### Deep Analysis (if flags found)
 [Continue with full analysis]
@@ -195,15 +195,15 @@ Quickly check each category:
 
 ### Reentrancy
 Locations checked: [list]
-Status: ✅ Clear / ⚠️ Potential / ❌ Found
+Status:  Clear /  Potential /  Found
 
 ### Access Control
 Locations checked: [list]
-Status: ✅ Clear / ⚠️ Potential / ❌ Found
+Status:  Clear /  Potential /  Found
 
 ### Oracle/Price
 Locations checked: [list]
-Status: ✅ Clear / ⚠️ Potential / ❌ Found
+Status:  Clear /  Potential /  Found
 
 [Continue for each category...]
 ```

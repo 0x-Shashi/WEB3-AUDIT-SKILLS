@@ -2140,7 +2140,7 @@ is executed:
         reserve1CumulativeLast += _reserve1 * timeElapsed;
      }
 ```
-This is forked from UniswapV2 source code, and itâ€™s meant and known to overflow. It works 
+This is forked from UniswapV2 source code, and its meant and known to overflow. It works 
 fine if solidity < 0.8.0 is used but reverts when solidity >= 0.8.0 is used.
 If this happens all the core functionalities of the pool would break, including `mint()`, `burn()`, 
 and `swap()`.
@@ -2255,7 +2255,7 @@ The protocol has acknowledged this issue.
 0k, 0xMojito, 0xRstStn, 0xloscar01, Stoicov, ZanyBonzy, den\_sosnovskyi, deth, fibonacci, giraffe, mahmud, n1punp, santiellena, sunill\_eth, tank
 ## Summary
 
-In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and itâ€™s meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
+In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and its meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
 
 ## Vulnerability Detail
 
@@ -2835,7 +2835,7 @@ if (LibAsset.isNativeAsset(assetId)) {
 
 ---
 
-### Example 11: Controller Can Indefinitely Lock Usersâ€™ Tokens
+### Example 11: Controller Can Indefinitely Lock Users Tokens
 
 **Source**: SigmaPrime
 **Protocol**: Status
@@ -2965,7 +2965,7 @@ Change the minimum bid percent to 0.1% in the `EmpaModuleTest` contract in `EMPA
 
 ---
 
-### Example 15: Low/high MaxGas values could make match/unmatch supplier/borrower functions always â€œfailâ€ or revert
+### Example 15: Low/high MaxGas values could make match/unmatch supplier/borrower functions always fail or revert
 
 **Source**: Spearbit
 **Protocol**: Morpho
@@ -4957,12 +4957,12 @@ Sherlock stakers who unstaked will in
 To liquidate an unhealthy loan position the liquidate() function inside CreditorNFT can be called by anyone where the debtAmount of debt token is paid out by the liquidator.
 This function in turn calls the liquidate function of LoanVault at L133.
 
-Inside LoanVault.solâ€™s liquidate() it is checked if the debtAmount (initial debt amount when loan was created) is now equal to the balance of debt token in the vault , if not revert (L163)
+Inside LoanVault.sols liquidate() it is checked if the debtAmount (initial debt amount when loan was created) is now equal to the balance of debt token in the vault , if not revert (L163)
 
 An attacker can see a liquidation() call in the mempool and ->
 
 a.) Frontruns this call to send the lowest amount of debt token to the vault , say 1
-b.) Now when the liquidator tries to liquidate he sends out debtAmount of tokens to the vault , letâ€™s say they were 100
+b.) Now when the liquidator tries to liquidate he sends out debtAmount of tokens to the vault , lets say they were 100
 c.) It is checked that debt amount and balance of debt token balance in the vault is equal
 d.) But they are not since there are a total of 101 debt tokens now , liquidation reverts.
 
@@ -5149,7 +5149,7 @@ In addition, it also requires lenders and borrowers to pay a significant amount 
 
 ## Real-World Examples
 
-### Example 1: Tokens can get stuck in Executor contract if the destination doesnâ€™t claim them all
+### Example 1: Tokens can get stuck in Executor contract if the destination doesnt claim them all
 
 **Source**: Spearbit
 **Protocol**: Connext
@@ -5202,7 +5202,7 @@ Determine what should happen with unclaimed tokens. Consider one or more of the 
 
 ---
 
-### Example 2: Tokens transferred with Axelar can get lost if the destination transaction canâ€™t be executed
+### Example 2: Tokens transferred with Axelar can get lost if the destination transaction cant be executed
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -5271,7 +5271,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 
 **Note:** Exploiters can pull the tokens from the LiFi protocol. Please refer to the issue **"Remaining tokens can be swept from the LiFi Diamond or the Executor," Issue #82**. Exploiters can take a more aggressive strategy and force the victim's swap to revert. A possible exploit scenario:
 
-- A victim wants to swap 10K optimismâ€™s BTC into Ethereum mainnet USDC.
+- A victim wants to swap 10K optimisms BTC into Ethereum mainnet USDC.
 - Since DEXs on the mainnet have the best liquidity, the LiFi protocol helps users swap on the mainnet.
 - The transaction on the source chain (optimism) succeeds, and the bridge services try to call `Co
 
@@ -5298,7 +5298,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 `NomadFacet.sol#L225-L242`
 
 ## Description
-When routers front liquidity for the protocolâ€™s users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
+When routers front liquidity for the protocols users, they are later reconciled once the bridge has optimistically verified transfers from the source chain. Upon being reconciled, the `_reconcileProcessPortal()` attempts to first pay back Aave debt before distributing the rest back to the router. However, `_reconcileProcessPortal()` will not convert the adopted asset back to the local asset in the case where the call to the Aave pool fails.
 
 Instead, the function will set `amountIn = 0` and continue to distribute the local asset to the router.
 
@@ -5408,7 +5408,7 @@ which has even more rounding errors. wlsETH could internally track the underlyin
 
 ---
 
-### Example 7: What if the receiver of Axelar _executeWithToken() doesnâ€™t claim all tokens
+### Example 7: What if the receiver of Axelar _executeWithToken() doesnt claim all tokens
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -5425,7 +5425,7 @@ which has even more rounding errors. wlsETH could internally track the underlyin
 `Executor.sol#L293-L316`
 
 ## Description
-The function `_executeWithToken()` approves tokens and then calls `callTo`. If that contract doesnâ€™t retrieve the tokens, then the tokens stay within the Executor and are lost. 
+The function `_executeWithToken()` approves tokens and then calls `callTo`. If that contract doesnt retrieve the tokens, then the tokens stay within the Executor and are lost. 
 
 Also see: "Remaining tokens can be swept from the LiFi Diamond or the Executor."
 
@@ -5530,7 +5530,7 @@ Fi
 - **Lines:** 97-113
 
 ### Description
-The `OptimismBridgeFacet` uses Optimismâ€™s bridge with user-provided `l2Gas`.
+The `OptimismBridgeFacet` uses Optimisms bridge with user-provided `l2Gas`.
 
 ```solidity
 function _startBridge(
@@ -5556,7 +5556,7 @@ function _startBridge(
 }
 ```
 
-Optimismâ€™s standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
+Optimisms standard token bridge makes the cross-chain deposit by sending a cross-chain message to `L2Bridge`.
 
 - **File:** L1StandardBridge.sol
 - **Lines:** 114-123
@@ -5581,7 +5581,7 @@ sendCrossDomainMessage(l2TokenBridge, _l2Gas, message);
 If the `l2Gas` is underpaid, `finalizeDeposit` will fail and user funds will be lost.
 
 ### Recommendation
-Given the potential risks of losing usersâ€™ funds, it is recommend
+Given the potential risks of losing users funds, it is recommend
 
 *[Content truncated...]*
 
@@ -5589,7 +5589,7 @@ Given the potential risks of losing usersâ€™ funds, it is recommend
 
 ---
 
-### Example 10: WormholeFacet doesnâ€™t send native token
+### Example 10: WormholeFacet doesnt send native token
 
 **Source**: Spearbit
 **Protocol**: LI.FI
@@ -5603,7 +5603,7 @@ Given the potential risks of losing usersâ€™ funds, it is recommend
 `WormholeFacet.sol#L36-L103`
 
 ## Description
-The functions of `WormholeFacet` allow sending the native token; however, they donâ€™t actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
+The functions of `WormholeFacet` allow sending the native token; however, they dont actually send it across the bridge, causing the native token to stay stuck in the LiFi Diamond and get lost for the sender.
 
 ```solidity
 contract WormholeFacet is ILiFi, ReentrancyGuard, Swapper {
@@ -5654,7 +5654,7 @@ Balancer offers a liquidity mining rewards distribution for liquidity providers.
 
 Liquidity Mining distributions are available to claim weekly through the `MerkleOrchard` contract. Liquidity Providers can claim tokens from this contract by submitting claims to the tokens. These claims are checked against a Merkle root of the accrued token balances which are stored in a Merkle tree. Claiming through the `MerkleOrchard` is much more gas-efficient than the previous generation of claiming contracts, especially when claiming multiple weeks of rewards, and when claiming multiple tokens.
 
-The AeraVault is itself the only liquidity provider of the Balancer pool deployed, so each week itâ€™s entitled to claim those rewards. Currently, those rewards cannot be claimed because the AeraVault is missing an implementation to interact with the `MerkleOrchard` contract, causing all rewards (BAL + other tokens) to remain in the `MerkleOrchard` forever.
+The AeraVault is itself the only liquidity provider of the Balancer pool deployed, so each week its entitled to claim those rewards. Currently, those rewards cannot be claimed because the AeraVault is missing an implementation to interact with the `MerkleOrchard` contract, causing all rewards (BAL + other tokens) to remain in the `MerkleOrchard` forever.
 
 ## Recommendation
 Add a function to allow the vault owner (the Treasury) to claim those rewards. More information on how to claim rewards and interact with the contract can be found directly in the Balancer Documentation website.
@@ -6147,10 +6147,10 @@ Add a method that can withdraw ETH from the `HibernationDen` contract.
 
 **Details**:
 
-TheÂ [`ETHAdapter`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol)Â contract is used as a proxy to allow users to interact with the vault through sending and receiving ETH instead of stETH. The adapter achieves this by converting ETH and stETH through a curve pool and then forwarding interactions to and from the vault. In the course of a normalÂ [withdrawal](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L71)Â orÂ [redemption](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L46)Â transaction, theÂ `ETHAdapter`Â will pull the funds out of the vault before passing them on to the designated receiver. During the moment theÂ `ETHAdapter`Â is holding the funds, it firstÂ [converts](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L110-L112)Â all of its stETH to ETH, and then sends its entire ETH balance to the receiving address.
+The[`ETHAdapter`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol)contract is used as a proxy to allow users to interact with the vault through sending and receiving ETH instead of stETH. The adapter achieves this by converting ETH and stETH through a curve pool and then forwarding interactions to and from the vault. In the course of a normal[withdrawal](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L71)or[redemption](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L46)transaction, the`ETHAdapter`will pull the funds out of the vault before passing them on to the designated receiver. During the moment the`ETHAdapter`is holding the funds, it first[converts](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/proxy/ETHAdapter.sol#L110-L112)all of its stETH to ETH, and then sends its entire ETH balance to the receiving address.
 
 
-The issue is that theÂ `ETHAdapter`Â sends its full balance to the receiver each time, meaning any ETH or stETH that is mistakenly sent to it can be drained by any user who performs a withdrawal or redemption on theÂ `ETHAdapter`. This is exacerbated by the fact that the vault is passed in as aÂ [parameter](https://github.com/pods-finance/yield-contracts/blob/9389ab4
+The issue is that the`ETHAdapter`sends its full balance to the receiver each time, meaning any ETH or stETH that is mistakenly sent to it can be drained by any user who performs a withdrawal or redemption on the`ETHAdapter`. This is exacerbated by the fact that the vault is passed in as a[parameter](https://github.com/pods-finance/yield-contracts/blob/9389ab4
 
 *[Content truncated...]*
 
@@ -6247,8 +6247,8 @@ function test_token_withdrawal_fails() public {
 ```
 
 > ```Solidity
-> â”œâ”€ [8858] UpgradeableProxy::withdraw(MockERC20Token: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 4)
-> â”‚   â”œâ”€ [8339] TokenManager::withdraw(M
+>  [8858] UpgradeableProxy::withdraw(MockERC20Token: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 4)
+>     [8339] TokenManager::withdraw(M
 
 *[Content truncated...]*
 
@@ -6929,21 +6929,21 @@ https://github.com/sherlock-audit/2024-11-teller-finance-update/blob/0c8535728f9
 
 | Category | Pattern | Severity |
 |----------|---------|----------|
-| [Gas](#1-gas-vulnerabilities) | Transaction Costs, L1â†’L2 Gas | Medium-High |
+| [Gas](#1-gas-vulnerabilities) | Transaction Costs, L1L2 Gas | Medium-High |
 | [DoS](#2-dos-vulnerabilities) | Replay Attacks, Block Gas Limit | Medium-High |
 | [Context](#3-context-vulnerabilities) | msg.value, msg.sender | Medium-High |
-| [Cross-Layer](#4-cross-layer-vulnerabilities) | L1â†”L2 Sync, Upgrade Failures | High |
+| [Cross-Layer](#4-cross-layer-vulnerabilities) | L1L2 Sync, Upgrade Failures | High |
 | [Data Location](#5-data-location-vulnerabilities) | Storage vs Memory, Calldata | Medium |
 
 ---
 
 ## 1. Gas Vulnerabilities
 
-### 1.1 L1â†’L2 Transaction Gas Miscalculation
+### 1.1 L1L2 Transaction Gas Miscalculation
 
-**Vulnerability**: Incorrect gas check allows L1â†’L2 transaction without sufficient gas for both overhead AND intrinsic costs.
+**Vulnerability**: Incorrect gas check allows L1L2 transaction without sufficient gas for both overhead AND intrinsic costs.
 
-**Context**: zkSync, Arbitrum, Optimism L1â†’L2 bridging
+**Context**: zkSync, Arbitrum, Optimism L1L2 bridging
 
 **Formula**:
 ```
@@ -6975,7 +6975,7 @@ require(
 ```
 
 **Audit Checklist**:
-- [ ] Does L1â†’L2 gas calculation include overhead?
+- [ ] Does L1L2 gas calculation include overhead?
 - [ ] Does it include intrinsic costs?
 - [ ] Does it include minimum execution gas?
 - [ ] Can underflow occur when subtracting overhead?
@@ -7009,7 +7009,7 @@ let overheadForLength := ceilDiv(
 
 ---
 
-### 1.3 L1â†’L2 Revert Consumes All Gas
+### 1.3 L1L2 Revert Consumes All Gas
 
 **Vulnerability**: Near call opcode (zkSync) doesn't return unspent gas on REVERT, unlike EVM's 63/64 rule.
 
@@ -7028,7 +7028,7 @@ function executeL1Tx() {
 **Impact**: Users lose entire gas payment even for simple reverts.
 
 **Audit Checklist**:
-- [ ] Does L1â†’L2 path use near call?
+- [ ] Does L1L2 path use near call?
 - [ ] Is gas refunded on revert?
 - [ ] Is this behavior documented for users?
 
@@ -7106,7 +7106,7 @@ function notifyGaugeLoss(address gauge) external {
 
 ### 2.3 Same-Block Stake/Unstake Exploit
 
-**Vulnerability**: Flash loan stake â†’ claim rewards â†’ unstake in same block dilutes long-term staker rewards.
+**Vulnerability**: Flash loan stake  claim rewards  unstake in same block dilutes long-term staker rewards.
 
 **Pattern to Look For**:
 ```solidity
@@ -7161,7 +7161,7 @@ function claimRewards() external {
 
 ### 3.1 L2 ETH Inaccessible via L1 Transactions
 
-**Vulnerability**: L1â†’L2 transactions use msg.value from L1, ignoring user's L2 balance.
+**Vulnerability**: L1L2 transactions use msg.value from L1, ignoring user's L2 balance.
 
 **Pattern to Look For**:
 ```solidity
@@ -7177,7 +7177,7 @@ function requestL2Transaction(
 }
 ```
 
-**Impact**: User with ETH on L2 cannot use it for L1â†’L2 transactions. Critical if malicious upgrade scheduled - users trapped.
+**Impact**: User with ETH on L2 cannot use it for L1L2 transactions. Critical if malicious upgrade scheduled - users trapped.
 
 **Audit Checklist**:
 - [ ] Can users access L2 balances via L1 calls?
@@ -7210,7 +7210,7 @@ function _verifyDepositLimit(address token, address depositor, uint256 amount, b
 1. Token has no limit initially
 2. Attacker deposits large amount, intentionally fails
 3. Later, token limit imposed
-4. Attacker claims failed deposit â†’ reduces counter
+4. Attacker claims failed deposit  reduces counter
 5. Attacker can now deposit more than cap
 
 **Secure Pattern**:
@@ -7299,14 +7299,14 @@ function executeBatches(StoredBatchInfo[] calldata batches) external {
 
 ### 4.2 Transaction Ordering in Cross-Layer Operations
 
-**Vulnerability**: L1â†’L2 message order assumptions can be violated by sequencer.
+**Vulnerability**: L1L2 message order assumptions can be violated by sequencer.
 
 **Pattern to Look For**:
 ```solidity
 // Assumes deposit processes before operation
 function depositAndOperate() external {
-    bridge.deposit(token, amount);  // L1 â†’ L2 message 1
-    bridge.operate(data);            // L1 â†’ L2 message 2
+    bridge.deposit(token, amount);  // L1  L2 message 1
+    bridge.operate(data);            // L1  L2 message 2
     // Sequencer may reorder!
 }
 ```
@@ -7428,7 +7428,7 @@ Check this protocol for denial of service vectors:
 4. Block gas limit issues in loops
 ```
 
-### For L1â†”L2 Audits
+### For L1L2 Audits
 ```
 Review cross-layer synchronization for:
 1. Message ordering guarantees
@@ -7443,7 +7443,7 @@ Review cross-layer synchronization for:
 
 | Pattern | Source Report | Protocol |
 |---------|--------------|----------|
-| L1â†’L2 Gas | Code4rena 2023-10 | zkSync |
+| L1L2 Gas | Code4rena 2023-10 | zkSync |
 | Unit Mismatch | Code4rena 2023-10 | zkSync |
 | Revert Gas | Code4rena 2023-10 | zkSync |
 | EIP-155 Replay | Code4rena 2023-10 | zkSync |

@@ -1,4 +1,4 @@
-# Missing-Logic Security Patterns
+﻿# Missing-Logic Security Patterns
 
 ## Overview
 
@@ -324,7 +324,7 @@ returns the wrong value at the bounds of `x` and `y`.
 If `x` or `y` is at these bounds, the corresponding term's computation is skipped and therefore implicitly set to 0, its initialization value.
 
 ```solidity
-int256 invariantTermX; // Φ¹(1-x)
+int256 invariantTermX; // (1-x)
 // @audit if x is at the bounds, the term remains 0
 if (self.reserveXPerWad.isBetween(lowerBoundX + 1, upperBoundX - 1)) {
     invariantTermX = Gaussian.ppf(int256(WAD - self.reserveXPerWad));
@@ -332,7 +332,7 @@ if (self.reserveXPerWad.isBetween(lowerBoundX + 1, upperBoundX - 1)) {
 ```
 
 ```solidity
-int256 invariantTermY; // Φ¹(y/K)
+int256 invariantTermY; // (y/K)
 // @audit if y is at the bounds, the term remains 0
 if (self.reserveYPerWad.isBetween(lowerBoundY + 1, upperBoundY - 1)) {
     invariantTermY = Gaussian.ppf(
@@ -700,13 +700,13 @@ https://github.com/sherlock-audit/2023-02-
 
 **Severity:** Medium
 
-**Context:** [`MUSDManager.sol#L249`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [`MUSDManager.sol#L299`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 "‌"), [`MintRewards.sol#L121`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L121 "‌"), [`MintRewards.sol#L92`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L92 "‌")
+**Context:** [`MUSDManager.sol#L249`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [`MUSDManager.sol#L299`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 ""), [`MintRewards.sol#L121`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L121 ""), [`MintRewards.sol#L92`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/reward/MintRewards.sol#L92 "")
 
 **Description:**
 
-With the current implementation, it is possible that the borrowers are in bad debt. As confirmed with the protocol team, _“When user's collateral position is under 100%, only the respective amount of mUSD which is equivalent of GLP\*price which is less than is debt position is closed.”_ ([MUSDManager.sol#L249](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [MUSDManager.sol#L299](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 "‌"))
+With the current implementation, it is possible that the borrowers are in bad debt. As confirmed with the protocol team, _When user's collateral position is under 100%, only the respective amount of mUSD which is equivalent of GLP\*price which is less than is debt position is closed._ ([MUSDManager.sol#L249](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L249), [MUSDManager.sol#L299](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/musd/MUSDManager.sol#L299 ""))
 
-On the other hand, by the protocol’s design, anyone with positive `borrowed` is considered as a mUSD holder and can claim the mint reward. Note that the user does not need to mint additional mUSD. ([MintRewards.sol#L121](https://github.com/getmetafinance/
+On the other hand, by the protocols design, anyone with positive `borrowed` is considered as a mUSD holder and can claim the mint reward. Note that the user does not need to mint additional mUSD. ([MintRewards.sol#L121](https://github.com/getmetafinance/
 
 *[Content truncated...]*
 
@@ -727,7 +727,7 @@ On the other hand, by the protocol’s design, anyone with positive `borrowed` i
 **Context:** [`MetaManager.sol#L117-L126`](https://github.com/getmetafinance/meta/blob/00bbac1613fa69e4c180ff53515451df4df9f69e/contracts/meta/MetaManager.sol#L117-L126)
 
 **Description:**
-In `MetaManager::reStake`, `toMint` is calculated as `getReservedForVesting(caller) + getClaimable(caller)` and it’s essentially the same to `unstakeRate[_user] * (time2fullRedemption[_user] - lastWithdrawTime[_user])`. The problem is that this should be “unslashed” using the `lastSlashRate` to be fair.
+In `MetaManager::reStake`, `toMint` is calculated as `getReservedForVesting(caller) + getClaimable(caller)` and its essentially the same to `unstakeRate[_user] * (time2fullRedemption[_user] - lastWithdrawTime[_user])`. The problem is that this should be unslashed using the `lastSlashRate` to be fair.
 
 For example, a user starts unstaking 100e18 esMETA with 10 days vesting period and after a day he decided to stop unstaking and restake.
 

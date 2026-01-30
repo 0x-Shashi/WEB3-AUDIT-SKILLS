@@ -1,4 +1,4 @@
-# Full Audit Chain
+﻿# Full Audit Chain
 
 ## Overview
 
@@ -12,56 +12,56 @@ Comprehensive security audit workflow covering all aspects.
 ## Chain Steps
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                    FULL AUDIT CHAIN                             │
-├────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Step 1: Context Detection                         [15 min]    │
-│  ├─ Identify chain/language                                    │
-│  ├─ Detect protocol type                                       │
-│  └─ Profile risk level                                         │
-│                                                                 │
-│  Step 2: Architecture Review                       [30 min]    │
-│  ├─ Map contract relationships                                 │
-│  ├─ Identify trust boundaries                                  │
-│  └─ Document external dependencies                             │
-│                                                                 │
-│  Step 3: Pattern Scanning                          [60 min]    │
-│  ├─ Load chain-specific scanner                                │
-│  ├─ Apply consolidated patterns                                │
-│  └─ Run detection queries                                      │
-│                                                                 │
-│  Step 4: Protocol-Specific Review                  [60 min]    │
-│  ├─ Load protocol template                                     │
-│  ├─ Check protocol-specific vulnerabilities                    │
-│  └─ Verify business logic                                      │
-│                                                                 │
-│  Step 5: Attack Chain Analysis                     [45 min]    │
-│  ├─ Map individual findings to chains                          │
-│  ├─ Identify combined exploits                                 │
-│  └─ Assess cascading impacts                                   │
-│                                                                 │
-│  Step 6: Access Control Audit                      [30 min]    │
-│  ├─ Map privileged functions                                   │
-│  ├─ Verify role separation                                     │
-│  └─ Check upgrade mechanisms                                   │
-│                                                                 │
-│  Step 7: Economic Analysis                         [30 min]    │
-│  ├─ Token flow analysis                                        │
-│  ├─ Fee/reward mechanisms                                      │
-│  └─ Value extraction paths                                     │
-│                                                                 │
-│  Step 8: Severity Assessment                       [20 min]    │
-│  ├─ Rate each finding                                          │
-│  ├─ Consider attack complexity                                 │
-│  └─ Estimate impact                                            │
-│                                                                 │
-│  Step 9: Report Generation                         [30 min]    │
-│  ├─ Structure findings                                         │
-│  ├─ Add recommendations                                        │
-│  └─ Create executive summary                                   │
-│                                                                 │
-└────────────────────────────────────────────────────────────────┘
+
+                    FULL AUDIT CHAIN                             
+
+                                                                 
+  Step 1: Context Detection                         [15 min]    
+   Identify chain/language                                    
+   Detect protocol type                                       
+   Profile risk level                                         
+                                                                 
+  Step 2: Architecture Review                       [30 min]    
+   Map contract relationships                                 
+   Identify trust boundaries                                  
+   Document external dependencies                             
+                                                                 
+  Step 3: Pattern Scanning                          [60 min]    
+   Load chain-specific scanner                                
+   Apply consolidated patterns                                
+   Run detection queries                                      
+                                                                 
+  Step 4: Protocol-Specific Review                  [60 min]    
+   Load protocol template                                     
+   Check protocol-specific vulnerabilities                    
+   Verify business logic                                      
+                                                                 
+  Step 5: Attack Chain Analysis                     [45 min]    
+   Map individual findings to chains                          
+   Identify combined exploits                                 
+   Assess cascading impacts                                   
+                                                                 
+  Step 6: Access Control Audit                      [30 min]    
+   Map privileged functions                                   
+   Verify role separation                                     
+   Check upgrade mechanisms                                   
+                                                                 
+  Step 7: Economic Analysis                         [30 min]    
+   Token flow analysis                                        
+   Fee/reward mechanisms                                      
+   Value extraction paths                                     
+                                                                 
+  Step 8: Severity Assessment                       [20 min]    
+   Rate each finding                                          
+   Consider attack complexity                                 
+   Estimate impact                                            
+                                                                 
+  Step 9: Report Generation                         [30 min]    
+   Structure findings                                         
+   Add recommendations                                        
+   Create executive summary                                   
+                                                                 
+
 ```
 
 ---
@@ -111,14 +111,14 @@ grep -rn "interface\s+I" --include="*.sol"
 
 **Output:**
 ```
-├── Core.sol (main entry)
-│   ├── inherits Ownable
-│   ├── inherits ReentrancyGuard
-│   └── calls Oracle.sol
-├── Oracle.sol
-│   └── calls Chainlink
-└── Token.sol
-    └── inherits ERC20
+ Core.sol (main entry)
+    inherits Ownable
+    inherits ReentrancyGuard
+    calls Oracle.sol
+ Oracle.sol
+    calls Chainlink
+ Token.sol
+     inherits ERC20
 ```
 
 ---
@@ -182,7 +182,7 @@ Finding: Oracle uses spot price (Medium)
 Finding: Instant liquidation (Low)
 Finding: Flash loan integration (Info)
 
-→ Attack Chain: Flash Loan + Oracle + Liquidation (CRITICAL)
+ Attack Chain: Flash Loan + Oracle + Liquidation (CRITICAL)
 ```
 
 ---

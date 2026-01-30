@@ -1,4 +1,4 @@
-# Bridge Security Patterns
+﻿# Bridge Security Patterns
 
 ## Overview
 
@@ -52,7 +52,7 @@ Some bridge services will send the tokens directly to the receiver address when 
 
 **Note:** Exploiters can pull the tokens from the LiFi protocol. Please refer to the issue **"Remaining tokens can be swept from the LiFi Diamond or the Executor," Issue #82**. Exploiters can take a more aggressive strategy and force the victim's swap to revert. A possible exploit scenario:
 
-- A victim wants to swap 10K optimism’s BTC into Ethereum mainnet USDC.
+- A victim wants to swap 10K optimisms BTC into Ethereum mainnet USDC.
 - Since DEXs on the mainnet have the best liquidity, the LiFi protocol helps users swap on the mainnet.
 - The transaction on the source chain (optimism) succeeds, and the bridge services try to call `Co
 
@@ -173,7 +173,7 @@ gravity.call(data);
 
 The log output is as follows:
 ```solidity
-    ERC20DeployedEvent("atom", "name", ❮utf8 decode failed❯: 0x73796d626fc0, 18, 2)
+    ERC20DeployedEvent("atom", "name", utf8 decode failed: 0x73796d626fc0, 18, 2)
 ```
 
 Which hits [this code path](https://github.com/althea-net/cosmos-gravity-bridge/blob/92d0e12cea813305e6472851beeb80bd2eaf858d/orchestrator/gravity_utils/src/types/ethereum_events.rs#L431-L438):

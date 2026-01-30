@@ -1,4 +1,4 @@
-# EIP Security Considerations
+﻿# EIP Security Considerations
 
 Security implications and common vulnerabilities associated with each major EIP/ERC standard.
 
@@ -11,12 +11,12 @@ Security implications and common vulnerabilities associated with each major EIP/
 **Severity**: High | **Frequency**: Common
 
 ```solidity
-// ❌ VULNERABLE: Assumes transfer returns bool
+//  VULNERABLE: Assumes transfer returns bool
 function transferTokens(IERC20 token, address to, uint256 amount) {
     require(token.transfer(to, amount), "Transfer failed");  // Reverts for USDT
 }
 
-// ✅ SECURE: Use SafeERC20
+//  SECURE: Use SafeERC20
 using SafeERC20 for IERC20;
 function transferTokens(IERC20 token, address to, uint256 amount) {
     token.safeTransfer(to, amount);
@@ -41,16 +41,16 @@ function transferTokens(IERC20 token, address to, uint256 amount) {
 // 6. Bob calls transferFrom for 50
 // 7. Bob got 150 instead of 100
 
-// ❌ VULNERABLE: Direct approval change
+//  VULNERABLE: Direct approval change
 token.approve(spender, newAmount);
 
-// ✅ SAFER: Increase/decrease pattern
+//  SAFER: Increase/decrease pattern
 function increaseAllowance(address spender, uint256 addedValue) public returns (bool) {
     _approve(msg.sender, spender, _allowances[msg.sender][spender] + addedValue);
     return true;
 }
 
-// ✅ SAFER: Set to 0 first (still race possible but lower risk)
+//  SAFER: Set to 0 first (still race possible but lower risk)
 token.approve(spender, 0);
 token.approve(spender, newAmount);
 ```
@@ -62,14 +62,14 @@ token.approve(spender, newAmount);
 **Severity**: Critical | **Frequency**: Legacy contracts
 
 ```solidity
-// ❌ VULNERABLE (Solidity < 0.8.0)
+//  VULNERABLE (Solidity < 0.8.0)
 function transfer(address to, uint256 amount) public returns (bool) {
     balances[msg.sender] -= amount;  // Underflow possible
     balances[to] += amount;          // Overflow possible
     return true;
 }
 
-// ✅ SECURE: Use SafeMath or Solidity 0.8+
+//  SECURE: Use SafeMath or Solidity 0.8+
 function transfer(address to, uint256 amount) public returns (bool) {
     require(balances[msg.sender] >= amount, "Insufficient balance");
     unchecked {
@@ -89,7 +89,7 @@ function transfer(address to, uint256 amount) public returns (bool) {
 **Severity**: High | **Frequency**: Common
 
 ```solidity
-// ❌ VULNERABLE: State updated after external call
+//  VULNERABLE: State updated after external call
 function buyNFT(uint256 tokenId) external payable {
     require(msg.value >= price[tokenId]);
     
@@ -102,7 +102,7 @@ function buyNFT(uint256 tokenId) external payable {
 
 // Attack: Receiver's onERC721Received reenters buyNFT before sold[tokenId] is set
 
-// ✅ SECURE: CEI pattern + reentrancy guard
+//  SECURE: CEI pattern + reentrancy guard
 function buyNFT(uint256 tokenId) external payable nonReentrant {
     require(msg.value >= price[tokenId]);
     require(!sold[tokenId], "Already sold");
@@ -122,14 +122,14 @@ function buyNFT(uint256 tokenId) external payable nonReentrant {
 **Severity**: Medium | **Frequency**: Implementation error
 
 ```solidity
-// ❌ SPEC VIOLATION: Approval persists after transfer
+//  SPEC VIOLATION: Approval persists after transfer
 function transferFrom(address from, address to, uint256 tokenId) public {
     require(_isApprovedOrOwner(msg.sender, tokenId));
     _transfer(from, to, tokenId);
     // Missing: _approve(address(0), tokenId);
 }
 
-// ✅ CORRECT: Clear approval on transfer
+//  CORRECT: Clear approval on transfer
 function _transfer(address from, address to, uint256 tokenId) internal {
     require(ownerOf(tokenId) == from);
     _approve(address(0), tokenId);  // Clear approval
@@ -145,13 +145,13 @@ function _transfer(address from, address to, uint256 tokenId) internal {
 **Severity**: Medium | **Frequency**: Implementation error
 
 ```solidity
-// ❌ SPEC VIOLATION: safeTransferFrom doesn't check receiver
+//  SPEC VIOLATION: safeTransferFrom doesn't check receiver
 function safeTransferFrom(address from, address to, uint256 tokenId) public {
     transferFrom(from, to, tokenId);
     // Missing receiver check!
 }
 
-// ✅ CORRECT: Check receiver
+//  CORRECT: Check receiver
 function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) public {
     transferFrom(from, to, tokenId);
     require(_checkOnERC721Received(from, to, tokenId, data), "ERC721: non-receiver");
@@ -184,7 +184,7 @@ function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes
 // 1. tokensToSend (on sender)
 // 2. tokensReceived (on recipient)
 
-// ❌ EXTREMELY VULNERABLE: Any ERC777 integration without guards
+//  EXTREMELY VULNERABLE: Any ERC777 integration without guards
 contract VulnerablePool {
     function deposit(IERC777 token, uint256 amount) external {
         token.send(address(this), amount, "");
@@ -197,7 +197,7 @@ contract VulnerablePool {
 
 // Real-world impact: imBTC/Uniswap hack - $25M lost
 
-// ✅ SECURE: Reentrancy guard + CEI
+//  SECURE: Reentrancy guard + CEI
 contract SecurePool is ReentrancyGuard {
     function deposit(IERC777 token, uint256 amount) external nonReentrant {
         uint256 balanceBefore = token.balanceOf(address(this));
@@ -208,7 +208,7 @@ contract SecurePool is ReentrancyGuard {
     }
 }
 
-// ✅ BEST: Block ERC777 tokens entirely
+//  BEST: Block ERC777 tokens entirely
 function deposit(IERC20 token, uint256 amount) external {
     require(!isERC777(address(token)), "ERC777 not supported");
     // ...
@@ -225,27 +225,27 @@ function deposit(IERC20 token, uint256 amount) external {
 
 ```solidity
 // Attack on empty vault:
-// 1. Attacker deposits 1 wei → gets 1 share
+// 1. Attacker deposits 1 wei  gets 1 share
 // 2. Attacker donates 10000 tokens to vault (not via deposit)
 // 3. Vault now has 10000 tokens, 1 share
 // 4. Victim deposits 9999 tokens
 // 5. Victim gets: 9999 * 1 / 10000 = 0 shares (rounds down!)
-// 6. Attacker redeems 1 share → gets all ~20000 tokens
+// 6. Attacker redeems 1 share  gets all ~20000 tokens
 
-// ❌ VULNERABLE: No protection
+//  VULNERABLE: No protection
 function convertToShares(uint256 assets) public view returns (uint256) {
     uint256 supply = totalSupply();
     return supply == 0 ? assets : assets * supply / totalAssets();
 }
 
-// ✅ SECURE: Virtual offset (OpenZeppelin pattern)
+//  SECURE: Virtual offset (OpenZeppelin pattern)
 uint256 constant OFFSET = 10 ** decimalsOffset;  // e.g., 1e3
 
 function _convertToShares(uint256 assets, Math.Rounding rounding) internal view returns (uint256) {
     return assets.mulDiv(totalSupply() + OFFSET, totalAssets() + 1, rounding);
 }
 
-// ✅ SECURE: Dead shares (mint to dead address on first deposit)
+//  SECURE: Dead shares (mint to dead address on first deposit)
 function deposit(uint256 assets, address receiver) public returns (uint256 shares) {
     if (totalSupply() == 0) {
         // Mint dead shares to prevent inflation attack
@@ -262,12 +262,12 @@ function deposit(uint256 assets, address receiver) public returns (uint256 share
 **Severity**: High | **Frequency**: Common
 
 ```solidity
-// ❌ WRONG: Always rounds down
+//  WRONG: Always rounds down
 function previewMint(uint256 shares) public view returns (uint256) {
     return shares * totalAssets() / totalSupply();  // Should round UP
 }
 
-// ✅ CORRECT: Round UP for user-pays scenarios
+//  CORRECT: Round UP for user-pays scenarios
 function previewMint(uint256 shares) public view returns (uint256) {
     return shares.mulDiv(totalAssets(), totalSupply(), Math.Rounding.Ceil);
 }
@@ -288,7 +288,7 @@ function previewMint(uint256 shares) public view returns (uint256) {
 **Severity**: High | **Frequency**: Common in forks
 
 ```solidity
-// ❌ VULNERABLE: Cached domain separator doesn't update on fork
+//  VULNERABLE: Cached domain separator doesn't update on fork
 bytes32 public immutable DOMAIN_SEPARATOR;  // Set at deploy
 
 constructor() {
@@ -298,7 +298,7 @@ constructor() {
 // After chain fork, DOMAIN_SEPARATOR is stale!
 // Signatures valid on one chain can replay on fork
 
-// ✅ SECURE: Recompute on chain change
+//  SECURE: Recompute on chain change
 bytes32 private immutable INITIAL_CHAIN_ID;
 bytes32 private immutable INITIAL_DOMAIN_SEPARATOR;
 
@@ -321,19 +321,19 @@ function DOMAIN_SEPARATOR() public view returns (bytes32) {
 **Severity**: Medium | **Frequency**: Implementation error
 
 ```solidity
-// ❌ WRONG: Extra spaces, wrong order
+//  WRONG: Extra spaces, wrong order
 bytes32 constant PERMIT_TYPEHASH = keccak256(
     "Permit(address owner, address spender, uint256 value, uint256 nonce, uint256 deadline)"
     //                   ^ extra spaces - signature won't match!
 );
 
-// ❌ WRONG: Parameters in wrong order
+//  WRONG: Parameters in wrong order
 bytes32 constant PERMIT_TYPEHASH = keccak256(
     "Permit(address spender,address owner,uint256 value,uint256 nonce,uint256 deadline)"
     //      ^ spender before owner - doesn't match spec!
 );
 
-// ✅ CORRECT: Exact format per spec
+//  CORRECT: Exact format per spec
 bytes32 constant PERMIT_TYPEHASH = keccak256(
     "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
 );
@@ -348,7 +348,7 @@ bytes32 constant PERMIT_TYPEHASH = keccak256(
 **Severity**: High | **Frequency**: Implementation error
 
 ```solidity
-// ❌ VULNERABLE: Deadline checked after signature verification
+//  VULNERABLE: Deadline checked after signature verification
 function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external {
     address signer = ecrecover(digest, v, r, s);
     require(signer == owner, "Invalid signature");
@@ -358,7 +358,7 @@ function permit(address owner, address spender, uint256 value, uint256 deadline,
     _approve(owner, spender, value);
 }
 
-// ✅ SECURE: Check deadline first
+//  SECURE: Check deadline first
 function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external {
     require(deadline >= block.timestamp, "Expired");
     
@@ -382,13 +382,13 @@ function permit(address owner, address spender, uint256 value, uint256 deadline,
 **Severity**: High | **Frequency**: Common oversight
 
 ```solidity
-// ❌ VULNERABLE: Zero address check missing
+//  VULNERABLE: Zero address check missing
 function permit(...) external {
     address signer = ecrecover(digest, v, r, s);
     require(signer == owner, "Invalid");  // Passes if owner == address(0)!
 }
 
-// ✅ SECURE: Check for zero address
+//  SECURE: Check for zero address
 function permit(...) external {
     address signer = ecrecover(digest, v, r, s);
     require(signer != address(0), "Invalid signature");
@@ -405,7 +405,7 @@ function permit(...) external {
 **Severity**: Critical | **Frequency**: Common
 
 ```solidity
-// ❌ VULNERABLE: Implementation can be initialized by attacker
+//  VULNERABLE: Implementation can be initialized by attacker
 contract Implementation {
     address public owner;
     
@@ -419,7 +419,7 @@ contract Implementation {
 // 2. Call initialize(attacker) directly on implementation
 // 3. In some cases, this can be leveraged to destroy proxy
 
-// ✅ SECURE: Use initializer modifier
+//  SECURE: Use initializer modifier
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 contract Implementation is Initializable {
@@ -444,21 +444,21 @@ contract V1 {
     address public owner;     // Slot 1
 }
 
-// ❌ DANGEROUS V2: Changed storage layout
+//  DANGEROUS V2: Changed storage layout
 contract V2 {
     address public owner;     // Slot 0 - COLLISION with value!
     uint256 public value;     // Slot 1 - COLLISION with owner!
     uint256 public newValue;  // Slot 2 - OK
 }
 
-// ✅ SAFE V2: Append only
+//  SAFE V2: Append only
 contract V2 {
     uint256 public value;     // Slot 0 - Same
     address public owner;     // Slot 1 - Same
     uint256 public newValue;  // Slot 2 - New, appended
 }
 
-// ✅ BEST: Use storage gap pattern
+//  BEST: Use storage gap pattern
 contract V1 {
     uint256 public value;
     address public owner;
@@ -476,14 +476,14 @@ contract V1 {
 **Severity**: Critical | **Frequency**: Implementation error
 
 ```solidity
-// ❌ VULNERABLE: Anyone can upgrade
+//  VULNERABLE: Anyone can upgrade
 contract VulnerableUUPS is UUPSUpgradeable {
     function _authorizeUpgrade(address newImplementation) internal override {
         // No access control!
     }
 }
 
-// ✅ SECURE: Proper authorization
+//  SECURE: Proper authorization
 contract SecureUUPS is UUPSUpgradeable, OwnableUpgradeable {
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {
         // Only owner can upgrade
@@ -501,13 +501,13 @@ contract SecureUUPS is UUPSUpgradeable, OwnableUpgradeable {
 // If V2 implementation doesn't include UUPS upgrade logic,
 // the proxy becomes permanently locked!
 
-// ❌ DANGEROUS: V2 removes upgrade capability
+//  DANGEROUS: V2 removes upgrade capability
 contract V2 {  // Not UUPSUpgradeable!
     // No upgradeTo function
     // Proxy is now BRICKED
 }
 
-// ✅ SAFE: Always inherit UUPS
+//  SAFE: Always inherit UUPS
 contract V2 is UUPSUpgradeable, OwnableUpgradeable {
     function _authorizeUpgrade(address) internal override onlyOwner {}
 }
@@ -522,7 +522,7 @@ contract V2 is UUPSUpgradeable, OwnableUpgradeable {
 **Severity**: High | **Frequency**: Design consideration
 
 ```solidity
-// ❌ VULNERABLE: Signature valid for multiple accounts
+//  VULNERABLE: Signature valid for multiple accounts
 function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash, uint256 missingAccountFunds) 
     external returns (uint256) 
 {
@@ -531,7 +531,7 @@ function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash, uint2
     return 0;
 }
 
-// ✅ SECURE: Include account address in validation
+//  SECURE: Include account address in validation
 function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash, uint256 missingAccountFunds) 
     external returns (uint256) 
 {

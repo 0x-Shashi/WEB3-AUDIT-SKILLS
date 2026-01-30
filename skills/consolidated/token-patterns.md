@@ -41,7 +41,7 @@
 // VULNERABLE: Assumes amount received = amount sent
 function deposit(uint amount) external {
     token.transferFrom(msg.sender, address(this), amount);
-    balances[msg.sender] += amount;  // ← Wrong! May receive less
+    balances[msg.sender] += amount;  //  Wrong! May receive less
 }
 
 // SAFE: Check actual balance change
@@ -49,7 +49,7 @@ function deposit(uint amount) external {
     uint balanceBefore = token.balanceOf(address(this));
     token.transferFrom(msg.sender, address(this), amount);
     uint received = token.balanceOf(address(this)) - balanceBefore;
-    balances[msg.sender] += received;  // ← Correct
+    balances[msg.sender] += received;  //  Correct
 }
 ```
 
@@ -145,9 +145,9 @@ token.safeApprove(spender, newAmount);
 
 _Submitted by [axic](https://twitter.com/alexberegszaszi), also found by [gpersoon](https://twitter.com/gpersoon), [pauliax](https://twitter.com/SolidityDev), [Jmukesh](https://twitter.com/MukeshJ_eth), [a_delamo](https://twitter.com/a_delamo), [s1m0](https://twitter.com/_smonica_), [cmichel](https://twitter.com/cmichelio), and [shw](https://github.com/x9453)_
 
-Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return â€œtrueâ€ on success. However, not every token claiming ERC20-compatibility is doing this â€” some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
+Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return true on success. However, not every token claiming ERC20-compatibility is doing this  some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
 
-Today many tools, including OpenZeppelin, offer [a wrapper for â€œsafe ERC20 transferâ€](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
+Today many tools, including OpenZeppelin, offer [a wrapper for safe ERC20 transfer](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
 
 RealityCards is not using such a wrapper, but instead tries to ensure successful transfers via the `balancedBooks` modifier:
 
@@ -201,7 +201,7 @@ if (auctioneerCut > 0) {
 
 This line will revert if `auctioneer` is set to `address(0)` on some tokens (revert on transferring to address(0) is a [default behaviour of the OpenZeppelin template](https://www.notion.so/Yield-Witch-555e6981c26b41008d03a504077b4770)). So if someone start an `auction` with `to = address(0)`, this auction becomes un-liquidatable.
 
-A malicious user can run a bot to monitor his own vault, and if the got underwater and they donâ€™t have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
+A malicious user can run a bot to monitor his own vault, and if the got underwater and they dont have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
 
 
 ## Recommended Mitigation Steps
@@ -366,7 +366,7 @@ Note that this function assumes that the `amount` of ERC20 token is always 18 de
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelinâ€™s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.
@@ -1652,16 +1652,16 @@ Use safeMint instead of mint for ERC721
 
 ## Vulnerability Detail
 
-TheÂ `msg.sender`Â will be minted as a proof of staking NFT whenÂ `_stakeToken()`Â is called. 
+The`msg.sender`will be minted as a proof of staking NFT when`_stakeToken()`is called. 
 
-However, ifÂ `msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
+However, if`msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
 
 As per the documentation of EIP-721:
 
 > A wallet/broker/auction application MUST implement the wallet interface if it will accept safe transfers.
 > 
 
-Ref:Â [https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
+Ref:[https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
 
 As per the documentation of ERC721.sol by Openzeppelin
 
@@ -1752,10 +1752,10 @@ _Submitted by hickuphh3, also found by antonttc, berndartmueller, catchup, cccz,
 
 ### Details & Impact
 
-The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isnâ€™t recommended because:
+The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isnt recommended because:
 
-*   [OpenZeppelinâ€™s documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
-*   Given that any NFT can be used for the call option, there are a few NFTs (hereâ€™s an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
+*   [OpenZeppelins documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
+*   Given that any NFT can be used for the call option, there are a few NFTs (heres an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
 
 ### Recommended Mitigation Steps
 
@@ -2264,12 +2264,12 @@ Source: https://github.com/sherlock-audit/2022-11-buffer-judging/issues/130
 bin2chen, HonorLt, KingNFT
 
 ## Summary
-_openQueuedTrade() does not follow the â€œChecks Effects Interactionsâ€ principle and may lead to re-entry to steal the funds
+_openQueuedTrade() does not follow the Checks Effects Interactions principle and may lead to re-entry to steal the funds
 
 https://fravoll.github.io/solidity-patterns/checks_effects_interactions.html
 
 ## Vulnerability Detail
-The prerequisite is that tokenX is ERC777 e.g. â€œsushiâ€
+The prerequisite is that tokenX is ERC777 e.g. sushi
 1. resolveQueuedTrades() call _openQueuedTrade()
 2. in _openQueuedTrade() call "tokenX.transfer(queuedTrade.user)" if (revisedFee < queuedTrade.totalFee) before set queuedTrade.isQueued = false; 
 ```solidity
@@ -2299,7 +2299,7 @@ Manual Review
 
 ## Recommendation
 
-follow â€œChecks Effects Interactionsâ€ 
+follow Checks Effects Interactions 
 
 ```solidity
 
@@ -2417,16 +2417,16 @@ As can be seen above, t
 
 **Details**:
 
-The internalÂ [`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407)Â function handles user deposits, transferring a specified amount ofÂ `stETH`Â fromÂ `msg.sender`Â to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by theÂ [`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371)Â function.
+The internal[`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407)function handles user deposits, transferring a specified amount of`stETH`from`msg.sender`to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by the[`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371)function.
 
 
-As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter theÂ `deposit`Â function multiple times.
+As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter the`deposit`function multiple times.
 
 
 This re-entrancy will result in an increment in the receiver balance on the queue, even though this balance will not correspond to the actual amount deposited into the vault.
 
 
-In the current implementation, theÂ `_deposit`Â function in theÂ `BaseVault`Â contract is overridden by theÂ [implementation in theÂ `STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, theÂ `BaseVault`Â is likely to be inherited by future vaults, so it is crucial to have the correctÂ `_deposit`Â implementation in this contract in case it is not overridden.
+In the current implementation, the`_deposit`function in the`BaseVault`contract is overridden by the[implementation in the`STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, the`BaseVault`is likely to be inherited by future vaults, so it is crucial to have the correct`_deposit`implementation in this contract in case it is not overridden.
 
 
 Consider reordering the calls, doing the transfer first, and then adding th
@@ -2625,7 +2625,7 @@ The code will go into `_transferERC721s` instead of `_transferERC1155s`, since t
 
 ---
 
-### Example 2: Re-entrancy issue for ERC1155 âœ“Â Fixed
+### Example 2: Re-entrancy issue for ERC1155 Fixed
 
 **Source**: ConsenSys
 **Protocol**: Bridge Mutual
@@ -3411,7 +3411,7 @@ ElKu, rvierdiiev, obront, pashov, ctf\_sec, joestakey, ak1, JohnnyTime, GimelSec
 
 ## Summary
 
-In past audits, we have seen contract admins claim that invalidated configuration setters are fine since â€œadmins are trustworthyâ€. However, cases such as [Nomad got drained for over $150M](https://twitter.com/samczsun/status/1554260106107179010) and [Misconfiguration in the Acala stablecoin project allows attacker to steal 1.2 billion aUSD](https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd) have shown again and again that even trustable entities can make mistakes. Thus any fields that might potentially result in insolvency of protocol should be thoroughly checked.
+In past audits, we have seen contract admins claim that invalidated configuration setters are fine since admins are trustworthy. However, cases such as [Nomad got drained for over $150M](https://twitter.com/samczsun/status/1554260106107179010) and [Misconfiguration in the Acala stablecoin project allows attacker to steal 1.2 billion aUSD](https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd) have shown again and again that even trustable entities can make mistakes. Thus any fields that might potentially result in insolvency of protocol should be thoroughly checked.
 
 NftPort template implementations often ignore checks for config fields. For the rest of the issue, we take `royalty` related fields as an example to illustrate potential consequences of misconfigurations. Notably, lack of check is not limited to `royalty`, but exists among most config fields.
 
@@ -3494,7 +3494,7 @@ Consider implementing the necessary functionality to allow for the collection of
 
 
 **[sofianeOuafir (Joyn) confirmed and commented](https://github.com/code-423n4/2022-03-joyn-findings/issues/130#issuecomment-1099679515):**
- > This is a great observation. Something we are aware of and intend to fix as well. ðŸ‘ 
+ > This is a great observation. Something we are aware of and intend to fix as well.  
 
 
 
@@ -4949,7 +4949,7 @@ if (auctioneerCut > 0) {
 
 This line will revert if `auctioneer` is set to `address(0)` on some tokens (revert on transferring to address(0) is a [default behaviour of the OpenZeppelin template](https://www.notion.so/Yield-Witch-555e6981c26b41008d03a504077b4770)). So if someone start an `auction` with `to = address(0)`, this auction becomes un-liquidatable.
 
-A malicious user can run a bot to monitor his own vault, and if the got underwater and they donâ€™t have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
+A malicious user can run a bot to monitor his own vault, and if the got underwater and they dont have enough collateral to top up, they can immediately start an auction on their own vault and set actioneer to `0` to avoid actually being liquidated, which breaks the design of the system.
 
 
 ## Recommended Mitigation Steps
@@ -5018,7 +5018,7 @@ Note that this function assumes that the `amount` of ERC20 token is always 18 de
 ### Description
 Some tokens, such as BAT, do not precisely follow the ERC20 specification and will return
 false or fail silently instead of reverting. Because the codebase does not consistently use
-OpenZeppelinâ€™s SafeERC20 library, the return values of calls to `transfer` and
+OpenZeppelins SafeERC20 library, the return values of calls to `transfer` and
 `transferFrom` should be checked. However, return value checks are missing from these
 calls in many areas of the code, opening the TWAMM contract (the time-weighted automated
 market maker) to severe vulnerabilities.
@@ -5571,16 +5571,16 @@ Hence, when the user `redeems` the minted shares back to the `_assets`, the cont
 
 **Details**:
 
-The internalÂ [`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407)Â function handles user deposits, transferring a specified amount ofÂ `stETH`Â fromÂ `msg.sender`Â to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by theÂ [`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371)Â function.
+The internal[`_deposit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L407)function handles user deposits, transferring a specified amount of`stETH`from`msg.sender`to the vault. Before moving the funds, it adds the deposit to the queue, which is processed later by the[`processQueuedDeposits`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L371)function.
 
 
-As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter theÂ `deposit`Â function multiple times.
+As the underlying token could have hooks that allow the token sender to execute code before the transfer (e.g., ERC777 standard), a malicious user could use those hooks to re-enter the`deposit`function multiple times.
 
 
 This re-entrancy will result in an increment in the receiver balance on the queue, even though this balance will not correspond to the actual amount deposited into the vault.
 
 
-In the current implementation, theÂ `_deposit`Â function in theÂ `BaseVault`Â contract is overridden by theÂ [implementation in theÂ `STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, theÂ `BaseVault`Â is likely to be inherited by future vaults, so it is crucial to have the correctÂ `_deposit`Â implementation in this contract in case it is not overridden.
+In the current implementation, the`_deposit`function in the`BaseVault`contract is overridden by the[implementation in the`STETHVault`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/STETHVault.sol#L113-L126), which has the correct order of operation. However, the`BaseVault`is likely to be inherited by future vaults, so it is crucial to have the correct`_deposit`implementation in this contract in case it is not overridden.
 
 
 Consider reordering the calls, doing the transfer first, and then adding th
@@ -5637,7 +5637,7 @@ As we all know, some tokens will deduct fees when transferring token. In this wa
 
 ## Vulnerability Detail
 
-The `_bidCollaterals` mapping of `CollateralManager` records the `CollateralInfo` of each bidId. This structure records the collateral information provided by the user when creating a bid for a loan. A lender can accept a loan by calling Â `TellerV2.lenderAcceptBid` that will eventually transfer the user's collateral from the user address to the CollateralEscrowV1 contract corresponding to the loan. The whole process will deduct fee twice.
+The `_bidCollaterals` mapping of `CollateralManager` records the `CollateralInfo` of each bidId. This structure records the collateral information provided by the user when creating a bid for a loan. A lender can accept a loan by calling `TellerV2.lenderAcceptBid` that will eventually transfer the user's collateral from the user address to the CollateralEscrowV1 contract corresponding to the loan. The whole process will deduct fee twice.
 
 ```solidity
 //CollateralManager.sol
@@ -5889,13 +5889,13 @@ If you are making a Lock fund for escrow using a fee on transfer token then cont
 
 **Details**:
 
-The vault implements aÂ [`mintWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L131)Â andÂ [`depositWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L106)Â function intended to allow users to transfer assets to the vault in a single transaction. However, the vaultâ€™s underlying asset is intended to beÂ [stETH](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F10#L50)Â which does not have aÂ `permit`Â function. Currently, any user who tries to perform aÂ `mintWithPermit`Â orÂ `depositWithPermit`Â will have their transaction reverted due to the stETH contractâ€™sÂ [fallback](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F1#L279)Â function.
+The vault implements a[`mintWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L131)and[`depositWithPermit`](https://github.com/pods-finance/yield-contracts/blob/9389ab46e9ecdd1ea1fd7228c9d9c6821c00f057/contracts/vaults/BaseVault.sol#L106)function intended to allow users to transfer assets to the vault in a single transaction. However, the vaults underlying asset is intended to be[stETH](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F10#L50)which does not have a`permit`function. Currently, any user who tries to perform a`mintWithPermit`or`depositWithPermit`will have their transaction reverted due to the stETH contracts[fallback](https://etherscan.io/address/0x47ebab13b806773ec2a2d16873e2df770d130b50#code#F1#L279)function.
 
 
-Consider removing theÂ `mintWithPermit`Â andÂ `depositWithPermit`Â functions. We note thatÂ [wstETH](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0#code#L965)Â does have a permit function for future considerations.
+Consider removing the`mintWithPermit`and`depositWithPermit`functions. We note that[wstETH](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0#code#L965)does have a permit function for future considerations.
 
 
-***Update:**Â Acknowledged, and will not fix. Pods Finance teamâ€™s statement for this issue:*
+***Update:**Acknowledged, and will not fix. Pods Finance teams statement for this issue:*
 
 
 
@@ -6381,7 +6381,7 @@ contract NomadFacet is BaseConnextFacet {
 }
 ```
 
-While the following functions donâ€™t do this:
+While the following functions dont do this:
 - `xcall` of `BridgeFacet`
 - `_backLoan` of `PortalFacet`
 - `_swapAsset` of `AssetLogic`
@@ -7002,7 +7002,7 @@ The parameter names change depending on the context. So for any ERC20 token that
 - Call any of the functions in these facets to approve another address for that token.
 - Use the approved address to transfer tokens out of the `LifiDiamond` contract.
 
-**Note:** Normally, there shouldnâ€™t be any tokens in the `LiFi Diamond` contract, so the risk is limited. Also, see "Hardcode bridge addresses via immutable."
+**Note:** Normally, there shouldnt be any tokens in the `LiFi Diamond` contract, so the risk is limited. Also, see "Hardcode bridge addresses via immutable."
 
 ## Recommendation
 For each bridge facet, the bridge approval contract address is already known. Store these addresses in an immutable or a storage variable instead of taking them as user input. Only approve and interact with these pre-defined addresses.
@@ -7572,7 +7572,7 @@ This is `configureGmxState()` code in `PirexGmx`:
 
 ## Real-World Examples
 
-### Example 1: allowance() doesnâ€™t limit withdraw() s
+### Example 1: allowance() doesnt limit withdraw() s
 
 **Source**: Spearbit
 **Protocol**: Gauntlet
@@ -8467,9 +8467,9 @@ This is `withdraw()` and `redeem()` code in ERC4626RouterBase:
 
 _Submitted by [axic](https://twitter.com/alexberegszaszi), also found by [gpersoon](https://twitter.com/gpersoon), [pauliax](https://twitter.com/SolidityDev), [Jmukesh](https://twitter.com/MukeshJ_eth), [a_delamo](https://twitter.com/a_delamo), [s1m0](https://twitter.com/_smonica_), [cmichel](https://twitter.com/cmichelio), and [shw](https://github.com/x9453)_
 
-Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return â€œtrueâ€ on success. However, not every token claiming ERC20-compatibility is doing this â€” some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
+Some major tokens went live before ERC20 was finalized, resulting in a discrepancy whether the transfer functions should (A) return a boolean or (B) revert/fail on error. The current best practice is that they should revert, but return true on success. However, not every token claiming ERC20-compatibility is doing this  some only return true/false; some revert, but do not return anything on success. This is a well known issue, heavily discussed since mid-2018.
 
-Today many tools, including OpenZeppelin, offer [a wrapper for â€œsafe ERC20 transferâ€](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
+Today many tools, including OpenZeppelin, offer [a wrapper for safe ERC20 transfer](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol):
 
 RealityCards is not using such a wrapper, but instead tries to ensure successful transfers via the `balancedBooks` modifier:
 
@@ -8866,9 +8866,9 @@ https://github.com/code-423n4/2022-05-rubicon/blob/8c312a63a91193c6a192a9aab44ff
 
 ## Impact
 
-It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelinâ€™s `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
+It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelins `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
 
-However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelinâ€™s `safeTransfer()`/`safeTransferFrom()`.
+However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelins `safeTransfer()`/`safeTransferFrom()`.
 
 ## Proof of Concept
 
@@ -8896,7 +8896,7 @@ However, using `require()` to check transfer return values could lead to issues 
 _Submitted by jayjonah8, also found by cccz, cmichel, Dravee, gzeon, hyh, IllIllI, leastwood, NoamYakov, and Omik_
 
 In BribeVault.sol the transferBribes() function uses token.transfer() instead of token.safeTransfer.
-Tokens that donâ€™t correctly implement the latest EIP20 spec, like USDT, will be unusable in the protocol as they revert the transaction because of the missing return value.  The fact that the SafeERC20.sol library is imported at the top of the BribeVault.sol implies that safeTransfer should be being used but may have been forgotten.
+Tokens that dont correctly implement the latest EIP20 spec, like USDT, will be unusable in the protocol as they revert the transaction because of the missing return value.  The fact that the SafeERC20.sol library is imported at the top of the BribeVault.sol implies that safeTransfer should be being used but may have been forgotten.
 
 ### Proof of Concept
 
@@ -8904,7 +8904,7 @@ Tokens that donâ€™t correctly implement the latest EIP20 spec, like USDT, w
 
 ### Recommended Mitigation Steps
 
-It's recommended to use OpenZeppelinâ€™s SafeERC20 versions with the safeTransfer and safeTransferFrom functions that handle the return value check as well as non-standard-compliant tokens.
+It's recommended to use OpenZeppelins SafeERC20 versions with the safeTransfer and safeTransferFrom functions that handle the return value check as well as non-standard-compliant tokens.
 
 **[kphed (Redacted Cartel) confirmed and commented](https://github.com/code-423n4/2022-02-redacted-cartel-findings/issues/4#issuecomment-1040506429):**
  > Good catch!
@@ -9162,10 +9162,10 @@ _Submitted by hickuphh3, also found by antonttc, berndartmueller, catchup, cccz,
 
 ### Details & Impact
 
-The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isnâ€™t recommended because:
+The `transferFrom()` method is used instead of `safeTransferFrom()`, presumably to save gas. I however argue that this isnt recommended because:
 
-*   [OpenZeppelinâ€™s documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
-*   Given that any NFT can be used for the call option, there are a few NFTs (hereâ€™s an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
+*   [OpenZeppelins documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`, use `safeTransferFrom()` whenever possible
+*   Given that any NFT can be used for the call option, there are a few NFTs (heres an [example](https://github.com/sz-piotr/eth-card-game/blob/master/src/ethereum/contracts/ERC721Market.sol#L20-L31)) that have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`
 
 ### Recommended Mitigation Steps
 
@@ -9222,7 +9222,7 @@ https://github.com/code-423n4/2022-10-inverse/blob/main/src/Market.sol#L602
 ## Vulnerability details
 
 ## Impact
-ERC20 implementations are not always consistent. Some implementations of transfer and transferFrom could return â€˜falseâ€™ on failure instead of reverting. It is safer to wrap such calls into require() statements to these failures.
+ERC20 implementations are not always consistent. Some implementations of transfer and transferFrom could return false on failure instead of reverting. It is safer to wrap such calls into require() statements to these failures.
 
 
 ## Proof of Concept
@@ -9237,7 +9237,7 @@ https://github.com/code-423n4/2022-10-inverse/blob/main/src/Market.sol#L602
 Read the codes
 
 ## Recommended Mitigation Steps
-Check the return value and revert on 0/false or use OpenZeppelinâ€™s SafeERC20 wrappe
+Check the return value and revert on 0/false or use OpenZeppelins SafeERC20 wrappe
 
 *[Content truncated...]*
 
@@ -9470,9 +9470,9 @@ https://github.com/code-423n4/2022-05-rubicon/blob/8c312a63a91193c6a192a9aab44ff
 
 ## Impact
 
-It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelinâ€™s `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
+It is a good idea to add a `require()` statement that checks the return value of ERC20 token transfers or to use something like OpenZeppelins `safeTransfer()`/`safeTransferFrom()` unless one is sure the given token reverts in case of a failure. Failure to do so will cause silent failures of transfers and affect token accounting in contract.
 
-However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelinâ€™s `safeTransfer()`/`safeTransferFrom()`.
+However, using `require()` to check transfer return values could lead to issues with non-compliant ERC20 tokens which do not return a boolean value. Therefore, it's highly advised to use OpenZeppelins `safeTransfer()`/`safeTransferFrom()`.
 
 ## Proof of Concept
 
@@ -9559,7 +9559,7 @@ Using safeTransferFrom of SafeERC20.sol is recommended instead.<br>
 
 ## Real-World Examples
 
-### Example 1: Minter user can conï¬scate any user tokens
+### Example 1: Minter user can conscate any user tokens
 
 **Source**: TrailOfBits
 **Protocol**: Curve DAO
@@ -9574,7 +9574,7 @@ Using safeTransferFrom of SafeERC20.sol is recommended instead.<br>
 **Difficulty:** Low  
 
 ## Description
-ERC20CVâ€™s minter has the unexpected right to move tokens from any users, increasing the risks associated with the minter account.
+ERC20CVs minter has the unexpected right to move tokens from any users, increasing the risks associated with the minter account.
 
 The administrator of the contract can design a special user called a minter:
 ```python
@@ -9677,16 +9677,16 @@ Use safeMint instead of mint for ERC721
 
 ## Vulnerability Detail
 
-TheÂ `msg.sender`Â will be minted as a proof of staking NFT whenÂ `_stakeToken()`Â is called. 
+The`msg.sender`will be minted as a proof of staking NFT when`_stakeToken()`is called. 
 
-However, ifÂ `msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
+However, if`msg.sender` is a contract address that does not support ERC721, the NFT can be frozen in the contract.
 
 As per the documentation of EIP-721:
 
 > A wallet/broker/auction application MUST implement the wallet interface if it will accept safe transfers.
 > 
 
-Ref:Â [https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
+Ref:[https://eips.ethereum.org/EIPS/eip-721](https://eips.ethereum.org/EIPS/eip-721)
 
 As per the documentation of ERC721.sol by Openzeppelin
 
@@ -9969,21 +9969,21 @@ File: contracts/src/PuttyV2.sol   #2
 
 **Details**:
 
-There is a subtle difference between the implementation of solmateâ€™s SafeTransferLib and OZâ€™s SafeERC20: OZâ€™s SafeERC20 checks if the token is a contract or not, solmateâ€™s SafeTransferLib does not.<br>
+There is a subtle difference between the implementation of solmates SafeTransferLib and OZs SafeERC20: OZs SafeERC20 checks if the token is a contract or not, solmates SafeTransferLib does not.<br>
 See: <https://github.com/Rari-Capital/solmate/blob/main/src/utils/SafeTransferLib.sol#L9><br>
 Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller.<br>
-As a result, when the tokenâ€™s address has no code, the transaction will just succeed with no error.<br>
+As a result, when the tokens address has no code, the transaction will just succeed with no error.<br>
 This attack vector was made well-known by the qBridge hack back in Jan 2022.
 
-In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmateâ€™s libraries.
+In AstariaRouter, Vault, PublicVault, VaultImplementation, ClearingHouse, TransferProxy, and WithdrawProxy, the `safetransfer` and `safetransferfrom` don't check the existence of code at the token address. This is a known issue while using solmates libraries.
 
-Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesnâ€™t have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
+Hence this can lead to miscalculation of funds and also loss of funds , because if safetransfer() and safetransferfrom() are called on a token address that doesnt have contract in it, it will always return success. Due to this protocol will think that funds has been transferred and successful , and records will be accordingly calculated, but in reality funds were never transferred.
 
 So this will lead to miscalculation and loss of funds.
 
 ### Attack scenario (example):
 
-Itâ€™s becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
+Its becoming popular for protocols to deploy their token across multiple networks and when they do so, a common practice is to deploy the token cont
 
 *[Content truncated...]*
 

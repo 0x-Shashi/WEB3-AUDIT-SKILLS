@@ -1,4 +1,4 @@
-# EVM, Gas & DoS Vulnerability Patterns
+﻿# EVM, Gas & DoS Vulnerability Patterns
 
 > **AI Skill**: This file contains EVM-specific, gas-related, and denial-of-service vulnerability patterns extracted from real audit reports.
 
@@ -6,21 +6,21 @@
 
 | Category | Pattern | Severity |
 |----------|---------|----------|
-| [Gas](#1-gas-vulnerabilities) | Transaction Costs, L1→L2 Gas | Medium-High |
+| [Gas](#1-gas-vulnerabilities) | Transaction Costs, L1L2 Gas | Medium-High |
 | [DoS](#2-dos-vulnerabilities) | Replay Attacks, Block Gas Limit | Medium-High |
 | [Context](#3-context-vulnerabilities) | msg.value, msg.sender | Medium-High |
-| [Cross-Layer](#4-cross-layer-vulnerabilities) | L1↔L2 Sync, Upgrade Failures | High |
+| [Cross-Layer](#4-cross-layer-vulnerabilities) | L1L2 Sync, Upgrade Failures | High |
 | [Data Location](#5-data-location-vulnerabilities) | Storage vs Memory, Calldata | Medium |
 
 ---
 
 ## 1. Gas Vulnerabilities
 
-### 1.1 L1→L2 Transaction Gas Miscalculation
+### 1.1 L1L2 Transaction Gas Miscalculation
 
-**Vulnerability**: Incorrect gas check allows L1→L2 transaction without sufficient gas for both overhead AND intrinsic costs.
+**Vulnerability**: Incorrect gas check allows L1L2 transaction without sufficient gas for both overhead AND intrinsic costs.
 
-**Context**: zkSync, Arbitrum, Optimism L1→L2 bridging
+**Context**: zkSync, Arbitrum, Optimism L1L2 bridging
 
 **Formula**:
 ```
@@ -52,7 +52,7 @@ require(
 ```
 
 **Audit Checklist**:
-- [ ] Does L1→L2 gas calculation include overhead?
+- [ ] Does L1L2 gas calculation include overhead?
 - [ ] Does it include intrinsic costs?
 - [ ] Does it include minimum execution gas?
 - [ ] Can underflow occur when subtracting overhead?
@@ -86,7 +86,7 @@ let overheadForLength := ceilDiv(
 
 ---
 
-### 1.3 L1→L2 Revert Consumes All Gas
+### 1.3 L1L2 Revert Consumes All Gas
 
 **Vulnerability**: Near call opcode (zkSync) doesn't return unspent gas on REVERT, unlike EVM's 63/64 rule.
 
@@ -105,7 +105,7 @@ function executeL1Tx() {
 **Impact**: Users lose entire gas payment even for simple reverts.
 
 **Audit Checklist**:
-- [ ] Does L1→L2 path use near call?
+- [ ] Does L1L2 path use near call?
 - [ ] Is gas refunded on revert?
 - [ ] Is this behavior documented for users?
 
@@ -183,7 +183,7 @@ function notifyGaugeLoss(address gauge) external {
 
 ### 2.3 Same-Block Stake/Unstake Exploit
 
-**Vulnerability**: Flash loan stake → claim rewards → unstake in same block dilutes long-term staker rewards.
+**Vulnerability**: Flash loan stake  claim rewards  unstake in same block dilutes long-term staker rewards.
 
 **Pattern to Look For**:
 ```solidity
@@ -238,7 +238,7 @@ function claimRewards() external {
 
 ### 3.1 L2 ETH Inaccessible via L1 Transactions
 
-**Vulnerability**: L1→L2 transactions use msg.value from L1, ignoring user's L2 balance.
+**Vulnerability**: L1L2 transactions use msg.value from L1, ignoring user's L2 balance.
 
 **Pattern to Look For**:
 ```solidity
@@ -254,7 +254,7 @@ function requestL2Transaction(
 }
 ```
 
-**Impact**: User with ETH on L2 cannot use it for L1→L2 transactions. Critical if malicious upgrade scheduled - users trapped.
+**Impact**: User with ETH on L2 cannot use it for L1L2 transactions. Critical if malicious upgrade scheduled - users trapped.
 
 **Audit Checklist**:
 - [ ] Can users access L2 balances via L1 calls?
@@ -287,7 +287,7 @@ function _verifyDepositLimit(address token, address depositor, uint256 amount, b
 1. Token has no limit initially
 2. Attacker deposits large amount, intentionally fails
 3. Later, token limit imposed
-4. Attacker claims failed deposit → reduces counter
+4. Attacker claims failed deposit  reduces counter
 5. Attacker can now deposit more than cap
 
 **Secure Pattern**:
@@ -376,14 +376,14 @@ function executeBatches(StoredBatchInfo[] calldata batches) external {
 
 ### 4.2 Transaction Ordering in Cross-Layer Operations
 
-**Vulnerability**: L1→L2 message order assumptions can be violated by sequencer.
+**Vulnerability**: L1L2 message order assumptions can be violated by sequencer.
 
 **Pattern to Look For**:
 ```solidity
 // Assumes deposit processes before operation
 function depositAndOperate() external {
-    bridge.deposit(token, amount);  // L1 → L2 message 1
-    bridge.operate(data);            // L1 → L2 message 2
+    bridge.deposit(token, amount);  // L1  L2 message 1
+    bridge.operate(data);            // L1  L2 message 2
     // Sequencer may reorder!
 }
 ```
@@ -505,7 +505,7 @@ Check this protocol for denial of service vectors:
 4. Block gas limit issues in loops
 ```
 
-### For L1↔L2 Audits
+### For L1L2 Audits
 ```
 Review cross-layer synchronization for:
 1. Message ordering guarantees
@@ -520,7 +520,7 @@ Review cross-layer synchronization for:
 
 | Pattern | Source Report | Protocol |
 |---------|--------------|----------|
-| L1→L2 Gas | Code4rena 2023-10 | zkSync |
+| L1L2 Gas | Code4rena 2023-10 | zkSync |
 | Unit Mismatch | Code4rena 2023-10 | zkSync |
 | Revert Gas | Code4rena 2023-10 | zkSync |
 | EIP-155 Replay | Code4rena 2023-10 | zkSync |

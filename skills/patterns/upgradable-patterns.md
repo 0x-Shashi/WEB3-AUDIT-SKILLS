@@ -1,4 +1,4 @@
-# Upgradable Security Patterns
+﻿# Upgradable Security Patterns
 
 ## Overview
 
@@ -405,7 +405,7 @@ Diffchecker
 
 ### Description
 
-The non-upgradeable standard version of OpenZeppelin’s library, such as `Ownable`, `Pausable`, `Address`, `Context`, `SafeERC20`, `ERC1967Upgrade` etc, are inherited / used by both the proxy and the implementation contracts.
+The non-upgradeable standard version of OpenZeppelins library, such as `Ownable`, `Pausable`, `Address`, `Context`, `SafeERC20`, `ERC1967Upgrade` etc, are inherited / used by both the proxy and the implementation contracts.
 
 As a result, when attempting to use the upgrades plugin mentioned, the following errors are raised:
 

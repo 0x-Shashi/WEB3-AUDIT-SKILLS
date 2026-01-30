@@ -1,4 +1,4 @@
-# Sui Security Guide
+﻿# Sui Security Guide
 
 Security considerations specific to Sui blockchain and Move development.
 
@@ -218,13 +218,13 @@ public fun add_child(
 ### Dynamic Field Security
 
 ```move
-// ⚠️ Key collision risk with generic keys
+//  Key collision risk with generic keys
 struct TypedKey has copy, drop, store {
     key_type: u8,
     key_value: address,
 }
 
-// ✅ Use type-safe keys
+//  Use type-safe keys
 public fun add_user_data(parent: &mut Parent, user: address, data: UserData) {
     let key = TypedKey { key_type: 1, key_value: user };
     assert!(!df::exists_(&parent.id, key), E_EXISTS);
@@ -304,7 +304,7 @@ public fun verify_publisher<T>(publisher: &Publisher) {
 ```move
 use sui::clock::{Self, Clock};
 
-// ⚠️ Clock is a shared object, updated by validators
+//  Clock is a shared object, updated by validators
 // Don't use for high-precision or critical timing
 
 public entry fun check_deadline(

@@ -1,4 +1,4 @@
-# TWAP Security Patterns
+﻿# TWAP Security Patterns
 
 ## Overview
 
@@ -25,7 +25,7 @@
 
 ## Real-World Examples
 
-### Example 1: P2P rate can be manipulated as it’s a lazy-updated snapshot
+### Example 1: P2P rate can be manipulated as its a lazy-updated snapshot
 
 **Source**: Spearbit
 **Protocol**: Morpho
@@ -38,7 +38,7 @@
 MarketsManagerForAave.sol#L408-L411
 
 ## Description
-The P2P rate is lazy-updated upon interactions with the Morpho protocol. It takes the mid-rate of the current Aave supply and borrow rate. It’s possible to manipulate these rates before triggering an update on Morpho.
+The P2P rate is lazy-updated upon interactions with the Morpho protocol. It takes the mid-rate of the current Aave supply and borrow rate. Its possible to manipulate these rates before triggering an update on Morpho.
 ```solidity
 function _updateSPYs(address _marketAddress) internal {
     DataTypes.ReserveData memory reserveData = lendingPool.getReserveData(

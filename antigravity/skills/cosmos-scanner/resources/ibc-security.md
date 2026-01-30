@@ -1,4 +1,4 @@
-# IBC Security Guide
+﻿# IBC Security Guide
 
 Security considerations for Inter-Blockchain Communication (IBC) in CosmWasm contracts.
 
@@ -7,22 +7,22 @@ Security considerations for Inter-Blockchain Communication (IBC) in CosmWasm con
 ## IBC Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                       CHAIN A                               │
-│  ┌─────────────────┐         ┌─────────────────────────┐   │
-│  │  IBC Contract   │ ──────► │     IBC Module          │   │
-│  │  (Application)  │ ◄────── │     (Relayer)           │   │
-│  └─────────────────┘         └─────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                          │  ▲
-                          ▼  │ (Light Client Verification)
-┌─────────────────────────────────────────────────────────────┐
-│                       CHAIN B                               │
-│  ┌─────────────────┐         ┌─────────────────────────┐   │
-│  │  IBC Contract   │ ◄────── │     IBC Module          │   │
-│  │  (Application)  │ ──────► │     (Relayer)           │   │
-│  └─────────────────┘         └─────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+
+                       CHAIN A                               
+              
+    IBC Contract          IBC Module             
+    (Application)         (Relayer)              
+              
+
+                            
+                             (Light Client Verification)
+
+                       CHAIN B                               
+              
+    IBC Contract          IBC Module             
+    (Application)         (Relayer)              
+              
+
 ```
 
 ---
@@ -137,7 +137,7 @@ pub fn ibc_channel_open(
     _env: Env,
     _msg: IbcChannelOpenMsg,
 ) -> Result<IbcChannelOpenResponse, ContractError> {
-    // ❌ Accepts ANY channel!
+    //  Accepts ANY channel!
     Ok(None)
 }
 
@@ -147,7 +147,7 @@ pub fn ibc_packet_receive(
     _env: Env,
     msg: IbcPacketReceiveMsg,
 ) -> Result<IbcReceiveResponse, ContractError> {
-    // ❌ Processes packet from any channel
+    //  Processes packet from any channel
     let data: PacketData = from_json(&msg.packet.data)?;
     process_transfer(deps, data)?;
     Ok(IbcReceiveResponse::new().set_ack(ack_success()))
@@ -160,7 +160,7 @@ const IBC_VERSION: &str = "myprotocol-1";
 const ORDERING: IbcOrder = IbcOrder::Unordered;
 
 fn validate_channel(channel: &IbcChannel) -> Result<(), ContractError> {
-    // ✅ Verify version
+    //  Verify version
     if channel.version != IBC_VERSION {
         return Err(ContractError::InvalidIbcVersion {
             expected: IBC_VERSION.to_string(),
@@ -168,7 +168,7 @@ fn validate_channel(channel: &IbcChannel) -> Result<(), ContractError> {
         });
     }
     
-    // ✅ Verify ordering
+    //  Verify ordering
     if channel.order != ORDERING {
         return Err(ContractError::InvalidChannelOrder {});
     }
@@ -194,7 +194,7 @@ pub fn ibc_packet_receive(
 ) -> Result<IbcReceiveResponse, ContractError> {
     let packet = &msg.packet;
     
-    // ✅ Verify channel is known/expected
+    //  Verify channel is known/expected
     if !ALLOWED_CHANNELS.has(deps.storage, &packet.dest.channel_id) {
         return Err(ContractError::UnknownChannel {});
     }
@@ -229,7 +229,7 @@ pub fn ibc_packet_receive(
 ) -> Result<IbcReceiveResponse, ContractError> {
     let data: TransferPacket = from_json(&msg.packet.data)?;
     
-    // ❌ Trusts sender/recipient from packet without validation
+    //  Trusts sender/recipient from packet without validation
     let recipient = deps.api.addr_validate(&data.recipient)?;
     mint_tokens(deps, recipient, data.amount)?;
     
@@ -248,24 +248,24 @@ pub fn ibc_packet_receive(
     let packet = &msg.packet;
     let data: TransferPacket = from_json(&packet.data)?;
     
-    // ✅ Validate amount
+    //  Validate amount
     if data.amount.is_zero() {
         return Ok(IbcReceiveResponse::new().set_ack(ack_error("zero amount")));
     }
     
-    // ✅ Validate recipient address format
+    //  Validate recipient address format
     let recipient = match deps.api.addr_validate(&data.recipient) {
         Ok(addr) => addr,
         Err(_) => return Ok(IbcReceiveResponse::new().set_ack(ack_error("invalid recipient"))),
     };
     
-    // ✅ Check against whitelist/limits if needed
+    //  Check against whitelist/limits if needed
     let config = CONFIG.load(deps.storage)?;
     if data.amount > config.max_transfer {
         return Ok(IbcReceiveResponse::new().set_ack(ack_error("exceeds limit")));
     }
     
-    // ✅ Log the source for auditing
+    //  Log the source for auditing
     let response = IbcReceiveResponse::new()
         .set_ack(ack_success())
         .add_attribute("source_channel", &packet.src.channel_id)
@@ -311,7 +311,7 @@ pub fn execute_transfer(
     Ok(Response::new().add_message(msg))
 }
 
-// ❌ Missing timeout handler - funds lost on timeout!
+//  Missing timeout handler - funds lost on timeout!
 ```
 
 ### Secure Code
@@ -332,7 +332,7 @@ pub fn execute_transfer(
     balance = balance.checked_sub(amount)?;
     BALANCES.save(deps.storage, &info.sender, &balance)?;
     
-    // ✅ Store pending transfer for potential refund
+    //  Store pending transfer for potential refund
     let sequence = get_next_sequence(deps.storage)?;
     PENDING_TRANSFERS.save(deps.storage, sequence, &PendingTransfer {
         sender: info.sender.clone(),
@@ -363,15 +363,15 @@ pub fn ibc_packet_timeout(
     let packet = msg.packet;
     let data: TransferPacket = from_json(&packet.data)?;
     
-    // ✅ Load pending transfer
+    //  Load pending transfer
     let pending = PENDING_TRANSFERS.load(deps.storage, data.sequence)?;
     
-    // ✅ Refund the sender
+    //  Refund the sender
     let mut balance = BALANCES.load(deps.storage, &pending.sender)?;
     balance = balance.checked_add(pending.amount)?;
     BALANCES.save(deps.storage, &pending.sender, &balance)?;
     
-    // ✅ Remove pending transfer
+    //  Remove pending transfer
     PENDING_TRANSFERS.remove(deps.storage, data.sequence);
     
     Ok(IbcBasicResponse::new()
@@ -391,12 +391,12 @@ pub fn ibc_packet_ack(
     
     match ack {
         Ack::Success {} => {
-            // ✅ Transfer succeeded, remove pending
+            //  Transfer succeeded, remove pending
             PENDING_TRANSFERS.remove(deps.storage, data.sequence);
             Ok(IbcBasicResponse::new().add_attribute("result", "success"))
         }
         Ack::Error(err) => {
-            // ✅ Transfer failed, refund
+            //  Transfer failed, refund
             let pending = PENDING_TRANSFERS.load(deps.storage, data.sequence)?;
             let mut balance = BALANCES.load(deps.storage, &pending.sender)?;
             balance = balance.checked_add(pending.amount)?;

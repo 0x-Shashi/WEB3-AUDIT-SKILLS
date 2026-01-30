@@ -1,4 +1,4 @@
-# Typo / CopyPaste Security Patterns
+﻿# Typo / CopyPaste Security Patterns
 
 ## Overview
 
@@ -25,7 +25,7 @@
 
 ## Real-World Examples
 
-### Example 1: [H-01] Use of tokenB’s price instead of tokenA in determining account health will lead to protocol mis-accounting and insolvency
+### Example 1: [H-01] Use of tokenBs price instead of tokenA in determining account health will lead to protocol mis-accounting and insolvency
 
 **Source**: Code4rena
 **Protocol**: Wild Credit

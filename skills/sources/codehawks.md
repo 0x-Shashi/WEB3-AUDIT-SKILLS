@@ -1,4 +1,4 @@
-# Codehawks - Audit Findings
+﻿# Codehawks - Audit Findings
 
 ## Overview
 
@@ -44,9 +44,9 @@ In `StabilityPool::liquidateBorrower` the function checks for `crvUSDToken.balan
 
 ```Solidity
 function liquidateBorrower(address userAddress) external onlyManagerOrOwner nonReentrant whenNotPaused {
-        _update();
-        uint256 userDebt = lendingPool.getUserDebt(userAddress);
-        uint256 scaledUserDebt = WadRayMath.rayMul(userDebt, lendingPool.getNor...
+    _update();
+    uint256 userDebt = lendingPool.getUserDebt(userAddress);
+    uint256 scaledUserDebt = WadRayMath.rayMul(userDebt, lendingPool.getNor...
 
 ---
 
@@ -60,7 +60,7 @@ The `StabilityPool` contract's reward distribution has a vulnerability where use
 
 ## Vulnerability Details
 
-The vulnerability exists in the `calculateRaacRewards()` function of the `StabilityPool` contract. The current implementation calculates rewards using the following formula:
+The vulnerability exists in the`calculateRaacRewards()`function of the `StabilityPool` contract. The current implementation calculates rewards using the following formula:
 
 ```Solidity
 rewards = (totalRewards * userDeposit...
@@ -151,7 +151,7 @@ The reSDL token approval is not ...
 
 ## Summary
 
-The `transferFrom` function in RToken calculates a scaled transfer amount before checking the user’s allowance. This discrepancy allows spenders to exceed the user’s intended approval, resulting in unauthorized transfers of more tokens than permitted.
+The `transferFrom` function in RToken calculates a scaled transfer amount before checking the users allowance. This discrepancy allows spenders to exceed the users intended approval, resulting in unauthorized transfers of more tokens than permitted.
 
 ## Vulnerability Details
 

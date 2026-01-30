@@ -1,33 +1,33 @@
-# NFT Marketplace Protocol Template
+﻿# NFT Marketplace Protocol Template
 
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                   NFT MARKETPLACE                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌───────────────┐                       ┌───────────────┐      │
-│  │   SELLERS     │──── List ───────────▶│  MARKETPLACE  │      │
-│  │               │◀─── Payment ─────────│  CONTRACT     │      │
-│  └───────────────┘                       └───────┬───────┘      │
-│                                                  │               │
-│  ┌───────────────┐                               │               │
-│  │   BUYERS      │──── Bid/Buy ──────────────────│               │
-│  │               │◀─── NFT ──────────────────────│               │
-│  └───────────────┘                               │               │
-│                                                  │               │
-│  ┌───────────────┐                       ┌───────┴───────┐      │
-│  │   CREATORS    │◀──────────────────────│   ROYALTY     │      │
-│  │               │      Royalties        │   ENGINE      │      │
-│  └───────────────┘                       └───────────────┘      │
-│                                                  │               │
-│                                          ┌───────┴───────┐      │
-│                                          │   ESCROW/     │      │
-│                                          │   CUSTODY     │      │
-│                                          └───────────────┘      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+                   NFT MARKETPLACE                                
+
+                                                                  
+                               
+     SELLERS      List   MARKETPLACE        
+                  Payment   CONTRACT           
+                               
+                                                                 
+                                                
+     BUYERS       Bid/Buy                
+                  NFT                
+                                                
+                                                                 
+                               
+     CREATORS       ROYALTY           
+                       Royalties           ENGINE            
+                               
+                                                                 
+                                                
+                                             ESCROW/           
+                                             CUSTODY           
+                                                
+                                                                  
+
 ```
 
 ---

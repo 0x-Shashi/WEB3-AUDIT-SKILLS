@@ -1,4 +1,4 @@
-# L1-L2 Messaging Security
+﻿# L1-L2 Messaging Security
 
 Comprehensive guide to securing cross-layer messaging between Ethereum (L1) and StarkNet (L2).
 
@@ -7,32 +7,32 @@ Comprehensive guide to securing cross-layer messaging between Ethereum (L1) and 
 ## Messaging Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        ETHEREUM (L1)                        │
-│  ┌─────────────────┐         ┌─────────────────────────┐   │
-│  │   L1 Contract   │ ──────► │    StarkNet Core        │   │
-│  │   (Bridge)      │ ◄────── │    (Message Queues)     │   │
-│  └─────────────────┘         └─────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                          │  ▲
-                          ▼  │
-┌─────────────────────────────────────────────────────────────┐
-│                       STARKNET (L2)                         │
-│  ┌─────────────────┐         ┌─────────────────────────┐   │
-│  │   L2 Contract   │ ◄────── │    Sequencer            │   │
-│  │   (Bridge)      │ ──────► │    (Proof Generation)   │   │
-│  └─────────────────┘         └─────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+
+                        ETHEREUM (L1)                        
+              
+     L1 Contract         StarkNet Core           
+     (Bridge)            (Message Queues)        
+              
+
+                            
+                            
+
+                       STARKNET (L2)                         
+              
+     L2 Contract         Sequencer               
+     (Bridge)            (Proof Generation)      
+              
+
 ```
 
 ---
 
-## L1 → L2 Messages
+## L1  L2 Messages
 
 ### Flow
 
 1. L1 contract calls `starknetCore.sendMessageToL2()`
-2. Message added to L1→L2 queue
+2. Message added to L1L2 queue
 3. Sequencer includes message in L2 block
 4. L1 handler invoked on L2 contract
 5. Message automatically consumed (one-time)
@@ -122,7 +122,7 @@ mod L2Bridge {
 }
 ```
 
-### Security Checklist - L1 → L2
+### Security Checklist - L1  L2
 
 - [ ] **L1 sender verified**: Always check `from_address` matches expected L1 contract
 - [ ] **Payload validated**: All parameters validated for range and validity
@@ -133,7 +133,7 @@ mod L2Bridge {
 
 ---
 
-## L2 → L1 Messages
+## L2  L1 Messages
 
 ### Flow
 
@@ -247,7 +247,7 @@ contract L1Bridge {
 }
 ```
 
-### Security Checklist - L2 → L1
+### Security Checklist - L2  L1
 
 - [ ] **Tokens burned before message**: Prevent double-spend
 - [ ] **Nonce included**: For ordering and replay protection
@@ -263,7 +263,7 @@ contract L1Bridge {
 ### 1. Missing L1 Origin Verification
 
 ```cairo
-// ❌ VULNERABLE - No sender check
+//  VULNERABLE - No sender check
 #[l1_handler]
 fn handle_deposit(
     ref self: ContractState,
@@ -274,7 +274,7 @@ fn handle_deposit(
     self._mint(get_caller_address(), amount);
 }
 
-// ✅ SECURE
+//  SECURE
 #[l1_handler]
 fn handle_deposit(
     ref self: ContractState,
@@ -302,14 +302,14 @@ let payload = array![recipient, amount.low, amount.high];
 ### 3. Missing L1 Replay Protection
 
 ```solidity
-// ❌ VULNERABLE - No replay tracking on L1
+//  VULNERABLE - No replay tracking on L1
 function completeWithdrawal(uint256[] calldata payload) external {
     starknetCore.consumeMessageFromL2(l2Contract, payload);
     // What if message already processed by different means?
     transfer(payload);
 }
 
-// ✅ SECURE - Track processed messages
+//  SECURE - Track processed messages
 mapping(bytes32 => bool) public processed;
 
 function completeWithdrawal(uint256[] calldata payload) external {
@@ -327,7 +327,7 @@ function completeWithdrawal(uint256[] calldata payload) external {
 ```
 Attack:
 1. User initiates withdrawal on L2
-2. Attacker sees pending L2→L1 message
+2. Attacker sees pending L2L1 message
 3. Attacker calls completeWithdrawal before user
 4. Tokens sent to wrong address if recipient not verified
 
@@ -339,7 +339,7 @@ Defense:
 ### 5. Timing Assumptions
 
 ```
-L2 → L1 messages require:
+L2  L1 messages require:
 1. L2 block finalization
 2. State diff generation
 3. Proof submission to L1
@@ -354,7 +354,7 @@ Don't assume messages arrive quickly!
 
 ## Message Hash Calculation
 
-### L1 → L2 Message Hash
+### L1  L2 Message Hash
 
 ```solidity
 // StarkNet calculates:
@@ -370,7 +370,7 @@ bytes32 msgHash = keccak256(
 );
 ```
 
-### L2 → L1 Message Hash
+### L2  L1 Message Hash
 
 ```cairo
 // Message hash on L2:
@@ -387,13 +387,13 @@ bytes32 msgHash = keccak256(
 ### Deposit/Withdraw Pattern
 
 ```
-Deposit (L1 → L2):
+Deposit (L1  L2):
 1. User calls L1.deposit(amount)
 2. L1 locks tokens in bridge contract
 3. L1 sends message to L2
 4. L2 mints equivalent tokens to user
 
-Withdraw (L2 → L1):
+Withdraw (L2  L1):
 1. User calls L2.withdraw(amount)
 2. L2 burns tokens
 3. L2 sends message to L1

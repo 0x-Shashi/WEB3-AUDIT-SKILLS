@@ -1,4 +1,4 @@
-# TON Contract Audit Workflow
+﻿# TON Contract Audit Workflow
 
 Systematic workflow for auditing TON blockchain smart contracts (FunC and Tact).
 
@@ -83,9 +83,9 @@ npx blueprint test
 ### Op Code Switch
 | Op | Handler | Auth | Validated? |
 |----|---------|------|------------|
-| 0x01 | do_transfer | Owner | ✅ |
-| 0x02 | do_deposit | Anyone | ✅ |
-| else | throw | N/A | ✅ |
+| 0x01 | do_transfer | Owner |  |
+| 0x02 | do_deposit | Anyone |  |
+| else | throw | N/A |  |
 
 ### Bounce Handling
 - [ ] Bounce flag detected
@@ -122,9 +122,9 @@ npx blueprint test
 ```markdown
 | Operation | Expected Auth | Verified? | Location |
 |-----------|---------------|-----------|----------|
-| transfer | Owner | ✅ | line 45 |
-| withdraw | Owner | ✅ | line 78 |
-| update_config | Admin | ❌ ISSUE | line 112 |
+| transfer | Owner |  | line 45 |
+| withdraw | Owner |  | line 78 |
+| update_config | Admin |  ISSUE | line 112 |
 | get_balance | Anyone | N/A | getter |
 ```
 
@@ -163,8 +163,8 @@ require(sender() == self.owner, "Not owner");
 ### Gas Limits
 | Operation | Bounded? | Max Iterations |
 |-----------|----------|----------------|
-| Loop A | ✅ | 100 |
-| Dict iteration | ❌ ISSUE | Unbounded |
+| Loop A |  | 100 |
+| Dict iteration |  ISSUE | Unbounded |
 
 ### Send Modes
 | Location | Mode | Purpose |
@@ -177,7 +177,7 @@ require(sender() == self.owner, "Not owner");
 ### 4.2 Gas Patterns
 
 ```func
-;; ✅ Proper gas reservation
+;;  Proper gas reservation
 const min_storage = 50000000; ;; 0.05 TON
 
 () process() impure {
@@ -186,7 +186,7 @@ const min_storage = 50000000; ;; 0.05 TON
     send_raw_message(msg, 128); ;; Safe with reservation
 }
 
-;; ✅ Bounded loops
+;;  Bounded loops
 const MAX_ITER = 50;
 int i = 0;
 while ((i < count) & (i < MAX_ITER)) {
@@ -220,8 +220,8 @@ while ((i < count) & (i < MAX_ITER)) {
 ### State Updates
 | Function | Loads? | Modifies? | Saves? |
 |----------|--------|-----------|--------|
-| transfer | ✅ | ✅ balance | ✅ |
-| deposit | ✅ | ✅ balance | ❌ ISSUE |
+| transfer |  |  balance |  |
+| deposit |  |  balance |  ISSUE |
 ```
 
 ### 5.2 Dictionary Security
@@ -244,19 +244,19 @@ while ((i < count) & (i < MAX_ITER)) {
 ```markdown
 | Location | Operation | Type | Safe? |
 |----------|-----------|------|-------|
-| L45 | a + b | coins | ⚠️ No check |
-| L78 | a - b | int | ✅ checked |
-| L112 | a * b | int | ⚠️ overflow |
+| L45 | a + b | coins |  No check |
+| L78 | a - b | int |  checked |
+| L112 | a * b | int |  overflow |
 ```
 
 ### 6.2 TON-Specific Math
 
 ```func
-;; ✅ Safe subtraction with check
+;;  Safe subtraction with check
 throw_if(400, balance < amount);
 balance -= amount;
 
-;; ✅ Coin validation
+;;  Coin validation
 throw_if(401, amount <= 0);
 throw_if(402, amount > max_amount);
 ```

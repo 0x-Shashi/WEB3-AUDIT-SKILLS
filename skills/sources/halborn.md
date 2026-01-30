@@ -1,4 +1,4 @@
-# Halborn - Audit Findings
+﻿# Halborn - Audit Findings
 
 ## Overview
 
@@ -100,7 +100,7 @@ export...
 
 ##### Description
 
-The mnemonic phrase of the wallet is kept unencrypted in memory, even the wallet was locked. As a result, an attacker with access to the user’s machine could exfiltrate the mnemonic phrase. This makes the wallet web extension vulnerable to Demonic (CVE-2022-32969). The user password in cleartext was also found.
+The mnemonic phrase of the wallet is kept unencrypted in memory, even the wallet was locked. As a result, an attacker with access to the users machine could exfiltrate the mnemonic phrase. This makes the wallet web extension vulnerable to Demonic (CVE-2022-32969). The user password in cleartext was also found.
 
 It is important to recognize that the mnemonic risk extends beyond the application state; it could also be leaked into memory when the browser displays the mnemonic in clear text and as long as the process running.
 

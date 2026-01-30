@@ -1,4 +1,4 @@
-# Move Contract Audit Workflow
+﻿# Move Contract Audit Workflow
 
 Systematic workflow for auditing Move smart contracts on Aptos and Sui.
 
@@ -107,15 +107,15 @@ sui move test
 ### Value-Bearing Structs
 | Struct | copy | drop | store | key | Correct? |
 |--------|------|------|-------|-----|----------|
-| Coin | ❌ | ❌ | ✅ | ✅ | ✅ |
-| LPToken | ❌ | ❌ | ✅ | ✅ | ✅ |
-| NFT | ❌ | ❌ | ✅ | ✅ | ✅ |
+| Coin |  |  |  |  |  |
+| LPToken |  |  |  |  |  |
+| NFT |  |  |  |  |  |
 
 ### Capability Structs
 | Struct | copy | drop | store | key | Correct? |
 |--------|------|------|-------|-----|----------|
-| AdminCap | ❌ | ❌ | ✅ | ✅ | ✅ |
-| MintCap | ❌ | ❌ | ✅ | ✅ | ✅ |
+| AdminCap |  |  |  |  |  |
+| MintCap |  |  |  |  |  |
 
 ### Issues Found
 - [ ] None / [Issue]
@@ -124,13 +124,13 @@ sui move test
 ### 3.2 Ability Red Flags
 
 ```move
-// ❌ RED FLAG: copy on value-bearing struct
+//  RED FLAG: copy on value-bearing struct
 struct Coin has copy, key, store { value: u64 }
 
-// ❌ RED FLAG: drop on valuable resource
+//  RED FLAG: drop on valuable resource
 struct NFT has drop, key { id: u64 }
 
-// ✅ CORRECT: No copy/drop on valuable structs
+//  CORRECT: No copy/drop on valuable structs
 struct SafeCoin has key, store { value: u64 }
 ```
 
@@ -166,9 +166,9 @@ struct SafeCoin has key, store { value: u64 }
 |----------|-----------|-----------|-------|
 | swap | Public | N/A | Anyone |
 | add_liquidity | Public | N/A | Anyone |
-| set_fee | AdminCap | ✅ | |
-| upgrade | UpgradeCap | ✅ | |
-| mint | MintCap | ❌ ISSUE | Missing |
+| set_fee | AdminCap |  | |
+| upgrade | UpgradeCap |  | |
+| mint | MintCap |  ISSUE | Missing |
 ```
 
 ---
@@ -183,17 +183,17 @@ struct SafeCoin has key, store { value: u64 }
 ### Creation
 - Function: `create()`
 - Who: Admin only
-- Validation: ✅
+- Validation: 
 
 ### Storage
 - Location: Under owner address
-- borrow_global: ✅ exists check
-- borrow_global_mut: ✅ auth check
+- borrow_global:  exists check
+- borrow_global_mut:  auth check
 
 ### Destruction
 - Function: `destroy()`
-- Cleanup: ✅ All values handled
-- Orphans: ❌ None
+- Cleanup:  All values handled
+- Orphans:  None
 ```
 
 ### 5.2 Object Lifecycle (Sui)
@@ -204,15 +204,15 @@ struct SafeCoin has key, store { value: u64 }
 ### Creation
 - Function: `create()`
 - Type: Owned / Shared / Immutable
-- Transfer: ✅ Transferred to sender
+- Transfer:  Transferred to sender
 
 ### Consumption
 - Functions that consume: `destroy()`, `merge()`
-- All paths return/transfer: ✅
+- All paths return/transfer: 
 
 ### Dynamic Fields
-- Keys unique: ✅
-- Collision possible: ❌
+- Keys unique: 
+- Collision possible: 
 ```
 
 ---
@@ -226,9 +226,9 @@ struct SafeCoin has key, store { value: u64 }
 
 | Location | Operation | Type | Overflow Safe? |
 |----------|-----------|------|----------------|
-| pool:45 | a + b | u64 | ✅ Move aborts |
-| pool:78 | a * b / c | u128 | ⚠️ Check order |
-| fee:23 | a - b | u64 | ❌ No check |
+| pool:45 | a + b | u64 |  Move aborts |
+| pool:78 | a * b / c | u128 |  Check order |
+| fee:23 | a - b | u64 |  No check |
 ```
 
 ### 6.2 Precision Analysis
@@ -313,8 +313,8 @@ Exchange token A for token B
 ### Input Validation
 | Input | Type | Validated? | How? |
 |-------|------|------------|------|
-| amount_in | u64 | ✅ | > 0 check |
-| min_out | u64 | ✅ | Used in slippage |
+| amount_in | u64 |  | > 0 check |
+| min_out | u64 |  | Used in slippage |
 
 ### State Changes
 | State | Before | After |
@@ -328,7 +328,7 @@ Exchange token A for token B
 
 ### Return Value
 - Type: Coin<B>
-- Correct: ✅
+- Correct: 
 ```
 
 ---

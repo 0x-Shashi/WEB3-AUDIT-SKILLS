@@ -1,4 +1,4 @@
-# Blacklisted Security Patterns
+﻿# Blacklisted Security Patterns
 
 ## Overview
 
@@ -445,7 +445,7 @@ A malicious recipient may prevent the payer from canceling the payment stream an
 
 ---
 
-### Example 11: transferFrom() Lacks notBlackListed Modifier on the Spender msg.sender ✓ Fixed
+### Example 11: transferFrom() Lacks notBlackListed Modifier on the Spender msg.sender Fixed
 
 **Source**: ConsenSys
 **Protocol**: USDKG

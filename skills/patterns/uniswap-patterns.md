@@ -1,4 +1,4 @@
-# Uniswap Security Patterns
+﻿# Uniswap Security Patterns
 
 ## Overview
 
@@ -587,7 +587,7 @@ The protocol has acknowledged this issue.
 0k, 0xMojito, 0xRstStn, 0xloscar01, Stoicov, ZanyBonzy, den\_sosnovskyi, deth, fibonacci, giraffe, mahmud, n1punp, santiellena, sunill\_eth, tank
 ## Summary
 
-In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and it’s meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
+In the `JalaPair::_update` function, overflow is intentionally desired in the calculations for `timeElapsed` and `priceCumulative`. This is forked from the UniswapV2 source code, and its meant and known to overflow. UniswapV2 was developed using Solidity 0.6.6, where arithmetic operations overflow and underflow by default. However, Jala utilizes Solidity >=0.8.0, where such operations will automatically revert.
 
 ## Vulnerability Detail
 
@@ -889,7 +889,7 @@ I think this is incorrectly **excluded**. The issue is not related to **flashloa
 ```
 The issue is that calculation of p is likely to overflow. sqrtPriceX96 has 96 bits for decimals, 
 10** `token0.decimals()` will have 60 bits when decimals is 18, therefore there is only 
-(256 – 2 * 96 – 60) / 2 = 2 bits for non-decimal part of sqrtPriceX96. 
+(256  2 * 96  60) / 2 = 2 bits for non-decimal part of sqrtPriceX96. 
 
 **Recommended Mitigation:**
 Consider converting the sqrtPrice to a 60x18 format and performing arithmetic operations 

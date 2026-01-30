@@ -1,4 +1,4 @@
-# Wrong Math Security Patterns
+﻿# Wrong Math Security Patterns
 
 ## Overview
 
@@ -120,7 +120,7 @@ Before deciding whether or not to relay an auction result, a bot can call `compu
 So in `_appendStack` we have:
 
 ```
-onew + on + ... + oj  ≤ Lj
+onew + on + ... + oj   Lj
 ```
 
 Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount for the stack slot plus the potential interest at the end of its term. 
@@ -128,7 +128,7 @@ Where `oj` is `getOwed(newStack[j], newStack[j].point.end)`, which is the amount
 So it would make sense to enforce a stricter inequality for `Lnew`:
 
 ```
-(1 + r(tend − tnow) / 10^18) Anew = onew ≤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 The big issue regarding the current lower bound is when the borrower only takes one lien and for this lien `liquidationInitialAsk == amount` (or they are close). Then at any point during the lien term (maybe very close to the end), the borrower can atomically self-liquidate and settle the Seaport auction in one transaction. This way the borrower can skip paying any interest (they would need to pay OpenSea fees and potentially royalty fees) and plus they would receive liquidation fees.
@@ -137,7 +137,7 @@ The big issue regarding the current lower bound is when the borrower only takes 
 Make sure the following stricter lower bound is used instead:
 
 ```
-(1 + r(tend − tnow) / 10^18) Anew = onew ≤ Lnew
+(1 + r(tend  tnow) / 10^18) Anew = onew  Lnew
 ```
 
 **Reference**: [View Original Finding](https://github.com/spearbit/portfolio/blob/master/pdfs/Astaria-Spearbit-Security-Review.pdf)
@@ -225,7 +225,7 @@ function _handleExecuteTransaction(...) ... {
 `ConnextPriceOracle.sol#L109-L135`
 
 ## Description
-The function `getPriceFromDex` derives the price by querying the balance of AMM’s pools.
+The function `getPriceFromDex` derives the price by querying the balance of AMMs pools.
 
 ```solidity
 function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
@@ -241,7 +241,7 @@ function getPriceFromDex(address _tokenAddress) public view returns (uint256) {
 Deriving the price with `balanceOf` is dangerous as `balanceOf` may be gamed. Consider Uniswap V2 as an example; exploiters can first send tokens into the pool and pump the price, then absorb the tokens that were previously donated by calling `mint`.
 
 ## Recommendation
-Consider querying DEX’s state through function calls such as Uniswap V2’s `getReserves()` which returns the correct state of the pool.
+Consider querying DEXs state through function calls such as Uniswap V2s `getReserves()` which returns the correct state of the pool.
 
 ## References
 - **Connext**: Solved in PR 1649.
@@ -268,7 +268,7 @@ Consider querying DEX’s state through function calls such as Uniswap V2’s `g
 `MarketsManagerForAave.sol#L413-L418`
 
 ## Description
-The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. It’s currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
+The reserve factor is taken on the entire P2P supply and borrow rates instead of just on the spread of the pool rates. Its currently overcharging suppliers and borrowers and making it possible to earn a worse rate on Morpho than the pool rates.
 
 ```solidity
 supplyP2PSPY[_marketAddress] =
@@ -281,8 +281,8 @@ MAX_BASIS_POINTS;
 ```
 
 ## Recommendation
-Fix the computation. The real reserve factor should apply only on the spread so you’re right that this formula is wrong and needs to be updated: 
-`a + (1/2 ± f)(b-a)` where f is the reserve factor.
+Fix the computation. The real reserve factor should apply only on the spread so youre right that this formula is wrong and needs to be updated: 
+`a + (1/2  f)(b-a)` where f is the reserve factor.
 
 ## Spearbit
 Acknowledged, fixed in PR #565.

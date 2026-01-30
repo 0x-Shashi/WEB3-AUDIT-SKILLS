@@ -1,4 +1,4 @@
----
+﻿---
 name: TON Scanner
 description: TON blockchain FunC/Tact smart contract vulnerability scanner with 40+ security patterns
 version: 1.0.0
@@ -174,7 +174,7 @@ Comprehensive security scanner for TON blockchain smart contracts. Covers both F
     
     (int seqno, int pubkey, int balance, slice owner) = load_data();
     
-    ;; ✅ Validate sender is owner
+    ;;  Validate sender is owner
     throw_unless(401, equal_slices(sender, owner));
     
     ;; ... continue
@@ -186,7 +186,7 @@ Comprehensive security scanner for TON blockchain smart contracts. Covers both F
 int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
 
 () recv_internal(int my_balance, int msg_value, ...) impure {
-    ;; ✅ Reserve gas for storage
+    ;;  Reserve gas for storage
     raw_reserve(min_tons_for_storage(), 0);
     
     ;; ... operations
@@ -224,7 +224,7 @@ contract Vault with Deployable {
     }
 
     receive(msg: Withdraw) {
-        // ✅ Validate sender
+        //  Validate sender
         require(sender() == self.owner, "Only owner");
         require(self.balance >= msg.amount, "Insufficient balance");
         

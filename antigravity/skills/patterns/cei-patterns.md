@@ -1,4 +1,4 @@
-# CEI Security Patterns
+﻿# CEI Security Patterns
 
 ## Overview
 
@@ -39,12 +39,12 @@ Source: https://github.com/sherlock-audit/2022-11-buffer-judging/issues/130
 bin2chen, HonorLt, KingNFT
 
 ## Summary
-_openQueuedTrade() does not follow the “Checks Effects Interactions” principle and may lead to re-entry to steal the funds
+_openQueuedTrade() does not follow the Checks Effects Interactions principle and may lead to re-entry to steal the funds
 
 https://fravoll.github.io/solidity-patterns/checks_effects_interactions.html
 
 ## Vulnerability Detail
-The prerequisite is that tokenX is ERC777 e.g. “sushi”
+The prerequisite is that tokenX is ERC777 e.g. sushi
 1. resolveQueuedTrades() call _openQueuedTrade()
 2. in _openQueuedTrade() call "tokenX.transfer(queuedTrade.user)" if (revisedFee < queuedTrade.totalFee) before set queuedTrade.isQueued = false; 
 ```solidity
@@ -74,7 +74,7 @@ Manual Review
 
 ## Recommendation
 
-follow “Checks Effects Interactions” 
+follow Checks Effects Interactions 
 
 ```solidity
 
