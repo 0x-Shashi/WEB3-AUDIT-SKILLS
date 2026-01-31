@@ -171,6 +171,13 @@ Organized by vulnerability type:
 	- [Read-only reentrancy](patterns/reentrancy/read-only-reentrancy.md)
 	- [Reentrancy via token receiver hooks](patterns/reentrancy/callback-hook-reentrancy.md)
 
+	## Exploit Forensics (Phase 3)
+
+	- [Exploit Forensics Index](exploit-forensics/index.md)
+		- [The DAO (2016)](exploit-forensics/the-dao-2016.md)
+		- [Wormhole (2022)](exploit-forensics/wormhole-2022.md)
+		- [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md)
+
 
 ---
 
