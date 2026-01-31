@@ -178,6 +178,13 @@ Organized by vulnerability type:
 		- [Wormhole (2022)](exploit-forensics/wormhole-2022.md)
 		- [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md)
 
+	## Protocol Integration Playbooks (Phase 4)
+
+	- [Protocol Playbooks Index](protocol-playbooks/index.md)
+		- [Uniswap V3](protocol-playbooks/uniswap-v3.md)
+		- [Aave V3](protocol-playbooks/aave-v3.md)
+		- [Lido](protocol-playbooks/lido.md)
+
 
 ---
 
