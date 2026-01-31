@@ -1,6 +1,21 @@
 # Web3 Audit Skills - Antigravity
 
-This guide shows you how to use the Web3 Audit Skills with Antigravity IDE.
+Transform Antigravity into a smart contract security auditor with 50,530 vulnerability patterns.
+
+---
+
+## What You Get
+
+| Feature | Details |
+|---------|---------|
+| Vulnerability Patterns | 149 pattern files covering 207 vulnerability types |
+| Reentrancy Deep-Dive | 6 specialized reentrancy variant patterns |
+| Exploit Forensics | 3 CSI-style case studies (DAO, Wormhole, Ronin) |
+| Protocol Playbooks | 3 integration guides (Uniswap V3, Aave V3, Lido) |
+| Evolution Timelines | 3 historical vulnerability evolution tracks |
+| Learning Paths | 3 structured curricula (140 hours total) |
+| Severity Files | HIGH, MEDIUM, LOW, GAS classifications |
+| Audit Firm Knowledge | 15 source files from top security firms |
 
 ---
 
@@ -57,7 +72,12 @@ Antigravity AI reads the `antigravity.yaml` file and the `skills/` folder when y
 
 | What It Learns | Count |
 |----------------|-------|
-| Vulnerability patterns | 147 files |
+| Vulnerability patterns | 149 files |
+| Reentrancy variants | 6 deep-dive files |
+| Exploit case studies | 3 forensic analyses |
+| Protocol playbooks | 3 integration guides |
+| Evolution timelines | 3 historical tracks |
+| Learning paths | 3 curricula (140 hours) |
 | Severity classifications | 4 files |
 | Audit firm knowledge | 15 files |
 | Total findings | 50,530 |
