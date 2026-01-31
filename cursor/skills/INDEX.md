@@ -209,6 +209,29 @@ Organized by vulnerability type:
   - [GMX](protocol-playbooks/gmx.md) - **NEW** - Perpetuals, keeper MEV
   - [Morpho](protocol-playbooks/morpho.md) - **NEW** - P2P optimization
 
+## Chain-Specific Security Guides (Phase 4) - EXPANDED
+
+- [Chain Guides Index](chain-guides/index.md) - **9 chains covered**
+  - [Solana](chain-guides/solana.md) - Account validation, PDA security, CPI
+  - [Arbitrum](chain-guides/arbitrum.md) - Sequencer, delayed inbox, retryable tickets
+  - [Optimism](chain-guides/optimism.md) - Cross-domain messaging, deposits
+  - [zkSync](chain-guides/zksync.md) - Era opcodes, system contracts
+  - [Cosmos](chain-guides/cosmos.md) - IBC security, CosmWasm patterns
+  - [Base](chain-guides/base.md) - **NEW** - OP Stack, Coinbase sequencer
+  - [Polygon](chain-guides/polygon.md) - **NEW** - PoS reorgs, validator risks
+  - [BSC](chain-guides/bsc.md) - **NEW** - 21 validators, PancakeSwap
+  - [Avalanche](chain-guides/avalanche.md) - **NEW** - Sub-second finality, subnets
+
+## Attack Chains - Multi-Step Exploits (Phase 4) - NEW
+
+- [Attack Chains Index](attack-chains/index.md) - **6 attack chains documented**
+  - [Flash Loan Oracle Chain](attack-chains/flash-loan-oracle-chain.md) - **NEW** - Price manipulation cascade
+  - [Governance Takeover Chain](attack-chains/governance-takeover-chain.md) - **NEW** - DAO attacks
+  - [Bridge Exploit Chain](attack-chains/bridge-exploit-chain.md) - **NEW** - Cross-chain attacks
+  - [Reentrancy Desync Chain](attack-chains/reentrancy-desync-chain.md) - **NEW** - State corruption
+  - [Sandwich MEV Chain](attack-chains/sandwich-mev-chain.md) - **NEW** - Front/back-running
+  - [Cross-Contract Chain](attack-chains/cross-contract-chain.md) - **NEW** - Composability exploits
+
 ## Evolution Timelines (Phase 5)
 
 - [Evolution Timelines Index](evolution-timelines/index.md)

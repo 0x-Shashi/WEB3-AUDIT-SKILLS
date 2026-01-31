@@ -20,6 +20,10 @@ Each blockchain has unique security considerations. This section covers chain-sp
 | [Optimism](optimism.md) | L2 Optimistic | Cross-domain messaging, deposit handling |
 | [zkSync](zksync.md) | L2 ZK-Rollup | Era-specific opcodes, system contracts |
 | [Cosmos](cosmos.md) | App-Chain | IBC security, CosmWasm patterns |
+| [Base](base.md) | L2 OP-Stack | Coinbase sequencer, native USDC, OP Stack forks |
+| [Polygon](polygon.md) | PoS Sidechain | Reorg risk, validator centralization, MATIC bridging |
+| [BSC](bsc.md) | Alt-L1 PoSA | 21 validators, PancakeSwap, BEP-20 edge cases |
+| [Avalanche](avalanche.md) | Alt-L1 | Sub-second finality, subnet security, Trader Joe LB |
 
 ## Common L2 Vulnerabilities
 
@@ -33,12 +37,12 @@ Each blockchain has unique security considerations. This section covers chain-sp
 
 ## Security Model Comparison
 
-| Aspect | Ethereum | Arbitrum | Optimism | zkSync | Solana |
-|--------|----------|----------|----------|--------|--------|
-| Finality | ~15 min | 7 days* | 7 days* | ~1 hour | ~400ms |
-| Sequencer | Decentralized | Centralized | Centralized | Centralized | Decentralized |
-| Execution | EVM | ArbOS | OVM | zkEVM | BPF/SVM |
-| State Model | Account | Account | Account | Account | Account |
+| Aspect | Ethereum | Arbitrum | Optimism | zkSync | Solana | Base | Polygon | BSC | Avalanche |
+|--------|----------|----------|----------|--------|--------|------|---------|-----|-----------|
+| Finality | ~15 min | 7 days* | 7 days* | ~1 hour | ~400ms | 7 days* | 256 blocks | ~3 sec | ~1 sec |
+| Sequencer | Decentralized | Centralized | Centralized | Centralized | Decentralized | Centralized | 100 validators | 21 validators | ~1200 validators |
+| Execution | EVM | ArbOS | OVM | zkEVM | BPF/SVM | OVM | EVM | EVM | EVM |
+| State Model | Account | Account | Account | Account | Account | Account | Account | Account | Account |
 
 *Challenge period for withdrawals
 
