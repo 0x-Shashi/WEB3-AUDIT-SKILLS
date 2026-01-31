@@ -162,6 +162,16 @@ Organized by vulnerability type:
 | Immutable | 3 | [immutable-patterns.md](patterns/immutable-patterns.md) |
 
 
+## Specialized Checklists (Phase 1.5) - NEW
+
+- [Checklists Index](checklists/index.md) - **6 domain-specific checklists**
+  - [DeFi Lending Checklist](checklists/defi-lending-checklist.md) - **NEW** - Collateral, liquidation, oracles
+  - [DEX/AMM Checklist](checklists/dex-amm-checklist.md) - **NEW** - Price manipulation, MEV, slippage
+  - [Bridge Checklist](checklists/bridge-checklist.md) - **NEW** - Message verification, finality
+  - [NFT/Gaming Checklist](checklists/nft-gaming-checklist.md) - **NEW** - Randomness, minting, royalties
+  - [Staking Checklist](checklists/staking-checklist.md) - **NEW** - Rewards, slashing, delegation
+  - [Governance Checklist](checklists/governance-checklist.md) - **NEW** - Flash loans, proposals, timelock
+
 ## Fractal Pattern Expansions (Phase 2)
 
 - [Reentrancy Fractal Map](patterns/reentrancy/index.md)
@@ -173,20 +183,28 @@ Organized by vulnerability type:
 
 ## Exploit Forensics (Phase 3) - EXPANDED
 
-- [Exploit Forensics Index](exploit-forensics/index.md) - **13 exploits, $2.1B+ analyzed**
+- [Exploit Forensics Index](exploit-forensics/index.md) - **19 exploits, $3.1B+ analyzed**
+  - **Classic Exploits (2016-2023)**
   - [The DAO (2016)](exploit-forensics/the-dao-2016.md) - $60M, reentrancy
+  - [Parity (2017)](exploit-forensics/parity-2017.md) - $280M, selfdestruct
+  - [Cream (2021)](exploit-forensics/cream-2021.md) - $130M, oracle manipulation
+  - [Poly Network (2021)](exploit-forensics/poly-network-2021.md) - $611M, access control
   - [Wormhole (2022)](exploit-forensics/wormhole-2022.md) - $326M, signature bypass
   - [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md) - $624M, key compromise
-  - [Euler (2023)](exploit-forensics/euler-2023.md) - **NEW** - $197M, donation attack
-  - [Poly Network (2021)](exploit-forensics/poly-network-2021.md) - **NEW** - $611M, access control
-  - [Nomad (2022)](exploit-forensics/nomad-2022.md) - **NEW** - $190M, zero hash root
-  - [Cream (2021)](exploit-forensics/cream-2021.md) - **NEW** - $130M, oracle manipulation
-  - [Rari (2022)](exploit-forensics/rari-2022.md) - **NEW** - $80M, reentrancy
-  - [Beanstalk (2022)](exploit-forensics/beanstalk-2022.md) - **NEW** - $182M, governance
-  - [Mango (2022)](exploit-forensics/mango-2022.md) - **NEW** - $114M, market manipulation
-  - [Cashio (2022)](exploit-forensics/cashio-2022.md) - **NEW** - $52M, account validation
-  - [Wintermute (2022)](exploit-forensics/wintermute-2022.md) - **NEW** - $160M, vanity address
-  - [Parity (2017)](exploit-forensics/parity-2017.md) - **NEW** - $280M, selfdestruct
+  - [Nomad (2022)](exploit-forensics/nomad-2022.md) - $190M, zero hash root
+  - [Rari (2022)](exploit-forensics/rari-2022.md) - $80M, reentrancy
+  - [Beanstalk (2022)](exploit-forensics/beanstalk-2022.md) - $182M, governance
+  - [Mango (2022)](exploit-forensics/mango-2022.md) - $114M, market manipulation
+  - [Cashio (2022)](exploit-forensics/cashio-2022.md) - $52M, account validation
+  - [Wintermute (2022)](exploit-forensics/wintermute-2022.md) - $160M, vanity address
+  - [Euler (2023)](exploit-forensics/euler-2023.md) - $197M, donation attack
+  - **2024 Exploits (NEW)**
+  - [Orbit Chain (2024)](exploit-forensics/orbit-2024.md) - **NEW** - $82M, private key compromise
+  - [PlayDapp (2024)](exploit-forensics/playdapp-2024.md) - **NEW** - $290M, unlimited minting
+  - [Hedgey Finance (2024)](exploit-forensics/hedgey-2024.md) - **NEW** - $45M, input validation
+  - [DMM Bitcoin (2024)](exploit-forensics/dmm-bitcoin-2024.md) - **NEW** - $305M, hot wallet compromise
+  - [WazirX (2024)](exploit-forensics/wazirx-2024.md) - **NEW** - $230M, multisig UI manipulation
+  - [Radiant Capital (2024)](exploit-forensics/radiant-2024.md) - **NEW** - $50M, device malware
 
 ## Chain-Specific Security Guides (Phase 3.5) - NEW
 
@@ -199,15 +217,25 @@ Organized by vulnerability type:
 
 ## Protocol Integration Playbooks (Phase 4) - EXPANDED
 
-- [Protocol Playbooks Index](protocol-playbooks/index.md) - **8 protocols covered**
-  - [Uniswap V3](protocol-playbooks/uniswap-v3.md)
-  - [Uniswap V4](protocol-playbooks/uniswap-v4.md) - **NEW** - Hooks, flash accounting
-  - [Aave V3](protocol-playbooks/aave-v3.md)
-  - [Compound V3](protocol-playbooks/compound-v3.md) - **NEW** - Comet, absorb mechanism
-  - [Lido](protocol-playbooks/lido.md)
-  - [Curve](protocol-playbooks/curve.md) - **NEW** - Read-only reentrancy
-  - [GMX](protocol-playbooks/gmx.md) - **NEW** - Perpetuals, keeper MEV
-  - [Morpho](protocol-playbooks/morpho.md) - **NEW** - P2P optimization
+- [Protocol Playbooks Index](protocol-playbooks/index.md) - **13 protocols covered**
+  - **DEX / AMM**
+  - [Uniswap V3](protocol-playbooks/uniswap-v3.md) - Concentrated liquidity
+  - [Uniswap V4](protocol-playbooks/uniswap-v4.md) - Hooks, flash accounting
+  - [Curve](protocol-playbooks/curve.md) - Read-only reentrancy, stableswap
+  - [Balancer](protocol-playbooks/balancer.md) - **NEW** - Vault, weighted/stable pools
+  - **Lending**
+  - [Aave V3](protocol-playbooks/aave-v3.md) - Multi-asset lending
+  - [Compound V3](protocol-playbooks/compound-v3.md) - Comet, absorb mechanism
+  - [Morpho](protocol-playbooks/morpho.md) - P2P optimization
+  - [MakerDAO](protocol-playbooks/makerdao.md) - **NEW** - CDP, DAI, PSM, Vat/Jug/Dog
+  - **Staking / Restaking**
+  - [Lido](protocol-playbooks/lido.md) - Liquid staking, wstETH
+  - [EigenLayer](protocol-playbooks/eigenlayer.md) - **NEW** - Restaking, AVS, slashing
+  - **Derivatives**
+  - [GMX](protocol-playbooks/gmx.md) - Perpetuals, keeper MEV
+  - [Pendle](protocol-playbooks/pendle.md) - **NEW** - PT/YT yield tokenization
+  - **Oracles**
+  - [Chainlink](protocol-playbooks/chainlink.md) - **NEW** - Price feeds, VRF, CCIP
 
 ## Chain-Specific Security Guides (Phase 4) - EXPANDED
 

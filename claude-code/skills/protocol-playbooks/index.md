@@ -20,9 +20,14 @@ These playbooks summarize secure integration guidance and audit checklists for m
 | **Uniswap V4** | DEX/AMM | Hooks, flash accounting, singleton | [uniswap-v4.md](uniswap-v4.md) |
 | Aave V3 | Lending | Oracle manipulation, liquidation | [aave-v3.md](aave-v3.md) |
 | **Compound V3** | Lending | Absorb mechanism, single-asset | [compound-v3.md](compound-v3.md) |
+| **MakerDAO** | Lending/Stablecoin | CDP, PSM, Vat precision | [makerdao.md](makerdao.md) |
 | Lido | Staking | Rebasing, oracle lag | [lido.md](lido.md) |
+| **EigenLayer** | Restaking | AVS, slashing, 7-day delay | [eigenlayer.md](eigenlayer.md) |
 | **Curve** | DEX/Stableswap | Read-only reentrancy, virtual price | [curve.md](curve.md) |
+| **Balancer** | DEX/Pools | Vault, free flash loans, weighted pools | [balancer.md](balancer.md) |
 | **GMX** | Perpetuals | Keeper MEV, GLP manipulation | [gmx.md](gmx.md) |
+| **Pendle** | Yield Trading | PT/YT, maturity, yield tokenization | [pendle.md](pendle.md) |
+| **Chainlink** | Oracles | Price feeds, VRF, CCIP, staleness | [chainlink.md](chainlink.md) |
 | **Morpho** | Lending Optimizer | P2P matching, oracle per market | [morpho.md](morpho.md) |
 
 ## By Protocol Category
@@ -31,17 +36,24 @@ These playbooks summarize secure integration guidance and audit checklists for m
 - [Uniswap V3](uniswap-v3.md) - Concentrated liquidity AMM
 - [Uniswap V4](uniswap-v4.md) - **NEW** - Hooks and singleton architecture
 - [Curve](curve.md) - **NEW** - Stableswap and metapools
+- [Balancer](balancer.md) - **NEW** - Vault-based pools, flash loans
 
 ### Lending / Borrowing
 - [Aave V3](aave-v3.md) - Multi-asset lending
 - [Compound V3](compound-v3.md) - **NEW** - Single-asset Comet markets
+- [MakerDAO](makerdao.md) - **NEW** - CDP, DAI, PSM, stability fees
 - [Morpho](morpho.md) - **NEW** - P2P optimization layer
 
 ### Derivatives / Perpetuals
 - [GMX](gmx.md) - **NEW** - Decentralized perpetual exchange
+- [Pendle](pendle.md) - **NEW** - Yield tokenization and trading
 
-### Staking
+### Staking / Restaking
 - [Lido](lido.md) - Liquid staking
+- [EigenLayer](eigenlayer.md) - **NEW** - Restaking and AVS integration
+
+### Oracles
+- [Chainlink](chainlink.md) - **NEW** - Price feeds, VRF, CCIP, Automation
 
 ## How to Use
 
