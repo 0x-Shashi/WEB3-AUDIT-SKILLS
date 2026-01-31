@@ -162,6 +162,16 @@ Organized by vulnerability type:
 | Immutable | 3 | [immutable-patterns.md](patterns/immutable-patterns.md) |
 
 
+## Fractal Pattern Expansions (Phase 2)
+
+- [Reentrancy Fractal Map](patterns/reentrancy/index.md)
+	- [Classic reentrancy](patterns/reentrancy/classic-reentrancy.md)
+	- [Cross-function reentrancy](patterns/reentrancy/cross-function-reentrancy.md)
+	- [Cross-contract reentrancy](patterns/reentrancy/cross-contract-reentrancy.md)
+	- [Read-only reentrancy](patterns/reentrancy/read-only-reentrancy.md)
+	- [Reentrancy via token receiver hooks](patterns/reentrancy/callback-hook-reentrancy.md)
+
+
 ---
 
 ## Severity Files
