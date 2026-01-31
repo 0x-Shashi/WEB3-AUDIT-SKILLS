@@ -1,4 +1,24 @@
-﻿# Hardcoded Address Security Patterns
+---
+id: PAT-HARDCODED-ADDRESS
+title: Hardcoded Address Security Patterns
+category: configuration
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - hardcoded
+  - immutable
+  - address
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Hardcoded Address Security Patterns
 
 ## Overview
 

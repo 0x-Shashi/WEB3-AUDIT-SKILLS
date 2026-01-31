@@ -1,4 +1,24 @@
-﻿# Stale Price Security Patterns
+---
+id: PAT-STALE-PRICE
+title: Stale Price Security Patterns
+category: oracle
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - stale
+  - outdated
+  - freshness
+
+finding_count: 31
+last_updated: 2026-01-31
+---
+# Stale Price Security Patterns
 
 ## Overview
 

@@ -1,3 +1,23 @@
+---
+id: PAT-51-ATTACK
+title: 51 Attack Security Patterns
+category: consensus
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - 51-attack
+  - majority
+  - consensus
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # 51% Attack Security Patterns
 
 ## Overview

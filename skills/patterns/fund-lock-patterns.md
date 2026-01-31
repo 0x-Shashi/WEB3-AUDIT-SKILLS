@@ -1,4 +1,24 @@
-﻿# Fund Lock Security Patterns
+---
+id: PAT-FUND-LOCK
+title: Fund Lock Security Patterns
+category: funds
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - funds
+  - locked
+  - stuck
+
+finding_count: 22
+last_updated: 2026-01-31
+---
+# Fund Lock Security Patterns
 
 ## Overview
 

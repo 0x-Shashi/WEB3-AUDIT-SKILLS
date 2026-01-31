@@ -1,4 +1,24 @@
-﻿# Time Rounding Security Patterns
+---
+id: PAT-TIME-ROUNDING
+title: Time Rounding Security Patterns
+category: timing
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - timestamp
+  - block
+  - deadline
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# Time Rounding Security Patterns
 
 ## Overview
 

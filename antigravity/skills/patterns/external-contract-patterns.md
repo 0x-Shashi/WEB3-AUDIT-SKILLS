@@ -1,4 +1,24 @@
-﻿# External Contract Security Patterns
+---
+id: PAT-EXTERNAL-CONTRACT
+title: External Contract Security Patterns
+category: external-call
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - external
+  - interface
+  - untrusted
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# External Contract Security Patterns
 
 ## Overview
 

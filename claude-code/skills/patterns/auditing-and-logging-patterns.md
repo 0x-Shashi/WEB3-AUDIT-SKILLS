@@ -1,4 +1,23 @@
-﻿# Auditing and Logging Security Patterns
+---
+id: PAT-AUDITING-AND-LOGGING
+title: Auditing And Logging Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# Auditing and Logging Security Patterns
 
 ## Overview
 

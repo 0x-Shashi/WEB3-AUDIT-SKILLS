@@ -1,4 +1,24 @@
-﻿# Blacklisted Security Patterns
+---
+id: PAT-BLACKLISTED
+title: Blacklisted Security Patterns
+category: token
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - blacklist
+  - blocklist
+  - compliance
+
+finding_count: 16
+last_updated: 2026-01-31
+---
+# Blacklisted Security Patterns
 
 ## Overview
 

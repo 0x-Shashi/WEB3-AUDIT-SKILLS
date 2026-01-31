@@ -1,4 +1,24 @@
-﻿# Protocol Reserve Security Patterns
+---
+id: PAT-PROTOCOL-RESERVE
+title: Protocol Reserve Security Patterns
+category: defi
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - reserve
+  - liquidity
+  - protocol
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# Protocol Reserve Security Patterns
 
 ## Overview
 

@@ -1,4 +1,24 @@
-﻿# Replay Attack Security Patterns
+---
+id: PAT-REPLAY-ATTACK
+title: Replay Attack Security Patterns
+category: cryptography
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - replay
+  - nonce
+  - signature
+
+finding_count: 14
+last_updated: 2026-01-31
+---
+# Replay Attack Security Patterns
 
 ## Overview
 

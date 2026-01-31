@@ -1,4 +1,11 @@
-﻿# TrailOfBits - Audit Findings
+---
+id: SRC-TRAILOFBITS
+title: Trailofbits Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# TrailOfBits - Audit Findings
 
 ## Overview
 

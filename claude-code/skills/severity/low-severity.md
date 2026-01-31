@@ -1,4 +1,11 @@
-﻿# LOW Severity Findings
+---
+id: SEV-LOW-SEVERITY
+title: Low Severity Findings
+category: severity
+severity_level: low
+last_updated: 2026-01-31
+---
+# LOW Severity Findings
 
 ## Overview
 

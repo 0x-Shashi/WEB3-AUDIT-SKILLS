@@ -1,4 +1,24 @@
-﻿# Whitelist/Blacklist Match Security Patterns
+---
+id: PAT-WHITELIST-BLACKLIST-MATCH
+title: Whitelist Blacklist Match Security Patterns
+category: access-control
+severity: low
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - whitelist
+  - allowlist
+  - access
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# Whitelist/Blacklist Match Security Patterns
 
 ## Overview
 

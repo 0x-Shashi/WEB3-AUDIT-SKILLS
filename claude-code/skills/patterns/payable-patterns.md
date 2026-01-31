@@ -1,4 +1,24 @@
-﻿# Payable Security Patterns
+---
+id: PAT-PAYABLE
+title: Payable Security Patterns
+category: ether
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - ether
+  - payable
+  - transfer
+
+finding_count: 9
+last_updated: 2026-01-31
+---
+# Payable Security Patterns
 
 ## Overview
 

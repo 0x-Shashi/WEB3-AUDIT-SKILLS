@@ -1,4 +1,24 @@
-﻿# Swap Security Patterns
+---
+id: PAT-SWAP
+title: Swap Security Patterns
+category: defi
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - swap
+  - exchange
+  - trading
+
+finding_count: 18
+last_updated: 2026-01-31
+---
+# Swap Security Patterns
 
 ## Overview
 

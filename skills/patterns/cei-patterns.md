@@ -1,4 +1,24 @@
-﻿# CEI Security Patterns
+---
+id: PAT-CEI
+title: Cei Security Patterns
+category: reentrancy
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - cei
+  - checks-effects-interactions
+  - pattern
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# CEI Security Patterns
 
 ## Overview
 

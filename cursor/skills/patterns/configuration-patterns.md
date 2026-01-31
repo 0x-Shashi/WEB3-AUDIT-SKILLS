@@ -1,4 +1,24 @@
-﻿# Configuration Security Patterns
+---
+id: PAT-CONFIGURATION
+title: Configuration Security Patterns
+category: configuration
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - configuration
+  - parameters
+  - settings
+
+finding_count: 24
+last_updated: 2026-01-31
+---
+# Configuration Security Patterns
 
 ## Overview
 

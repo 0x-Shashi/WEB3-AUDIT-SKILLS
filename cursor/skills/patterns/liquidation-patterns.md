@@ -1,4 +1,24 @@
-﻿# Liquidation Security Patterns
+---
+id: PAT-LIQUIDATION
+title: Liquidation Security Patterns
+category: defi
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - liquidation
+  - collateral
+  - lending
+
+finding_count: 42
+last_updated: 2026-01-31
+---
+# Liquidation Security Patterns
 
 ## Overview
 

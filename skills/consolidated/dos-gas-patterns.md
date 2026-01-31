@@ -1,4 +1,25 @@
-﻿# DoS & Gas Security Patterns (Consolidated)
+---
+id: PAT-DOS-GAS
+title: Dos Gas Security Patterns
+category: gas
+severity: low
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - optimization
+  - efficiency
+  - gas-limit
+related_patterns:
+  - vulnerability
+finding_count: 66
+last_updated: 2026-01-31
+---
+# DoS & Gas Security Patterns (Consolidated)
 
 > **Denial of Service attacks make protocols unusable. Gas griefing extracts value from users.**
 

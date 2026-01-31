@@ -1,3 +1,23 @@
+---
+id: PAT-MERKLE-TREE
+title: Merkle Tree Security Patterns
+category: cryptography
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - merkle
+  - proof
+  - whitelist
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # Merkle Tree Security Patterns
 
 ## Overview

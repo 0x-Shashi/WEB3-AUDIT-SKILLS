@@ -1,3 +1,23 @@
+---
+id: PAT-HARDCODED-SETTING
+title: Hardcoded Setting Security Patterns
+category: configuration
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - hardcoded
+  - immutable
+  - address
+
+finding_count: 5
+last_updated: 2026-01-31
+---
 # Hardcoded Setting Security Patterns
 
 ## Overview

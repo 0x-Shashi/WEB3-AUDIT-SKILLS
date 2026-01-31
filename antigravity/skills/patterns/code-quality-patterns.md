@@ -1,4 +1,23 @@
-﻿# Code Quality Security Patterns
+---
+id: PAT-CODE-QUALITY
+title: Code Quality Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 10
+last_updated: 2026-01-31
+---
+# Code Quality Security Patterns
 
 ## Overview
 

@@ -1,3 +1,10 @@
+---
+id: SRC-CYFRIN
+title: Cyfrin Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
 # Cyfrin - Audit Findings
 
 ## Overview

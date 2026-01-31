@@ -1,3 +1,23 @@
+---
+id: PAT-COOLDOWN
+title: Cooldown Security Patterns
+category: timing
+severity: low
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - cooldown
+  - delay
+  - timelock
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Cooldown Security Patterns
 
 ## Overview

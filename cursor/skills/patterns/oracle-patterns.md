@@ -1,4 +1,26 @@
-﻿# Oracle Security Patterns
+---
+id: PAT-ORACLE
+title: Oracle Security Patterns
+category: oracle
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - price-feed
+  - manipulation
+  - stale-data
+related_patterns:
+  - flash-loan
+  - price
+finding_count: 59
+last_updated: 2026-01-31
+---
+# Oracle Security Patterns
 
 ## Overview
 

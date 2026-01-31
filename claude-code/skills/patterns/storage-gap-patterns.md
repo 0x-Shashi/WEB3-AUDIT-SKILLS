@@ -1,3 +1,23 @@
+---
+id: PAT-STORAGE-GAP
+title: Storage Gap Security Patterns
+category: storage
+severity: high
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - storage
+  - collision
+  - layout
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # Storage Gap Security Patterns
 
 ## Overview

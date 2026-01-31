@@ -1,4 +1,24 @@
-﻿# Signature & Cryptography Security Patterns (Consolidated)
+---
+id: PAT-SIGNATURE-CRYPTO
+title: Signature Crypto Security Patterns
+category: cryptography
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - signature
+  - verification
+  - ecrecover
+
+finding_count: 5
+last_updated: 2026-01-31
+---
+# Signature & Cryptography Security Patterns (Consolidated)
 
 > **Cryptographic vulnerabilities allow signature replay, forgery, and authentication bypass.**
 

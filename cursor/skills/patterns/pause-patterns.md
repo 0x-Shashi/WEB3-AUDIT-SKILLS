@@ -1,3 +1,23 @@
+---
+id: PAT-PAUSE
+title: Pause Security Patterns
+category: access-control
+severity: low
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - pause
+  - emergency
+  - circuit-breaker
+
+finding_count: 10
+last_updated: 2026-01-31
+---
 # Pause Security Patterns
 
 ## Overview

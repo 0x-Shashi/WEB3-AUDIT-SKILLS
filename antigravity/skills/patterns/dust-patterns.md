@@ -1,3 +1,23 @@
+---
+id: PAT-DUST
+title: Dust Security Patterns
+category: token
+severity: low
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - dust
+  - small-amounts
+  - rounding
+
+finding_count: 5
+last_updated: 2026-01-31
+---
 # Dust Security Patterns
 
 ## Overview

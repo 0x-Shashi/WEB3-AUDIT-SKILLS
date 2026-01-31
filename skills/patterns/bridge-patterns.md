@@ -1,4 +1,24 @@
-﻿# Bridge Security Patterns
+---
+id: PAT-BRIDGE
+title: Bridge Security Patterns
+category: cross-chain
+severity: critical
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - bridge
+  - cross-chain
+  - messaging
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# Bridge Security Patterns
 
 ## Overview
 

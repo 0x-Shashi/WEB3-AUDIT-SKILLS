@@ -1,4 +1,24 @@
-﻿# Cross Chain Security Patterns
+---
+id: PAT-CROSS-CHAIN
+title: Cross Chain Security Patterns
+category: cross-chain
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - cross-chain
+  - messaging
+  - relayer
+
+finding_count: 8
+last_updated: 2026-01-31
+---
+# Cross Chain Security Patterns
 
 ## Overview
 

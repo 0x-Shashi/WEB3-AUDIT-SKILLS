@@ -1,3 +1,23 @@
+---
+id: PAT-PRECISION-LOSS
+title: Precision Loss Security Patterns
+category: validation
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - pre-condition
+  - balance
+  - check
+
+finding_count: 14
+last_updated: 2026-01-31
+---
 # Precision Loss Security Patterns
 
 ## Overview

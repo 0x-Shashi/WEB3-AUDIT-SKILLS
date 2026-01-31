@@ -1,4 +1,24 @@
-﻿# Grief Attack Security Patterns
+---
+id: PAT-GRIEF-ATTACK
+title: Grief Attack Security Patterns
+category: dos
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - griefing
+  - dos
+  - attack
+
+finding_count: 12
+last_updated: 2026-01-31
+---
+# Grief Attack Security Patterns
 
 ## Overview
 

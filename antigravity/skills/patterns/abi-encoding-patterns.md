@@ -1,3 +1,23 @@
+---
+id: PAT-ABI-ENCODING
+title: Abi Encoding Security Patterns
+category: encoding
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - abi
+  - encoding
+  - decoding
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # ABI Encoding Security Patterns
 
 ## Overview

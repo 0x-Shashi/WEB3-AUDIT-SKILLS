@@ -1,3 +1,23 @@
+---
+id: PAT-DOS
+title: Dos Security Patterns
+category: dos
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - denial-of-service
+  - gas
+  - griefing
+
+finding_count: 66
+last_updated: 2026-01-31
+---
 # DOS Security Patterns
 
 ## Overview

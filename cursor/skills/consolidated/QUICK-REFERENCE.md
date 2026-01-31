@@ -1,4 +1,23 @@
-﻿# Quick Reference - Web3 Security Patterns
+---
+id: PAT-QUICK-REFERENCE
+title: QUICK REFERENCE Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+
+last_updated: 2026-01-31
+---
+# Quick Reference - Web3 Security Patterns
 
 A rapid lookup guide for AI auditors. Each pattern has a one-line summary to quickly identify vulnerabilities.
 

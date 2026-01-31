@@ -1,4 +1,24 @@
-﻿# Validation Security Patterns (Consolidated)
+---
+id: PAT-VALIDATION
+title: Validation Security Patterns
+category: validation
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - input-validation
+  - require
+  - assert
+
+finding_count: 127
+last_updated: 2026-01-31
+---
+# Validation Security Patterns (Consolidated)
 
 > **Missing input validation is the easiest bug to exploit and the easiest to prevent.**
 

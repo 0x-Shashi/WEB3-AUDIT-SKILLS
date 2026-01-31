@@ -1,4 +1,24 @@
-﻿# Refund Ether Security Patterns
+---
+id: PAT-REFUND-ETHER
+title: Refund Ether Security Patterns
+category: ether
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - refund
+  - excess
+  - return
+
+finding_count: 12
+last_updated: 2026-01-31
+---
+# Refund Ether Security Patterns
 
 ## Overview
 

@@ -1,3 +1,23 @@
+---
+id: PAT-FEE-ON-TRANSFER
+title: Fee On Transfer Security Patterns
+category: token
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - transfer
+  - safe-transfer
+  - return-value
+
+finding_count: 66
+last_updated: 2026-01-31
+---
 # Fee On Transfer Security Patterns
 
 ## Overview

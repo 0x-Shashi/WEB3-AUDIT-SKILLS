@@ -1,4 +1,24 @@
-﻿# Min/Max Cap Validation Security Patterns
+---
+id: PAT-MIN-MAX-CAP-VALIDATION
+title: Min Max Cap Validation Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - input-validation
+  - require
+  - assert
+
+finding_count: 9
+last_updated: 2026-01-31
+---
+# Min/Max Cap Validation Security Patterns
 
 ## Overview
 

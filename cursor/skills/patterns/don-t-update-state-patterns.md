@@ -1,4 +1,24 @@
-﻿# Don't update state Security Patterns
+---
+id: PAT-DON-T-UPDATE-STATE
+title: Don T Update State Security Patterns
+category: state
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - state-update
+  - mutation
+  - storage
+
+finding_count: 47
+last_updated: 2026-01-31
+---
+# Don't update state Security Patterns
 
 ## Overview
 

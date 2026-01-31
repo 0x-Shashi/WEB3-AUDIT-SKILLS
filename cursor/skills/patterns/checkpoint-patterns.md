@@ -1,3 +1,23 @@
+---
+id: PAT-CHECKPOINT
+title: Checkpoint Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - validation
+  - require
+  - missing-check
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # CheckPoint Security Patterns
 
 ## Overview

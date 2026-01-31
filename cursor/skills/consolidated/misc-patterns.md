@@ -1,4 +1,24 @@
-﻿# Miscellaneous Security Patterns (Consolidated)
+---
+id: PAT-MISC
+title: Misc Security Patterns
+category: general
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+related_patterns:
+  - vulnerability
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Miscellaneous Security Patterns (Consolidated)
 
 > **Collection of additional vulnerability patterns including timing, events, and code quality.**
 

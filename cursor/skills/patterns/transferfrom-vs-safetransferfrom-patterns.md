@@ -1,4 +1,24 @@
-﻿# transferFrom vs safeTransferFrom Security Patterns
+---
+id: PAT-TRANSFERFROM-VS-SAFETRANSFERFROM
+title: Transferfrom Vs Safetransferfrom Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - transfer
+  - safe-transfer
+  - return-value
+
+finding_count: 14
+last_updated: 2026-01-31
+---
+# transferFrom vs safeTransferFrom Security Patterns
 
 ## Overview
 

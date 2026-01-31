@@ -1,4 +1,24 @@
-﻿# Math & Precision Security Patterns (Consolidated)
+---
+id: PAT-MATH-PRECISION
+title: Math Precision Security Patterns
+category: validation
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - pre-condition
+  - balance
+  - check
+
+finding_count: 14
+last_updated: 2026-01-31
+---
+# Math & Precision Security Patterns (Consolidated)
 
 > **Precision errors silently drain funds. Rounding in the wrong direction = attacker profit.**
 

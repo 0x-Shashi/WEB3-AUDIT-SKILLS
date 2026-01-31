@@ -1,4 +1,24 @@
-﻿# Signature Malleability Security Patterns
+---
+id: PAT-SIGNATURE-MALLEABILITY
+title: Signature Malleability Security Patterns
+category: encoding
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - abi
+  - encoding
+  - decoding
+
+finding_count: 5
+last_updated: 2026-01-31
+---
+# Signature Malleability Security Patterns
 
 ## Overview
 

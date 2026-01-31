@@ -1,4 +1,24 @@
-﻿# Typo / CopyPaste Security Patterns
+---
+id: PAT-TYPO-COPYPASTE
+title: Typo Copypaste Security Patterns
+category: code-quality
+severity: low
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - typo
+  - copy-paste
+  - error
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Typo / CopyPaste Security Patterns
 
 ## Overview
 

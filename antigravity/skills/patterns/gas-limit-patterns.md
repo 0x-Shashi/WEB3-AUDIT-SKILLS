@@ -1,4 +1,24 @@
-﻿# Gas Limit Security Patterns
+---
+id: PAT-GAS-LIMIT
+title: Gas Limit Security Patterns
+category: gas
+severity: low
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - optimization
+  - efficiency
+  - gas-limit
+
+finding_count: 18
+last_updated: 2026-01-31
+---
+# Gas Limit Security Patterns
 
 ## Overview
 

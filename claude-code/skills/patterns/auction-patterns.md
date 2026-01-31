@@ -1,3 +1,23 @@
+---
+id: PAT-AUCTION
+title: Auction Security Patterns
+category: defi
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - auction
+  - bidding
+  - settlement
+
+finding_count: 15
+last_updated: 2026-01-31
+---
 # Auction Security Patterns
 
 ## Overview

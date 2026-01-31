@@ -1,4 +1,24 @@
-﻿# NFT & Governance Security Patterns (Consolidated)
+---
+id: PAT-NFT-GOVERNANCE
+title: Nft Governance Security Patterns
+category: governance
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - governance
+  - proposal
+  - timelock
+
+finding_count: 19
+last_updated: 2026-01-31
+---
+# NFT & Governance Security Patterns (Consolidated)
 
 > **Flash loan governance attacks can pass malicious proposals in one block.**
 

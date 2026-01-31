@@ -1,3 +1,23 @@
+---
+id: PAT-WITHDRAW-PATTERN
+title: Withdraw Pattern Security Patterns
+category: funds
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - withdraw
+  - withdrawal
+  - funds
+
+finding_count: 6
+last_updated: 2026-01-31
+---
 # Withdraw Pattern Security Patterns
 
 ## Overview

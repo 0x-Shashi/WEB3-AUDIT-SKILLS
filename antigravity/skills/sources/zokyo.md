@@ -1,4 +1,11 @@
-﻿# Zokyo - Audit Findings
+---
+id: SRC-ZOKYO
+title: Zokyo Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# Zokyo - Audit Findings
 
 ## Overview
 

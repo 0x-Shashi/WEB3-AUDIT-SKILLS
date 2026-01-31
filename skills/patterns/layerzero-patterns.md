@@ -1,4 +1,24 @@
-﻿# LayerZero Security Patterns
+---
+id: PAT-LAYERZERO
+title: Layerzero Security Patterns
+category: cross-chain
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - layerzero
+  - omnichain
+  - messaging
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# LayerZero Security Patterns
 
 ## Overview
 

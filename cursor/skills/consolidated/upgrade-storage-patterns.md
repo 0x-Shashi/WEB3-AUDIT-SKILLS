@@ -1,4 +1,24 @@
-﻿# Upgrade & Storage Security Patterns (Consolidated)
+---
+id: PAT-UPGRADE-STORAGE
+title: Upgrade Storage Security Patterns
+category: storage
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - storage
+  - collision
+  - layout
+
+finding_count: 10
+last_updated: 2026-01-31
+---
+# Upgrade & Storage Security Patterns (Consolidated)
 
 > **Upgradeable contracts are powerful but dangerous. Storage collision = instant loss.**
 

@@ -1,4 +1,11 @@
-﻿# ConsenSys - Audit Findings
+---
+id: SRC-CONSENSYS
+title: Consensys Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# ConsenSys - Audit Findings
 
 ## Overview
 

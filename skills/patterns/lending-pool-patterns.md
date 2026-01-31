@@ -1,4 +1,24 @@
-﻿# Lending Pool Security Patterns
+---
+id: PAT-LENDING-POOL
+title: Lending Pool Security Patterns
+category: defi
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - lending
+  - borrowing
+  - interest
+
+finding_count: 17
+last_updated: 2026-01-31
+---
+# Lending Pool Security Patterns
 
 ## Overview
 

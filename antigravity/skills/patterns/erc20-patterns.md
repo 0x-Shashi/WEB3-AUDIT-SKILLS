@@ -1,4 +1,24 @@
-﻿# ERC20 Security Patterns
+---
+id: PAT-ERC20
+title: Erc20 Security Patterns
+category: token
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc20
+  - transfer
+  - approval
+
+finding_count: 27
+last_updated: 2026-01-31
+---
+# ERC20 Security Patterns
 
 ## Overview
 

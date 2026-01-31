@@ -1,3 +1,22 @@
+---
+id: PAT-CODING-BUG
+title: Coding Bug Security Patterns
+category: general
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 20
+last_updated: 2026-01-31
+---
 # Coding-Bug Security Patterns
 
 ## Overview

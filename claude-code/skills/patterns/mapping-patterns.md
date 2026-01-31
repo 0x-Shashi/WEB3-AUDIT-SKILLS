@@ -1,3 +1,23 @@
+---
+id: PAT-MAPPING
+title: Mapping Security Patterns
+category: data-structure
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - mapping
+  - storage
+  - key
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Mapping Security Patterns
 
 ## Overview

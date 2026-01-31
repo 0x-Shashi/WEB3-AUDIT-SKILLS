@@ -1,4 +1,24 @@
-﻿# DeFi Security Patterns (Consolidated)
+---
+id: PAT-DEFI
+title: Defi Security Patterns
+category: general
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+related_patterns:
+  - vulnerability
+finding_count: 25
+last_updated: 2026-01-31
+---
+# DeFi Security Patterns (Consolidated)
 
 > **DeFi protocols are the primary target for exploits. Over $3B lost in DeFi hacks.**
 

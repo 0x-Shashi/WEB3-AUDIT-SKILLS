@@ -1,4 +1,24 @@
-﻿# Validation Security Patterns
+---
+id: PAT-VALIDATION
+title: Validation Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - input-validation
+  - require
+  - assert
+
+finding_count: 127
+last_updated: 2026-01-31
+---
+# Validation Security Patterns
 
 ## Overview
 

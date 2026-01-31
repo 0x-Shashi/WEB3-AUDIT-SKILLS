@@ -1,4 +1,25 @@
-﻿# Protocol-Specific Audit Patterns
+---
+id: PAT-PROTOCOL-SPECIFIC
+title: Protocol Specific Security Patterns
+category: integration
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - protocol
+  - integration
+  - external
+related_patterns:
+  - vulnerability
+finding_count: 365
+last_updated: 2026-01-31
+---
+# Protocol-Specific Audit Patterns
 
 > **AI Skill**: This file contains protocol-specific vulnerability patterns and audit focus areas based on 50+ real audit reports from production protocols.
 

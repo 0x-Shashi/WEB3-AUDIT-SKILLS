@@ -1,4 +1,24 @@
-﻿# Ownership Security Patterns
+---
+id: PAT-OWNERSHIP
+title: Ownership Security Patterns
+category: access-control
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - ownership
+  - transfer
+  - renounce
+
+finding_count: 13
+last_updated: 2026-01-31
+---
+# Ownership Security Patterns
 
 ## Overview
 

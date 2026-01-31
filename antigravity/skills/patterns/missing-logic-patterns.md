@@ -1,4 +1,24 @@
-﻿# Missing-Logic Security Patterns
+---
+id: PAT-MISSING-LOGIC
+title: Missing Logic Security Patterns
+category: logic
+severity: high
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - logic
+  - flow
+  - condition
+
+finding_count: 33
+last_updated: 2026-01-31
+---
+# Missing-Logic Security Patterns
 
 ## Overview
 

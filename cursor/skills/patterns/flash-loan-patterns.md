@@ -1,4 +1,24 @@
-﻿# Flash Loan Security Patterns
+---
+id: PAT-FLASH-LOAN
+title: Flash Loan Security Patterns
+category: flash-loan
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - atomic
+  - liquidity
+  - arbitrage
+
+finding_count: 25
+last_updated: 2026-01-31
+---
+# Flash Loan Security Patterns
 
 ## Overview
 

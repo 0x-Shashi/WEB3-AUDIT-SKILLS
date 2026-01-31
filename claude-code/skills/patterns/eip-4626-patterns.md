@@ -1,4 +1,24 @@
-﻿# EIP-4626 Security Patterns
+---
+id: PAT-EIP-4626
+title: Eip 4626 Security Patterns
+category: standards
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - eip
+  - standard
+  - specification
+
+finding_count: 9
+last_updated: 2026-01-31
+---
+# EIP-4626 Security Patterns
 
 ## Overview
 

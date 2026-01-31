@@ -1,4 +1,24 @@
-﻿# Share Inflation Security Patterns
+---
+id: PAT-SHARE-INFLATION
+title: Share Inflation Security Patterns
+category: defi
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - shares
+  - inflation
+  - vault
+
+finding_count: 12
+last_updated: 2026-01-31
+---
+# Share Inflation Security Patterns
 
 ## Overview
 

@@ -1,3 +1,23 @@
+---
+id: PAT-L2-SEQUENCER
+title: L2 Sequencer Security Patterns
+category: layer2
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - l2
+  - sequencer
+  - bridge
+
+finding_count: 6
+last_updated: 2026-01-31
+---
 # L2 Sequencer Security Patterns
 
 ## Overview

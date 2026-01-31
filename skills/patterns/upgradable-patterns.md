@@ -1,4 +1,23 @@
-﻿# Upgradable Security Patterns
+---
+id: PAT-UPGRADABLE
+title: Upgradable Security Patterns
+category: general
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 10
+last_updated: 2026-01-31
+---
+# Upgradable Security Patterns
 
 ## Overview
 

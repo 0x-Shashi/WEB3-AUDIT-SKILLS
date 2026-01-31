@@ -1,3 +1,23 @@
+---
+id: PAT-VAULT
+title: Vault Security Patterns
+category: defi
+severity: high
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - vault
+  - strategy
+  - yield
+
+finding_count: 9
+last_updated: 2026-01-31
+---
 # Vault Security Patterns
 
 ## Overview

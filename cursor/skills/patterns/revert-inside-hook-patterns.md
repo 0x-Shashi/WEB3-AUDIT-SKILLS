@@ -1,4 +1,24 @@
-﻿# Revert Inside Hook Security Patterns
+---
+id: PAT-REVERT-INSIDE-HOOK
+title: Revert Inside Hook Security Patterns
+category: error-handling
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - revert
+  - error
+  - exception
+
+finding_count: 4
+last_updated: 2026-01-31
+---
+# Revert Inside Hook Security Patterns
 
 ## Overview
 

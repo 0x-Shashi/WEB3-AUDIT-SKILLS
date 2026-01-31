@@ -1,4 +1,24 @@
-﻿# ERC4626 Security Patterns
+---
+id: PAT-ERC4626
+title: Erc4626 Security Patterns
+category: defi
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - vault
+  - shares
+  - deposit
+
+finding_count: 28
+last_updated: 2026-01-31
+---
+# ERC4626 Security Patterns
 
 ## Overview
 

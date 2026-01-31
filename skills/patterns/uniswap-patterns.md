@@ -1,4 +1,24 @@
-﻿# Uniswap Security Patterns
+---
+id: PAT-UNISWAP
+title: Uniswap Security Patterns
+category: defi
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - uniswap
+  - amm
+  - swap
+
+finding_count: 22
+last_updated: 2026-01-31
+---
+# Uniswap Security Patterns
 
 ## Overview
 

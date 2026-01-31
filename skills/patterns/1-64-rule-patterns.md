@@ -1,4 +1,24 @@
-﻿# 1/64 Rule Security Patterns
+---
+id: PAT-1-64-RULE
+title: 1 64 Rule Security Patterns
+category: evm
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - 1-64-rule
+  - gas
+  - call
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# 1/64 Rule Security Patterns
 
 ## Overview
 

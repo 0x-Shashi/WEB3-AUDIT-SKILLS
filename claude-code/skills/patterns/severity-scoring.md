@@ -1,4 +1,23 @@
-﻿# Severity Scoring Guide - AI Reference
+---
+id: PAT-SEVERITY-SCORING
+title: Severity Scoring Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+
+last_updated: 2026-01-31
+---
+# Severity Scoring Guide - AI Reference
 
 > **For AI Assistants:** Use this guide to assign accurate severity scores to vulnerabilities.
 

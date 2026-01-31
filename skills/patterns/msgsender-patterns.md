@@ -1,3 +1,23 @@
+---
+id: PAT-MSGSENDER
+title: Msgsender Security Patterns
+category: context
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - msg.sender
+  - tx.origin
+  - context
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # msgSender Security Patterns
 
 ## Overview

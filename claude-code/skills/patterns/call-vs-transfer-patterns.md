@@ -1,4 +1,24 @@
-﻿# call vs transfer Security Patterns
+---
+id: PAT-CALL-VS-TRANSFER
+title: Call Vs Transfer Security Patterns
+category: token
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - transfer
+  - safe-transfer
+  - return-value
+
+finding_count: 15
+last_updated: 2026-01-31
+---
+# call vs transfer Security Patterns
 
 ## Overview
 

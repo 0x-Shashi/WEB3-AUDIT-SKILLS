@@ -1,4 +1,24 @@
-﻿# Vote Security Patterns
+---
+id: PAT-VOTE
+title: Vote Security Patterns
+category: governance
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - voting
+  - governance
+  - delegation
+
+finding_count: 22
+last_updated: 2026-01-31
+---
+# Vote Security Patterns
 
 ## Overview
 

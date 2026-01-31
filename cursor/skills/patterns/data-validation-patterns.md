@@ -1,4 +1,24 @@
-﻿# Data Validation Security Patterns
+---
+id: PAT-DATA-VALIDATION
+title: Data Validation Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - input-validation
+  - require
+  - assert
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# Data Validation Security Patterns
 
 ## Overview
 

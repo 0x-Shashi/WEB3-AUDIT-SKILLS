@@ -1,4 +1,25 @@
-﻿# EVM, Gas & DoS Vulnerability Patterns
+---
+id: PAT-EVM-GAS-DOS
+title: Evm Gas Dos Security Patterns
+category: gas
+severity: low
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - optimization
+  - efficiency
+  - gas-limit
+related_patterns:
+  - vulnerability
+
+last_updated: 2026-01-31
+---
+# EVM, Gas & DoS Vulnerability Patterns
 
 > **AI Skill**: This file contains EVM-specific, gas-related, and denial-of-service vulnerability patterns extracted from real audit reports.
 

@@ -1,4 +1,11 @@
-﻿# OtterSec - Audit Findings
+---
+id: SRC-OTTERSEC
+title: Ottersec Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# OtterSec - Audit Findings
 
 ## Overview
 

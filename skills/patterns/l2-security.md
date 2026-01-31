@@ -1,3 +1,23 @@
+---
+id: PAT-L2
+title: L2 Security Patterns
+category: layer2
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - l2
+  - sequencer
+  - bridge
+
+
+last_updated: 2026-01-31
+---
 # L2 Security Patterns - AI Reference
 
 > **For AI Assistants:** Layer 2 networks have unique vulnerabilities. Apply these patterns when auditing L2 deployments.

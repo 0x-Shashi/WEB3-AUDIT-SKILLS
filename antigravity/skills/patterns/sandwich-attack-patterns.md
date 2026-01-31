@@ -1,4 +1,24 @@
-﻿# Sandwich Attack Security Patterns
+---
+id: PAT-SANDWICH-ATTACK
+title: Sandwich Attack Security Patterns
+category: mev
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - sandwich
+  - mev
+  - front-running
+
+finding_count: 19
+last_updated: 2026-01-31
+---
+# Sandwich Attack Security Patterns
 
 ## Overview
 

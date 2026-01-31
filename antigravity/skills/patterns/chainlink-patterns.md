@@ -1,4 +1,24 @@
-﻿# Chainlink Security Patterns
+---
+id: PAT-CHAINLINK
+title: Chainlink Security Patterns
+category: oracle
+severity: high
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - chainlink
+  - price-feed
+  - aggregator
+
+finding_count: 25
+last_updated: 2026-01-31
+---
+# Chainlink Security Patterns
 
 ## Overview
 

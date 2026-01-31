@@ -1,4 +1,24 @@
-﻿# Weird ERC20 Security Patterns
+---
+id: PAT-WEIRD-ERC20
+title: Weird Erc20 Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc20
+  - transfer
+  - approval
+
+finding_count: 26
+last_updated: 2026-01-31
+---
+# Weird ERC20 Security Patterns
 
 ## Overview
 

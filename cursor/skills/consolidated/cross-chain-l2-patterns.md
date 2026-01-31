@@ -1,4 +1,24 @@
-﻿# Cross-Chain & L2 Security Patterns (Consolidated)
+---
+id: PAT-CROSS-CHAIN-L2
+title: Cross Chain L2 Security Patterns
+category: layer2
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - l2
+  - sequencer
+  - bridge
+
+finding_count: 8
+last_updated: 2026-01-31
+---
+# Cross-Chain & L2 Security Patterns (Consolidated)
 
 > **Bridging and L2 introduce unique attack vectors. Cross-chain replay = double withdrawal.**
 

@@ -1,4 +1,24 @@
-﻿# Missing Check Security Patterns
+---
+id: PAT-MISSING-CHECK
+title: Missing Check Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - validation
+  - require
+  - missing-check
+
+finding_count: 23
+last_updated: 2026-01-31
+---
+# Missing Check Security Patterns
 
 ## Overview
 

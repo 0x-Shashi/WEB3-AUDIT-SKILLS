@@ -1,4 +1,24 @@
-﻿# mint vs safeMint Security Patterns
+---
+id: PAT-MINT-VS-SAFEMINT
+title: Mint Vs Safemint Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - safe-transfer
+  - safe-approve
+  - wrapper
+
+finding_count: 5
+last_updated: 2026-01-31
+---
+# mint vs safeMint Security Patterns
 
 ## Overview
 

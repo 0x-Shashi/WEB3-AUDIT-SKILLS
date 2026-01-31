@@ -1,4 +1,24 @@
-﻿# Block Period Security Patterns
+---
+id: PAT-BLOCK-PERIOD
+title: Block Period Security Patterns
+category: timing
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - block
+  - timestamp
+  - number
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# Block Period Security Patterns
 
 ## Overview
 

@@ -1,4 +1,25 @@
-﻿# Token Security Patterns (Consolidated)
+---
+id: PAT-TOKEN
+title: Token Security Patterns
+category: token
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - token
+  - erc20
+  - transfer
+related_patterns:
+  - erc20
+finding_count: 27
+last_updated: 2026-01-31
+---
+# Token Security Patterns (Consolidated)
 
 > **Tokens are not all the same. Weird token behaviors cause billions in losses.**
 

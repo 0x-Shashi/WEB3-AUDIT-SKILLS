@@ -1,4 +1,24 @@
-﻿# Allowance Security Patterns
+---
+id: PAT-ALLOWANCE
+title: Allowance Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - allowance
+  - approval
+  - spending
+
+finding_count: 15
+last_updated: 2026-01-31
+---
+# Allowance Security Patterns
 
 ## Overview
 

@@ -1,4 +1,24 @@
-﻿# Event Security Patterns
+---
+id: PAT-EVENT
+title: Event Security Patterns
+category: best-practices
+severity: low
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - events
+  - logging
+  - indexing
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Event Security Patterns
 
 ## Overview
 

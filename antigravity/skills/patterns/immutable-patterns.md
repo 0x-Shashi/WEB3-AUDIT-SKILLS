@@ -1,3 +1,23 @@
+---
+id: PAT-IMMUTABLE
+title: Immutable Security Patterns
+category: storage
+severity: low
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - immutable
+  - constant
+  - unchangeable
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Immutable Security Patterns
 
 ## Overview

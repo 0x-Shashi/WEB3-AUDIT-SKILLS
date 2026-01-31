@@ -1,4 +1,24 @@
-﻿# from=to Security Patterns
+---
+id: PAT-FROM-TO
+title: From To Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - from
+  - to
+  - address
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# from=to Security Patterns
 
 ## Overview
 

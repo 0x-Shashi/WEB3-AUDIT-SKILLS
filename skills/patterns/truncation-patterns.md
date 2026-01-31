@@ -1,3 +1,23 @@
+---
+id: PAT-TRUNCATION
+title: Truncation Security Patterns
+category: data-type
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - truncation
+  - overflow
+  - casting
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Truncation Security Patterns
 
 ## Overview

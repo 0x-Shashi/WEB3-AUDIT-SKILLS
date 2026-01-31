@@ -1,3 +1,23 @@
+---
+id: PAT-TRANSFER-RESULT-CHECK
+title: Transfer Result Check Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - transfer
+  - safe-transfer
+  - return-value
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Transfer Result Check Security Patterns
 
 ## Overview

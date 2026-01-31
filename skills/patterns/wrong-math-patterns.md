@@ -1,4 +1,24 @@
-﻿# Wrong Math Security Patterns
+---
+id: PAT-WRONG-MATH
+title: Wrong Math Security Patterns
+category: logic
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - wrong
+  - incorrect
+  - error
+
+finding_count: 107
+last_updated: 2026-01-31
+---
+# Wrong Math Security Patterns
 
 ## Overview
 

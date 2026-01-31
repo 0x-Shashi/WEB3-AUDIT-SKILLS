@@ -1,3 +1,23 @@
+---
+id: PAT-BROKEN-LOOP
+title: Broken Loop Security Patterns
+category: dos
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - loop
+  - iteration
+  - gas
+
+finding_count: 7
+last_updated: 2026-01-31
+---
 # Broken Loop Security Patterns
 
 ## Overview

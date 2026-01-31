@@ -1,4 +1,24 @@
-﻿# USDT Security Patterns
+---
+id: PAT-USDT
+title: Usdt Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - usdt
+  - non-standard
+  - approval
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# USDT Security Patterns
 
 ## Overview
 

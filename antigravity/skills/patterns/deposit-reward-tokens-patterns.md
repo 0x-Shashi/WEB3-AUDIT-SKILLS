@@ -1,3 +1,24 @@
+---
+id: PAT-DEPOSIT-REWARD-TOKENS
+title: Deposit Reward Tokens Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - token
+  - erc20
+  - transfer
+related_patterns:
+  - erc20
+finding_count: 18
+last_updated: 2026-01-31
+---
 # Deposit/Reward tokens Security Patterns
 
 ## Overview

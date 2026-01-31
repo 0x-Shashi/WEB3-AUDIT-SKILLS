@@ -1,4 +1,11 @@
-﻿# Pashov Audit Group - Audit Findings
+---
+id: SRC-PASHOV-AUDIT-GROUP
+title: Pashov Audit Group Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# Pashov Audit Group - Audit Findings
 
 ## Overview
 

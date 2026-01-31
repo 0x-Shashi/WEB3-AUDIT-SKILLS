@@ -1,4 +1,26 @@
-﻿# Read-only Reentrancy Security Patterns
+---
+id: PAT-READ-ONLY-REENTRANCY
+title: Read Only Reentrancy Security Patterns
+category: reentrancy
+severity: critical
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - external-call
+  - state-update
+  - callback
+related_patterns:
+  - external-call
+  - cei
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Read-only Reentrancy Security Patterns
 
 ## Overview
 

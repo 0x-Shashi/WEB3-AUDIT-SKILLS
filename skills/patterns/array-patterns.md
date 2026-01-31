@@ -1,3 +1,23 @@
+---
+id: PAT-ARRAY
+title: Array Security Patterns
+category: data-structure
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - array
+  - iteration
+  - bounds
+
+finding_count: 6
+last_updated: 2026-01-31
+---
 # Array Security Patterns
 
 ## Overview

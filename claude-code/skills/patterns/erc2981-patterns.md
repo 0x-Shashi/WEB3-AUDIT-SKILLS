@@ -1,4 +1,23 @@
-﻿# ERC2981 Security Patterns
+---
+id: PAT-ERC2981
+title: Erc2981 Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# ERC2981 Security Patterns
 
 ## Overview
 

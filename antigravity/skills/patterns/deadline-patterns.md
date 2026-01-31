@@ -1,3 +1,23 @@
+---
+id: PAT-DEADLINE
+title: Deadline Security Patterns
+category: timing
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - deadline
+  - expiry
+  - timestamp
+
+finding_count: 6
+last_updated: 2026-01-31
+---
 # Deadline Security Patterns
 
 ## Overview

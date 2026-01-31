@@ -1,4 +1,24 @@
-﻿# Pre/Post Balance Security Patterns
+---
+id: PAT-PRE-POST-BALANCE
+title: Pre Post Balance Security Patterns
+category: validation
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - pre-condition
+  - balance
+  - check
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# Pre/Post Balance Security Patterns
 
 ## Overview
 

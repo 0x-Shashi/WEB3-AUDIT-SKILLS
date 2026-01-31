@@ -1,4 +1,24 @@
-﻿# ERC777 Security Patterns
+---
+id: PAT-ERC777
+title: Erc777 Security Patterns
+category: token
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc777
+  - callback
+  - reentrancy
+
+finding_count: 11
+last_updated: 2026-01-31
+---
+# ERC777 Security Patterns
 
 ## Overview
 

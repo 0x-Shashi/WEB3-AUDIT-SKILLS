@@ -1,4 +1,24 @@
-﻿# Account Abstraction Security Patterns
+---
+id: PAT-ACCOUNT-ABSTRACTION
+title: Account Abstraction Security Patterns
+category: erc4337
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc4337
+  - aa
+  - bundler
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Account Abstraction Security Patterns
 
 ## Overview
 

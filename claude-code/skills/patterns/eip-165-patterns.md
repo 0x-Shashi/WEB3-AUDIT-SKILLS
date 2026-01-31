@@ -1,3 +1,23 @@
+---
+id: PAT-EIP-165
+title: Eip 165 Security Patterns
+category: standards
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - eip
+  - standard
+  - specification
+
+finding_count: 5
+last_updated: 2026-01-31
+---
 # EIP-165 Security Patterns
 
 ## Overview

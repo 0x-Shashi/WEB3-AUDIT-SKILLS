@@ -1,4 +1,11 @@
-﻿# Code4rena - Audit Findings
+---
+id: SRC-CODE4RENA
+title: Code4rena Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# Code4rena - Audit Findings
 
 ## Overview
 

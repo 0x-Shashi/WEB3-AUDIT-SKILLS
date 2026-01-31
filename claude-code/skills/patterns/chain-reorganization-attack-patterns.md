@@ -1,4 +1,24 @@
-﻿# Chain Reorganization Attack Security Patterns
+---
+id: PAT-CHAIN-REORGANIZATION-ATTACK
+title: Chain Reorganization Attack Security Patterns
+category: consensus
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - reorg
+  - reorganization
+  - finality
+
+finding_count: 18
+last_updated: 2026-01-31
+---
+# Chain Reorganization Attack Security Patterns
 
 ## Overview
 

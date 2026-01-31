@@ -1,4 +1,24 @@
-﻿# Update State After Admin Action Security Patterns
+---
+id: PAT-UPDATE-STATE-AFTER-ADMIN-ACTION
+title: Update State After Admin Action Security Patterns
+category: state
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - state-update
+  - mutation
+  - storage
+
+finding_count: 5
+last_updated: 2026-01-31
+---
+# Update State After Admin Action Security Patterns
 
 ## Overview
 

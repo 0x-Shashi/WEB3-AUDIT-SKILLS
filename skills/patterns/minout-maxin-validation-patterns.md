@@ -1,4 +1,24 @@
-﻿# MinOut/MaxIn Validation Security Patterns
+---
+id: PAT-MINOUT-MAXIN-VALIDATION
+title: Minout Maxin Validation Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - input-validation
+  - require
+  - assert
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# MinOut/MaxIn Validation Security Patterns
 
 ## Overview
 

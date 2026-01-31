@@ -1,4 +1,24 @@
-﻿# Bridge Security Patterns - AI Reference
+---
+id: PAT-BRIDGE
+title: Bridge Security Patterns
+category: cross-chain
+severity: critical
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - bridge
+  - cross-chain
+  - messaging
+
+
+last_updated: 2026-01-31
+---
+# Bridge Security Patterns - AI Reference
 
 > **For AI Assistants:** Bridges are high-value targets. Apply these patterns when auditing cross-chain protocols.
 

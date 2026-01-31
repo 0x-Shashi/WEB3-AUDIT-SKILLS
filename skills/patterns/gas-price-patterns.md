@@ -1,3 +1,23 @@
+---
+id: PAT-GAS-PRICE
+title: Gas Price Security Patterns
+category: gas
+severity: low
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - optimization
+  - efficiency
+  - gas-limit
+
+finding_count: 5
+last_updated: 2026-01-31
+---
 # Gas Price Security Patterns
 
 ## Overview

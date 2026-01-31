@@ -1,3 +1,23 @@
+---
+id: PAT-DELEGATE
+title: Delegate Security Patterns
+category: proxy
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - delegatecall
+  - proxy
+  - context
+
+finding_count: 8
+last_updated: 2026-01-31
+---
 # Delegate Security Patterns
 
 ## Overview

@@ -1,4 +1,11 @@
-﻿# Codehawks - Audit Findings
+---
+id: SRC-CODEHAWKS
+title: Codehawks Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# Codehawks - Audit Findings
 
 ## Overview
 

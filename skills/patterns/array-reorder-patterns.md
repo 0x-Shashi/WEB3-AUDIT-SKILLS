@@ -1,3 +1,23 @@
+---
+id: PAT-ARRAY-REORDER
+title: Array Reorder Security Patterns
+category: data-structure
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - array
+  - iteration
+  - bounds
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # Array Reorder Security Patterns
 
 ## Overview

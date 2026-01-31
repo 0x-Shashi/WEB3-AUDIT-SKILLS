@@ -1,3 +1,23 @@
+---
+id: PAT-PEGGED
+title: Pegged Security Patterns
+category: defi
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - peg
+  - stablecoin
+  - depeg
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # Pegged Security Patterns
 
 ## Overview

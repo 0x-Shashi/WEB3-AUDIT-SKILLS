@@ -1,3 +1,23 @@
+---
+id: PAT-NONCE
+title: Nonce Security Patterns
+category: cryptography
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - nonce
+  - replay
+  - unique
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # Nonce Security Patterns
 
 ## Overview

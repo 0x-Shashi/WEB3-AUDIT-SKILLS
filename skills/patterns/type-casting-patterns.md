@@ -1,4 +1,24 @@
-﻿# Type casting Security Patterns
+---
+id: PAT-TYPE-CASTING
+title: Type Casting Security Patterns
+category: data-type
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - type-casting
+  - conversion
+  - truncation
+
+finding_count: 14
+last_updated: 2026-01-31
+---
+# Type casting Security Patterns
 
 ## Overview
 

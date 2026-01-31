@@ -1,4 +1,24 @@
-﻿# First Depositor Issue Security Patterns
+---
+id: PAT-FIRST-DEPOSITOR-ISSUE
+title: First Depositor Issue Security Patterns
+category: defi
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - first-depositor
+  - inflation
+  - vault
+
+finding_count: 26
+last_updated: 2026-01-31
+---
+# First Depositor Issue Security Patterns
 
 ## Overview
 

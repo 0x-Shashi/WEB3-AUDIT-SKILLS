@@ -1,4 +1,24 @@
-﻿# Bypass limit Security Patterns
+---
+id: PAT-BYPASS-LIMIT
+title: Bypass Limit Security Patterns
+category: access-control
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - bypass
+  - circumvent
+  - exploit
+
+finding_count: 15
+last_updated: 2026-01-31
+---
+# Bypass limit Security Patterns
 
 ## Overview
 

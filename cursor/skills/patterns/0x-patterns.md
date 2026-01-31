@@ -1,4 +1,24 @@
-﻿# 0x Security Patterns
+---
+id: PAT-0X
+title: 0X Security Patterns
+category: defi
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - 0x
+  - exchange
+  - trading
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# 0x Security Patterns
 
 ## Overview
 

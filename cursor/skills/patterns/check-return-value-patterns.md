@@ -1,4 +1,24 @@
-﻿# Check Return Value Security Patterns
+---
+id: PAT-CHECK-RETURN-VALUE
+title: Check Return Value Security Patterns
+category: validation
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - validation
+  - require
+  - missing-check
+
+finding_count: 7
+last_updated: 2026-01-31
+---
+# Check Return Value Security Patterns
 
 ## Overview
 

@@ -1,3 +1,22 @@
+---
+id: PAT-INVARIANT-TESTING
+title: Invariant Testing Security Patterns
+category: general
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+
+last_updated: 2026-01-31
+---
 # Invariant Test Generator - AI Reference
 
 > **For AI Assistants:** Use these templates to generate Foundry invariant/fuzz tests for smart contracts.

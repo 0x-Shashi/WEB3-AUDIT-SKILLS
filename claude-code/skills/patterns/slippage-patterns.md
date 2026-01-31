@@ -1,4 +1,24 @@
-﻿# Slippage Security Patterns
+---
+id: PAT-SLIPPAGE
+title: Slippage Security Patterns
+category: defi
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - slippage
+  - price-impact
+  - trading
+
+finding_count: 36
+last_updated: 2026-01-31
+---
+# Slippage Security Patterns
 
 ## Overview
 

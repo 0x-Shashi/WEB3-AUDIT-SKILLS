@@ -1,4 +1,24 @@
-﻿# Approve Security Patterns
+---
+id: PAT-APPROVE
+title: Approve Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - approval
+  - allowance
+  - permit
+
+finding_count: 18
+last_updated: 2026-01-31
+---
+# Approve Security Patterns
 
 ## Overview
 

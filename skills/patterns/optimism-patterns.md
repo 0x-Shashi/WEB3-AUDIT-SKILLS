@@ -1,4 +1,24 @@
-﻿# Optimism Security Patterns
+---
+id: PAT-OPTIMISM
+title: Optimism Security Patterns
+category: layer2
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - optimism
+  - l2
+  - rollup
+
+finding_count: 4
+last_updated: 2026-01-31
+---
+# Optimism Security Patterns
 
 ## Overview
 

@@ -11,3 +11,7 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# Large data files
+EXTRACED SOLODIT DATA/
+*.json

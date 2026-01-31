@@ -1,4 +1,24 @@
-﻿# Initialization Security Patterns
+---
+id: PAT-INITIALIZATION
+title: Initialization Security Patterns
+category: initialization
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - initializer
+  - constructor
+  - proxy
+
+finding_count: 15
+last_updated: 2026-01-31
+---
+# Initialization Security Patterns
 
 ## Overview
 

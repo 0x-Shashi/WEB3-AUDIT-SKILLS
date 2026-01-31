@@ -1,4 +1,24 @@
-﻿# Decimals Security Patterns
+---
+id: PAT-DECIMALS
+title: Decimals Security Patterns
+category: math
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - decimals
+  - precision
+  - scaling
+
+finding_count: 45
+last_updated: 2026-01-31
+---
+# Decimals Security Patterns
 
 ## Overview
 

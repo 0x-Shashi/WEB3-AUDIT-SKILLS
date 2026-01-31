@@ -1,4 +1,24 @@
-﻿# SafeTransfer Security Patterns
+---
+id: PAT-SAFETRANSFER
+title: Safetransfer Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - transfer
+  - safe-transfer
+  - return-value
+
+finding_count: 14
+last_updated: 2026-01-31
+---
+# SafeTransfer Security Patterns
 
 ## Overview
 

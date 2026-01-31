@@ -1,4 +1,25 @@
-﻿# Token Existence Security Patterns
+---
+id: PAT-TOKEN-EXISTENCE
+title: Token Existence Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - token
+  - erc20
+  - transfer
+related_patterns:
+  - erc20
+finding_count: 4
+last_updated: 2026-01-31
+---
+# Token Existence Security Patterns
 
 ## Overview
 

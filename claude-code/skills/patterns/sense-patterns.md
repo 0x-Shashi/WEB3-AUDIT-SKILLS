@@ -1,3 +1,23 @@
+---
+id: PAT-SENSE
+title: Sense Security Patterns
+category: logic
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - sense-check
+  - sanity
+  - validation
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Sense Security Patterns
 
 ## Overview

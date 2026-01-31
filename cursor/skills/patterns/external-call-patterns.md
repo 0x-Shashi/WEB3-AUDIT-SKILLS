@@ -1,4 +1,24 @@
-﻿# External Call Security Patterns
+---
+id: PAT-EXTERNAL-CALL
+title: External Call Security Patterns
+category: external-call
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - call
+  - low-level
+  - return
+
+finding_count: 8
+last_updated: 2026-01-31
+---
+# External Call Security Patterns
 
 ## Overview
 

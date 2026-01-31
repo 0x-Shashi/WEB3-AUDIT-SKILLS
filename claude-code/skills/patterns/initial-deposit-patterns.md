@@ -1,3 +1,23 @@
+---
+id: PAT-INITIAL-DEPOSIT
+title: Initial Deposit Security Patterns
+category: defi
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - deposit
+  - stake
+  - lock
+
+finding_count: 9
+last_updated: 2026-01-31
+---
 # Initial Deposit Security Patterns
 
 ## Overview

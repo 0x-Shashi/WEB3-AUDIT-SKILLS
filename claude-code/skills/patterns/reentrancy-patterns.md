@@ -1,4 +1,26 @@
-﻿# Reentrancy Security Patterns
+---
+id: PAT-REENTRANCY
+title: Reentrancy Security Patterns
+category: reentrancy
+severity: critical
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - external-call
+  - state-update
+  - callback
+related_patterns:
+  - external-call
+  - cei
+finding_count: 59
+last_updated: 2026-01-31
+---
+# Reentrancy Security Patterns
 
 ## Overview
 

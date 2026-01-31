@@ -1,4 +1,24 @@
-﻿# Admin Security Patterns
+---
+id: PAT-ADMIN
+title: Admin Security Patterns
+category: access-control
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - admin
+  - owner
+  - privileged
+
+finding_count: 36
+last_updated: 2026-01-31
+---
+# Admin Security Patterns
 
 ## Overview
 

@@ -1,3 +1,23 @@
+---
+id: PAT-REVERT-BY-SENDING-DUST
+title: Revert By Sending Dust Security Patterns
+category: error-handling
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - revert
+  - error
+  - exception
+
+finding_count: 7
+last_updated: 2026-01-31
+---
 # Revert By Sending Dust Security Patterns
 
 ## Overview

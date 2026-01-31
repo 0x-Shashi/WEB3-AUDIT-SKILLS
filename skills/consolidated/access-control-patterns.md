@@ -1,4 +1,24 @@
-﻿# Access Control Security Patterns (Consolidated)
+---
+id: PAT-ACCESS-CONTROL
+title: Access Control Security Patterns
+category: access-control
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - authorization
+  - permissions
+  - roles
+
+finding_count: 48
+last_updated: 2026-01-31
+---
+# Access Control Security Patterns (Consolidated)
 
 > **Broken access control is a top vulnerability. Missing auth = instant critical.**
 

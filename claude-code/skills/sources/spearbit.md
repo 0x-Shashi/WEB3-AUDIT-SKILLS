@@ -1,4 +1,11 @@
-﻿# Spearbit - Audit Findings
+---
+id: SRC-SPEARBIT
+title: Spearbit Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# Spearbit - Audit Findings
 
 ## Overview
 

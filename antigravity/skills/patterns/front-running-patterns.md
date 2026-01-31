@@ -1,4 +1,24 @@
-﻿# Front-Running Security Patterns
+---
+id: PAT-FRONT-RUNNING
+title: Front Running Security Patterns
+category: front-running
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - mev
+  - sandwich
+  - transaction-ordering
+
+finding_count: 106
+last_updated: 2026-01-31
+---
+# Front-Running Security Patterns
 
 ## Overview
 

@@ -1,4 +1,24 @@
-﻿# EIP-712 Security Patterns
+---
+id: PAT-EIP-712
+title: Eip 712 Security Patterns
+category: standards
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - eip
+  - standard
+  - specification
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# EIP-712 Security Patterns
 
 ## Overview
 

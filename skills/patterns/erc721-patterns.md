@@ -1,4 +1,24 @@
-﻿# ERC721 Security Patterns
+---
+id: PAT-ERC721
+title: Erc721 Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc721
+  - nft
+  - transfer
+
+finding_count: 21
+last_updated: 2026-01-31
+---
+# ERC721 Security Patterns
 
 ## Overview
 

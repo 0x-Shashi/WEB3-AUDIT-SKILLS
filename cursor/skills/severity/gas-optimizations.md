@@ -1,4 +1,11 @@
-﻿# GAS Severity Findings
+---
+id: SEV-GAS-OPTIMIZATIONS
+title: Gas Optimization Findings
+category: severity
+severity_level: gas
+last_updated: 2026-01-31
+---
+# GAS Severity Findings
 
 ## Overview
 

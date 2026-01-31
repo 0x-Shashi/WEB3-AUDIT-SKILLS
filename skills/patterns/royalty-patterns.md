@@ -1,4 +1,24 @@
-﻿# Royalty Security Patterns
+---
+id: PAT-ROYALTY
+title: Royalty Security Patterns
+category: nft
+severity: low
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - royalty
+  - erc2981
+  - creator
+
+finding_count: 6
+last_updated: 2026-01-31
+---
+# Royalty Security Patterns
 
 ## Overview
 

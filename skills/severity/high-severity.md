@@ -1,4 +1,11 @@
-﻿# HIGH Severity Findings
+---
+id: SEV-HIGH-SEVERITY
+title: High Severity Findings
+category: severity
+severity_level: high
+last_updated: 2026-01-31
+---
+# HIGH Severity Findings
 
 ## Overview
 

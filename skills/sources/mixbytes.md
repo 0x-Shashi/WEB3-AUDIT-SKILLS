@@ -1,4 +1,11 @@
-﻿# MixBytes - Audit Findings
+---
+id: SRC-MIXBYTES
+title: Mixbytes Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# MixBytes - Audit Findings
 
 ## Overview
 

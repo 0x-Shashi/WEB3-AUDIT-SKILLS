@@ -1,4 +1,24 @@
-﻿# Overflow/Underflow Security Patterns
+---
+id: PAT-OVERFLOW-UNDERFLOW
+title: Overflow Underflow Security Patterns
+category: math
+severity: high
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - overflow
+  - underflow
+  - arithmetic
+
+finding_count: 43
+last_updated: 2026-01-31
+---
+# Overflow/Underflow Security Patterns
 
 ## Overview
 

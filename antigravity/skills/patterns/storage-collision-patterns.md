@@ -1,4 +1,24 @@
-﻿# Storage Collision Security Patterns
+---
+id: PAT-STORAGE-COLLISION
+title: Storage Collision Security Patterns
+category: storage
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - storage
+  - collision
+  - layout
+
+finding_count: 3
+last_updated: 2026-01-31
+---
+# Storage Collision Security Patterns
 
 ## Overview
 

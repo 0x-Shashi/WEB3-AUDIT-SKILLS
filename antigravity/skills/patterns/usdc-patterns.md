@@ -1,3 +1,22 @@
+---
+id: PAT-USDC
+title: Usdc Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 6
+last_updated: 2026-01-31
+---
 # USDC Security Patterns
 
 ## Overview

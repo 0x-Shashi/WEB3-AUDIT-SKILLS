@@ -1,4 +1,24 @@
-﻿# TWAP Security Patterns
+---
+id: PAT-TWAP
+title: Twap Security Patterns
+category: oracle
+severity: medium
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - twap
+  - oracle
+  - manipulation
+
+finding_count: 10
+last_updated: 2026-01-31
+---
+# TWAP Security Patterns
 
 ## Overview
 

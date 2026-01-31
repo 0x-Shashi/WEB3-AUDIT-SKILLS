@@ -1,3 +1,22 @@
+---
+id: PAT-DAO
+title: Dao Security Patterns
+category: general
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - security
+  - vulnerability
+
+finding_count: 4
+last_updated: 2026-01-31
+---
 # DAO Security Patterns
 
 ## Overview

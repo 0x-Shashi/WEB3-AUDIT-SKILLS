@@ -1,3 +1,23 @@
+---
+id: PAT-COLLATERAL-FACTOR
+title: Collateral Factor Security Patterns
+category: defi
+severity: high
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - collateral
+  - lending
+  - liquidation
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Collateral Factor Security Patterns
 
 ## Overview

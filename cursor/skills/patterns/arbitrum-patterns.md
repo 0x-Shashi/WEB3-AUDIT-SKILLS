@@ -1,4 +1,24 @@
-﻿# Arbitrum Security Patterns
+---
+id: PAT-ARBITRUM
+title: Arbitrum Security Patterns
+category: layer2
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - arbitrum
+  - l2
+  - rollup
+
+finding_count: 5
+last_updated: 2026-01-31
+---
+# Arbitrum Security Patterns
 
 ## Overview
 

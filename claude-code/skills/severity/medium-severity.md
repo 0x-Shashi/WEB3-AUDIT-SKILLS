@@ -1,4 +1,11 @@
-﻿# MEDIUM Severity Findings
+---
+id: SEV-MEDIUM-SEVERITY
+title: Medium Severity Findings
+category: severity
+severity_level: medium
+last_updated: 2026-01-31
+---
+# MEDIUM Severity Findings
 
 ## Overview
 

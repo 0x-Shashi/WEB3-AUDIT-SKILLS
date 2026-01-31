@@ -1,4 +1,24 @@
-﻿# Denial-Of-Service Security Patterns
+---
+id: PAT-DENIAL-OF-SERVICE
+title: Denial Of Service Security Patterns
+category: dos
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - denial-of-service
+  - gas
+  - griefing
+
+finding_count: 36
+last_updated: 2026-01-31
+---
+# Denial-Of-Service Security Patterns
 
 ## Overview
 

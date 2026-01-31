@@ -1,4 +1,24 @@
-﻿# NFT Security Patterns
+---
+id: PAT-NFT
+title: Nft Security Patterns
+category: nft
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - nft
+  - metadata
+  - royalty
+
+finding_count: 19
+last_updated: 2026-01-31
+---
+# NFT Security Patterns
 
 ## Overview
 

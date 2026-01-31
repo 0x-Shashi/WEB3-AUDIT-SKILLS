@@ -1,3 +1,10 @@
+---
+id: SRC-SHERLOCK
+title: Sherlock Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
 # Sherlock - Audit Findings
 
 ## Overview

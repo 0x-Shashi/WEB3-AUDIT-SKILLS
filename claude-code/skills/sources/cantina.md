@@ -1,4 +1,11 @@
-﻿# Cantina - Audit Findings
+---
+id: SRC-CANTINA
+title: Cantina Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# Cantina - Audit Findings
 
 ## Overview
 

@@ -1,4 +1,24 @@
-﻿# ERC1155 Security Patterns
+---
+id: PAT-ERC1155
+title: Erc1155 Security Patterns
+category: token
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc1155
+  - multi-token
+  - batch
+
+finding_count: 17
+last_updated: 2026-01-31
+---
+# ERC1155 Security Patterns
 
 ## Overview
 

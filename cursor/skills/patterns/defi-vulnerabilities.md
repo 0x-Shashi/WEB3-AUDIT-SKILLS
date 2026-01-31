@@ -1,3 +1,24 @@
+---
+id: PAT-DEFI-VULNERABILITIES
+title: Defi Vulnerabilities Security Patterns
+category: encoding
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - abi
+  - encoding
+  - decoding
+related_patterns:
+  - vulnerability
+
+last_updated: 2026-01-31
+---
 # DeFi Vulnerability Patterns
 
 > **AI Skill**: This file contains real-world DeFi vulnerability patterns extracted from audit reports. Use these patterns to identify similar vulnerabilities in code you're reviewing.

@@ -1,3 +1,23 @@
+---
+id: PAT-SUPPORTSINTERFACE
+title: Supportsinterface Security Patterns
+category: standards
+severity: low
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - erc165
+  - interface
+  - detection
+
+finding_count: 5
+last_updated: 2026-01-31
+---
 # supportsInterface Security Patterns
 
 ## Overview

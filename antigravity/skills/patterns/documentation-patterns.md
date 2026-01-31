@@ -1,4 +1,24 @@
-﻿# Documentation Security Patterns
+---
+id: PAT-DOCUMENTATION
+title: Documentation Security Patterns
+category: code-quality
+severity: low
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - documentation
+  - natspec
+  - comments
+
+finding_count: 4
+last_updated: 2026-01-31
+---
+# Documentation Security Patterns
 
 ## Overview
 

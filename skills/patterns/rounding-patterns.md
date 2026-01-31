@@ -1,4 +1,24 @@
-﻿# Rounding Security Patterns
+---
+id: PAT-ROUNDING
+title: Rounding Security Patterns
+category: math
+severity: medium
+difficulty: intermediate
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - rounding
+  - precision
+  - loss
+
+finding_count: 32
+last_updated: 2026-01-31
+---
+# Rounding Security Patterns
 
 ## Overview
 

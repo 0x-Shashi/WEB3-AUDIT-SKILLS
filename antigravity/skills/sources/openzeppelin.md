@@ -1,4 +1,11 @@
-﻿# OpenZeppelin - Audit Findings
+---
+id: SRC-OPENZEPPELIN
+title: Openzeppelin Audit Findings
+category: audit-firm
+firm_name: 
+last_updated: 2026-01-31
+---
+# OpenZeppelin - Audit Findings
 
 ## Overview
 

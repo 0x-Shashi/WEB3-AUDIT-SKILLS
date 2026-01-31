@@ -1,3 +1,23 @@
+---
+id: PAT-APPROVE-MAX
+title: Approve Max Security Patterns
+category: token
+severity: medium
+difficulty: beginner
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - approval
+  - allowance
+  - permit
+
+finding_count: 3
+last_updated: 2026-01-31
+---
 # Approve Max Security Patterns
 
 ## Overview

@@ -1,4 +1,24 @@
-﻿# Business Logic Security Patterns
+---
+id: PAT-BUSINESS-LOGIC
+title: Business Logic Security Patterns
+category: logic
+severity: high
+difficulty: advanced
+chains:
+  - ethereum
+  - arbitrum
+  - optimism
+  - polygon
+  - bsc
+tags:
+  - logic
+  - flow
+  - condition
+
+finding_count: 234
+last_updated: 2026-01-31
+---
+# Business Logic Security Patterns
 
 ## Overview
 
