@@ -171,19 +171,43 @@ Organized by vulnerability type:
   - [Read-only reentrancy](patterns/reentrancy/read-only-reentrancy.md)
   - [Reentrancy via token receiver hooks](patterns/reentrancy/callback-hook-reentrancy.md)
 
-## Exploit Forensics (Phase 3)
+## Exploit Forensics (Phase 3) - EXPANDED
 
-- [Exploit Forensics Index](exploit-forensics/index.md)
-  - [The DAO (2016)](exploit-forensics/the-dao-2016.md)
-  - [Wormhole (2022)](exploit-forensics/wormhole-2022.md)
-  - [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md)
+- [Exploit Forensics Index](exploit-forensics/index.md) - **13 exploits, $2.1B+ analyzed**
+  - [The DAO (2016)](exploit-forensics/the-dao-2016.md) - $60M, reentrancy
+  - [Wormhole (2022)](exploit-forensics/wormhole-2022.md) - $326M, signature bypass
+  - [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md) - $624M, key compromise
+  - [Euler (2023)](exploit-forensics/euler-2023.md) - **NEW** - $197M, donation attack
+  - [Poly Network (2021)](exploit-forensics/poly-network-2021.md) - **NEW** - $611M, access control
+  - [Nomad (2022)](exploit-forensics/nomad-2022.md) - **NEW** - $190M, zero hash root
+  - [Cream (2021)](exploit-forensics/cream-2021.md) - **NEW** - $130M, oracle manipulation
+  - [Rari (2022)](exploit-forensics/rari-2022.md) - **NEW** - $80M, reentrancy
+  - [Beanstalk (2022)](exploit-forensics/beanstalk-2022.md) - **NEW** - $182M, governance
+  - [Mango (2022)](exploit-forensics/mango-2022.md) - **NEW** - $114M, market manipulation
+  - [Cashio (2022)](exploit-forensics/cashio-2022.md) - **NEW** - $52M, account validation
+  - [Wintermute (2022)](exploit-forensics/wintermute-2022.md) - **NEW** - $160M, vanity address
+  - [Parity (2017)](exploit-forensics/parity-2017.md) - **NEW** - $280M, selfdestruct
 
-## Protocol Integration Playbooks (Phase 4)
+## Chain-Specific Security Guides (Phase 3.5) - NEW
 
-- [Protocol Playbooks Index](protocol-playbooks/index.md)
+- [Chain Guides Index](chain-guides/index.md)
+  - [Solana](chain-guides/solana.md) - Account validation, PDA, CPI vulnerabilities
+  - [Arbitrum](chain-guides/arbitrum.md) - Sequencer, retryable tickets, aliasing
+  - [Optimism](chain-guides/optimism.md) - Cross-domain messaging, deposits
+  - [zkSync Era](chain-guides/zksync.md) - zkEVM differences, account abstraction
+  - [Cosmos/CosmWasm](chain-guides/cosmos.md) - IBC security, Rust patterns
+
+## Protocol Integration Playbooks (Phase 4) - EXPANDED
+
+- [Protocol Playbooks Index](protocol-playbooks/index.md) - **8 protocols covered**
   - [Uniswap V3](protocol-playbooks/uniswap-v3.md)
+  - [Uniswap V4](protocol-playbooks/uniswap-v4.md) - **NEW** - Hooks, flash accounting
   - [Aave V3](protocol-playbooks/aave-v3.md)
+  - [Compound V3](protocol-playbooks/compound-v3.md) - **NEW** - Comet, absorb mechanism
   - [Lido](protocol-playbooks/lido.md)
+  - [Curve](protocol-playbooks/curve.md) - **NEW** - Read-only reentrancy
+  - [GMX](protocol-playbooks/gmx.md) - **NEW** - Perpetuals, keeper MEV
+  - [Morpho](protocol-playbooks/morpho.md) - **NEW** - P2P optimization
 
 ## Evolution Timelines (Phase 5)
 
