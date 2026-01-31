@@ -165,25 +165,39 @@ Organized by vulnerability type:
 ## Fractal Pattern Expansions (Phase 2)
 
 - [Reentrancy Fractal Map](patterns/reentrancy/index.md)
-	- [Classic reentrancy](patterns/reentrancy/classic-reentrancy.md)
-	- [Cross-function reentrancy](patterns/reentrancy/cross-function-reentrancy.md)
-	- [Cross-contract reentrancy](patterns/reentrancy/cross-contract-reentrancy.md)
-	- [Read-only reentrancy](patterns/reentrancy/read-only-reentrancy.md)
-	- [Reentrancy via token receiver hooks](patterns/reentrancy/callback-hook-reentrancy.md)
+  - [Classic reentrancy](patterns/reentrancy/classic-reentrancy.md)
+  - [Cross-function reentrancy](patterns/reentrancy/cross-function-reentrancy.md)
+  - [Cross-contract reentrancy](patterns/reentrancy/cross-contract-reentrancy.md)
+  - [Read-only reentrancy](patterns/reentrancy/read-only-reentrancy.md)
+  - [Reentrancy via token receiver hooks](patterns/reentrancy/callback-hook-reentrancy.md)
 
-	## Exploit Forensics (Phase 3)
+## Exploit Forensics (Phase 3)
 
-	- [Exploit Forensics Index](exploit-forensics/index.md)
-		- [The DAO (2016)](exploit-forensics/the-dao-2016.md)
-		- [Wormhole (2022)](exploit-forensics/wormhole-2022.md)
-		- [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md)
+- [Exploit Forensics Index](exploit-forensics/index.md)
+  - [The DAO (2016)](exploit-forensics/the-dao-2016.md)
+  - [Wormhole (2022)](exploit-forensics/wormhole-2022.md)
+  - [Ronin Bridge (2022)](exploit-forensics/ronin-2022.md)
 
-	## Protocol Integration Playbooks (Phase 4)
+## Protocol Integration Playbooks (Phase 4)
 
-	- [Protocol Playbooks Index](protocol-playbooks/index.md)
-		- [Uniswap V3](protocol-playbooks/uniswap-v3.md)
-		- [Aave V3](protocol-playbooks/aave-v3.md)
-		- [Lido](protocol-playbooks/lido.md)
+- [Protocol Playbooks Index](protocol-playbooks/index.md)
+  - [Uniswap V3](protocol-playbooks/uniswap-v3.md)
+  - [Aave V3](protocol-playbooks/aave-v3.md)
+  - [Lido](protocol-playbooks/lido.md)
+
+## Evolution Timelines (Phase 5)
+
+- [Evolution Timelines Index](evolution-timelines/index.md)
+  - [Reentrancy Evolution (2016-2026)](evolution-timelines/reentrancy-evolution.md)
+  - [Oracle Manipulation Evolution (2020-2026)](evolution-timelines/oracle-evolution.md)
+  - [Bridge Security Evolution (2021-2026)](evolution-timelines/bridge-evolution.md)
+
+## Learning Paths (Phase 6)
+
+- [Learning Paths Index](learning-paths/index.md)
+  - [Beginner Path (20 hours)](learning-paths/beginner-path.md)
+  - [Intermediate Path (40 hours)](learning-paths/intermediate-path.md)
+  - [Advanced Path (80 hours)](learning-paths/advanced-path.md)
 
 
 ---
