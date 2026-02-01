@@ -404,3 +404,95 @@ Check the platform-specific guides:
 
 Or open an issue on GitHub.
 
+---
+
+## Version History
+
+Current Version: **4.0**
+
+<details>
+<summary><strong>v4.0</strong> - Navigation & Methodology (Feb 2026)</summary>
+
+**New Files:**
+- `ROUTE-MAP.md` - Decision tree for 9 protocol types (Lending, DEX, Bridge, Vault, Staking, NFT, Governance, Perps, Intents)
+- `poc-writing-guide.md` - How to write effective PoCs
+- `secure-pattern-reference.md` - What secure implementations look like
+
+**Improvements:**
+- YAML frontmatter with triggers for AI discoverability
+- Protocol-specific reading paths
+- Severity classification guidance
+
+**Stats:** 12 files, 4,656 lines added
+
+</details>
+
+<details>
+<summary><strong>v3.0</strong> - Advanced Methodology (Jan 2026)</summary>
+
+**New Methodology Files:**
+- `fix-verification-patterns.md` - How to verify fixes don't reintroduce bugs
+- `gas-optimization-security.md` - When gas optimizations become vulnerabilities
+- `audit-report-templates.md` - Professional finding formats
+- `exploit-case-studies.md` - $1.5B+ in analyzed hacks (Ronin, Wormhole, Euler, Nomad, Mango, Cream)
+- `upgrade-migration-patterns.md` - Proxy and storage collision vulnerabilities
+- `composability-attacks.md` - Cross-protocol DeFi attack surfaces
+
+**Stats:** 24 files, 14,532 lines added
+
+</details>
+
+<details>
+<summary><strong>v2.0</strong> - Multi-Chain Expansion (Jan 2026)</summary>
+
+**Batch 4 - Chain Guides:**
+- Solana, CosmWasm, Move (Aptos/Sui), TON, StarkNet, zkSync guides
+- Chain-specific vulnerability patterns
+- Cross-chain bridge security
+
+**Batch 3 - Protocol Playbooks:**
+- Uniswap V3, Aave V3, Lido integration security
+- Evolution timelines (Reentrancy, Oracle, Bridge attacks)
+
+**Batch 2 - Deep Analysis:**
+- Fractal pattern expansion (reentrancy deep-dive)
+- Exploit forensics (DAO, Wormhole, Ronin)
+- Learning path curriculum
+
+**Stats:** 72 files, 39,796 lines added
+
+</details>
+
+<details>
+<summary><strong>v1.0</strong> - Foundation (Jan 2026)</summary>
+
+**Initial Release:**
+- 149 vulnerability pattern files
+- 50,530 findings from 15 audit firms
+- Master checklist with 207 vulnerability types
+- YAML-structured metadata for AI parsing
+- Multi-platform support (Cursor, Antigravity, Claude Code)
+
+**Coverage:**
+- 2,844 audited protocols
+- 8,022 High severity findings
+- 13,814 Medium severity findings
+- 25,272 Low severity findings
+
+**Stats:** Base repository with core patterns
+
+</details>
+
+---
+
+### Versioning Guide
+
+| Version Type | When to Use | Example |
+|--------------|-------------|---------|
+| **Major (X.0)** | Big feature additions, structural changes | v4.0 → v5.0 |
+| **Minor (X.Y)** | Small updates, bug fixes, pattern additions | v4.0 → v4.1 |
+
+**Upcoming in v4.1+:**
+- Additional protocol-specific checklists
+- More chain guides
+- Community-contributed patterns
