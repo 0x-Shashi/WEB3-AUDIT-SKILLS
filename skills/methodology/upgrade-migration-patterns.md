@@ -638,9 +638,9 @@ async function main() {
 npx hardhat run scripts/validate-upgrade.js
 
 # Output:
-# ✓ Storage layout compatible
-# ✓ No storage collisions
-# ✓ Gaps correctly adjusted
+#  Storage layout compatible
+#  No storage collisions
+#  Gaps correctly adjusted
 ```
 
 ### 8.3 Slither Upgrade Checks

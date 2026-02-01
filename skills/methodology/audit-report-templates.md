@@ -545,15 +545,15 @@ We audited [X] lines of Solidity code across [Y] contracts over [Z] days.
 
 | Check | Status | Notes |
 |-------|--------|-------|
-| Original PoC fails | ✅ | Reverts with "Access denied" |
-| Fix addresses root cause | ✅ | Added proper validation |
-| No new issues introduced | ✅ | Reviewed diff |
-| Tests added | ✅ | test_FixValidation |
-| Edge cases handled | ✅ | Zero, max, boundary |
+| Original PoC fails |  | Reverts with "Access denied" |
+| Fix addresses root cause |  | Added proper validation |
+| No new issues introduced |  | Reviewed diff |
+| Tests added |  | test_FixValidation |
+| Edge cases handled |  | Zero, max, boundary |
 
 ### Conclusion
 
-**Status**: ✅ FIXED / ⚠️ PARTIALLY FIXED / ❌ NOT FIXED
+**Status**:  FIXED /  PARTIALLY FIXED /  NOT FIXED
 
 **Notes**: [Additional observations]
 ```

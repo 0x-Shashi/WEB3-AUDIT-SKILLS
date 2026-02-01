@@ -289,7 +289,7 @@ function addLiquiditySinglePt(
 
 ## Security Considerations
 
-### 🔴 Critical Checks
+###  Critical Checks
 
 ```
 [ ] Is market expired? (different logic post-maturity)
@@ -482,7 +482,7 @@ Implied APY = (SY/PT - 1) / timeToMaturity * 365 days
 
 ---
 
-## Red Flags 🚩
+## Red Flags 
 
 - [ ] Operating on expired markets without handling
 - [ ] Not accounting for time decay in YT valuation

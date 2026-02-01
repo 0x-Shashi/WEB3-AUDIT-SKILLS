@@ -24,7 +24,7 @@ related_skills:
   - checklists/comprehensive-checklist.md
 ---
 
-# 🗺️ Audit Route Map
+#  Audit Route Map
 
 ## Overview
 

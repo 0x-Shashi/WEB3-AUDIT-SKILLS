@@ -154,7 +154,7 @@ psm.buyGem(recipient, amount);   // Receive USDC
 
 ## Security Considerations
 
-### 🔴 Critical Checks
+###  Critical Checks
 
 ```
 [ ] Collateralization ratio always above liquidation threshold?

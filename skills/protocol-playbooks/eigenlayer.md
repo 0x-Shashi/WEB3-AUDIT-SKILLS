@@ -318,7 +318,7 @@ contract OracleAVS is IAVS {
 
 ## Security Considerations
 
-### 🔴 Critical Checks
+###  Critical Checks
 
 ```
 [ ] Slashing conditions clearly defined and bounded?
@@ -503,7 +503,7 @@ function distributeRewards(uint256 amount, uint256 blockNumber) external {
 
 ---
 
-## Red Flags 🚩
+## Red Flags 
 
 - [ ] Operator registered with unknown/unaudited AVS
 - [ ] No slashing caps defined by AVS

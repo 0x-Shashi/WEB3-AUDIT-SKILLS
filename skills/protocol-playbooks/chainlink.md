@@ -69,7 +69,7 @@ contract PriceConsumer {
 }
 ```
 
-### 🔴 Critical: Proper Price Feed Validation
+###  Critical: Proper Price Feed Validation
 
 ```solidity
 function getValidatedPrice() public view returns (int256) {
@@ -389,37 +389,37 @@ contract CCIPReceiver is CCIPReceiver {
 
 ### Price Feeds
 ```
-❌ Not checking staleness
-❌ Not checking answer > 0
-❌ Not checking answeredInRound >= roundId
-❌ Not checking L2 sequencer status
-❌ Wrong decimal handling
-❌ Using deprecated latestAnswer()
+ Not checking staleness
+ Not checking answer > 0
+ Not checking answeredInRound >= roundId
+ Not checking L2 sequencer status
+ Wrong decimal handling
+ Using deprecated latestAnswer()
 ```
 
 ### VRF
 ```
-❌ Single-transaction randomness
-❌ Re-requesting on unfavorable outcome
-❌ Not tracking request IDs
-❌ Modulo bias for small ranges
-❌ Insufficient callback gas
+ Single-transaction randomness
+ Re-requesting on unfavorable outcome
+ Not tracking request IDs
+ Modulo bias for small ranges
+ Insufficient callback gas
 ```
 
 ### Automation
 ```
-❌ Trusting performData blindly
-❌ Not revalidating conditions in performUpkeep
-❌ Gas-expensive checkUpkeep
-❌ Not handling edge cases
+ Trusting performData blindly
+ Not revalidating conditions in performUpkeep
+ Gas-expensive checkUpkeep
+ Not handling edge cases
 ```
 
 ### CCIP
 ```
-❌ Not validating source chain
-❌ Not validating source sender
-❌ Message replay attacks
-❌ Insufficient fee handling
+ Not validating source chain
+ Not validating source sender
+ Message replay attacks
+ Insufficient fee handling
 ```
 
 ---

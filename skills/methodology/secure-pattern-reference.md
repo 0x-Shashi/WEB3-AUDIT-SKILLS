@@ -20,7 +20,7 @@ related_skills:
   - methodology/fix-verification-patterns.md
 ---
 
-# 🛡️ Secure Pattern Reference
+#  Secure Pattern Reference
 
 ## Overview
 
@@ -35,12 +35,12 @@ This document describes **what secure implementations look like** so you can ide
 **Pattern**: State changes BEFORE external calls
 
 ```
-✅ SECURE ORDER:
+ SECURE ORDER:
 1. Check: Validate conditions (require/revert)
 2. Effect: Update state (balances, flags)
 3. Interact: External call (transfer, call)
 
-❌ VULNERABLE ORDER:
+ VULNERABLE ORDER:
 1. Check
 2. Interact ← External call here
 3. Effect ← State update too late!
@@ -55,7 +55,7 @@ This document describes **what secure implementations look like** so you can ide
 **Pattern**: Mutex lock using uint256 (not bool)
 
 ```
-✅ SECURE:
+ SECURE:
 uint256 private _status = 1;  // NOT_ENTERED
 modifier nonReentrant() {
     require(_status != 2, "Reentrant");
@@ -64,7 +64,7 @@ modifier nonReentrant() {
     _status = 1;  // NOT_ENTERED
 }
 
-❌ VULNERABLE (gas inefficient):
+ VULNERABLE (gas inefficient):
 bool private locked;  // Zero→non-zero SSTORE costs more
 ```
 
@@ -82,14 +82,14 @@ bool private locked;  // Zero→non-zero SSTORE costs more
 **Pattern**: Check ALL failure modes
 
 ```
-✅ SECURE CHECKS:
+ SECURE CHECKS:
 1. Staleness: block.timestamp - updatedAt < maxAge
 2. Zero/Negative: answer > 0
 3. Round Complete: answeredInRound >= roundId
 4. Circuit Breaker: minPrice < answer < maxPrice
 5. Decimals: Scale to 18 decimals properly
 
-❌ VULNERABLE (missing checks):
+ VULNERABLE (missing checks):
 (, int price, , , ) = feed.latestRoundData();
 return uint256(price);  // No validation!
 ```
@@ -104,12 +104,12 @@ return uint256(price);  // No validation!
 **Pattern**: Time-weighted average resists manipulation
 
 ```
-✅ SECURE:
+ SECURE:
 - Use Uniswap V3 TWAP with 10-30 minute window
 - Verify sufficient liquidity depth
 - Multi-block sampling
 
-❌ VULNERABLE:
+ VULNERABLE:
 - Spot price from getReserves()
 - Single-block price reading
 - No liquidity verification
@@ -124,7 +124,7 @@ return uint256(price);  // No validation!
 **Pattern**: Pending owner must accept
 
 ```
-✅ SECURE:
+ SECURE:
 function transferOwnership(newOwner) {
     pendingOwner = newOwner;  // Step 1: Nominate
 }
@@ -133,7 +133,7 @@ function acceptOwnership() {
     owner = pendingOwner;  // Step 2: Accept
 }
 
-❌ VULNERABLE:
+ VULNERABLE:
 function transferOwnership(newOwner) {
     owner = newOwner;  // Direct transfer - typo = lost forever
 }
@@ -149,12 +149,12 @@ function transferOwnership(newOwner) {
 **Pattern**: Roles have separate admins
 
 ```
-✅ SECURE:
+ SECURE:
 - DEFAULT_ADMIN_ROLE manages other roles
 - Each role can have different admin
 - renounceRole only for msg.sender
 
-❌ VULNERABLE:
+ VULNERABLE:
 - Single "admin" bool flag
 - Hardcoded admin address
 - Anyone can revoke others' roles
@@ -169,13 +169,13 @@ function transferOwnership(newOwner) {
 **Pattern**: Virtual shares/assets offset
 
 ```
-✅ SECURE:
+ SECURE:
 totalSupply() = actualSupply + 1e3  // Virtual offset
 totalAssets() = actualAssets + 1    // Virtual offset
 
 Effect: Attacker needs massive capital to inflate shares
 
-❌ VULNERABLE:
+ VULNERABLE:
 totalSupply() = actualSupply  // No offset
 // First depositor can donate to inflate share price
 ```
@@ -190,13 +190,13 @@ totalSupply() = actualSupply  // No offset
 **Pattern**: Always round against the user
 
 ```
-✅ SECURE ROUNDING:
+ SECURE ROUNDING:
 deposit(): shares = floor(assets * supply / total)  // DOWN
 withdraw(): assets = floor(shares * total / supply)  // DOWN
 mint(): assets = ceil(shares * total / supply)      // UP
 redeem(): shares = ceil(assets * supply / total)    // UP
 
-❌ VULNERABLE:
+ VULNERABLE:
 Always rounding in user's favor = protocol drained
 ```
 
@@ -209,18 +209,18 @@ Always rounding in user's favor = protocol drained
 **Pattern**: Domain + nonce + deadline + chainId
 
 ```
-✅ SECURE DOMAIN:
+ SECURE DOMAIN:
 - name: Contract name
 - version: "1"
 - chainId: block.chainid (recomputed if changes)
 - verifyingContract: address(this)
 
-✅ SECURE MESSAGE:
+ SECURE MESSAGE:
 - Include nonce (incremented after use)
 - Include deadline (checked before use)
 - Include all action parameters
 
-❌ VULNERABLE:
+ VULNERABLE:
 - No chainId = cross-chain replay
 - No nonce = unlimited replay
 - No deadline = valid forever
@@ -236,11 +236,11 @@ Always rounding in user's favor = protocol drained
 **Pattern**: Use OpenZeppelin ECDSA, not raw ecrecover
 
 ```
-✅ SECURE:
+ SECURE:
 address signer = ECDSA.recover(hash, signature);
 // Handles: zero address, malleability, compact sigs
 
-❌ VULNERABLE:
+ VULNERABLE:
 address signer = ecrecover(hash, v, r, s);
 // Returns 0 on failure, no malleability check
 ```
@@ -254,13 +254,13 @@ address signer = ecrecover(hash, v, r, s);
 **Pattern**: Balance check (not allowance), reentrancy guard
 
 ```
-✅ SECURE:
+ SECURE:
 - Check balance BEFORE loan
 - Verify balance AFTER >= before + fee
 - Reentrancy guard prevents nested loans
 - Callback return value validated
 
-❌ VULNERABLE:
+ VULNERABLE:
 - Checking allowance (doesn't guarantee tokens exist)
 - No reentrancy protection
 - Ignoring callback return value
@@ -271,14 +271,14 @@ address signer = ecrecover(hash, v, r, s);
 **Pattern**: Validate lender and initiator
 
 ```
-✅ SECURE:
+ SECURE:
 function onFlashLoan(...) {
     require(msg.sender == TRUSTED_LENDER);
     require(initiator == OWNER);
     // Execute strategy
 }
 
-❌ VULNERABLE:
+ VULNERABLE:
 function onFlashLoan(...) {
     // Anyone can trigger, drain tokens
 }
@@ -293,7 +293,7 @@ function onFlashLoan(...) {
 **Pattern**: Implementation cannot be initialized
 
 ```
-✅ SECURE:
+ SECURE:
 constructor() {
     _disableInitializers();  // Prevents takeover
 }
@@ -304,7 +304,7 @@ function initialize(owner) initializer {
 
 function _authorizeUpgrade(newImpl) onlyOwner {}
 
-❌ VULNERABLE:
+ VULNERABLE:
 // No _disableInitializers()
 // Anyone can initialize implementation contract
 ```
@@ -314,7 +314,7 @@ function _authorizeUpgrade(newImpl) onlyOwner {}
 **Pattern**: Reserve slots for future variables
 
 ```
-✅ SECURE:
+ SECURE:
 contract V1 {
     uint256 public value;
     uint256[49] private __gap;  // Reserve 49 slots
@@ -326,7 +326,7 @@ contract V2 {
     uint256[48] private __gap;  // Now 48 slots
 }
 
-❌ VULNERABLE:
+ VULNERABLE:
 // No gap = can't add variables without collision
 ```
 

@@ -26,11 +26,11 @@ Invariant testing (stateful fuzzing) automatically explores sequences of functio
 │         ▲                                      │                │
 │         │              ┌───────────┐           │                │
 │         └──────────────│  Repeat   │◄──────────┘                │
-│                        │ 1000s of  │     ✓ Pass                 │
+│                        │ 1000s of  │      Pass                 │
 │                        │   times   │                            │
 │                        └───────────┘                            │
 │                              │                                  │
-│                              ▼ ✗ Fail                           │
+│                              ▼  Fail                           │
 │                     ┌───────────────┐                           │
 │                     │ Shrink to     │                           │
 │                     │ Minimal Repro │                           │

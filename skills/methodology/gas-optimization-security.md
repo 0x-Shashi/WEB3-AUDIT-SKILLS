@@ -466,15 +466,15 @@ function claimRewards() external {
 
 | Optimization | Gas Saved | Security Risk | Recommendation |
 |-------------|-----------|---------------|----------------|
-| Unchecked loop counter | ~50/iter | Low | ✅ Safe if bounded |
-| Unchecked all math | ~50/op | **Critical** | ❌ Never |
-| Skip array length check | ~100 | High | ❌ Never |
-| Pack structs | ~2100/slot | Medium | ✅ With safe casts |
-| Remove reentrancy guard | ~2400 | **Critical** | ⚠️ CEI pattern instead |
-| Use assembly for transfers | ~200 | High | ⚠️ Use audited library |
-| Cache storage in memory | ~100/read | Medium | ✅ With careful writeback |
-| Skip zero-address checks | ~100 | Medium | ❌ Keep checks |
-| Bitmap vs sequential nonce | ~2000 | High | ⚠️ Sequential safer |
+| Unchecked loop counter | ~50/iter | Low |  Safe if bounded |
+| Unchecked all math | ~50/op | **Critical** |  Never |
+| Skip array length check | ~100 | High |  Never |
+| Pack structs | ~2100/slot | Medium |  With safe casts |
+| Remove reentrancy guard | ~2400 | **Critical** |  CEI pattern instead |
+| Use assembly for transfers | ~200 | High |  Use audited library |
+| Cache storage in memory | ~100/read | Medium |  With careful writeback |
+| Skip zero-address checks | ~100 | Medium |  Keep checks |
+| Bitmap vs sequential nonce | ~2000 | High |  Sequential safer |
 
 ---
 

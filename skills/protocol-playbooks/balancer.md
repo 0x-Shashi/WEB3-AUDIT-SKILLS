@@ -266,7 +266,7 @@ contract BalancerFlashLoan is IFlashLoanRecipient {
 
 ## Security Considerations
 
-### 🔴 Critical Checks
+###  Critical Checks
 
 ```
 [ ] Slippage protection on all swaps (limit parameter)?
@@ -450,7 +450,7 @@ amountOut = balancerQueries.querySwap(swap, funds);
 
 ---
 
-## Red Flags 🚩
+## Red Flags 
 
 - [ ] No slippage protection (limit = 0)
 - [ ] Using spot price as oracle

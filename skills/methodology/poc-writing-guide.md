@@ -16,7 +16,7 @@ related_skills:
   - patterns/oracle-patterns.md
 ---
 
-# 📝 Proof of Concept Writing Guide
+#  Proof of Concept Writing Guide
 
 ## Overview
 
@@ -69,10 +69,10 @@ Every PoC should follow this structure:
 - Show exact profit amount
 
 ### Common Mistakes
-- ❌ Not showing initial vs final balances
-- ❌ No comments explaining the flow
-- ❌ Hardcoded values without explanation
-- ✅ Clear setup → attack → verify flow
+-  Not showing initial vs final balances
+-  No comments explaining the flow
+-  Hardcoded values without explanation
+-  Clear setup → attack → verify flow
 
 ---
 
@@ -234,25 +234,25 @@ forge test --match-test testExploit --debug
 
 ## Common PoC Anti-Patterns
 
-### ❌ Unrealistic Setup
+###  Unrealistic Setup
 ```
 "Attacker needs 1 billion tokens to exploit"
 → Not a realistic vulnerability
 ```
 
-### ❌ No Quantification
+###  No Quantification
 ```
 "Attacker gains tokens"
 → How many? What's the profit?
 ```
 
-### ❌ Missing Context
+###  Missing Context
 ```
 "Call withdraw() to exploit"
 → What state is needed? What's the attack flow?
 ```
 
-### ❌ Over-Complicated
+###  Over-Complicated
 ```
 100 lines of setup for simple bug
 → Minimize to essential elements
