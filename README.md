@@ -22,7 +22,63 @@ Traditional smart contract audits cost $50,000 to $500,000 and take weeks. This 
 
 ## Key Features
 
-### 1. Vulnerability Pattern Library (149 Files)
+### 1. Attack Trees - Visual Attack Paths (NEW in v4.0)
+
+Systematic decision trees showing how attackers explore protocol vulnerabilities:
+
+| Attack Tree | Branches | Real Exploits Mapped |
+|-------------|----------|---------------------|
+| Lending Protocol | [A-G] Oracle, Liquidation, Accounting, Reentrancy, Flash Loan, Access, MEV | Euler ($197M), Radiant ($4.5M), Cream ($130M) |
+| DEX/AMM | [A-G] Oracle, LP, Swaps, MEV, Concentrated Liquidity, Router, Governance | Harvest ($24M), Warp ($7.7M) |
+| Cross-Chain Bridge | [A-G] Signatures, State Sync, Tokens, Relayer, Contracts, Economic | Wormhole ($326M), Ronin ($625M), Poly ($610M) |
+| Vault/Yield Aggregator | [A-H] Share Price, Strategy, Withdrawal, Oracle, ERC4626, Access, Tokens, Rewards | Yearn ($11M), Rari ($80M) |
+
+**Each tree includes:**
+- Condition checks (when is this exploitable?)
+- Attack actions (what does the attacker do?)
+- Expected results (what happens if successful?)
+- Pattern cross-references (links to detailed files)
+- Real exploit mappings (which hacks used this?)
+
+### 2. Anti-Patterns - What NOT to Do (NEW in v4.0)
+
+Bad code examples from real exploits with working attack PoCs:
+
+| Anti-Pattern Category | Patterns | Total Losses |
+|----------------------|----------|--------------|
+| Oracle Anti-Patterns | 7 mistakes | $200M+ | 
+| Access Control Anti-Patterns | 7 mistakes | $1.4B+ |
+| Reentrancy Anti-Patterns | 7 mistakes | $115M+ |
+
+**Each anti-pattern shows:**
+- Vulnerable code (marked with ❌)
+- Why it's bad
+- Real exploits that used it
+- Working attack PoC
+- Correct pattern (marked with ✅)
+
+### 3. Smart Checklists - Role-Based (NEW in v4.0)
+
+Context-aware checklists for specific roles and phases:
+
+| Checklist | Target Audience | Time Required | Copy-Pasteable |
+|-----------|----------------|---------------|----------------|
+| Developer Pre-Deployment | Developers | 15-30 min | Yes (PR/Issue format) |
+| Auditor First Pass | Auditors | 30-60 min | Yes (Quick scan) |
+| QA Integration Testing | QA Testers | 2-4 hours | Yes (Test scenarios) |
+| Protocol Integration | Developers | 1-2 hours | Yes (External protocols) |
+
+### 4. Navigation Tools (NEW in v4.0)
+
+Intelligent cross-referencing and file discovery:
+
+| Tool | Purpose | Lines |
+|------|---------|-------|
+| XREF.md | Cross-reference index: vulnerability → pattern → exploit → fix | 500+ |
+| TRIGGERS.md | AI trigger phrases: user question → files to load | 400+ |
+| CHANGELOG.md | Pattern evolution over time, exploit timeline | 600+ |
+
+### 5. Vulnerability Pattern Library (149 Files)
 
 Complete coverage of smart contract vulnerabilities organized by attack vector:
 
@@ -36,7 +92,7 @@ Complete coverage of smart contract vulnerabilities organized by attack vector:
 | Bridge and Cross-Chain | 10+ | Message verification, replay attacks, sequencer issues |
 | L2 Specific | 8+ | Arbitrum, Optimism, sequencer downtime handling |
 
-### 2. Fractal Pattern Expansion (Deep-Dive Analysis)
+### 6. Fractal Pattern Expansion (Deep-Dive Analysis)
 
 Not just surface-level patterns. Each major vulnerability type includes:
 
@@ -47,7 +103,7 @@ Not just surface-level patterns. Each major vulnerability type includes:
 - Read-only reentrancy attacking view functions
 - Callback hook reentrancy via ERC777/ERC1155/ERC721
 
-### 3. Exploit Forensics (CSI-Style Case Studies)
+### 7. Exploit Forensics (CSI-Style Case Studies)
 
 Learn from the biggest hacks in DeFi history with transaction-level analysis:
 
@@ -63,7 +119,7 @@ Each case study includes:
 - Attacker transaction traces
 - What auditors missed and why
 
-### 4. Protocol Integration Playbooks
+### 8. Protocol Integration Playbooks
 
 Security guidance for integrating with major DeFi protocols:
 
@@ -73,7 +129,7 @@ Security guidance for integrating with major DeFi protocols:
 | Aave V3 | Flash loan patterns, liquidation MEV, oracle dependencies |
 | Lido | stETH/wstETH handling, rebasing token accounting, withdrawal queue |
 
-### 5. Evolution Timelines
+### 9. Evolution Timelines
 
 Track how vulnerabilities evolved and defenses improved:
 
@@ -118,7 +174,7 @@ Aggregated patterns from the top security firms:
 | Cyfrin | 2,133 | Educational focus |
 | And 9 more firms | 15,000+ | Various specialties |
 
-### 9. Master Audit Checklist
+### 10. Master Audit Checklist
 
 A prioritized checklist covering all 207 vulnerability types, organized by:
 - Likelihood of occurrence
@@ -239,6 +295,23 @@ WEB3-AUDIT-SKILLS/
 |-- AI-INSTRUCTIONS.md           # Instructions for AI assistants
 |
 |-- skills/                      # Master copy of all skills
+|   |-- attack-trees/            # NEW: Visual attack decision paths (5 files)
+|   |   |-- INDEX.md             # Attack tree navigation
+|   |   |-- lending-attack-tree.md
+|   |   |-- dex-attack-tree.md
+|   |   |-- bridge-attack-tree.md
+|   |   |-- vault-attack-tree.md
+|   |-- anti-patterns/           # NEW: What NOT to do (4 files)
+|   |   |-- INDEX.md             # Anti-pattern catalog
+|   |   |-- oracle-anti-patterns.md
+|   |   |-- access-control-anti-patterns.md
+|   |   |-- reentrancy-anti-patterns.md
+|   |-- checklists/              # Audit checklists
+|   |   |-- roles/               # NEW: Role-based checklists (4 files)
+|   |       |-- developer-pre-deployment.md
+|   |       |-- auditor-first-pass.md
+|   |       |-- qa-integration-testing.md
+|   |       |-- protocol-integration.md
 |   |-- patterns/                # 149 vulnerability pattern files
 |   |   |-- reentrancy/          # Reentrancy deep-dive (6 files)
 |   |-- exploit-forensics/       # CSI-style case studies (4 files)
@@ -247,8 +320,10 @@ WEB3-AUDIT-SKILLS/
 |   |-- learning-paths/          # Structured curriculum (4 files)
 |   |-- severity/                # 4 severity level files
 |   |-- sources/                 # 15 audit firm files
-|   |-- checklists/              # Audit checklists
 |   |-- methodology/             # Audit workflows
+|   |-- XREF.md                  # NEW: Cross-reference index
+|   |-- TRIGGERS.md              # NEW: AI trigger phrase mapping
+|   |-- CHANGELOG.md             # NEW: Pattern evolution timeline
 |   |-- MASTER_CHECKLIST.md      # Complete checklist
 |   |-- STATISTICS.md            # Data analysis
 |   |-- INDEX.md                 # Navigation
@@ -411,7 +486,50 @@ Or open an issue on GitHub.
 Current Version: **4.0**
 
 <details>
-<summary><strong>v4.0</strong> - Navigation & Methodology (Feb 2026)</summary>
+<summary><strong>v4.0</strong> - Attack Trees, Anti-Patterns & Smart Checklists (January 2025)</summary>
+
+**Major New Features:**
+
+**Attack Trees (5 files, 2,000+ lines)**
+- Visual decision paths for systematic vulnerability discovery
+- lending-attack-tree.md - Lending protocol attack surface mapping
+- dex-attack-tree.md - DEX/AMM attack paths  
+- bridge-attack-tree.md - Cross-chain bridge vulnerabilities
+- vault-attack-tree.md - Vault/yield aggregator attack surface
+- Mapped to 70+ real exploits ($3B+ in losses)
+
+**Anti-Patterns (4 files, 1,500+ lines)**
+- What NOT to do - bad code examples with real exploit PoCs
+- oracle-anti-patterns.md - 7 oracle mistakes ($200M+ losses)
+- access-control-anti-patterns.md - 7 access control mistakes ($1.4B+ losses)
+- reentrancy-anti-patterns.md - 7 reentrancy mistakes ($115M+ losses)
+- Each includes vulnerable code, attack PoC, and correct pattern
+
+**Smart Checklists (4 files, 1,400+ lines)**
+- Role-based context-aware checklists
+- developer-pre-deployment.md - Pre-deployment sanity checks
+- auditor-first-pass.md - 30-60 min initial scan
+- qa-integration-testing.md - Integration test scenarios
+- protocol-integration.md - External protocol integration guide
+
+**Navigation Tools (3 files, 1,500+ lines)**
+- XREF.md - Cross-reference index: vulnerability → pattern → exploit → fix
+- TRIGGERS.md - AI trigger phrases: user question → files to load
+- CHANGELOG.md - Pattern evolution timeline with real exploits
+
+**Improvements:**
+- Removed all emoji characters for professional appearance
+- Enhanced cross-linking between all resource types
+- Added exploit statistics with dollar amounts and dates
+- Improved markdown formatting and link structure
+
+**Files Added:** 16 new files, 6,400+ lines
+**Total Repository:** 1,600+ files, professional formatting
+
+</details>
+
+<details>
+<summary><strong>v3.0</strong> - Navigation & Methodology (December 2024)</summary>
 
 **New Files:**
 - `ROUTE-MAP.md` - Decision tree for 9 protocol types (Lending, DEX, Bridge, Vault, Staking, NFT, Governance, Perps, Intents)
