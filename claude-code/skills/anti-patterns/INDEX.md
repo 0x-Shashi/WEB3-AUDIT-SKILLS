@@ -187,8 +187,8 @@ Additional anti-pattern guides:
 
 ```bash
 1. Check anti-patterns before implementing
-2. Avoid all patterns marked ❌ VULNERABLE
-3. Use patterns marked ✅ GOOD
+2. Avoid all patterns marked [VULNERABLE]
+3. Use patterns marked [GOOD]
 4. Test with the attack PoCs to verify security
 ```
 
@@ -202,7 +202,7 @@ Each anti-pattern follows this structure:
 ## Anti-Pattern #X: Name
 
 ### BAD CODE
-❌ VULNERABLE: Code that should never be written
+[VULNERABLE]: Code that should never be written
 
 ### Why It's Bad
 - Explanation of vulnerability
@@ -218,7 +218,7 @@ Each anti-pattern follows this structure:
 Working exploit code showing how to attack the bad pattern
 
 ### Correct Pattern
-✅ GOOD: How to fix it properly
+[GOOD]: How to fix it properly
 ```
 
 ---
@@ -240,9 +240,9 @@ Working exploit code showing how to attack the bad pattern
 Anti-patterns work best when combined with:
 
 1. **Pattern Files** - See the correct way
-   - `patterns/oracle-patterns.md` - ✅ GOOD oracle usage
-   - `patterns/access-control-patterns.md` - ✅ GOOD access control
-   - `patterns/reentrancy-patterns.md` - ✅ GOOD reentrancy protection
+   - `patterns/oracle-patterns.md` - [GOOD] oracle usage
+   - `patterns/access-control-patterns.md` - [GOOD] access control
+   - `patterns/reentrancy-patterns.md` - [GOOD] reentrancy protection
 
 2. **Attack Trees** - Understand attack context
    - `attack-trees/lending-attack-tree.md` - Where these fit in attack paths

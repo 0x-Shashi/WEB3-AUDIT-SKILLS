@@ -14,7 +14,7 @@ Access control fixes have a **25% failure rate**, primarily from:
 
 ### 1.1 Missing Access Control
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 contract Vault {
     address public treasury;
@@ -30,7 +30,7 @@ contract Vault {
 }
 ```
 
-**❌ BAD FIX #1: Only fixed one function**
+**[BAD FIX #1]: Only fixed one function**
 ```solidity
 contract Vault {
     address public owner;
@@ -50,7 +50,7 @@ contract Vault {
 }
 ```
 
-**❌ BAD FIX #2: Wrong modifier logic**
+**[BAD FIX #2]: Wrong modifier logic**
 ```solidity
 modifier onlyOwner() {
     require(msg.sender != owner, "Not owner");  // != instead of ==
@@ -58,7 +58,7 @@ modifier onlyOwner() {
 }
 ```
 
-**✅ CORRECT FIX:**
+**[CORRECT FIX]:**
 ```solidity
 import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 
@@ -84,14 +84,14 @@ contract Vault is Ownable2Step {
 
 ### 1.2 Single-Step Ownership Transfer
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 function transferOwnership(address newOwner) external onlyOwner {
     owner = newOwner;  // Single step - typo = permanent loss
 }
 ```
 
-**❌ BAD FIX: Added zero check but still single-step**
+**[BAD FIX]: Added zero check but still single-step**
 ```solidity
 function transferOwnership(address newOwner) external onlyOwner {
     require(newOwner != address(0), "Zero address");
@@ -100,7 +100,7 @@ function transferOwnership(address newOwner) external onlyOwner {
 // Problem: Typo in address still causes permanent loss
 ```
 
-**✅ CORRECT FIX: Two-step transfer**
+**[CORRECT FIX]: Two-step transfer**
 ```solidity
 address public owner;
 address public pendingOwner;
@@ -122,7 +122,7 @@ function acceptOwnership() external {
 
 ### 1.3 Insufficient Role Granularity
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 contract Protocol {
     address public admin;
@@ -140,7 +140,7 @@ contract Protocol {
 }
 ```
 
-**❌ BAD FIX: Roles but wrong assignment**
+**[BAD FIX]: Roles but wrong assignment**
 ```solidity
 bytes32 public constant PAUSER_ROLE = keccak256("PAUSER");
 bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER");
@@ -150,7 +150,7 @@ grantRole(PAUSER_ROLE, multisig);
 grantRole(UPGRADER_ROLE, multisig);  // Same address = no separation!
 ```
 
-**✅ CORRECT FIX: Proper role separation**
+**[CORRECT FIX]: Proper role separation**
 ```solidity
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
@@ -184,7 +184,7 @@ contract Protocol is AccessControl {
 
 ### 1.4 Proxy Access Control Bypass
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 // Implementation contract
 contract VaultImpl {
@@ -200,7 +200,7 @@ contract VaultImpl {
 // Problem: Anyone can call initialize on implementation directly
 ```
 
-**❌ BAD FIX: Added initializer but not on implementation**
+**[BAD FIX]: Added initializer but not on implementation**
 ```solidity
 // Proxy protected, but implementation still vulnerable
 contract VaultImpl {
@@ -211,7 +211,7 @@ contract VaultImpl {
 // Attacker can: call initialize() on implementation, then selfdestruct
 ```
 
-**✅ CORRECT FIX: Disable initializers on implementation**
+**[CORRECT FIX]: Disable initializers on implementation**
 ```solidity
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -386,7 +386,7 @@ contract RoleBasedAccessTest is Test {
 
 ## 3. Fix Gone Wrong Examples
 
-### 3.1 ❌ Forgot Internal Functions
+### 3.1 [BAD] Forgot Internal Functions
 
 ```solidity
 contract Vault {
@@ -401,7 +401,7 @@ contract Vault {
 }
 ```
 
-### 3.2 ❌ Modifier on Wrong Function Signature
+### 3.2 [BAD] Modifier on Wrong Function Signature
 
 ```solidity
 // Fixed setFee(uint256) but there's also setFee(uint256, address)
@@ -416,7 +416,7 @@ function setFee(uint256 _fee, address _recipient) external {
 }
 ```
 
-### 3.3 ❌ Role Check but No Role Assignment
+### 3.3 [BAD] Role Check but No Role Assignment
 
 ```solidity
 function initialize() external initializer {
@@ -429,7 +429,7 @@ function setFee(uint256 _fee) external onlyRole(ADMIN_ROLE) {
 }
 ```
 
-### 3.4 ❌ Renouncing Ownership Leaves Protocol Bricked
+### 3.4 [BAD] Renouncing Ownership Leaves Protocol Bricked
 
 ```solidity
 // Developer added renounceOwnership without checking impact
@@ -439,7 +439,7 @@ function renounceOwnership() public override onlyOwner {
 // Should either: remove function, add timelock, or ensure protocol can function ownerless
 ```
 
-### 3.5 ❌ tx.origin Used Instead of msg.sender
+### 3.5 [BAD] tx.origin Used Instead of msg.sender
 
 ```solidity
 modifier onlyOwner() {

@@ -322,14 +322,14 @@ Keep track of:
 
 ## Red Flags (Stop Integration If)
 
-- [ ] ❌ Protocol recently exploited
-- [ ] ❌ No recent audits
-- [ ] ❌ Upgradeable without timelock
-- [ ] ❌ No test coverage
-- [ ] ❌ Unverified contracts
-- [ ] ❌ No active community
-- [ ] ❌ Centralized control
-- [ ] ❌ Can't test on fork
+- [ ] [!] Protocol recently exploited
+- [ ] [!] No recent audits
+- [ ] [!] Upgradeable without timelock
+- [ ] [!] No test coverage
+- [ ] [!] Unverified contracts
+- [ ] [!] No active community
+- [ ] [!] Centralized control
+- [ ] [!] Can't test on fork
 
 ---
 

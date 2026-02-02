@@ -14,12 +14,12 @@
 
 | Severity | Count | Status |
 |----------|-------|--------|
-| 🔴 Critical | 0 | |
-| 🟠 High | 0 | |
-| 🟡 Medium | 0 | |
-| 🟢 Low | 0 | |
-| 📝 Informational | 0 | |
-| ⛽ Gas | 0 | |
+| [C] Critical | 0 | |
+| [H] High | 0 | |
+| [M] Medium | 0 | |
+| [L] Low | 0 | |
+| [I] Informational | 0 | |
+| [G] Gas | 0 | |
 
 **Total Findings:** 0  
 **Total Estimated Loss:** $0
@@ -37,7 +37,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Severity** | 🟠 High |
+| **Severity** | [H] High |
 | **Status** | Confirmed / Unconfirmed / Fixed / Won't Fix |
 | **Contract** | [Contract.sol] |
 | **Function** | [functionName()] |
@@ -59,7 +59,7 @@
 ```solidity
 // Location: contracts/Contract.sol:L123
 function vulnerableFunction() external {
-    // ❌ VULNERABLE: [explain why]
+    // [VULNERABLE]: [explain why]
     ...
 }
 ```
@@ -107,7 +107,7 @@ function testExploit() public {
 #### Recommendation
 
 ```solidity
-// ✅ FIXED: [explain the fix]
+// [FIXED]: [explain the fix]
 function fixedFunction() external {
     ...
 }
@@ -124,7 +124,7 @@ function fixedFunction() external {
 
 | Field | Value |
 |-------|-------|
-| **Severity** | 🟡 Medium |
+| **Severity** | [M] Medium |
 | **Status** | Confirmed / Unconfirmed / Fixed / Won't Fix |
 | **Contract** | [Contract.sol] |
 | **Function** | [functionName()] |
@@ -189,12 +189,12 @@ function fixedFunction() external {
 
 | Severity | Definition | Examples |
 |----------|------------|----------|
-| 🔴 Critical | Direct fund loss, no user interaction | Oracle manipulation, infinite mint |
-| 🟠 High | Fund loss with conditions | Reentrancy, access control bypass |
-| 🟡 Medium | Limited fund loss or DoS | Griefing, temporary DoS |
-| 🟢 Low | Minor impact | Edge cases, unlikely scenarios |
-| 📝 Info | Best practices | Code quality, documentation |
-| ⛽ Gas | Gas optimization | Loop optimization, storage packing |
+| [C] Critical | Direct fund loss, no user interaction | Oracle manipulation, infinite mint |
+| [H] High | Fund loss with conditions | Reentrancy, access control bypass |
+| [M] Medium | Limited fund loss or DoS | Griefing, temporary DoS |
+| [L] Low | Minor impact | Edge cases, unlikely scenarios |
+| [I] Info | Best practices | Code quality, documentation |
+| [G] Gas | Gas optimization | Loop optimization, storage packing |
 
 ---
 

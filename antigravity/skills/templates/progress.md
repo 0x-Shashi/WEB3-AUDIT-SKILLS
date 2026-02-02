@@ -77,9 +77,9 @@
 
 | # | Attack Vector | PoC File | Target | Result | Next Step |
 |---|---------------|----------|--------|--------|-----------|
-| 1 | [A1] Stale Oracle | `test/StaleOracle.t.sol` | Oracle.sol | ❌ Reverts - oracle has staleness check | Move to [A2] |
-| 2 | [A2] Flash Loan | `test/FlashLoan.t.sol` | Lending.sol | ✅ SUCCESS - 10x profit | Document in findings |
-| 3 | [D1] Reentrancy | `test/Reentrancy.t.sol` | Vault.sol | ❌ nonReentrant guard | Check cross-function |
+| 1 | [A1] Stale Oracle | `test/StaleOracle.t.sol` | Oracle.sol | [FAIL] Reverts - oracle has staleness check | Move to [A2] |
+| 2 | [A2] Flash Loan | `test/FlashLoan.t.sol` | Lending.sol | [PASS] SUCCESS - 10x profit | Document in findings |
+| 3 | [D1] Reentrancy | `test/Reentrancy.t.sol` | Vault.sol | [FAIL] nonReentrant guard | Check cross-function |
 
 ### Exploit Attempt Details
 
@@ -113,7 +113,7 @@ function testFlashLoanExploit() public {
     assertGt(usdc.balanceOf(attacker), initialBalance);
 }
 ```
-**Result:** ✅ Profit: 500,000 USDC. Documented as H-01.
+**Result:** [PASS] Profit: 500,000 USDC. Documented as H-01.
 
 ---
 
@@ -139,8 +139,8 @@ function testFlashLoanExploit() public {
 
 | Test | Command | Expected | Actual | Status |
 |------|---------|----------|--------|--------|
-| Flash Loan PoC | `forge test --match-test testFlashLoan` | Profit > 0 | Profit = 500K | ✅ Pass |
-| Reentrancy PoC | `forge test --match-test testReentrancy` | Revert bypass | Reverted | ❌ Fail |
+| Flash Loan PoC | `forge test --match-test testFlashLoan` | Profit > 0 | Profit = 500K | [PASS] |
+| Reentrancy PoC | `forge test --match-test testReentrancy` | Revert bypass | Reverted | [FAIL] |
 
 ---
 
@@ -191,10 +191,10 @@ function testFlashLoanExploit() public {
 
 | Phase | Estimated | Actual | Status |
 |-------|-----------|--------|--------|
-| Phase 1: Understanding | 4h | 3h | ✅ Complete |
-| Phase 2: Attack Surface | 8h | 5h | 🔄 In Progress |
-| Phase 3: PoC Development | 6h | - | ⏸️ Pending |
-| Phase 4: Report | 4h | - | ⏸️ Pending |
+| Phase 1: Understanding | 4h | 3h | [DONE] |
+| Phase 2: Attack Surface | 8h | 5h | [WIP] |
+| Phase 3: PoC Development | 6h | - | [PENDING] |
+| Phase 4: Report | 4h | - | [PENDING] |
 | **Total** | **22h** | **8h** | |
 
 ---

@@ -4,10 +4,10 @@
 
 This directory contains detailed fix verification guides for specific vulnerability categories. Each guide includes:
 
-- ✅ **Before/After Code Comparisons** - Vulnerable vs fixed code
-- ✅ **Regression Test Templates** - Foundry tests to verify fixes
-- ✅ **Fix Gone Wrong Examples** - Common mistakes when fixing
-- ✅ **Verification Checklists** - Step-by-step validation
+- **Before/After Code Comparisons** - Vulnerable vs fixed code
+- **Regression Test Templates** - Foundry tests to verify fixes
+- **Fix Gone Wrong Examples** - Common mistakes when fixing
+- **Verification Checklists** - Step-by-step validation
 
 ---
 

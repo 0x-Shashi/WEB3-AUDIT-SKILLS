@@ -51,11 +51,11 @@ Bad code examples from real exploits with working attack PoCs:
 | Reentrancy Anti-Patterns | 7 mistakes | $115M+ |
 
 **Each anti-pattern shows:**
-- Vulnerable code (marked with ❌)
+- Vulnerable code (marked with [VULNERABLE])
 - Why it's bad
 - Real exploits that used it
 - Working attack PoC
-- Correct pattern (marked with ✅)
+- Correct pattern (marked with [GOOD])
 
 ### 3. Smart Checklists - Role-Based (NEW in v4.0)
 

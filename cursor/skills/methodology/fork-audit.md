@@ -172,7 +172,7 @@ function flashLoan(...) external {
 }
 
 // Fork: Tried to remove but left callback
-// ❌ MISTAKE: flashLoanCallback still exists and callable
+// [MISTAKE]: flashLoanCallback still exists and callable
 function flashLoanCallback(...) external {
     // Can be called directly!
 }
@@ -190,7 +190,7 @@ grep -r "Callback\|Hook\|callback\|hook" contracts/ | cut -d: -f2 | sort -u
 // Original Uniswap V2:
 address constant FACTORY = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
 
-// ❌ Fork kept mainnet address on Arbitrum
+// [MISTAKE] Fork kept mainnet address on Arbitrum
 // Protocol interacts with wrong/non-existent contract
 ```
 
@@ -206,7 +206,7 @@ grep -rE "0x[a-fA-F0-9]{40}" contracts/
 // Original: 0.3% fee, well-tested
 uint256 constant FEE = 30; // basis points
 
-// ❌ Fork: Changed to 1%, breaks invariants
+// [MISTAKE] Fork: Changed to 1%, breaks invariants
 uint256 constant FEE = 100;
 // Math that assumed FEE < 100 now overflows
 ```
@@ -223,7 +223,7 @@ diff <(grep -r "constant\|immutable" reference/) <(grep -r "constant\|immutable"
 // Original: Used standard ERC20
 IERC20(token).transfer(to, amount);
 
-// ❌ Fork: Integrates with non-standard token
+// [MISTAKE] Fork: Integrates with non-standard token
 // Token returns (bool, bytes) instead of bool
 // Silent failure or revert
 ```
@@ -236,7 +236,7 @@ contract Protocol is Ownable, ReentrancyGuard {
     function admin() external onlyOwner { }
 }
 
-// ❌ Fork: Copied functions but forgot inheritance
+// [MISTAKE] Fork: Copied functions but forgot inheritance
 contract ForkedProtocol is ReentrancyGuard {  // Missing Ownable!
     function admin() external onlyOwner { }    // onlyOwner undefined → compile error
     // Or worse: they define own broken modifier
@@ -291,7 +291,7 @@ function initialize() {
     initB(); // Uses values set by initA
 }
 
-// ❌ Fork: Reordered initialization
+// [MISTAKE] Fork: Reordered initialization
 function initialize() {
     initB(); // Reads uninitialized values!
     initA();
@@ -306,7 +306,7 @@ function withdraw() external nonReentrant {
     // ...
 }
 
-// ❌ Fork: Removed "unnecessary" modifier for gas
+// [MISTAKE] Fork: Removed "unnecessary" modifier for gas
 function withdraw() external {
     // Now vulnerable!
 }
@@ -318,7 +318,7 @@ function withdraw() external {
 // Original: Emitted event with correct values
 emit Transfer(from, to, amount);
 
-// ❌ Fork: Changed parameter order (off-chain indexers break)
+// [MISTAKE] Fork: Changed parameter order (off-chain indexers break)
 emit Transfer(to, from, amount);  // Reversed!
 
 // Or: Removed event entirely (indexers can't track)
@@ -400,7 +400,7 @@ emit Transfer(to, from, amount);  // Reversed!
 ### Missing Upstream Patches
 | Patch | Original Commit | Status | Risk |
 |-------|----------------|--------|------|
-| Reentrancy fix | abc123 | ❌ Missing | High |
+| Reentrancy fix | abc123 | [X] Missing | High |
 
 ### Recommendations
 1. [Recommendation]

@@ -488,8 +488,115 @@ Context package for audit continuation:
 1. **Start with Exploration** - Understand before attacking
 2. **Generate hypotheses systematically** - 10-15 to start
 3. **Kill hypotheses quickly** - Don't waste time on invalid ones
-4. **Document as you go** - Working notes  Findings
+4. **Document as you go** - Working notes → Findings
 5. **Be skeptical of your findings** - Use Adversarial Reviewer
 6. **Focus on impact** - What's the worst case?
 7. **Be precise in reports** - Triagers appreciate clarity
+
+---
+
+## Critical Rules for Context Management
+
+### The 2-Contract Rule
+
+> **After reviewing 2 contracts or 2 major functions, IMMEDIATELY update findings_report.md.**
+
+This prevents discoveries from being lost when context resets.
+
+```
+Review Contract A → Review Contract B → UPDATE FILES → Review Contract C
+                                        ↑
+                            Don't skip this step!
+```
+
+### The 2-Action Rule
+
+> **After every 2 view/browser/search operations, IMMEDIATELY save key findings to text files.**
+
+Visual/multimodal content doesn't persist in context. Write it down immediately.
+
+### The Never-Repeat Rule
+
+```
+if action_failed:
+    next_action != same_action
+```
+
+Track what you tried. Mutate the approach. Check `progress.md` before retrying.
+
+### The 3-Strike Error Protocol
+
+```
+ATTEMPT 1: Diagnose & Fix
+  → Read error carefully
+  → Identify root cause
+  → Apply targeted fix
+
+ATTEMPT 2: Alternative Approach
+  → Same error? Try different method
+  → Different tool? Different library?
+  → NEVER repeat exact same failing action
+
+ATTEMPT 3: Broader Rethink
+  → Question assumptions
+  → Search for solutions
+  → Consider updating the plan
+
+AFTER 3 FAILURES: Escalate
+  → Document what you tried in progress.md
+  → Move to next attack vector
+  → Return later with fresh approach
+```
+
+### The 5-Question Reboot Test
+
+If context resets, verify you can answer:
+
+| Question | Answer Source |
+|----------|---------------|
+| Where am I? | Current phase in `audit_plan.md` |
+| Where am I going? | Remaining phases |
+| What's the goal? | Goal statement in plan |
+| What have I learned? | `threat_model.md`, `findings_report.md` |
+| What have I tried? | Exploit attempts in `progress.md` |
+
+---
+
+## Exploit Attempt Tracking
+
+Always log exploit attempts in `progress.md`:
+
+```markdown
+## Exploit Attempts
+| # | Attack Vector | PoC File | Result | Next Step |
+|---|---------------|----------|--------|-----------|
+| 1 | [A1] Stale Oracle | test/StaleOracle.t.sol | [FAIL] Reverts | Try [A2] |
+| 2 | [A2] Flash Loan | test/FlashLoan.t.sol | [PASS] SUCCESS | Document |
+```
+
+This table is your "memory" of what worked and what didn't.
+
+---
+
+## Session Templates
+
+Use the templates in `templates/` folder:
+
+| Template | Purpose |
+|----------|---------|
+| `audit_plan.md` | Master roadmap, attack tree progress |
+| `threat_model.md` | Actors, assumptions, attack surface |
+| `findings_report.md` | Live vulnerability documentation |
+| `progress.md` | Session log, exploit attempts |
+
+See: [templates/INDEX.md](../templates/INDEX.md)
+
+---
+
+## Related Resources
+
+- **Attack Trees:** [attack-trees/INDEX.md](../attack-trees/INDEX.md)
+- **Anti-Patterns:** [anti-patterns/INDEX.md](../anti-patterns/INDEX.md)
+- **Protocol Playbooks:** [protocol-playbooks/index.md](../protocol-playbooks/index.md)
+- **Exploit Forensics:** [exploit-forensics/index.md](../exploit-forensics/index.md)
 

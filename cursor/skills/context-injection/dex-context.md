@@ -87,13 +87,13 @@ uint256 received = token.balanceOf(address(this)) - before;
 
 ### Bad Swap (No Slippage)
 ```solidity
-// ❌ VULNERABLE
+// [VULNERABLE]
 function swap(uint256 amountIn) external {
     uint256 amountOut = getAmountOut(amountIn);
     token1.transfer(msg.sender, amountOut);
 }
 
-// ✅ SAFE
+// [SAFE]
 function swap(uint256 amountIn, uint256 minAmountOut, uint256 deadline) external {
     require(block.timestamp <= deadline, "Expired");
     uint256 amountOut = getAmountOut(amountIn);
@@ -104,23 +104,23 @@ function swap(uint256 amountIn, uint256 minAmountOut, uint256 deadline) external
 
 ### Bad K Invariant Check
 ```solidity
-// ❌ VULNERABLE - K can decrease
+// [VULNERABLE] - K can decrease
 uint256 balance0After = token0.balanceOf(address(this));
 uint256 balance1After = token1.balanceOf(address(this));
 // No k check!
 
-// ✅ SAFE
+// [SAFE]
 require(balance0After * balance1After >= reserve0 * reserve1, "K");
 ```
 
 ### Bad Flash Loan Callback
 ```solidity
-// ❌ VULNERABLE - Anyone can call
+// [VULNERABLE] - Anyone can call
 function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external {
     // Attacker calls directly with fake data
 }
 
-// ✅ SAFE
+// [SAFE]
 function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external {
     require(msg.sender == address(pair), "Invalid caller");
     require(sender == address(this), "Invalid sender");

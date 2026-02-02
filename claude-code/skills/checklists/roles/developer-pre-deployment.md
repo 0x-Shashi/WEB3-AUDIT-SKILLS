@@ -163,14 +163,14 @@ Copy this into your deployment PR or issue. Check boxes as you verify each item.
 
 ## Red Flags (DO NOT DEPLOY IF)
 
-- [ ] ❌ Deployer retains admin/owner role
-- [ ] ❌ Hardcoded addresses not verified
-- [ ] ❌ Tests failing or skipped
-- [ ] ❌ Gas costs unexpectedly high
-- [ ] ❌ Last-minute code changes
-- [ ] ❌ Unclear about any configuration parameter
-- [ ] ❌ Team unavailable for monitoring
-- [ ] ❌ Audit findings not addressed
+- [ ] [!] Deployer retains admin/owner role
+- [ ] [!] Hardcoded addresses not verified
+- [ ] [!] Tests failing or skipped
+- [ ] [!] Gas costs unexpectedly high
+- [ ] [!] Last-minute code changes
+- [ ] [!] Unclear about any configuration parameter
+- [ ] [!] Team unavailable for monitoring
+- [ ] [!] Audit findings not addressed
 
 ---
 

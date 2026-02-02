@@ -24,7 +24,7 @@ Examples of **BAD** code patterns for reentrancy protection. These are real mist
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Classic reentrancy
+// [VULNERABLE]: Classic reentrancy
 contract Bank {
     mapping(address => uint) public balances;
     
@@ -78,7 +78,7 @@ contract Attack {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Checks-Effects-Interactions
+// [GOOD]: Checks-Effects-Interactions
 function withdraw(uint amount) external {
     require(balances[msg.sender] >= amount); // Checks
     
@@ -97,7 +97,7 @@ function withdraw(uint amount) external {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: No reentrancy guard
+// [VULNERABLE]: No reentrancy guard
 contract LendingPool {
     mapping(address => uint) public supplied;
     mapping(address => uint) public borrowed;
@@ -147,7 +147,7 @@ contract Attack {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Global reentrancy guard
+// [GOOD]: Global reentrancy guard
 contract LendingPool is ReentrancyGuard {
     function withdraw(uint amount) external nonReentrant {
         supplied[msg.sender] -= amount;
@@ -170,7 +170,7 @@ contract LendingPool is ReentrancyGuard {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: View function during state transition
+// [VULNERABLE]: View function during state transition
 contract LPVault {
     IUniswapV2Pair public pair;
     
@@ -228,7 +228,7 @@ contract Attack {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Reentrancy guard even on view-like functions
+// [GOOD]: Reentrancy guard even on view-like functions
 contract LPVault is ReentrancyGuard {
     function getSharePrice() public view returns (uint) {
         // Add reentrancy check in state-changing functions that might call this
@@ -257,7 +257,7 @@ contract LPVault is ReentrancyGuard {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Accepting ERC777 without protection
+// [VULNERABLE]: Accepting ERC777 without protection
 contract Vault {
     mapping(address => uint) public deposits;
     
@@ -303,7 +303,7 @@ function tokensReceived(
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Block ERC777 or add reentrancy guard
+// [GOOD]: Block ERC777 or add reentrancy guard
 contract Vault is ReentrancyGuard {
     function deposit(IERC20 token, uint amount) external nonReentrant {
         // Update state FIRST
@@ -326,7 +326,7 @@ contract Vault is ReentrancyGuard {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: User-controlled callback
+// [VULNERABLE]: User-controlled callback
 contract FlashLoan {
     function flashLoan(uint amount, address callback) external {
         IERC20(token).transfer(msg.sender, amount);
@@ -371,7 +371,7 @@ contract Attack is IFlashLoanReceiver {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Reentrancy guard + validation
+// [GOOD]: Reentrancy guard + validation
 contract FlashLoan is ReentrancyGuard {
     function flashLoan(uint amount) external nonReentrant {
         uint initialBalance = IERC20(token).balanceOf(address(this));
@@ -397,7 +397,7 @@ contract FlashLoan is ReentrancyGuard {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Delegatecall with reentrancy
+// [VULNERABLE]: Delegatecall with reentrancy
 contract Proxy {
     address public implementation;
     mapping(address => uint) public balances;
@@ -446,7 +446,7 @@ contract MaliciousImpl {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Reentrancy guard in proxy
+// [GOOD]: Reentrancy guard in proxy
 contract Proxy is ReentrancyGuard {
     address public implementation;
     
@@ -475,7 +475,7 @@ contract Implementation is ReentrancyGuard {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Not checking return value
+// [VULNERABLE]: Not checking return value
 contract TokenVault {
     mapping(address => uint) public balances;
     
@@ -510,7 +510,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Use SafeERC20
+// [GOOD]: Use SafeERC20
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract TokenVault {

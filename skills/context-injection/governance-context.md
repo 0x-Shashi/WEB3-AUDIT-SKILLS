@@ -52,13 +52,13 @@
 
 ### Bad Vote Counting (Flash Loan)
 ```solidity
-// ❌ VULNERABLE - Can flash loan tokens to vote
+// [VULNERABLE] - Can flash loan tokens to vote
 function vote(uint256 proposalId, bool support) external {
     uint256 votes = token.balanceOf(msg.sender);  // Current balance
     proposals[proposalId].votes += votes;
 }
 
-// ✅ SAFE - Snapshot at proposal creation
+// [SAFE] - Snapshot at proposal creation
 function vote(uint256 proposalId, bool support) external {
     uint256 votes = token.getPastVotes(msg.sender, proposals[proposalId].snapshotBlock);
     proposals[proposalId].votes += votes;
@@ -67,12 +67,12 @@ function vote(uint256 proposalId, bool support) external {
 
 ### Bad Timelock (Bypass)
 ```solidity
-// ❌ VULNERABLE - Emergency can do anything instantly
+// [VULNERABLE] - Emergency can do anything instantly
 function emergencyExecute(bytes calldata data) external onlyEmergency {
     (bool success,) = target.call(data);  // No timelock!
 }
 
-// ✅ SAFE - Emergency is limited
+// [SAFE] - Emergency is limited
 function emergencyPause() external onlyEmergency {
     paused = true;  // Can only pause, not arbitrary execution
 }
@@ -80,7 +80,7 @@ function emergencyPause() external onlyEmergency {
 
 ### Bad Proposal Execution
 ```solidity
-// ❌ VULNERABLE - Reentrancy possible
+// [VULNERABLE] - Reentrancy possible
 function execute(uint256 proposalId) external {
     Proposal storage prop = proposals[proposalId];
     require(prop.executed == false);
@@ -91,7 +91,7 @@ function execute(uint256 proposalId) external {
     prop.executed = true;  // Set after calls
 }
 
-// ✅ SAFE
+// [SAFE]
 function execute(uint256 proposalId) external nonReentrant {
     Proposal storage prop = proposals[proposalId];
     require(!prop.executed);
@@ -105,12 +105,12 @@ function execute(uint256 proposalId) external nonReentrant {
 
 ### Bad Delegation
 ```solidity
-// ❌ VULNERABLE - Circular delegation possible
+// [VULNERABLE] - Circular delegation possible
 function delegate(address to) external {
     delegates[msg.sender] = to;  // Can set to anyone
 }
 
-// ✅ SAFE - Prevent circular
+// [SAFE] - Prevent circular
 function delegate(address to) external {
     require(to != msg.sender, "Self-delegation");
     require(delegates[to] == address(0) || delegates[to] != msg.sender, "Circular");

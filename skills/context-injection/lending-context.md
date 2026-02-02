@@ -80,11 +80,11 @@ collateralSeized = debtToRepay * liquidationBonus / collateralPrice;
 
 ### Bad Oracle Usage
 ```solidity
-// ❌ VULNERABLE
+// [VULNERABLE]
 (, int256 price, , , ) = feed.latestRoundData();
 return uint256(price);
 
-// ✅ SAFE
+// [SAFE]
 (uint80 roundId, int256 price, , uint256 updatedAt, uint80 answeredInRound) = feed.latestRoundData();
 require(price > 0, "Invalid price");
 require(answeredInRound >= roundId, "Stale round");
@@ -93,20 +93,20 @@ require(block.timestamp - updatedAt <= HEARTBEAT, "Stale price");
 
 ### Bad Share Calculation
 ```solidity
-// ❌ VULNERABLE to first depositor attack
+// [VULNERABLE] to first depositor attack
 shares = assets * totalSupply / totalAssets;
 
-// ✅ SAFE with virtual offset
+// [SAFE] with virtual offset
 shares = assets * (totalSupply + 1e3) / (totalAssets + 1e3);
 ```
 
 ### Bad Withdrawal
 ```solidity
-// ❌ VULNERABLE to reentrancy
+// [VULNERABLE] to reentrancy
 token.transfer(msg.sender, amount);  // External call
 balances[msg.sender] -= amount;       // State update after
 
-// ✅ SAFE CEI pattern
+// [SAFE] CEI pattern
 balances[msg.sender] -= amount;       // State update first
 token.transfer(msg.sender, amount);   // External call last
 ```

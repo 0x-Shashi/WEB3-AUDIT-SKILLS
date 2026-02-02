@@ -14,7 +14,7 @@ Oracle fixes have a **35% incomplete fix rate**. Most failures come from:
 
 ### 1.1 Spot Price Manipulation
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 function getPrice() public view returns (uint256) {
     // Spot price from Uniswap - manipulable via flash loan
@@ -23,7 +23,7 @@ function getPrice() public view returns (uint256) {
 }
 ```
 
-**❌ BAD FIX #1: TWAP with tiny window**
+**[BAD FIX #1]: TWAP with tiny window**
 ```solidity
 function getPrice() public view returns (uint256) {
     // 1 block TWAP - still manipulable!
@@ -32,7 +32,7 @@ function getPrice() public view returns (uint256) {
 // Problem: Multi-block manipulation is cheap
 ```
 
-**❌ BAD FIX #2: TWAP but no staleness check**
+**[BAD FIX #2]: TWAP but no staleness check**
 ```solidity
 function getPrice() public view returns (uint256) {
     // 30 min TWAP but could be 3 days old
@@ -42,7 +42,7 @@ function getPrice() public view returns (uint256) {
 // Problem: Oracle not updated = stale price
 ```
 
-**✅ CORRECT FIX:**
+**[CORRECT FIX]:**
 ```solidity
 uint256 public constant TWAP_PERIOD = 30 minutes;
 uint256 public constant MAX_STALENESS = 1 hours;
@@ -75,7 +75,7 @@ function getPrice() public view returns (uint256) {
 
 ### 1.2 Chainlink Staleness
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 function getLatestPrice() public view returns (uint256) {
     (, int256 price, , , ) = priceFeed.latestRoundData();
@@ -83,7 +83,7 @@ function getLatestPrice() public view returns (uint256) {
 }
 ```
 
-**❌ BAD FIX #1: Only checked price > 0**
+**[BAD FIX #1]: Only checked price > 0**
 ```solidity
 function getLatestPrice() public view returns (uint256) {
     (, int256 price, , , ) = priceFeed.latestRoundData();
@@ -93,7 +93,7 @@ function getLatestPrice() public view returns (uint256) {
 // Problem: No staleness, no round completeness check
 ```
 
-**❌ BAD FIX #2: Wrong staleness calculation**
+**[BAD FIX #2]: Wrong staleness calculation**
 ```solidity
 function getLatestPrice() public view returns (uint256) {
     (uint80 roundId, int256 price, , uint256 updatedAt, uint80 answeredInRound) = 
@@ -106,7 +106,7 @@ function getLatestPrice() public view returns (uint256) {
 // Problem: answeredInRound is a round ID, not timestamp!
 ```
 
-**✅ CORRECT FIX:**
+**[CORRECT FIX]:**
 ```solidity
 uint256 public constant HEARTBEAT = 3600; // 1 hour for ETH/USD
 
@@ -136,7 +136,7 @@ function getLatestPrice() public view returns (uint256) {
 
 ### 1.3 LP Token Price Manipulation
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 function getLPTokenPrice() public view returns (uint256) {
     uint256 totalSupply = lpToken.totalSupply();
@@ -148,7 +148,7 @@ function getLPTokenPrice() public view returns (uint256) {
 }
 ```
 
-**❌ BAD FIX: Used fair reserves but wrong formula**
+**[BAD FIX]: Used fair reserves but wrong formula**
 ```solidity
 function getLPTokenPrice() public view returns (uint256) {
     uint256 totalSupply = lpToken.totalSupply();
@@ -163,7 +163,7 @@ function getLPTokenPrice() public view returns (uint256) {
 // Problem: Missing decimal normalization
 ```
 
-**✅ CORRECT FIX: Alpha Homora v2 formula**
+**[CORRECT FIX]: Alpha Homora v2 formula**
 ```solidity
 function getLPTokenPrice() public view returns (uint256) {
     uint256 totalSupply = lpToken.totalSupply();
@@ -312,7 +312,7 @@ contract StalenessTest is Test {
 
 ## 3. Fix Gone Wrong Examples
 
-### 3.1 ❌ Different Heartbeats Not Accounted
+### 3.1 [BAD] Different Heartbeats Not Accounted
 
 ```solidity
 // Developer used same staleness for all feeds
@@ -335,7 +335,7 @@ function getOBSCUREPrice() view returns (uint256) {
 }
 ```
 
-### 3.2 ❌ Decimals Mismatch
+### 3.2 [BAD] Decimals Mismatch
 
 ```solidity
 function getPrice() view returns (uint256) {
@@ -347,7 +347,7 @@ function getPrice() view returns (uint256) {
 }
 ```
 
-### 3.3 ❌ L2 Sequencer Not Checked
+### 3.3 [BAD] L2 Sequencer Not Checked
 
 ```solidity
 // On Arbitrum/Optimism, must check sequencer status
@@ -360,7 +360,7 @@ function getPrice() view returns (uint256) {
 // Problem: After sequencer downtime, prices may be stale but look fresh
 ```
 
-**✅ CORRECT: L2 Sequencer Check**
+**[CORRECT]: L2 Sequencer Check**
 ```solidity
 function getPrice() view returns (uint256) {
     // Check sequencer uptime first
@@ -375,7 +375,7 @@ function getPrice() view returns (uint256) {
 }
 ```
 
-### 3.4 ❌ Fallback Oracle Not Tested
+### 3.4 [BAD] Fallback Oracle Not Tested
 
 ```solidity
 function getPrice() view returns (uint256) {

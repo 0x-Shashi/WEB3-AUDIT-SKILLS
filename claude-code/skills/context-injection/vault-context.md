@@ -58,14 +58,14 @@ redeem:   assets = shares * totalAssets / supply  // Round DOWN (user gets fewer
 
 ### Bad Share Calculation (First Depositor)
 ```solidity
-// ❌ VULNERABLE
+// [VULNERABLE]
 function deposit(uint256 assets) external returns (uint256 shares) {
     shares = totalSupply() == 0 ? assets : assets * totalSupply() / totalAssets();
     _mint(msg.sender, shares);
 }
 // Attacker: deposit 1 wei, donate 10000, victim gets 0 shares
 
-// ✅ SAFE - Virtual shares
+// [SAFE] - Virtual shares
 uint256 constant OFFSET = 1e3;
 function deposit(uint256 assets) external returns (uint256 shares) {
     shares = assets * (totalSupply() + OFFSET) / (totalAssets() + OFFSET);
@@ -75,14 +75,14 @@ function deposit(uint256 assets) external returns (uint256 shares) {
 
 ### Bad Rounding
 ```solidity
-// ❌ VULNERABLE - Rounds in user favor
+// [VULNERABLE] - Rounds in user favor
 function withdraw(uint256 shares) external returns (uint256 assets) {
     assets = (shares * totalAssets() + totalSupply() - 1) / totalSupply();  // Round UP
     _burn(msg.sender, shares);
     asset.transfer(msg.sender, assets);
 }
 
-// ✅ SAFE - Rounds in vault favor
+// [SAFE] - Rounds in vault favor
 function withdraw(uint256 shares) external returns (uint256 assets) {
     assets = shares * totalAssets() / totalSupply();  // Round DOWN
     _burn(msg.sender, shares);
@@ -92,13 +92,13 @@ function withdraw(uint256 shares) external returns (uint256 assets) {
 
 ### Bad Strategy Approval
 ```solidity
-// ❌ VULNERABLE - Strategy can drain vault
+// [VULNERABLE] - Strategy can drain vault
 function setStrategy(address newStrategy) external onlyOwner {
     strategy = newStrategy;
     asset.approve(newStrategy, type(uint256).max);  // Unlimited approval!
 }
 
-// ✅ SAFE - Limited and timelocked
+// [SAFE] - Limited and timelocked
 function setStrategy(address newStrategy) external onlyOwner {
     require(proposedStrategy == newStrategy, "Not proposed");
     require(block.timestamp >= proposalTime + TIMELOCK, "Too early");
@@ -111,13 +111,13 @@ function setStrategy(address newStrategy) external onlyOwner {
 
 ### Bad Harvest (Sandwich)
 ```solidity
-// ❌ VULNERABLE - Can be sandwiched
+// [VULNERABLE] - Can be sandwiched
 function harvest() external {
     uint256 profit = strategy.harvest();  // Public profit
     totalAssets += profit;  // Attacker deposited before, withdraws after
 }
 
-// ✅ SAFE - Time-weighted
+// [SAFE] - Time-weighted
 function harvest() external {
     uint256 profit = strategy.harvest();
     // Profit unlocks linearly over 6 hours

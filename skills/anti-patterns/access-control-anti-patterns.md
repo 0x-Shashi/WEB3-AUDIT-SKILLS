@@ -23,7 +23,7 @@ Examples of **BAD** code patterns for access control. These are real mistakes fo
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Anyone can initialize
+// [VULNERABLE]: Anyone can initialize
 contract LendingPool {
     address public owner;
     bool public initialized;
@@ -66,7 +66,7 @@ function frontRunInit(address targetContract) external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Protected initialization
+// [GOOD]: Protected initialization
 contract LendingPool {
     address public immutable owner;
     
@@ -89,7 +89,7 @@ function initialize(address _owner) external initializer {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Missing onlyOwner
+// [VULNERABLE]: Missing onlyOwner
 contract TokenVault {
     address public owner;
     
@@ -128,7 +128,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Proper modifiers
+// [GOOD]: Proper modifiers
 contract TokenVault is Ownable {
     function setOwner(address newOwner) external onlyOwner {
         _transferOwnership(newOwner);
@@ -148,7 +148,7 @@ contract TokenVault is Ownable {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: tx.origin instead of msg.sender
+// [VULNERABLE]: tx.origin instead of msg.sender
 contract Wallet {
     address public owner;
     
@@ -192,7 +192,7 @@ contract Attack {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Use msg.sender
+// [GOOD]: Use msg.sender
 function withdraw(uint amount) external {
     require(msg.sender == owner, "Not owner");
     payable(msg.sender).transfer(amount);
@@ -207,7 +207,7 @@ function withdraw(uint amount) external {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Inconsistent modifiers
+// [VULNERABLE]: Inconsistent modifiers
 contract Protocol {
     address public admin;
     address public owner;
@@ -245,7 +245,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Consistent role-based access
+// [GOOD]: Consistent role-based access
 contract Protocol is AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -272,7 +272,7 @@ contract Protocol is AccessControl {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Hardcoded privileged address
+// [VULNERABLE]: Hardcoded privileged address
 contract Bridge {
     function validateMessage(bytes32 msgHash, bytes memory sig) public view {
         address signer = recoverSigner(msgHash, sig);
@@ -312,7 +312,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Configurable validators with rotation
+// [GOOD]: Configurable validators with rotation
 contract Bridge is Ownable {
     mapping(address => bool) public validators;
     uint public requiredValidators;
@@ -344,7 +344,7 @@ contract Bridge is Ownable {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Instant admin actions
+// [VULNERABLE]: Instant admin actions
 contract Vault is Ownable {
     uint public withdrawalFee = 1; // 1%
     
@@ -380,7 +380,7 @@ function rugPull() external onlyOwner {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Timelock for critical changes
+// [GOOD]: Timelock for critical changes
 contract Vault is Ownable {
     uint public withdrawalFee = 1;
     uint public pendingFee;
@@ -410,7 +410,7 @@ contract Vault is Ownable {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Weak modifier
+// [VULNERABLE]: Weak modifier
 contract MultiSig {
     mapping(address => bool) public isSigner;
     
@@ -443,7 +443,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Proper multi-sig verification
+// [GOOD]: Proper multi-sig verification
 contract MultiSig {
     struct Transaction {
         address to;

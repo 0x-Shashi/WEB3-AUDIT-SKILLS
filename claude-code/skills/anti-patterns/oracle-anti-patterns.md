@@ -23,7 +23,7 @@ Examples of **BAD** code patterns for oracle usage. These are real mistakes foun
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Using DEX spot price
+// [VULNERABLE]: Using DEX spot price
 function getCollateralValue(address token, uint amount) public view returns (uint) {
     IUniswapV2Pair pair = IUniswapV2Pair(factory.getPair(token, WETH));
     (uint reserve0, uint reserve1,) = pair.getReserves();
@@ -68,7 +68,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Use TWAP oracle with manipulation resistance
+// [GOOD]: Use TWAP oracle with manipulation resistance
 function getCollateralValue(address token, uint amount) public view returns (uint) {
     // Option 1: Use Chainlink oracle (external, manipulation-resistant)
     AggregatorV3Interface priceFeed = priceFeeds[token];
@@ -92,7 +92,7 @@ function getCollateralValue(address token, uint amount) public view returns (uin
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: No staleness validation
+// [VULNERABLE]: No staleness validation
 function getPrice(address token) public view returns (uint) {
     AggregatorV3Interface priceFeed = priceFeeds[token];
     
@@ -135,7 +135,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Full staleness validation
+// [GOOD]: Full staleness validation
 function getPrice(address token) public view returns (uint) {
     AggregatorV3Interface priceFeed = priceFeeds[token];
     
@@ -167,7 +167,7 @@ function getPrice(address token) public view returns (uint) {
 > **Severity: Critical** | **Estimated Loss: $10M-$100M+** | **Fix Priority: Immediate**
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: No zero or negative price check
+// [VULNERABLE]: No zero or negative price check
 function getPrice(address token) public view returns (uint) {
     (, int price,,,) = priceFeeds[token].latestRoundData();
     
@@ -225,7 +225,7 @@ function exploitNegative() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Full price validation with bounds
+// [GOOD]: Full price validation with bounds
 function getPrice(address token) public view returns (uint) {
     (, int price,,,) = priceFeeds[token].latestRoundData();
     
@@ -255,7 +255,7 @@ function calculateCollateral(uint amount) public view returns (uint) {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Single point of failure
+// [VULNERABLE]: Single point of failure
 contract PriceOracle {
     AggregatorV3Interface public priceFeed;
     
@@ -294,7 +294,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Multi-oracle with fallback chain
+// [GOOD]: Multi-oracle with fallback chain
 contract ResilientOracle {
     AggregatorV3Interface public primaryOracle;   // Chainlink
     AggregatorV3Interface public secondaryOracle; // Band Protocol
@@ -339,7 +339,7 @@ contract ResilientOracle {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: LP token pricing via balanceOf
+// [VULNERABLE]: LP token pricing via balanceOf
 function getLPTokenPrice(address lpToken) public view returns (uint) {
     IUniswapV2Pair pair = IUniswapV2Pair(lpToken);
     
@@ -391,7 +391,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Use getReserves() instead of balanceOf()
+// [GOOD]: Use getReserves() instead of balanceOf()
 function getLPTokenPrice(address lpToken) public view returns (uint) {
     IUniswapV2Pair pair = IUniswapV2Pair(lpToken);
     
@@ -407,7 +407,7 @@ function getLPTokenPrice(address lpToken) public view returns (uint) {
     return (value0 + value1) / totalSupply;
 }
 
-// ✅ EVEN BETTER: Use Alpha Homora fair LP pricing
+// [EVEN BETTER]: Use Alpha Homora fair LP pricing
 function getFairLPPrice(address lpToken) public view returns (uint) {
     IUniswapV2Pair pair = IUniswapV2Pair(lpToken);
     (uint r0, uint r1,) = pair.getReserves();
@@ -431,7 +431,7 @@ function getFairLPPrice(address lpToken) public view returns (uint) {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Using tx.origin for auth
+// [VULNERABLE]: Using tx.origin for auth
 contract RestrictedOracle {
     mapping(address => bool) public trustedCallers;
     
@@ -464,7 +464,7 @@ function phishAdmin() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Use msg.sender for authorization
+// [GOOD]: Use msg.sender for authorization
 contract SecureOracle {
     mapping(address => bool) public trustedCallers;
     
@@ -490,7 +490,7 @@ contract SecureOracle {
 
 ### BAD CODE
 ```solidity
-// ❌ VULNERABLE: Using average without deviation check
+// [VULNERABLE]: Using average without deviation check
 function getPrice() public view returns (uint) {
     uint price1 = oracle1.getPrice();
     uint price2 = oracle2.getPrice();
@@ -525,7 +525,7 @@ function exploit() external {
 
 ### Correct Pattern
 ```solidity
-// ✅ GOOD: Check deviation before averaging
+// [GOOD]: Check deviation before averaging
 function getPrice() public view returns (uint) {
     uint price1 = oracle1.getPrice();
     uint price2 = oracle2.getPrice();

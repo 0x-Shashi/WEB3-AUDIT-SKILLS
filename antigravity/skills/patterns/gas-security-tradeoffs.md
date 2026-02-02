@@ -14,27 +14,27 @@ Gas optimizations are critical for DeFi protocols, but many introduce subtle sec
 
 | Gas Optimization | Security Risk | Severity | When Safe | When Dangerous |
 |-----------------|---------------|----------|-----------|----------------|
-| `unchecked { }` math | Integer overflow/underflow | 🔴 Critical | Provably bounded values, loop counters | User input, token amounts, prices |
-| Bit shifting instead of multiply/divide | Precision loss | 🟡 Medium | Power of 2 operations | Non-power-of-2 divisors |
-| `>> 1` instead of `/ 2` | Off-by-one for odd numbers | 🟢 Low | Even numbers only | Odd number division |
-| Pre-increment `++i` vs `i++` | None | ✅ Safe | Always | Never |
-| `!= 0` vs `> 0` for uints | None | ✅ Safe | Always | Never |
+| `unchecked { }` math | Integer overflow/underflow | [C] Critical | Provably bounded values, loop counters | User input, token amounts, prices |
+| Bit shifting instead of multiply/divide | Precision loss | [M] Medium | Power of 2 operations | Non-power-of-2 divisors |
+| `>> 1` instead of `/ 2` | Off-by-one for odd numbers | [L] Low | Even numbers only | Odd number division |
+| Pre-increment `++i` vs `i++` | None | [OK] Safe | Always | Never |
+| `!= 0` vs `> 0` for uints | None | [OK] Safe | Always | Never |
 
 ```solidity
-// ❌ DANGEROUS: Unchecked user input
+// [DANGEROUS]: Unchecked user input
 function deposit(uint256 amount) external {
     unchecked {
         balances[msg.sender] += amount;  // Can overflow!
     }
 }
 
-// ✅ SAFE: Unchecked loop counter
+// [SAFE]: Unchecked loop counter
 for (uint256 i = 0; i < length;) {
     // ... loop body
     unchecked { ++i; }  // i is bounded by length
 }
 
-// ✅ SAFE: Unchecked subtraction after check
+// [SAFE]: Unchecked subtraction after check
 require(balances[msg.sender] >= amount);
 unchecked {
     balances[msg.sender] -= amount;  // Can't underflow
@@ -47,14 +47,14 @@ unchecked {
 
 | Gas Optimization | Security Risk | Severity | When Safe | When Dangerous |
 |-----------------|---------------|----------|-----------|----------------|
-| Variable packing | Dirty upper bits | 🟡 Medium | Same-size types | Mixed sizes, inline assembly |
-| Transient storage (`TSTORE`) | Cross-call state leakage | 🔴 Critical | Single transaction | Delegatecall, reentrancy |
-| Skip zero-initialization | Non-zero defaults | 🟢 Low | Value types | Reference types, mappings |
-| Immutable variables | None | ✅ Safe | Constants | Never |
-| Short strings (<32 bytes) | None if no assembly | ✅ Safe | Standard access | Assembly string ops |
+| Variable packing | Dirty upper bits | [M] Medium | Same-size types | Mixed sizes, inline assembly |
+| Transient storage (`TSTORE`) | Cross-call state leakage | [C] Critical | Single transaction | Delegatecall, reentrancy |
+| Skip zero-initialization | Non-zero defaults | [L] Low | Value types | Reference types, mappings |
+| Immutable variables | None | [OK] Safe | Constants | Never |
+| Short strings (<32 bytes) | None if no assembly | [OK] Safe | Standard access | Assembly string ops |
 
 ```solidity
-// ❌ DANGEROUS: Variable packing with inline assembly
+// [DANGEROUS]: Variable packing with inline assembly
 struct Packed {
     uint128 a;
     uint128 b;
@@ -67,7 +67,7 @@ function exploit(Packed storage p) external {
     }
 }
 
-// ❌ DANGEROUS: Transient storage with reentrancy
+// [DANGEROUS]: Transient storage with reentrancy
 function swap() external {
     assembly {
         tstore(0, caller())  // Set in transient storage
@@ -88,26 +88,26 @@ function swap() external {
 
 | Gas Optimization | Security Risk | Severity | When Safe | When Dangerous |
 |-----------------|---------------|----------|-----------|----------------|
-| `call` over `transfer` | Reentrancy | 🔴 Critical | With reentrancy guard | No guard, CEI broken |
-| Skip return value check | Silent failure | 🔴 Critical | Never safe | Always |
-| Assembly `call` | All of the above + more | 🔴 Critical | Expert-reviewed code | General use |
-| `staticcall` for views | None | ✅ Safe | Read-only operations | Never |
-| Batched calls | First-failure DoS | 🟡 Medium | Try/catch each | Linear batch |
+| `call` over `transfer` | Reentrancy | [C] Critical | With reentrancy guard | No guard, CEI broken |
+| Skip return value check | Silent failure | [C] Critical | Never safe | Always |
+| Assembly `call` | All of the above + more | [C] Critical | Expert-reviewed code | General use |
+| `staticcall` for views | None | [OK] Safe | Read-only operations | Never |
+| Batched calls | First-failure DoS | [M] Medium | Try/catch each | Linear batch |
 
 ```solidity
-// ❌ DANGEROUS: No return check
+// [DANGEROUS]: No return check
 token.transfer(to, amount);  // Returns false on failure, doesn't revert
 
-// ✅ SAFE: With SafeERC20
+// [SAFE]: With SafeERC20
 SafeERC20.safeTransfer(token, to, amount);
 
-// ❌ DANGEROUS: Assembly call without full checks
+// [DANGEROUS]: Assembly call without full checks
 assembly {
     let success := call(gas(), target, value, 0, 0, 0, 0)
     // Missing: returndatasize check, error bubbling
 }
 
-// ✅ SAFE: Assembly call with proper checks
+// [SAFE]: Assembly call with proper checks
 assembly {
     let success := call(gas(), target, value, add(data, 0x20), mload(data), 0, 0)
     if iszero(success) {
@@ -124,14 +124,14 @@ assembly {
 
 | Gas Optimization | Security Risk | Severity | When Safe | When Dangerous |
 |-----------------|---------------|----------|-----------|----------------|
-| Skip zero-address check | Token burn, locked funds | 🟡 Medium | Token minting | Transfer recipients |
-| Skip zero-amount check | Division by zero, DoS | 🟡 Medium | Validated upstream | Raw user input |
-| Combine require statements | Unclear revert reason | 🟢 Low | Internal functions | User-facing functions |
-| Custom errors over strings | None | ✅ Safe | Always | Never |
-| Skip array length check | Out-of-bounds access | 🔴 Critical | Validated upstream | Raw user arrays |
+| Skip zero-address check | Token burn, locked funds | [M] Medium | Token minting | Transfer recipients |
+| Skip zero-amount check | Division by zero, DoS | [M] Medium | Validated upstream | Raw user input |
+| Combine require statements | Unclear revert reason | [L] Low | Internal functions | User-facing functions |
+| Custom errors over strings | None | [OK] Safe | Always | Never |
+| Skip array length check | Out-of-bounds access | [C] Critical | Validated upstream | Raw user arrays |
 
 ```solidity
-// ❌ DANGEROUS: Skipped zero check
+// [DANGEROUS]: Skipped zero check
 function setPrice(uint256 newPrice) external {
     price = newPrice;  // Can set to 0
 }
@@ -140,7 +140,7 @@ function calculateShares(uint256 amount) view returns (uint256) {
     return amount * 1e18 / price;  // Division by zero!
 }
 
-// ✅ SAFE: Zero validated upstream
+// [SAFE]: Zero validated upstream
 function setPrice(uint256 newPrice) external {
     require(newPrice > 0, "Zero price");
     price = newPrice;
@@ -159,13 +159,13 @@ function calculateShares(uint256 amount) view returns (uint256) {
 
 | Gas Optimization | Security Risk | Severity | When Safe | When Dangerous |
 |-----------------|---------------|----------|-----------|----------------|
-| Unbounded loops | DoS via gas exhaustion | 🔴 Critical | Never | Always |
-| Cache array length | None | ✅ Safe | Always | Never |
-| Process in batches | Incomplete processing | 🟡 Medium | With continuation | One-shot operations |
-| `pop()` instead of `delete` | Order dependency bugs | 🟡 Medium | Order doesn't matter | Ordered data |
+| Unbounded loops | DoS via gas exhaustion | [C] Critical | Never | Always |
+| Cache array length | None | [OK] Safe | Always | Never |
+| Process in batches | Incomplete processing | [M] Medium | With continuation | One-shot operations |
+| `pop()` instead of `delete` | Order dependency bugs | [M] Medium | Order doesn't matter | Ordered data |
 
 ```solidity
-// ❌ DANGEROUS: Unbounded loop
+// [DANGEROUS]: Unbounded loop
 function distributeRewards(address[] calldata users) external {
     for (uint256 i = 0; i < users.length; i++) {
         // Attacker adds 10000 users → out of gas
@@ -173,7 +173,7 @@ function distributeRewards(address[] calldata users) external {
     }
 }
 
-// ✅ SAFE: Bounded with pagination
+// [SAFE]: Bounded with pagination
 uint256 public constant MAX_BATCH = 100;
 
 function distributeRewards(
@@ -197,18 +197,18 @@ function distributeRewards(
 
 | Gas Optimization | Security Risk | Severity | When Safe | When Dangerous |
 |-----------------|---------------|----------|-----------|----------------|
-| `abi.encodePacked` | Hash collision | 🔴 Critical | Fixed-size types only | Dynamic types |
-| Skip ABI encoding | Malformed calldata | 🔴 Critical | Never | Always |
-| Tight packing for hashing | Collision with similar data | 🟡 Medium | Unique structure | User-controlled strings |
+| `abi.encodePacked` | Hash collision | [C] Critical | Fixed-size types only | Dynamic types |
+| Skip ABI encoding | Malformed calldata | [C] Critical | Never | Always |
+| Tight packing for hashing | Collision with similar data | [M] Medium | Unique structure | User-controlled strings |
 
 ```solidity
-// ❌ DANGEROUS: Hash collision possible
+// [DANGEROUS]: Hash collision possible
 function verify(string memory a, string memory b) pure returns (bytes32) {
     // "ab" + "c" == "a" + "bc" → same hash!
     return keccak256(abi.encodePacked(a, b));
 }
 
-// ✅ SAFE: With separator or abi.encode
+// [SAFE]: With separator or abi.encode
 function verify(string memory a, string memory b) pure returns (bytes32) {
     return keccak256(abi.encode(a, b));  // Includes length prefixes
 }
@@ -218,7 +218,7 @@ function verify(string memory a, string memory b) pure returns (bytes32) {
 
 ## 2. Quick Reference Card
 
-### 🔴 Never Skip These Checks (Security > Gas)
+### [C] Never Skip These Checks (Security > Gas)
 
 ```solidity
 // Always check these:
@@ -229,7 +229,7 @@ require(i < array.length, "Out of bounds");   // Array access
 require(deadline >= block.timestamp, "Expired"); // Time-sensitive ops
 ```
 
-### 🟡 Context-Dependent Optimizations
+### [M] Context-Dependent Optimizations
 
 ```solidity
 // Safe with guards:
@@ -241,7 +241,7 @@ unchecked { a - b; }              // After require(a >= b)
 x / y;                            // After require(y > 0)
 ```
 
-### ✅ Always Safe Optimizations
+### [OK] Always Safe Optimizations
 
 ```solidity
 ++i;                              // Pre-increment
@@ -257,12 +257,12 @@ custom errors                     // Error() over require("")
 
 | Optimization | Gas Saved | Risk Level | Recommendation |
 |-------------|-----------|------------|----------------|
-| Custom errors | ~50-200 | None | ✅ Always use |
-| Immutable vars | ~2100 per read | None | ✅ Always use |
-| Unchecked counters | ~40-80 per op | Low | ✅ Use in loops |
-| Skip zero-checks | ~100-200 | Medium-High | ⚠️ Only with upstream validation |
-| Assembly calls | ~200-500 | Very High | ❌ Avoid unless expert |
-| abi.encodePacked | ~100-300 | High | ⚠️ Fixed types only |
+| Custom errors | ~50-200 | None | [OK] Always use |
+| Immutable vars | ~2100 per read | None | [OK] Always use |
+| Unchecked counters | ~40-80 per op | Low | [OK] Use in loops |
+| Skip zero-checks | ~100-200 | Medium-High | [!] Only with upstream validation |
+| Assembly calls | ~200-500 | Very High | [X] Avoid unless expert |
+| abi.encodePacked | ~100-300 | High | [!] Fixed types only |
 
 ---
 

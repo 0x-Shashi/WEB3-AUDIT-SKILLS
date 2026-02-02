@@ -570,8 +570,8 @@ Always log exploit attempts in `progress.md`:
 ## Exploit Attempts
 | # | Attack Vector | PoC File | Result | Next Step |
 |---|---------------|----------|--------|-----------|
-| 1 | [A1] Stale Oracle | test/StaleOracle.t.sol | ❌ Reverts | Try [A2] |
-| 2 | [A2] Flash Loan | test/FlashLoan.t.sol | ✅ SUCCESS | Document |
+| 1 | [A1] Stale Oracle | test/StaleOracle.t.sol | [FAIL] Reverts | Try [A2] |
+| 2 | [A2] Flash Loan | test/FlashLoan.t.sol | [PASS] SUCCESS | Document |
 ```
 
 This table is your "memory" of what worked and what didn't.

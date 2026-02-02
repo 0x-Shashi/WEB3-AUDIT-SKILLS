@@ -65,7 +65,7 @@ userRewardPerTokenPaid[user] = rewardPerTokenStored;
 
 ### Bad Reward Calculation (Retroactive)
 ```solidity
-// ❌ VULNERABLE - Can stake after reward, claim immediately
+// [VULNERABLE] - Can stake after reward, claim immediately
 function distributeReward(uint256 amount) external {
     rewardBalance += amount;
 }
@@ -74,7 +74,7 @@ function claim() external {
     // Attacker stakes large amount, immediately claims
 }
 
-// ✅ SAFE - Snapshot at reward time
+// [SAFE] - Snapshot at reward time
 function distributeReward(uint256 amount) external {
     rewardPerTokenStored += amount * 1e18 / totalStaked;  // Snapshot current stakers
 }
@@ -82,7 +82,7 @@ function distributeReward(uint256 amount) external {
 
 ### Bad Flash Stake Protection
 ```solidity
-// ❌ VULNERABLE - Stake and claim in same block
+// [VULNERABLE] - Stake and claim in same block
 function stake(uint256 amount) external {
     balances[msg.sender] += amount;
     totalStaked += amount;
@@ -94,7 +94,7 @@ function claim() external {
     rewardToken.transfer(msg.sender, reward);
 }
 
-// ✅ SAFE - Time-weighted rewards
+// [SAFE] - Time-weighted rewards
 function claim() external {
     require(lastStakeTime[msg.sender] + MIN_STAKE_DURATION <= block.timestamp, "Too soon");
     // ... rest of claim
@@ -103,7 +103,7 @@ function claim() external {
 
 ### Bad Withdrawal (Reentrancy)
 ```solidity
-// ❌ VULNERABLE
+// [VULNERABLE]
 function withdraw(uint256 amount) external {
     require(balances[msg.sender] >= amount);
     stakingToken.transfer(msg.sender, amount);  // External call first
@@ -111,7 +111,7 @@ function withdraw(uint256 amount) external {
     totalStaked -= amount;
 }
 
-// ✅ SAFE
+// [SAFE]
 function withdraw(uint256 amount) external nonReentrant {
     require(balances[msg.sender] >= amount);
     balances[msg.sender] -= amount;
@@ -123,12 +123,12 @@ function withdraw(uint256 amount) external nonReentrant {
 
 ### Bad Slash Handling
 ```solidity
-// ❌ VULNERABLE - Can underflow
+// [VULNERABLE] - Can underflow
 function slash(address user, uint256 amount) external onlySlasher {
     balances[user] -= amount;  // Underflow if amount > balance
 }
 
-// ✅ SAFE
+// [SAFE]
 function slash(address user, uint256 amount) external onlySlasher {
     uint256 actualSlash = amount > balances[user] ? balances[user] : amount;
     balances[user] -= actualSlash;

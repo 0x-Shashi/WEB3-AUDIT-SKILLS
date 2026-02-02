@@ -58,13 +58,13 @@
 
 ### Bad Source Validation
 ```solidity
-// ❌ VULNERABLE
+// [VULNERABLE]
 function receiveMessage(bytes calldata message) external {
     // Accept from anyone
     _execute(message);
 }
 
-// ✅ SAFE
+// [SAFE]
 function receiveMessage(uint256 srcChain, address srcSender, bytes calldata message) external {
     require(msg.sender == trustedRelayer, "Invalid relayer");
     require(allowedSources[srcChain][srcSender], "Invalid source");
@@ -76,13 +76,13 @@ function receiveMessage(uint256 srcChain, address srcSender, bytes calldata mess
 
 ### Bad Replay Protection
 ```solidity
-// ❌ VULNERABLE - No replay protection
+// [VULNERABLE] - No replay protection
 function executeMessage(bytes32 messageHash, bytes calldata data) external {
     require(verifySignature(messageHash, signature), "Bad sig");
     _execute(data);
 }
 
-// ✅ SAFE
+// [SAFE]
 mapping(bytes32 => bool) public executed;
 
 function executeMessage(bytes32 messageHash, bytes calldata data) external {
@@ -95,13 +95,13 @@ function executeMessage(bytes32 messageHash, bytes calldata data) external {
 
 ### Bad Token Amount Handling
 ```solidity
-// ❌ VULNERABLE - Decimal mismatch
+// [VULNERABLE] - Decimal mismatch
 function bridgeIn(uint256 amount) external {
     // Source has 18 decimals, dest has 6
     destToken.mint(msg.sender, amount);  // 10^12 too many!
 }
 
-// ✅ SAFE
+// [SAFE]
 function bridgeIn(uint256 amount, uint8 srcDecimals) external {
     uint256 normalizedAmount = amount * (10 ** destDecimals) / (10 ** srcDecimals);
     destToken.mint(msg.sender, normalizedAmount);
@@ -110,13 +110,13 @@ function bridgeIn(uint256 amount, uint8 srcDecimals) external {
 
 ### Bad Finality Assumption
 ```solidity
-// ❌ VULNERABLE - No finality wait
+// [VULNERABLE] - No finality wait
 function receiveFromL2(bytes calldata message) external {
     // Execute immediately, but L2 might reorg
     _execute(message);
 }
 
-// ✅ SAFE
+// [SAFE]
 function receiveFromL2(bytes calldata message, uint256 l2Block) external {
     require(block.number >= l2Block + FINALITY_BLOCKS, "Not finalized");
     _execute(message);

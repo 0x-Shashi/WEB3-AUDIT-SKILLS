@@ -10,7 +10,7 @@ Reentrancy fixes have a **40% failure rate** on first attempt. This guide ensure
 
 ### 1.1 Single-Function Reentrancy
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 function withdraw(uint256 amount) external {
     require(balances[msg.sender] >= amount, "Insufficient");
@@ -23,7 +23,7 @@ function withdraw(uint256 amount) external {
 }
 ```
 
-**❌ BAD FIX #1: Only added ReentrancyGuard**
+**[BAD FIX #1]: Only added ReentrancyGuard**
 ```solidity
 function withdraw(uint256 amount) external nonReentrant {
     require(balances[msg.sender] >= amount, "Insufficient");
@@ -37,7 +37,7 @@ function withdraw(uint256 amount) external nonReentrant {
 // Problem: Guard can be bypassed via cross-contract reentrancy
 ```
 
-**❌ BAD FIX #2: CEI but forgot success check**
+**[BAD FIX #2]: CEI but forgot success check**
 ```solidity
 function withdraw(uint256 amount) external {
     require(balances[msg.sender] >= amount, "Insufficient");
@@ -48,7 +48,7 @@ function withdraw(uint256 amount) external {
 // Problem: Silent failure = funds lost
 ```
 
-**✅ CORRECT FIX:**
+**[CORRECT FIX]:**
 ```solidity
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
@@ -72,7 +72,7 @@ function withdraw(uint256 amount) external nonReentrant {
 
 ### 1.2 Cross-Function Reentrancy
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 contract Vault {
     mapping(address => uint256) public balances;
@@ -96,7 +96,7 @@ contract Vault {
 }
 ```
 
-**❌ BAD FIX: Only fixed withdraw**
+**[BAD FIX]: Only fixed withdraw**
 ```solidity
 function withdraw(uint256 amount) external nonReentrant {
     require(balances[msg.sender] >= amount);
@@ -107,7 +107,7 @@ function withdraw(uint256 amount) external nonReentrant {
 // transfer() still vulnerable to reentrancy from withdraw!
 ```
 
-**✅ CORRECT FIX: All state-reading functions protected**
+**[CORRECT FIX]: All state-reading functions protected**
 ```solidity
 contract Vault is ReentrancyGuard {
     function withdraw(uint256 amount) external nonReentrant {
@@ -129,7 +129,7 @@ contract Vault is ReentrancyGuard {
 
 ### 1.3 Read-Only Reentrancy
 
-**❌ VULNERABLE:**
+**[VULNERABLE]:**
 ```solidity
 contract LPToken {
     function burn(uint256 shares) external {
@@ -147,7 +147,7 @@ contract LPToken {
 }
 ```
 
-**✅ CORRECT FIX: Lock during state transition**
+**[CORRECT FIX]: Lock during state transition**
 ```solidity
 contract LPToken is ReentrancyGuard {
     bool private _inBurn;
@@ -292,7 +292,7 @@ contract CrossFunctionTest is Test {
 
 ## 3. Fix Gone Wrong Examples
 
-### 3.1 ❌ Added Guard to Wrong Function
+### 3.1 [BAD] Added Guard to Wrong Function
 
 ```solidity
 // Developer added nonReentrant to deposit instead of withdraw
@@ -307,7 +307,7 @@ function withdraw(uint256 amount) external {  // Still vulnerable!
 }
 ```
 
-### 3.2 ❌ CEI Pattern but Emitted Event Before Effect
+### 3.2 [BAD] CEI Pattern but Emitted Event Before Effect
 
 ```solidity
 function withdraw(uint256 amount) external {
@@ -323,7 +323,7 @@ function withdraw(uint256 amount) external {
 }
 ```
 
-### 3.3 ❌ Used transfer() Instead of call() - DoS Risk
+### 3.3 [BAD] Used transfer() Instead of call() - DoS Risk
 
 ```solidity
 function withdraw(uint256 amount) external nonReentrant {
@@ -335,7 +335,7 @@ function withdraw(uint256 amount) external nonReentrant {
 // NEW BUG: Contract recipients can't receive funds
 ```
 
-### 3.4 ❌ Forgot to Update All Clones/Proxies
+### 3.4 [BAD] Forgot to Update All Clones/Proxies
 
 ```solidity
 // Fixed in implementation but proxy still points to old logic
