@@ -77,6 +77,44 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Strategy Reentrancy | Critical | [reentrancy-patterns.md#strategy](patterns/reentrancy-patterns.md) | - | [vault-tree [B1]](attack-trees/vault-attack-tree.md) | - | Immediate |
 | ERC4626 Preview Mismatch | Medium | [erc4626-patterns.md#preview-accuracy](patterns/erc4626-patterns.md) | - | [vault-tree [E1]](attack-trees/vault-attack-tree.md) | - | Medium |
 | Flash Loan Reward Farming | High | [flash-loan-patterns.md#reward-farming](patterns/flash-loan-patterns.md) | - | [vault-tree [H2]](attack-trees/vault-attack-tree.md) | Multiple | High |
+| **GOVERNANCE SPECIFIC** |
+| Flash Loan Governance Voting | Critical | [governance-patterns.md#flash-loan-voting](patterns/governance-patterns.md) | [governance-anti-patterns.md#2](anti-patterns/governance-anti-patterns.md) | [governance-tree [A1]](attack-trees/governance-attack-tree.md) | Beanstalk 2022 ($182M) | Immediate |
+| No Timelock on Critical Changes | Critical | [governance-patterns.md#timelock](patterns/governance-patterns.md) | [governance-anti-patterns.md#1](anti-patterns/governance-anti-patterns.md) | [governance-tree [C]](attack-trees/governance-attack-tree.md) | Tornado Cash 2023 | Immediate |
+| Low Quorum Requirements | High | [governance-patterns.md#quorum](patterns/governance-patterns.md) | [governance-anti-patterns.md#3](anti-patterns/governance-anti-patterns.md) | [governance-tree [D]](attack-trees/governance-attack-tree.md) | Multiple DAOs | High |
+| Proposal Spam DoS | Medium | [governance-patterns.md#proposal-threshold](patterns/governance-patterns.md) | [governance-anti-patterns.md#4](anti-patterns/governance-anti-patterns.md) | [governance-tree [B3]](attack-trees/governance-attack-tree.md) | - | Medium |
+| Hidden Malicious Code in Proposal | Critical | [governance-patterns.md#transparency](patterns/governance-patterns.md) | [governance-anti-patterns.md#5](anti-patterns/governance-anti-patterns.md) | [governance-tree [E1]](attack-trees/governance-attack-tree.md) | Tornado Cash 2023 | Immediate |
+| Vote Buying Off-Chain | High | [governance-patterns.md#vote-integrity](patterns/governance-patterns.md) | [governance-anti-patterns.md#6](anti-patterns/governance-anti-patterns.md) | [governance-tree [A5]](attack-trees/governance-attack-tree.md) | Curve Wars | Medium |
+| Arbitrary Call in Governance | Critical | [governance-patterns.md#function-whitelist](patterns/governance-patterns.md) | [governance-anti-patterns.md#7](anti-patterns/governance-anti-patterns.md) | [governance-tree [E3]](attack-trees/governance-attack-tree.md) | Multiple protocols | Immediate |
+| **STABLECOIN SPECIFIC** |
+| Death Spiral (Algorithmic) | Critical | [stablecoin-patterns.md#death-spiral](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [A1]](attack-trees/stablecoin-attack-tree.md) | Terra/Luna 2022 ($40B) | N/A (Design) |
+| Bank Run on Collateral | High | [stablecoin-patterns.md#bank-run](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [A2]](attack-trees/stablecoin-attack-tree.md) | USDC Depeg 2023 | High |
+| Stablecoin Oracle Manipulation | Critical | [oracle-patterns.md#stablecoin](patterns/oracle-patterns.md) | - | [stablecoin-tree [A3]](attack-trees/stablecoin-attack-tree.md) | - | Immediate |
+| Reserve Accounting Error | Critical | [stablecoin-patterns.md#reserve-accounting](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [B1]](attack-trees/stablecoin-attack-tree.md) | Beanstalk 2022 (partial) | Immediate |
+| Infinite Minting | Critical | [stablecoin-patterns.md#infinite-mint](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [C1]](attack-trees/stablecoin-attack-tree.md) | - | Immediate |
+| Cascade Liquidation | Critical | [lending-pool-patterns.md#liquidation-cascade](patterns/lending-pool-patterns.md) | - | [stablecoin-tree [E1]](attack-trees/stablecoin-attack-tree.md) | - | Immediate |
+| Stablecoin Governance Attack | High | [governance-patterns.md#stablecoin](patterns/governance-patterns.md) | - | [stablecoin-tree [F1]](attack-trees/stablecoin-attack-tree.md) | - | High |
+| **NFT LENDING SPECIFIC** |
+| NFT Floor Price Manipulation | Critical | [oracle-patterns.md#nft-floor](patterns/oracle-patterns.md) | - | [nft-tree [A1]](attack-trees/nft-lending-attack-tree.md) | JPEG'd 2023 ($11.6M) | Immediate |
+| Wash Trading Valuation | High | [nft-patterns.md#wash-trading](patterns/nft-patterns.md) | - | [nft-tree [A2]](attack-trees/nft-lending-attack-tree.md) | Wasabi 2023 | High |
+| NFT Metadata Mutation | Critical | [nft-patterns.md#metadata-mutation](patterns/nft-patterns.md) | - | [nft-tree [B1]](attack-trees/nft-lending-attack-tree.md) | - | Immediate |
+| Counterfeit NFT Deposit | Critical | [nft-patterns.md#counterfeit](patterns/nft-patterns.md) | - | [nft-tree [D1]](attack-trees/nft-lending-attack-tree.md) | - | Immediate |
+| Malicious NFT Contract | Critical | [nft-patterns.md#malicious-contract](patterns/nft-patterns.md) | - | [nft-tree [D2]](attack-trees/nft-lending-attack-tree.md) | - | Immediate |
+| NFT Liquidation Front-Running | Medium | [mev-patterns.md#nft-liquidation](patterns/mev-patterns.md) | - | [nft-tree [C1]](attack-trees/nft-lending-attack-tree.md) | - | Medium |
+| NFT Pool Drain | Critical | [nft-patterns.md#pool-drain](patterns/nft-patterns.md) | - | [nft-tree [F1]](attack-trees/nft-lending-attack-tree.md) | - | Immediate |
+| **TOKEN HANDLING** |
+| Fee-on-Transfer Token | High | [token-patterns.md#fee-on-transfer](patterns/token-patterns.md) | [token-anti-patterns.md#1](anti-patterns/token-anti-patterns.md) | [dex-tree [C3]](attack-trees/dex-attack-tree.md) | Balancer 2021 ($500K+) | High |
+| Rebasing Token Accounting | Critical | [token-patterns.md#rebasing](patterns/token-patterns.md) | [token-anti-patterns.md#2](anti-patterns/token-anti-patterns.md) | - | Rari 2021 ($11M partial) | Immediate |
+| ERC777 Reentrancy | Critical | [token-patterns.md#erc777](patterns/token-patterns.md) | [token-anti-patterns.md#3](anti-patterns/token-anti-patterns.md) | [lending-tree [D4]](attack-trees/lending-attack-tree.md) | Imbtc 2020 ($300K) | Immediate |
+| Approval Race Condition | Medium | [token-patterns.md#approval-race](patterns/token-patterns.md) | [token-anti-patterns.md#4](anti-patterns/token-anti-patterns.md) | - | Theoretical | Medium |
+| Deflationary Token Math | Medium | [token-patterns.md#deflationary](patterns/token-patterns.md) | [token-anti-patterns.md#5](anti-patterns/token-anti-patterns.md) | - | Multiple farms | Medium |
+| Token Return Value Not Checked | High | [erc20-patterns.md#safe-transfer](patterns/erc20-patterns.md) | [token-anti-patterns.md#7](anti-patterns/token-anti-patterns.md) | - | Multiple protocols | High |
+| **FLASH LOAN ATTACKS** |
+| Flash Loan Oracle Manipulation | Critical | [oracle-patterns.md#flash-loan](patterns/oracle-patterns.md) | [flash-loan-anti-patterns.md#2](anti-patterns/flash-loan-anti-patterns.md) | [dex-tree [A1]](attack-trees/dex-attack-tree.md) | bZx 2020 ($954K), Harvest 2020 ($34M) | Immediate |
+| Flash Loan Interest Rate Manipulation | High | [lending-pool-patterns.md#interest-rate](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#3](anti-patterns/flash-loan-anti-patterns.md) | - | Inverse Finance 2022 ($15.6M) | High |
+| Flash Loan Reward Farming Exploit | High | [flash-loan-patterns.md#reward-farming](patterns/flash-loan-patterns.md) | [flash-loan-anti-patterns.md#4](anti-patterns/flash-loan-anti-patterns.md) | - | Multiple farms | High |
+| Flash Loan Collateral Inflation | Critical | [lending-pool-patterns.md#collateral](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#5](anti-patterns/flash-loan-anti-patterns.md) | [lending-tree [C2]](attack-trees/lending-attack-tree.md) | Cream Finance 2021 ($130M) | Immediate |
+| Flash Loan Arbitrage Drain | Critical | [flash-loan-patterns.md#arbitrage](patterns/flash-loan-patterns.md) | [flash-loan-anti-patterns.md#6](anti-patterns/flash-loan-anti-patterns.md) | - | Warp Finance 2020 ($7.7M), Alpha Homora 2021 ($37M) | Immediate |
+| Flash Loan Cascade Liquidation | Critical | [lending-pool-patterns.md#liquidation-cascade](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#7](anti-patterns/flash-loan-anti-patterns.md) | [stablecoin-tree [E1]](attack-trees/stablecoin-attack-tree.md) | Venus Protocol 2021 ($200M) | Immediate |
 
 ---
 
@@ -85,11 +123,20 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Exploit Name | Year | Loss | Vulnerability | Pattern Reference | Anti-Pattern | Attack Tree |
 |--------------|------|------|---------------|-------------------|--------------|-------------|
 | **2023-2024** |
+| JPEG'd Exploit | 2023 | $11.6M | NFT floor manipulation | [oracle-patterns.md#nft-floor](patterns/oracle-patterns.md) | - | [nft-tree [A1]](attack-trees/nft-lending-attack-tree.md) |
+| Wasabi Floor Manipulation | 2023 | Undisclosed | Wash trading | [nft-patterns.md#wash-trading](patterns/nft-patterns.md) | - | [nft-tree [A2]](attack-trees/nft-lending-attack-tree.md) |
+| Tornado Cash Governance | 2023 | N/A | Hidden malicious code | [governance-patterns.md#transparency](patterns/governance-patterns.md) | [governance-anti-patterns.md#5](anti-patterns/governance-anti-patterns.md) | [governance-tree [E1]](attack-trees/governance-attack-tree.md) |
+| USDC Depeg | 2023 | Temporary | Bank run + FUD | [stablecoin-patterns.md#bank-run](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [A2][A6]](attack-trees/stablecoin-attack-tree.md) |
 | Yearn Finance | 2023 | $11M | First depositor attack | [defi-vault-patterns.md#first-depositor](patterns/defi-vault-patterns.md) | - | [vault-tree [A1]](attack-trees/vault-attack-tree.md) |
 | Radiant Capital | 2024 | $4.5M | Cross-function reentrancy | [reentrancy-patterns.md#cross-function](patterns/reentrancy-patterns.md) | - | [lending-tree [D2]](attack-trees/lending-attack-tree.md) |
 | Sentiment | 2023 | $1M | Read-only reentrancy | [reentrancy-patterns.md#read-only](patterns/reentrancy-patterns.md) | [reentrancy-anti-patterns.md#3](anti-patterns/reentrancy-anti-patterns.md) | [lending-tree [D3]](attack-trees/lending-attack-tree.md) |
 | Euler Finance | 2023 | $197M | Liquidation DoS | [dos-patterns.md#liquidation](patterns/dos-patterns.md) | - | [lending-tree [B2]](attack-trees/lending-attack-tree.md) |
 | **2022** |
+| Terra/Luna Collapse | 2022 | $40B | Death spiral (algorithmic) | [stablecoin-patterns.md#death-spiral](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [A1]](attack-trees/stablecoin-attack-tree.md) |
+| Beanstalk | 2022 | $182M | Flash loan governance | [governance-patterns.md#flash-loan-voting](patterns/governance-patterns.md) | [governance-anti-patterns.md#2](anti-patterns/governance-anti-patterns.md) | [governance-tree [A1]](attack-trees/governance-attack-tree.md) |
+| BendDAO Crisis | 2022 | Near-collapse | Floor crash + bank run | [nft-patterns.md#floor-crash](patterns/nft-patterns.md) | - | [nft-tree [C2][F4]](attack-trees/nft-lending-attack-tree.md) |
+| Iron Finance | 2021 | $2B | Death spiral (TITAN) | [stablecoin-patterns.md#death-spiral](patterns/stablecoin-patterns.md) | - | [stablecoin-tree [A1]](attack-trees/stablecoin-attack-tree.md) |
+| Inverse Finance | 2022 | $15.6M | Interest rate manipulation | [lending-pool-patterns.md#interest-rate](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#3](anti-patterns/flash-loan-anti-patterns.md) | - |
 | Nomad Bridge | 2022 | $190M | Unprotected init | [access-control-patterns.md#initialization](patterns/access-control-patterns.md) | [access-control-anti-patterns.md#1](anti-patterns/access-control-anti-patterns.md) | [bridge-tree [E2]](attack-trees/bridge-attack-tree.md) |
 | Ronin Bridge | 2022 | $625M | Validator key compromise | [bridge-patterns.md#key-management](patterns/bridge-patterns.md) | - | [bridge-tree [A5]](attack-trees/bridge-attack-tree.md) |
 | Wormhole | 2022 | $326M | Missing signature verification | [signature-patterns.md#verification](patterns/signature-patterns.md) | - | [bridge-tree [A6]](attack-trees/bridge-attack-tree.md) |
@@ -97,6 +144,10 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Rari Capital | 2022 | $80M | Malicious strategy | [strategy-patterns.md#validation](patterns/strategy-patterns.md) | - | [vault-tree [B2]](attack-trees/vault-attack-tree.md) |
 | Inverse Finance | 2022 | $1.2M | Stale oracle | [oracle-patterns.md#staleness](patterns/oracle-patterns.md) | [oracle-anti-patterns.md#2](anti-patterns/oracle-anti-patterns.md) | [lending-tree [A1]](attack-trees/lending-attack-tree.md) |
 | **2021** |
+| Alpha Homora | 2021 | $37M | Flash loan arbitrage | [flash-loan-patterns.md#arbitrage](patterns/flash-loan-patterns.md) | [flash-loan-anti-patterns.md#6](anti-patterns/flash-loan-anti-patterns.md) | - |
+| Venus Protocol | 2021 | $200M | Flash loan cascade liquidation | [lending-pool-patterns.md#liquidation-cascade](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#7](anti-patterns/flash-loan-anti-patterns.md) | [stablecoin-tree [E1]](attack-trees/stablecoin-attack-tree.md) |
+| Build Finance | 2021 | N/A | Flash loan governance | [governance-patterns.md#flash-loan-voting](patterns/governance-patterns.md) | [governance-anti-patterns.md#2](anti-patterns/governance-anti-patterns.md) | [governance-tree [A1]](attack-trees/governance-attack-tree.md) |
+| Balancer (Deflationary) | 2021 | $500K+ | Fee-on-transfer token | [token-patterns.md#fee-on-transfer](patterns/token-patterns.md) | [token-anti-patterns.md#1](anti-patterns/token-anti-patterns.md) | - |
 | Poly Network | 2021 | $610M | Missing access control | [access-control-patterns.md#modifiers](patterns/access-control-patterns.md) | [access-control-anti-patterns.md#2](anti-patterns/access-control-anti-patterns.md) | [bridge-tree [E5]](attack-trees/bridge-attack-tree.md) |
 | Cream Finance | 2021 | $130M | Spot price manipulation | [oracle-patterns.md#spot-price](patterns/oracle-patterns.md) | [oracle-anti-patterns.md#1](anti-patterns/oracle-anti-patterns.md) | [lending-tree [A2]](attack-trees/lending-attack-tree.md) |
 | THORChain | 2021 | $8M | tx.origin auth | [access-control-patterns.md#tx-origin](patterns/access-control-patterns.md) | [access-control-anti-patterns.md#3](anti-patterns/access-control-anti-patterns.md) | - |
@@ -104,11 +155,15 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Grim Finance | 2021 | $30M | Reentrancy | [reentrancy-patterns.md#cei](patterns/reentrancy-patterns.md) | [reentrancy-anti-patterns.md#1](anti-patterns/reentrancy-anti-patterns.md) | - |
 | Beefy Finance | 2021 | $11M | Strategy loss | [strategy-patterns.md#loss-cap](patterns/strategy-patterns.md) | - | [vault-tree [B3]](attack-trees/vault-attack-tree.md) |
 | **2020** |
+| Imbtc | 2020 | $300K | ERC777 reentrancy | [token-patterns.md#erc777](patterns/token-patterns.md) | [token-anti-patterns.md#3](anti-patterns/token-anti-patterns.md) | - |
+| bZx (Multiple) | 2020 | $954K | Flash loan oracle manipulation | [oracle-patterns.md#flash-loan](patterns/oracle-patterns.md) | [flash-loan-anti-patterns.md#2](anti-patterns/flash-loan-anti-patterns.md) | - |
+| Harvest Finance | 2020 | $34M | Flash loan oracle manipulation | [oracle-patterns.md#spot-price](patterns/oracle-patterns.md) | [flash-loan-anti-patterns.md#2](anti-patterns/flash-loan-anti-patterns.md) | [dex-tree [A1]](attack-trees/dex-attack-tree.md) |
 | Lendf.Me | 2020 | $25M | ERC777 reentrancy | [token-patterns.md#erc777](patterns/token-patterns.md) | [reentrancy-anti-patterns.md#4](anti-patterns/reentrancy-anti-patterns.md) | [lending-tree [D4]](attack-trees/lending-attack-tree.md) |
 | Harvest Finance | 2020 | $24M | Spot price + arbitrage | [oracle-patterns.md#spot-price](patterns/oracle-patterns.md) | [oracle-anti-patterns.md#1](anti-patterns/oracle-anti-patterns.md) | [dex-tree [A1]](attack-trees/dex-attack-tree.md) |
 | Warp Finance | 2020 | $7.7M | LP balanceOf pricing | [defi-vault-patterns.md#lp-pricing](patterns/defi-vault-patterns.md) | [oracle-anti-patterns.md#5](anti-patterns/oracle-anti-patterns.md) | [lending-tree [A2]](attack-trees/lending-attack-tree.md) |
 | bZx | 2020 | $8M | Oracle manipulation | [oracle-patterns.md#manipulation](patterns/oracle-patterns.md) | - | - |
 | Synthetix | 2020 | DoS | Oracle failure | - | [oracle-anti-patterns.md#4](anti-patterns/oracle-anti-patterns.md) | - |
+| Warp Finance | 2020 | $7.7M | Flash loan arbitrage | [flash-loan-patterns.md#arbitrage](patterns/flash-loan-patterns.md) | [flash-loan-anti-patterns.md#6](anti-patterns/flash-loan-anti-patterns.md) | - |
 | **2016-2017** |
 | The DAO | 2016 | $60M | Classic reentrancy | [reentrancy-patterns.md#cei](patterns/reentrancy-patterns.md) | [reentrancy-anti-patterns.md#1](anti-patterns/reentrancy-anti-patterns.md) | [lending-tree [D1]](attack-trees/lending-attack-tree.md) |
 | Parity Wallet | 2017 | $150M | Unprotected init | [access-control-patterns.md#initialization](patterns/access-control-patterns.md) | [access-control-anti-patterns.md#1](anti-patterns/access-control-anti-patterns.md) | - |
@@ -181,6 +236,54 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 
 ---
 
+### Governance/DAOs
+
+**Critical Vulnerabilities:**
+- Flash loan governance voting
+- No timelock on critical changes
+- Hidden malicious code in proposals
+- Arbitrary call execution
+- Low quorum requirements
+
+**Primary References:**
+- Attack Tree: [governance-attack-tree.md](attack-trees/governance-attack-tree.md)
+- Patterns: [governance-patterns.md](patterns/governance-patterns.md)
+- Anti-Patterns: [governance-anti-patterns.md](anti-patterns/governance-anti-patterns.md), [flash-loan-anti-patterns.md](anti-patterns/flash-loan-anti-patterns.md)
+
+---
+
+### Stablecoins
+
+**Critical Vulnerabilities:**
+- Death spiral (algorithmic)
+- Reserve drain/accounting errors
+- Infinite minting
+- Cascade liquidation
+- Oracle manipulation
+
+**Primary References:**
+- Attack Tree: [stablecoin-attack-tree.md](attack-trees/stablecoin-attack-tree.md)
+- Patterns: [stablecoin-patterns.md](patterns/stablecoin-patterns.md), [oracle-patterns.md](patterns/oracle-patterns.md)
+- Related: [lending-pool-patterns.md](patterns/lending-pool-patterns.md)
+
+---
+
+### NFT Lending
+
+**Critical Vulnerabilities:**
+- NFT floor price manipulation
+- Counterfeit NFT deposits
+- Metadata mutation
+- Malicious NFT contracts
+- Pool drain via over-valuation
+
+**Primary References:**
+- Attack Tree: [nft-lending-attack-tree.md](attack-trees/nft-lending-attack-tree.md)
+- Patterns: [nft-patterns.md](patterns/nft-patterns.md), [oracle-patterns.md](patterns/oracle-patterns.md)
+- Related: [lending-pool-patterns.md](patterns/lending-pool-patterns.md)
+
+---
+
 ## Quick Search
 
 **For Auditors:**
@@ -209,5 +312,5 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 
 ---
 
-**Last Updated:** 2024
-**Version:** 1.0
+**Last Updated:** 2025
+**Version:** 2.0 (Batch 2 Complete)
