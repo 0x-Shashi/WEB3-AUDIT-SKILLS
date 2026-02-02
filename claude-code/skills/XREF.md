@@ -101,6 +101,50 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Malicious NFT Contract | Critical | [nft-patterns.md#malicious-contract](patterns/nft-patterns.md) | - | [nft-tree [D2]](attack-trees/nft-lending-attack-tree.md) | - | Immediate |
 | NFT Liquidation Front-Running | Medium | [mev-patterns.md#nft-liquidation](patterns/mev-patterns.md) | - | [nft-tree [C1]](attack-trees/nft-lending-attack-tree.md) | - | Medium |
 | NFT Pool Drain | Critical | [nft-patterns.md#pool-drain](patterns/nft-patterns.md) | - | [nft-tree [F1]](attack-trees/nft-lending-attack-tree.md) | - | Immediate |
+| **LIQUID STAKING SPECIFIC** |
+| Exchange Rate Oracle Attack | Critical | [oracle-patterns.md#exchange-rate](patterns/oracle-patterns.md) | - | [liquid-staking-tree [A1]](attack-trees/liquid-staking-attack-tree.md) | Lido 2023 (caught) | Immediate |
+| Withdrawal Queue Manipulation | High | [withdrawal-patterns.md#queue](patterns/withdrawal-patterns.md) | - | [liquid-staking-tree [B1]](attack-trees/liquid-staking-attack-tree.md) | stETH Depeg 2022 | High |
+| Malicious Validator Registration | Critical | [staking-patterns.md#validator-registration](patterns/staking-patterns.md) | - | [liquid-staking-tree [C1]](attack-trees/liquid-staking-attack-tree.md) | - | Immediate |
+| Slashing Event Exploitation | High | [staking-patterns.md#slashing](patterns/staking-patterns.md) | - | [liquid-staking-tree [C2]](attack-trees/liquid-staking-attack-tree.md) | - | High |
+| Rebasing Token Accounting | Critical | [token-patterns.md#rebasing](patterns/token-patterns.md) | - | [liquid-staking-tree [D1]](attack-trees/liquid-staking-attack-tree.md) | Multiple | Immediate |
+| Reward Timing Manipulation | Medium | [staking-patterns.md#reward-timing](patterns/staking-patterns.md) | - | [liquid-staking-tree [E1]](attack-trees/liquid-staking-attack-tree.md) | - | Medium |
+| Restaking Double-Count | Critical | [restaking-patterns.md#double-count](patterns/restaking-patterns.md) | - | [liquid-staking-tree [G3]](attack-trees/liquid-staking-attack-tree.md) | - | Immediate |
+| **PERPETUALS SPECIFIC** |
+| Index Price Manipulation | Critical | [oracle-patterns.md#index-price](patterns/oracle-patterns.md) | - | [perpetuals-tree [A1]](attack-trees/perpetuals-attack-tree.md) | Mango Markets 2022 ($114M) | Immediate |
+| Funding Rate Manipulation | High | [perpetuals-patterns.md#funding-manipulation](patterns/perpetuals-patterns.md) | - | [perpetuals-tree [B1]](attack-trees/perpetuals-attack-tree.md) | Perp Protocol 2022 ($1M+) | High |
+| Forced Liquidation Attack | Critical | [liquidation-patterns.md#forced](patterns/liquidation-patterns.md) | - | [perpetuals-tree [C1]](attack-trees/perpetuals-attack-tree.md) | Mango Markets 2022 | Immediate |
+| Liquidation Cascade | Critical | [liquidation-patterns.md#cascade](patterns/liquidation-patterns.md) | - | [perpetuals-tree [C2]](attack-trees/perpetuals-attack-tree.md) | - | Immediate |
+| Position Size Manipulation | Critical | [perpetuals-patterns.md#position-limits](patterns/perpetuals-patterns.md) | - | [perpetuals-tree [D1]](attack-trees/perpetuals-attack-tree.md) | Mango Markets 2022 | Immediate |
+| LP Token Extraction | Critical | [perpetuals-patterns.md#lp-extraction](patterns/perpetuals-patterns.md) | - | [perpetuals-tree [E2]](attack-trees/perpetuals-attack-tree.md) | GMX 2022 ($565K) | Immediate |
+| Insurance Fund Drain | Critical | [perpetuals-patterns.md#insurance](patterns/perpetuals-patterns.md) | - | [perpetuals-tree [G1]](attack-trees/perpetuals-attack-tree.md) | - | Immediate |
+| **OPTIONS SPECIFIC** |
+| Underlying Price Manipulation | Critical | [oracle-patterns.md#spot-price](patterns/oracle-patterns.md) | - | [options-tree [A1]](attack-trees/options-attack-tree.md) | - | Immediate |
+| IV Manipulation | High | [options-patterns.md#iv-manipulation](patterns/options-patterns.md) | - | [options-tree [A2]](attack-trees/options-attack-tree.md) | Hegic 2021 | High |
+| Settlement Price Manipulation | Critical | [options-patterns.md#settlement-price](patterns/options-patterns.md) | - | [options-tree [B2]](attack-trees/options-attack-tree.md) | - | Immediate |
+| Vault Share Inflation | Critical | [vault-patterns.md#share-inflation](patterns/vault-patterns.md) | - | [options-tree [C1]](attack-trees/options-attack-tree.md) | - | Immediate |
+| Exercise Timing Attack | High | [options-patterns.md#exercise-timing](patterns/options-patterns.md) | - | [options-tree [B1]](attack-trees/options-attack-tree.md) | Opyn 2020 ($371K) | High |
+| Strategy Gaming (DOV) | High | [options-patterns.md#strategy-gaming](patterns/options-patterns.md) | - | [options-tree [C5]](attack-trees/options-attack-tree.md) | Ribbon 2022 | High |
+| Gamma Squeeze | High | [options-patterns.md#gamma-squeeze](patterns/options-patterns.md) | - | [options-tree [D2]](attack-trees/options-attack-tree.md) | - | High |
+| **DEX-SPECIFIC (EXPANDED)** |
+| Incorrect Invariant Calculation | Critical | [amm-patterns.md#invariant](patterns/amm-patterns.md) | [dex-anti-patterns.md#DEX-AP-01](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [C2]](attack-trees/dex-attack-tree.md) | Uranium ($57M), Belt ($6.2M) | Immediate |
+| Swap Reentrancy | Critical | [reentrancy-patterns.md#swap](patterns/reentrancy-patterns.md) | [dex-anti-patterns.md#DEX-AP-02](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [B2]](attack-trees/dex-attack-tree.md) | Curve (read-only) | Immediate |
+| No Slippage Protection | Critical | [slippage-patterns.md#protection](patterns/slippage-patterns.md) | [dex-anti-patterns.md#DEX-AP-09](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [C1]](attack-trees/dex-attack-tree.md) | Constant MEV | Immediate |
+| Sandwich Vulnerability | Critical | [mev-patterns.md#sandwich](patterns/mev-patterns.md) | [dex-anti-patterns.md#DEX-AP-17](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [C1]](attack-trees/dex-attack-tree.md) | Constant MEV | High |
+| JIT Liquidity Attack | High | [mev-patterns.md#jit-liquidity](patterns/mev-patterns.md) | [dex-anti-patterns.md#DEX-AP-18](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [D2]](attack-trees/dex-attack-tree.md) | - | High |
+| LP Share Inflation | Critical | [vault-patterns.md#first-depositor](patterns/vault-patterns.md) | [dex-anti-patterns.md#DEX-AP-24](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [B1]](attack-trees/dex-attack-tree.md) | Multiple | Immediate |
+| Spot Price Oracle | Critical | [oracle-patterns.md#spot-price](patterns/oracle-patterns.md) | [dex-anti-patterns.md#DEX-AP-37](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [A1]](attack-trees/dex-attack-tree.md) | Dozens | Immediate |
+| Router Auth Bypass | Critical | [access-control-patterns.md#router](patterns/access-control-patterns.md) | [dex-anti-patterns.md#DEX-AP-43](anti-patterns/dex-specific-anti-patterns.md) | - | - | Immediate |
+| **BRIDGE-SPECIFIC (EXPANDED)** |
+| Missing Signature Verification | Critical | [signature-patterns.md#verification](patterns/signature-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-01](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [A6]](attack-trees/bridge-attack-tree.md) | Ronin ($625M), Wormhole ($320M) | Immediate |
+| Signature Replay | Critical | [signature-patterns.md#replay](patterns/signature-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-02](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [A1]](attack-trees/bridge-attack-tree.md) | Multiple | Immediate |
+| Cross-Chain Replay | Critical | [signature-patterns.md#chain-id](patterns/signature-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-03](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [A2]](attack-trees/bridge-attack-tree.md) | Nomad ($190M) | Immediate |
+| Insufficient Threshold | Critical | [bridge-patterns.md#validator-threshold](patterns/bridge-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-04](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [A4]](attack-trees/bridge-attack-tree.md) | - | Immediate |
+| Arbitrary Message Execution | Critical | [bridge-patterns.md#message-validation](patterns/bridge-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-09](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [D1]](attack-trees/bridge-attack-tree.md) | - | Immediate |
+| Source Chain Spoofing | Critical | [bridge-patterns.md#chain-verification](patterns/bridge-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-12](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [B]](attack-trees/bridge-attack-tree.md) | - | Immediate |
+| Insufficient Confirmations | Critical | [bridge-patterns.md#confirmation-depth](patterns/bridge-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-23](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [B1]](attack-trees/bridge-attack-tree.md) | - | Immediate |
+| No Fraud Proofs (Optimistic) | Critical | [bridge-patterns.md#fraud-proofs](patterns/bridge-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-25](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [B3]](attack-trees/bridge-attack-tree.md) | - | Immediate |
+| Mint Without Lock Verification | Critical | [bridge-patterns.md#mint-verification](patterns/bridge-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-29](anti-patterns/bridge-specific-anti-patterns.md) | [bridge-tree [C1]](attack-trees/bridge-attack-tree.md) | - | Immediate |
+| First Depositor Attack (Bridge LP) | Critical | [vault-patterns.md#first-depositor](patterns/vault-patterns.md) | [bridge-anti-patterns.md#BRIDGE-AP-40](anti-patterns/bridge-specific-anti-patterns.md) | - | - | Immediate |
 | **TOKEN HANDLING** |
 | Fee-on-Transfer Token | High | [token-patterns.md#fee-on-transfer](patterns/token-patterns.md) | [token-anti-patterns.md#1](anti-patterns/token-anti-patterns.md) | [dex-tree [C3]](attack-trees/dex-attack-tree.md) | Balancer 2021 ($500K+) | High |
 | Rebasing Token Accounting | Critical | [token-patterns.md#rebasing](patterns/token-patterns.md) | [token-anti-patterns.md#2](anti-patterns/token-anti-patterns.md) | - | Rari 2021 ($11M partial) | Immediate |
@@ -281,6 +325,103 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - Attack Tree: [nft-lending-attack-tree.md](attack-trees/nft-lending-attack-tree.md)
 - Patterns: [nft-patterns.md](patterns/nft-patterns.md), [oracle-patterns.md](patterns/oracle-patterns.md)
 - Related: [lending-pool-patterns.md](patterns/lending-pool-patterns.md)
+
+---
+
+### Liquid Staking (NEW)
+
+**Critical Vulnerabilities:**
+- Exchange rate oracle manipulation
+- Withdrawal queue manipulation/DoS
+- Malicious validator registration
+- Rebasing token accounting errors
+- Slashing event exploitation
+- Restaking double-count risks
+
+**Primary References:**
+- Attack Tree: [liquid-staking-attack-tree.md](attack-trees/liquid-staking-attack-tree.md)
+- Patterns: [staking-patterns.md](patterns/staking-patterns.md), [oracle-patterns.md](patterns/oracle-patterns.md)
+- Anti-Patterns: [token-anti-patterns.md](anti-patterns/token-anti-patterns.md)
+- Related: [governance-patterns.md](patterns/governance-patterns.md)
+
+---
+
+### Perpetuals (NEW)
+
+**Critical Vulnerabilities:**
+- Index/mark price manipulation
+- Funding rate manipulation
+- Forced liquidation attacks
+- Liquidation cascade
+- Position size manipulation
+- LP token extraction
+- Insurance fund drain
+
+**Primary References:**
+- Attack Tree: [perpetuals-attack-tree.md](attack-trees/perpetuals-attack-tree.md)
+- Patterns: [perpetuals-patterns.md](patterns/perpetuals-patterns.md), [liquidation-patterns.md](patterns/liquidation-patterns.md)
+- Anti-Patterns: [oracle-anti-patterns.md](anti-patterns/oracle-anti-patterns.md)
+- Related: [dex-patterns.md](patterns/dex-patterns.md)
+
+---
+
+### Options (NEW)
+
+**Critical Vulnerabilities:**
+- Underlying/settlement price manipulation
+- IV manipulation
+- Vault share inflation (DOVs)
+- Exercise timing attacks
+- Strategy gaming (predictable vaults)
+- Gamma squeeze attacks
+- Collateral ratio manipulation
+
+**Primary References:**
+- Attack Tree: [options-attack-tree.md](attack-trees/options-attack-tree.md)
+- Patterns: [options-patterns.md](patterns/options-patterns.md), [vault-patterns.md](patterns/vault-patterns.md)
+- Anti-Patterns: [oracle-anti-patterns.md](anti-patterns/oracle-anti-patterns.md)
+- Related: [perpetuals-patterns.md](patterns/perpetuals-patterns.md)
+
+---
+
+### DEX/AMM (EXPANDED)
+
+**Critical Vulnerabilities:**
+- Spot price oracle (use TWAP)
+- First LP inflation attack
+- Invariant calculation errors
+- Swap reentrancy
+- No slippage protection
+- Sandwich/MEV attacks
+- JIT liquidity attacks
+- Router authorization bypass
+
+**Primary References:**
+- Attack Tree: [dex-attack-tree.md](attack-trees/dex-attack-tree.md)
+- Patterns: [dex-patterns.md](patterns/dex-patterns.md), [amm-patterns.md](patterns/amm-patterns.md)
+- Anti-Patterns: [dex-specific-anti-patterns.md](anti-patterns/dex-specific-anti-patterns.md) (47 patterns)
+- Related: [mev-patterns.md](patterns/mev-patterns.md)
+
+---
+
+### Bridges (EXPANDED)
+
+**Critical Vulnerabilities:**
+- Missing/improper signature verification
+- Signature replay (same-chain & cross-chain)
+- Insufficient validator threshold
+- Arbitrary message execution
+- Source chain spoofing
+- Insufficient confirmations
+- No fraud proofs (optimistic bridges)
+- Mint without lock verification
+- First depositor attack (bridge LPs)
+
+**Primary References:**
+- Attack Tree: [bridge-attack-tree.md](attack-trees/bridge-attack-tree.md)
+- Patterns: [bridge-patterns.md](patterns/bridge-patterns.md), [signature-patterns.md](patterns/signature-patterns.md)
+- Anti-Patterns: [bridge-specific-anti-patterns.md](anti-patterns/bridge-specific-anti-patterns.md) (45 patterns)
+- Related: [access-control-patterns.md](patterns/access-control-patterns.md)
 
 ---
 
