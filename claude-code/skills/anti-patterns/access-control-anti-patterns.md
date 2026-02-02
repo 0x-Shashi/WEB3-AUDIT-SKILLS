@@ -19,6 +19,8 @@ Examples of **BAD** code patterns for access control. These are real mistakes fo
 
 ## Anti-Pattern #1: Unprotected Initialize
 
+> **Severity: Critical** | **Estimated Loss: $10M-$200M+** | **Fix Priority: Immediate**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Anyone can initialize
@@ -83,6 +85,8 @@ function initialize(address _owner) external initializer {
 
 ## Anti-Pattern #2: Missing Function Modifiers
 
+> **Severity: Critical** | **Estimated Loss: $10M-$600M+** | **Fix Priority: Immediate**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Missing onlyOwner
@@ -140,6 +144,8 @@ contract TokenVault is Ownable {
 
 ## Anti-Pattern #3: Using tx.origin for Auth
 
+> **Severity: High** | **Estimated Loss: $1M-$15M** | **Fix Priority: High**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: tx.origin instead of msg.sender
@@ -196,6 +202,8 @@ function withdraw(uint amount) external {
 ---
 
 ## Anti-Pattern #4: Inconsistent Access Control
+
+> **Severity: Medium** | **Estimated Loss: $100K-$5M** | **Fix Priority: Medium**
 
 ### BAD CODE
 ```solidity
@@ -259,6 +267,8 @@ contract Protocol is AccessControl {
 ---
 
 ## Anti-Pattern #5: Hardcoded Addresses
+
+> **Severity: High** | **Estimated Loss: $100M-$625M+** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity
@@ -330,6 +340,8 @@ contract Bridge is Ownable {
 
 ## Anti-Pattern #6: Centralized Admin with No Timelock
 
+> **Severity: High** | **Estimated Loss: Rug Pull Risk** | **Fix Priority: High**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Instant admin actions
@@ -393,6 +405,8 @@ contract Vault is Ownable {
 ---
 
 ## Anti-Pattern #7: Modifier Only Checks One Condition
+
+> **Severity: Critical** | **Estimated Loss: $1M-$50M** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity

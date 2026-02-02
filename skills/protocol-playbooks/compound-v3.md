@@ -10,6 +10,8 @@ last_updated: 2026-01-31
 
 # Compound V3 (Comet) Security Playbook
 
+> **Attack Surface:** See [attack-trees/lending-attack-tree.md](../attack-trees/lending-attack-tree.md)
+
 ## Protocol Overview
 
 Compound V3 (Comet) is a complete redesign focusing on a single borrowable asset per market (e.g., USDC) with multiple collateral assets. This simplifies risk management but introduces new considerations.

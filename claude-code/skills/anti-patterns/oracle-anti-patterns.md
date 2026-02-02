@@ -19,6 +19,8 @@ Examples of **BAD** code patterns for oracle usage. These are real mistakes foun
 
 ## Anti-Pattern #1: Using Spot Price Directly
 
+> **Severity: Critical** | **Estimated Loss: $10M-$150M+** | **Fix Priority: Immediate**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Using DEX spot price
@@ -85,6 +87,8 @@ function getCollateralValue(address token, uint amount) public view returns (uin
 ---
 
 ## Anti-Pattern #2: No Staleness Check
+
+> **Severity: High** | **Estimated Loss: $1M-$50M** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity
@@ -160,7 +164,7 @@ function getPrice(address token) public view returns (uint) {
 ---
 
 ## Anti-Pattern #3: No Zero/Negative Price Handling
-
+> **Severity: Critical** | **Estimated Loss: $10M-$100M+** | **Fix Priority: Immediate**
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: No zero or negative price check
@@ -247,6 +251,8 @@ function calculateCollateral(uint amount) public view returns (uint) {
 
 ## Anti-Pattern #4: Single Oracle, No Fallback
 
+> **Severity: Medium** | **Estimated Loss: $100K-$10M** | **Fix Priority: Medium**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Single point of failure
@@ -328,6 +334,8 @@ contract ResilientOracle {
 ---
 
 ## Anti-Pattern #5: Using balanceOf for LP Price
+
+> **Severity: Critical** | **Estimated Loss: $5M-$100M+** | **Fix Priority: Immediate**
 
 ### BAD CODE
 ```solidity
@@ -419,6 +427,8 @@ function getFairLPPrice(address lpToken) public view returns (uint) {
 
 ## Anti-Pattern #6: Trusting tx.origin for Oracle
 
+> **Severity: Medium** | **Estimated Loss: $100K-$5M** | **Fix Priority: Medium**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Using tx.origin for auth
@@ -475,6 +485,8 @@ contract SecureOracle {
 ---
 
 ## Anti-Pattern #7: No Deviation Check (Multi-Oracle)
+
+> **Severity: High** | **Estimated Loss: $1M-$50M** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity

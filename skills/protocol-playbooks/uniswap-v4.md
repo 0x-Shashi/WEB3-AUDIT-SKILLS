@@ -10,6 +10,8 @@ last_updated: 2026-01-31
 
 # Uniswap V4 Security Playbook
 
+> **Attack Surface:** See [attack-trees/dex-attack-tree.md](../attack-trees/dex-attack-tree.md)
+
 ## Protocol Overview
 
 Uniswap V4 introduces revolutionary changes: singleton architecture, hooks, and flash accounting. These changes require entirely new security considerations.

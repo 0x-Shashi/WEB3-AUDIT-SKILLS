@@ -16,6 +16,8 @@ last_updated: 2026-01-31
 
 # Uniswap V3 Secure Integration Guide
 
+> **Attack Surface:** See [attack-trees/dex-attack-tree.md](../attack-trees/dex-attack-tree.md)
+
 ## Summary
 Guidance for safe swaps, liquidity positions, and oracle usage when integrating Uniswap V3.
 

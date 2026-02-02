@@ -10,6 +10,8 @@ last_updated: 2026-01-31
 
 # GMX Security Playbook
 
+> **Attack Surface:** See [attack-trees/perpetuals-attack-tree.md](../attack-trees/perpetuals-attack-tree.md)
+
 ## Protocol Overview
 
 GMX is a decentralized perpetual exchange offering up to 50x leverage. It uses a unique model with a multi-asset liquidity pool (GLP) and oracle-based pricing.

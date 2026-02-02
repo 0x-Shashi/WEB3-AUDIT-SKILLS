@@ -10,6 +10,8 @@ last_updated: 2026-01-31
 
 # Morpho Protocol Security Playbook
 
+> **Attack Surface:** See [attack-trees/lending-attack-tree.md](../attack-trees/lending-attack-tree.md)
+
 ## Protocol Overview
 
 Morpho is a lending optimizer that sits on top of Aave and Compound, offering improved rates through peer-to-peer matching. Morpho Blue is their newer isolated markets protocol.

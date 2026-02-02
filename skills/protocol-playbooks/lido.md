@@ -16,6 +16,8 @@ last_updated: 2026-01-31
 
 # Lido Secure Integration Guide
 
+> **Attack Surface:** See [attack-trees/liquid-staking-attack-tree.md](../attack-trees/liquid-staking-attack-tree.md)
+
 ## Summary
 Guidance for integrating staking and withdrawal flows with Lido.
 

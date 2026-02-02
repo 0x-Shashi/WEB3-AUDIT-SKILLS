@@ -10,6 +10,8 @@ last_updated: 2026-01-31
 
 # Chainlink Integration Playbook
 
+> **Related Patterns:** See [patterns/oracle-patterns.md](../patterns/oracle-patterns.md) | [anti-patterns/oracle-anti-patterns.md](../anti-patterns/oracle-anti-patterns.md)
+
 Comprehensive guide for integrating with Chainlink services - the most widely used oracle network.
 
 ---

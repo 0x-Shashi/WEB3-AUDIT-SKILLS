@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # Ethena Integration Playbook
 
+> **Attack Surface:** See [attack-trees/stablecoin-attack-tree.md](../attack-trees/stablecoin-attack-tree.md)
+
 ## Protocol Overview
 
 ```

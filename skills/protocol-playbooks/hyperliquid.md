@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # Hyperliquid Integration Playbook
 
+> **Attack Surface:** See [attack-trees/perpetuals-attack-tree.md](../attack-trees/perpetuals-attack-tree.md)
+
 ## Protocol Overview
 
 ```

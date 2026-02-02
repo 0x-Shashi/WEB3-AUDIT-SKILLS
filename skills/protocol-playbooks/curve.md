@@ -10,6 +10,8 @@ last_updated: 2026-01-31
 
 # Curve Finance Security Playbook
 
+> **Attack Surface:** See [attack-trees/dex-attack-tree.md](../attack-trees/dex-attack-tree.md) | [attack-trees/stablecoin-attack-tree.md](../attack-trees/stablecoin-attack-tree.md)
+
 ## Protocol Overview
 
 Curve Finance specializes in stablecoin and pegged asset swaps using the StableSwap invariant. It's critical infrastructure for DeFi with complex math and multiple pool types.

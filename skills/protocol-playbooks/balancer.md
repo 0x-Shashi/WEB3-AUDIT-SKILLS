@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # Balancer Integration Playbook
 
+> **Attack Surface:** See [attack-trees/dex-attack-tree.md](../attack-trees/dex-attack-tree.md)
+
 Comprehensive guide for integrating with and auditing Balancer V2 - the flexible multi-token AMM.
 
 ---

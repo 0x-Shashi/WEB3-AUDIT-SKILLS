@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # MakerDAO Integration Playbook
 
+> **Attack Surface:** See [attack-trees/stablecoin-attack-tree.md](../attack-trees/stablecoin-attack-tree.md) | [attack-trees/governance-attack-tree.md](../attack-trees/governance-attack-tree.md)
+
 Comprehensive guide for integrating with and auditing MakerDAO (Maker Protocol) - the largest CDP-based stablecoin system.
 
 ---

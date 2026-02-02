@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # Pendle Integration Playbook
 
+> **Attack Surface:** See [attack-trees/vault-attack-tree.md](../attack-trees/vault-attack-tree.md) | [attack-trees/dex-attack-tree.md](../attack-trees/dex-attack-tree.md)
+
 Comprehensive guide for integrating with Pendle V2 - the yield tokenization and trading protocol.
 
 ---

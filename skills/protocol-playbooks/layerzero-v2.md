@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # LayerZero V2 Integration Playbook
 
+> **Attack Surface:** See [attack-trees/bridge-attack-tree.md](../attack-trees/bridge-attack-tree.md)
+
 ## Protocol Overview
 
 ```

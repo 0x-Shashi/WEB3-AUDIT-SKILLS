@@ -20,6 +20,8 @@ Examples of **BAD** code patterns for reentrancy protection. These are real mist
 
 ## Anti-Pattern #1: State Update After External Call
 
+> **Severity: Critical** | **Estimated Loss: $1M-$60M+** | **Fix Priority: Immediate**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Classic reentrancy
@@ -91,6 +93,8 @@ function withdraw(uint amount) external {
 
 ## Anti-Pattern #2: Missing nonReentrant on Critical Functions
 
+> **Severity: Critical** | **Estimated Loss: $1M-$30M** | **Fix Priority: Immediate**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: No reentrancy guard
@@ -161,6 +165,8 @@ contract LendingPool is ReentrancyGuard {
 ---
 
 ## Anti-Pattern #3: Read-Only Reentrancy
+
+> **Severity: High** | **Estimated Loss: $500K-$10M** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity
@@ -247,6 +253,8 @@ contract LPVault is ReentrancyGuard {
 
 ## Anti-Pattern #4: ERC777 Callback Reentrancy
 
+> **Severity: Critical** | **Estimated Loss: $5M-$25M+** | **Fix Priority: Immediate**
+
 ### BAD CODE
 ```solidity
 // ❌ VULNERABLE: Accepting ERC777 without protection
@@ -313,6 +321,8 @@ contract Vault is ReentrancyGuard {
 ---
 
 ## Anti-Pattern #5: Reentrancy via Callback Parameter
+
+> **Severity: High** | **Estimated Loss: $1M-$20M** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity
@@ -382,6 +392,8 @@ contract FlashLoan is ReentrancyGuard {
 ---
 
 ## Anti-Pattern #6: Delegatecall Reentrancy
+
+> **Severity: Critical** | **Estimated Loss: $5M-$50M** | **Fix Priority: High**
 
 ### BAD CODE
 ```solidity
@@ -458,6 +470,8 @@ contract Implementation is ReentrancyGuard {
 ---
 
 ## Anti-Pattern #7: Ignoring Token Transfer Return Value
+
+> **Severity: Medium** | **Estimated Loss: $100K-$5M** | **Fix Priority: Medium**
 
 ### BAD CODE
 ```solidity

@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # Fluid (Instadapp) Integration Playbook
 
+> **Attack Surface:** See [attack-trees/lending-attack-tree.md](../attack-trees/lending-attack-tree.md) | [attack-trees/dex-attack-tree.md](../attack-trees/dex-attack-tree.md)
+
 ## Protocol Overview
 
 ```

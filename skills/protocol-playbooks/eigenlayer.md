@@ -11,6 +11,8 @@ last_updated: 2026-01-31
 
 # EigenLayer Integration Playbook
 
+> **Attack Surface:** See [attack-trees/liquid-staking-attack-tree.md](../attack-trees/liquid-staking-attack-tree.md)
+
 Comprehensive guide for integrating with EigenLayer - the restaking protocol that extends Ethereum security.
 
 ---

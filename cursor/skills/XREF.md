@@ -4,6 +4,54 @@ Master lookup table mapping vulnerabilities → patterns → exploits → fixes.
 
 ---
 
+## Table of Contents
+
+- [How to Use XREF](#how-to-use-xref)
+- [Quick Lookup Tables](#quick-lookup-tables)
+  - [By Vulnerability Type](#by-vulnerability-type)
+    - Oracle Vulnerabilities
+    - Access Control
+    - Reentrancy
+    - Lending Specific
+    - DEX/AMM Specific
+    - Bridge Specific
+    - Vault Specific
+    - Governance Specific
+    - Stablecoin Specific
+    - NFT Lending Specific
+    - Liquid Staking Specific
+    - Perpetuals Specific
+    - Options Specific
+    - Intent-Based DEX Specific
+    - Insurance Protocol Specific
+    - Math/Precision Specific
+    - Signature/Cryptography Specific
+    - Token Handling
+    - Flash Loan Attacks
+- [By Real Exploit](#by-real-exploit)
+  - 2023-2024 Exploits
+  - 2022 Exploits
+  - 2021 Exploits
+  - 2020 Exploits
+  - 2016-2017 Exploits
+- [By Protocol Type](#by-protocol-type)
+  - [Lending Protocols](#lending-protocols)
+  - [DEX/AMM](#dexamm)
+  - [Bridges](#bridges)
+  - [Vaults/Yield Aggregators](#vaultsyield-aggregators)
+  - [Governance/DAOs](#governancedaos)
+  - [Stablecoins](#stablecoins)
+  - [NFT Lending](#nft-lending)
+  - [Liquid Staking](#liquid-staking-new)
+  - [Perpetuals](#perpetuals-new)
+  - [Options](#options-new)
+  - [Intent-Based DEX](#intent-based-dex-new)
+  - [Insurance Protocols](#insurance-protocols-new)
+- [Quick Search](#quick-search)
+- [Navigation Tips](#navigation-tips)
+
+---
+
 ## How to Use XREF
 
 This file is your **quick navigation tool**. When you encounter a vulnerability, exploit, or pattern name:

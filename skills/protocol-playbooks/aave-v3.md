@@ -16,6 +16,8 @@ last_updated: 2026-01-31
 
 # Aave V3 Secure Integration Guide
 
+> **Attack Surface:** See [attack-trees/lending-attack-tree.md](../attack-trees/lending-attack-tree.md)
+
 ## Summary
 Integration guidance for deposit, borrow, and liquidation flows using Aave V3.
 
