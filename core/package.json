@@ -1,0 +1,38 @@
+{
+  "name": "@web3-audit/core",
+  "version": "1.0.0",
+  "description": "Core intelligence module for Web3 Audit Skills - MCP server for real-time pattern matching",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "web3-audit": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test tests/*.test.js",
+    "mcp": "node src/mcp-server.js"
+  },
+  "keywords": [
+    "web3",
+    "audit",
+    "security",
+    "mcp",
+    "ai",
+    "smart-contracts",
+    "solidity"
+  ],
+  "author": "0x-Shashi",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0x-Shashi/WEB3-AUDIT-SKILLS.git"
+  }
+}
