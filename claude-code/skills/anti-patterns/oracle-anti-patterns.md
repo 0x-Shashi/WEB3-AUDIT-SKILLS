@@ -64,6 +64,24 @@ function exploit() external {
 }
 ```
 
+### Correct Pattern
+```solidity
+// ✅ GOOD: Use TWAP oracle with manipulation resistance
+function getCollateralValue(address token, uint amount) public view returns (uint) {
+    // Option 1: Use Chainlink oracle (external, manipulation-resistant)
+    AggregatorV3Interface priceFeed = priceFeeds[token];
+    (, int price,,,) = priceFeed.latestRoundData();
+    require(price > 0, "Invalid price");
+    return amount * uint(price) / 1e8;
+    
+    // Option 2: Use Uniswap V3 TWAP (time-weighted average)
+    // uint32 twapInterval = 1800; // 30 minutes
+    // (int24 tick,) = OracleLibrary.consult(pool, twapInterval);
+    // uint256 price = OracleLibrary.getQuoteAtTick(tick, amount, token, WETH);
+    // return price;
+}
+```
+
 ---
 
 ## Anti-Pattern #2: No Staleness Check
@@ -108,6 +126,34 @@ function exploit() external {
     lending.borrow(USDC, 7000e6); // 70% LTV of $10,000
     
     // 4. Default - protocol loses $6,000
+}
+```
+
+### Correct Pattern
+```solidity
+// ✅ GOOD: Full staleness validation
+function getPrice(address token) public view returns (uint) {
+    AggregatorV3Interface priceFeed = priceFeeds[token];
+    
+    (
+        uint80 roundId,
+        int price,
+        ,
+        uint updatedAt,
+        uint80 answeredInRound
+    ) = priceFeed.latestRoundData();
+    
+    // Check staleness - price must be recent
+    require(updatedAt > 0, "Round not complete");
+    require(block.timestamp - updatedAt < MAX_STALENESS, "Stale price");
+    
+    // Check round completeness
+    require(answeredInRound >= roundId, "Stale round");
+    
+    // Check price validity
+    require(price > 0, "Invalid price");
+    
+    return uint(price);
 }
 ```
 
@@ -173,6 +219,30 @@ function exploitNegative() external {
 }
 ```
 
+### Correct Pattern
+```solidity
+// ✅ GOOD: Full price validation with bounds
+function getPrice(address token) public view returns (uint) {
+    (, int price,,,) = priceFeeds[token].latestRoundData();
+    
+    // Check for zero price
+    require(price > 0, "Zero price");
+    
+    // Check for reasonable bounds (e.g., $0.0001 to $1M per token)
+    require(uint(price) >= MIN_PRICE, "Price too low");
+    require(uint(price) <= MAX_PRICE, "Price too high");
+    
+    return uint(price);
+}
+
+function calculateCollateral(uint amount) public view returns (uint) {
+    uint price = getPrice(collateralToken);
+    
+    // Safe division - price guaranteed > 0 by getPrice()
+    return amount * 1e8 / price; // Assuming 8 decimal price feed
+}
+```
+
 ---
 
 ## Anti-Pattern #4: Single Oracle, No Fallback
@@ -213,6 +283,45 @@ function exploit() external {
     // 3b. If reverts: DoS all borrows/liquidations
     
     // Either way: Protocol unusable or exploitable
+}
+```
+
+### Correct Pattern
+```solidity
+// ✅ GOOD: Multi-oracle with fallback chain
+contract ResilientOracle {
+    AggregatorV3Interface public primaryOracle;   // Chainlink
+    AggregatorV3Interface public secondaryOracle; // Band Protocol
+    address public twapPool;                       // Uniswap TWAP
+    
+    function getPrice(address token) public view returns (uint) {
+        // Try primary oracle (Chainlink)
+        (bool success1, uint price1) = _tryChainlink(token);
+        if (success1) return price1;
+        
+        // Fallback to secondary oracle
+        (bool success2, uint price2) = _trySecondaryOracle(token);
+        if (success2) return price2;
+        
+        // Last resort: TWAP oracle
+        (bool success3, uint price3) = _tryTWAP(token);
+        if (success3) return price3;
+        
+        revert("All oracles failed");
+    }
+    
+    function _tryChainlink(address token) internal view returns (bool, uint) {
+        try priceFeeds[token].latestRoundData() returns (
+            uint80 roundId, int price, , uint updatedAt, uint80 answeredInRound
+        ) {
+            if (price > 0 && 
+                block.timestamp - updatedAt < MAX_STALENESS &&
+                answeredInRound >= roundId) {
+                return (true, uint(price));
+            }
+        } catch {}
+        return (false, 0);
+    }
 }
 ```
 
@@ -272,6 +381,40 @@ function exploit() external {
 }
 ```
 
+### Correct Pattern
+```solidity
+// ✅ GOOD: Use getReserves() instead of balanceOf()
+function getLPTokenPrice(address lpToken) public view returns (uint) {
+    IUniswapV2Pair pair = IUniswapV2Pair(lpToken);
+    
+    uint totalSupply = pair.totalSupply();
+    
+    // Use getReserves() - not manipulable by donation
+    (uint reserve0, uint reserve1,) = pair.getReserves();
+    
+    uint value0 = reserve0 * getPrice(pair.token0());
+    uint value1 = reserve1 * getPrice(pair.token1());
+    
+    // Price per LP token (donation-resistant)
+    return (value0 + value1) / totalSupply;
+}
+
+// ✅ EVEN BETTER: Use Alpha Homora fair LP pricing
+function getFairLPPrice(address lpToken) public view returns (uint) {
+    IUniswapV2Pair pair = IUniswapV2Pair(lpToken);
+    (uint r0, uint r1,) = pair.getReserves();
+    
+    uint p0 = getPrice(pair.token0());
+    uint p1 = getPrice(pair.token1());
+    
+    // Fair LP pricing formula (manipulation-resistant)
+    // price = 2 * sqrt(r0 * r1 * p0 * p1) / totalSupply
+    uint sqrtK = sqrt(r0 * r1);
+    uint sqrtP = sqrt(p0 * p1);
+    return 2 * sqrtK * sqrtP / pair.totalSupply();
+}
+```
+
 ---
 
 ## Anti-Pattern #6: Trusting tx.origin for Oracle
@@ -306,6 +449,26 @@ function phishAdmin() external {
     // msg.sender = this contract (malicious)
     
     // Now use price in exploit
+}
+```
+
+### Correct Pattern
+```solidity
+// ✅ GOOD: Use msg.sender for authorization
+contract SecureOracle {
+    mapping(address => bool) public trustedCallers;
+    
+    function getPrice() external view returns (uint) {
+        // Use msg.sender - cannot be phished
+        require(trustedCallers[msg.sender], "Not trusted");
+        return _fetchPrice();
+    }
+    
+    // Or better: use AccessControl from OpenZeppelin
+    // bytes32 public constant READER_ROLE = keccak256("READER");
+    // function getPrice() external view onlyRole(READER_ROLE) returns (uint) {
+    //     return _fetchPrice();
+    // }
 }
 ```
 
