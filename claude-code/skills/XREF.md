@@ -125,6 +125,42 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Exercise Timing Attack | High | [options-patterns.md#exercise-timing](patterns/options-patterns.md) | - | [options-tree [B1]](attack-trees/options-attack-tree.md) | Opyn 2020 ($371K) | High |
 | Strategy Gaming (DOV) | High | [options-patterns.md#strategy-gaming](patterns/options-patterns.md) | - | [options-tree [C5]](attack-trees/options-attack-tree.md) | Ribbon 2022 | High |
 | Gamma Squeeze | High | [options-patterns.md#gamma-squeeze](patterns/options-patterns.md) | - | [options-tree [D2]](attack-trees/options-attack-tree.md) | - | High |
+| **INTENT-BASED DEX SPECIFIC** |
+| Solver Sandwich Attack | Critical | [intent-patterns.md#solver-mev](patterns/intent-patterns.md) | - | [intent-tree [A1]](attack-trees/intent-based-attack-tree.md) | CoW Protocol 2023 | Immediate |
+| Solver Collusion | High | [intent-patterns.md#solver-collusion](patterns/intent-patterns.md) | - | [intent-tree [A3]](attack-trees/intent-based-attack-tree.md) | - | High |
+| Intent Signature Replay | Critical | [signature-patterns.md#replay](patterns/signature-patterns.md) | [signature-anti-patterns.md#SIG-AP-16](anti-patterns/signature-anti-patterns.md) | [intent-tree [B1]](attack-trees/intent-based-attack-tree.md) | - | Immediate |
+| Permit2 Allowance Drain | Critical | [permit-patterns.md#permit2](patterns/permit-patterns.md) | [signature-anti-patterns.md#SIG-AP-24](anti-patterns/signature-anti-patterns.md) | [intent-tree [B5]](attack-trees/intent-based-attack-tree.md) | Socket Bridge 2024 ($3.3M) | Immediate |
+| Order Validation Bypass | Critical | [intent-patterns.md#order-validation](patterns/intent-patterns.md) | - | [intent-tree [C1]](attack-trees/intent-based-attack-tree.md) | - | Immediate |
+| Dutch Auction Gaming | High | [intent-patterns.md#dutch-auction](patterns/intent-patterns.md) | - | [intent-tree [E1]](attack-trees/intent-based-attack-tree.md) | - | High |
+| Cross-Chain Intent Replay | Critical | [bridge-patterns.md#cross-chain](patterns/bridge-patterns.md) | [signature-anti-patterns.md#SIG-AP-18](anti-patterns/signature-anti-patterns.md) | [intent-tree [F2]](attack-trees/intent-based-attack-tree.md) | - | Immediate |
+| **INSURANCE PROTOCOL SPECIFIC** |
+| Front-Run Exploit with Cover | Critical | [insurance-patterns.md#cover-timing](patterns/insurance-patterns.md) | - | [insurance-tree [A1]](attack-trees/insurance-attack-tree.md) | - | Immediate |
+| Cover Stacking Attack | High | [insurance-patterns.md#cover-stacking](patterns/insurance-patterns.md) | - | [insurance-tree [A4]](attack-trees/insurance-attack-tree.md) | - | High |
+| Fraudulent Claims Attack | Critical | [insurance-patterns.md#claims-validation](patterns/insurance-patterns.md) | - | [insurance-tree [B1]](attack-trees/insurance-attack-tree.md) | - | Immediate |
+| Parametric Trigger Manipulation | Critical | [oracle-patterns.md#parametric](patterns/oracle-patterns.md) | - | [insurance-tree [B5]](attack-trees/insurance-attack-tree.md) | - | Immediate |
+| Capital Pool Drain | Critical | [insurance-patterns.md#capital-pool](patterns/insurance-patterns.md) | - | [insurance-tree [C1]](attack-trees/insurance-attack-tree.md) | Cover Protocol 2020 | Immediate |
+| NXM Token Manipulation | High | [insurance-patterns.md#token-economics](patterns/insurance-patterns.md) | - | [insurance-tree [F1]](attack-trees/insurance-attack-tree.md) | - | High |
+| **VAULT-SPECIFIC (EXPANDED)** |
+| First Depositor Inflation | Critical | [vault-patterns.md#first-depositor](patterns/vault-patterns.md) | [vault-anti-patterns.md#VAULT-AP-01](anti-patterns/vault-specific-anti-patterns.md) | [vault-tree [A1]](attack-trees/vault-attack-tree.md) | Yearn 2023 ($11M) | Immediate |
+| Rounding Direction Exploit | High | [erc4626-patterns.md#rounding](patterns/erc4626-patterns.md) | [vault-anti-patterns.md#VAULT-AP-02](anti-patterns/vault-specific-anti-patterns.md) | [vault-tree [A3]](attack-trees/vault-attack-tree.md) | - | High |
+| Harvest Sandwich Attack | Critical | [mev-patterns.md#harvest](patterns/mev-patterns.md) | [vault-anti-patterns.md#VAULT-AP-17](anti-patterns/vault-specific-anti-patterns.md) | [vault-tree [C2]](attack-trees/vault-attack-tree.md) | - | Immediate |
+| Fee-on-Transfer Vault Accounting | High | [token-patterns.md#fee-on-transfer](patterns/token-patterns.md) | [vault-anti-patterns.md#VAULT-AP-14](anti-patterns/vault-specific-anti-patterns.md) | - | Multiple | High |
+| Strategy Migration Vulnerability | High | [strategy-patterns.md#migration](patterns/strategy-patterns.md) | [vault-anti-patterns.md#VAULT-AP-37](anti-patterns/vault-specific-anti-patterns.md) | [vault-tree [B4]](attack-trees/vault-attack-tree.md) | - | High |
+| **MATH/PRECISION SPECIFIC** |
+| Unchecked Block Overflow | Critical | [arithmetic-patterns.md#unchecked](patterns/arithmetic-patterns.md) | [math-anti-patterns.md#MATH-AP-01](anti-patterns/math-precision-anti-patterns.md) | - | Multiple 2022-2023 | Immediate |
+| Division Before Multiplication | High | [arithmetic-patterns.md#order](patterns/arithmetic-patterns.md) | [math-anti-patterns.md#MATH-AP-17](anti-patterns/math-precision-anti-patterns.md) | - | - | High |
+| Incorrect Rounding Direction | High | [arithmetic-patterns.md#rounding](patterns/arithmetic-patterns.md) | [math-anti-patterns.md#MATH-AP-09](anti-patterns/math-precision-anti-patterns.md) | [vault-tree [A3]](attack-trees/vault-attack-tree.md) | - | High |
+| WAD/RAY Mixing | Critical | [fixed-point-patterns.md#wad-ray](patterns/fixed-point-patterns.md) | [math-anti-patterns.md#MATH-AP-25](anti-patterns/math-precision-anti-patterns.md) | - | - | Immediate |
+| Decimal Mismatch | Critical | [token-patterns.md#decimals](patterns/token-patterns.md) | [math-anti-patterns.md#MATH-AP-20](anti-patterns/math-precision-anti-patterns.md) | [bridge-tree [C5]](attack-trees/bridge-attack-tree.md) | Multiple | Immediate |
+| Type Casting Overflow | High | [arithmetic-patterns.md#casting](patterns/arithmetic-patterns.md) | [math-anti-patterns.md#MATH-AP-04](anti-patterns/math-precision-anti-patterns.md) | - | - | High |
+| **SIGNATURE/CRYPTOGRAPHY SPECIFIC** |
+| ecrecover Zero Address | Critical | [signature-patterns.md#ecrecover](patterns/signature-patterns.md) | [signature-anti-patterns.md#SIG-AP-01](anti-patterns/signature-anti-patterns.md) | - | Multiple | Immediate |
+| Signature Malleability | High | [signature-patterns.md#malleability](patterns/signature-patterns.md) | [signature-anti-patterns.md#SIG-AP-02](anti-patterns/signature-anti-patterns.md) | [bridge-tree [A3]](attack-trees/bridge-attack-tree.md) | - | High |
+| Missing EIP-712 Domain | Critical | [signature-patterns.md#eip712](patterns/signature-patterns.md) | [signature-anti-patterns.md#SIG-AP-08](anti-patterns/signature-anti-patterns.md) | - | - | Immediate |
+| Nonce Not Incremented | Critical | [signature-patterns.md#nonce](patterns/signature-patterns.md) | [signature-anti-patterns.md#SIG-AP-17](anti-patterns/signature-anti-patterns.md) | [intent-tree [B1]](attack-trees/intent-based-attack-tree.md) | - | Immediate |
+| Permit Front-Running | High | [permit-patterns.md#front-run](patterns/permit-patterns.md) | [signature-anti-patterns.md#SIG-AP-23](anti-patterns/signature-anti-patterns.md) | - | - | High |
+| Multi-Sig Threshold Bypass | Critical | [multisig-patterns.md#threshold](patterns/multisig-patterns.md) | [signature-anti-patterns.md#SIG-AP-30](anti-patterns/signature-anti-patterns.md) | - | - | Immediate |
+| No Key Rotation | Medium | [key-management-patterns.md#rotation](patterns/key-management-patterns.md) | [signature-anti-patterns.md#SIG-AP-39](anti-patterns/signature-anti-patterns.md) | - | - | Medium |
 | **DEX-SPECIFIC (EXPANDED)** |
 | Incorrect Invariant Calculation | Critical | [amm-patterns.md#invariant](patterns/amm-patterns.md) | [dex-anti-patterns.md#DEX-AP-01](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [C2]](attack-trees/dex-attack-tree.md) | Uranium ($57M), Belt ($6.2M) | Immediate |
 | Swap Reentrancy | Critical | [reentrancy-patterns.md#swap](patterns/reentrancy-patterns.md) | [dex-anti-patterns.md#DEX-AP-02](anti-patterns/dex-specific-anti-patterns.md) | [dex-tree [B2]](attack-trees/dex-attack-tree.md) | Curve (read-only) | Immediate |
@@ -384,6 +420,45 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 
 ---
 
+### Intent-Based DEX (NEW)
+
+**Critical Vulnerabilities:**
+- Solver MEV/sandwich attacks
+- Solver collusion
+- Intent signature replay
+- Permit2 allowance drain
+- Order validation bypass
+- Dutch auction gaming
+- Cross-chain intent replay
+- Settlement layer manipulation
+
+**Primary References:**
+- Attack Tree: [intent-based-attack-tree.md](attack-trees/intent-based-attack-tree.md)
+- Patterns: [intent-patterns.md](patterns/intent-patterns.md), [permit-patterns.md](patterns/permit-patterns.md)
+- Anti-Patterns: [signature-anti-patterns.md](anti-patterns/signature-anti-patterns.md) (40 patterns)
+- Related: [dex-patterns.md](patterns/dex-patterns.md), [bridge-patterns.md](patterns/bridge-patterns.md)
+
+---
+
+### Insurance Protocols (NEW)
+
+**Critical Vulnerabilities:**
+- Front-run exploit with cover purchase
+- Cover stacking attacks
+- Fraudulent claims submission
+- Parametric trigger manipulation
+- Capital pool drain
+- Token economics manipulation
+- Oracle manipulation for claims
+
+**Primary References:**
+- Attack Tree: [insurance-attack-tree.md](attack-trees/insurance-attack-tree.md)
+- Patterns: [insurance-patterns.md](patterns/insurance-patterns.md), [oracle-patterns.md](patterns/oracle-patterns.md)
+- Anti-Patterns: [governance-anti-patterns.md](anti-patterns/governance-anti-patterns.md)
+- Related: [staking-patterns.md](patterns/staking-patterns.md)
+
+---
+
 ### DEX/AMM (EXPANDED)
 
 **Critical Vulnerabilities:**
@@ -454,4 +529,4 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 ---
 
 **Last Updated:** 2025
-**Version:** 2.0 (Batch 2 Complete)
+**Version:** 4.0 (Batch 4 Complete - Intent-Based, Insurance, Vault, Math, Signature)
