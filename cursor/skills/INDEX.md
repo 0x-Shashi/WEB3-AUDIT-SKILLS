@@ -4,6 +4,12 @@
 
 ---
 
+## CRITICAL: Load First
+
+- **[MANDATORY_OUTPUTS.md](MANDATORY_OUTPUTS.md)** - MUST include after every audit
+
+---
+
 ##  Quick Navigation
 
 - [Pattern Files](#pattern-files) - By vulnerability type
@@ -11,6 +17,11 @@
 - [Source Files](#source-files) - By audit firm
 - [Master Checklist](MASTER_CHECKLIST.md) - Prioritized checklist
 - [Statistics](STATISTICS.md) - Comprehensive stats
+- [Feedback Loop](audit-feedback/FEEDBACK_LOOP.md) - Improve from misses
+- [Community Contribution](community-feedback/COMMUNITY_FEEDBACK.md) - Share findings
+- [Audit Scoring](scoring/AUDIT_SCORING.md) - Track performance
+- [Audit Traces](templates/audit_trace.md) - Log audit steps
+- [Hooks](templates/HOOKS.md) - Workflow automation
 
 ---
 

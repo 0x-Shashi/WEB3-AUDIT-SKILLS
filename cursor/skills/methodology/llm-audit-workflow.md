@@ -593,8 +593,62 @@ See: [templates/INDEX.md](../templates/INDEX.md)
 
 ---
 
+## MANDATORY: Post-Audit Outputs
+
+**CRITICAL: After EVERY audit, you MUST include these outputs:**
+
+See: [MANDATORY_OUTPUTS.md](../MANDATORY_OUTPUTS.md)
+
+### Required Footer (copy after every audit):
+
+```markdown
+---
+
+## Audit Trace Summary
+
+| Metric | Value |
+|--------|-------|
+| Contracts Audited | [X] |
+| Functions Reviewed | [X] |
+| Vulnerability Checks | [X] |
+| Findings | [X] |
+
+---
+
+## Feedback & Improvement
+
+**Was anything missed?** Reply with:
+```
+feedback: [describe what was missed]
+```
+I'll generate a gradient to improve detection patterns.
+
+---
+
+## Contribute to Community
+
+**Found a novel pattern?** Help protect future protocols:
+```
+contribute: yes
+```
+I'll prepare an anonymized contribution template.
+
+---
+
+## Save Artifacts
+
+```
+save: [report | trace | all | none]
+```
+```
+
+---
+
 ## Related Resources
 
+- **MANDATORY OUTPUTS:** [MANDATORY_OUTPUTS.md](../MANDATORY_OUTPUTS.md) - ALWAYS include
+- **Feedback Loop:** [audit-feedback/FEEDBACK_LOOP.md](../audit-feedback/FEEDBACK_LOOP.md)
+- **Community Contribution:** [community-feedback/COMMUNITY_FEEDBACK.md](../community-feedback/COMMUNITY_FEEDBACK.md)
 - **Attack Trees:** [attack-trees/INDEX.md](../attack-trees/INDEX.md)
 - **Anti-Patterns:** [anti-patterns/INDEX.md](../anti-patterns/INDEX.md)
 - **Protocol Playbooks:** [protocol-playbooks/index.md](../protocol-playbooks/index.md)
