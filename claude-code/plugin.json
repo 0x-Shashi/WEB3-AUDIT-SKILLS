@@ -4,7 +4,7 @@
   "description": "Comprehensive Web3 smart contract security audit skills for Claude Code",
   "author": "0x-Shashi",
   "license": "MIT",
-  "skills_directory": "./skills",
+  "skills_directory": "../skills",
   "capabilities": [
     "solidity-scanning",
     "solana-scanning",

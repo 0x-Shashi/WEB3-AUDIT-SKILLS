@@ -3,9 +3,21 @@
 ## Overview
 Cursor IDE integration for the Web3 Audit Skills system. This provides comprehensive smart contract security audit capabilities directly within Cursor's AI-assisted development environment.
 
+## Architecture
+
+This folder contains **only platform-specific configuration** for Cursor. All skill content lives in the shared `skills/` directory at the repository root, which is the single source of truth for all platforms.
+
+```
+repo-root/
+  skills/          <-- shared skill files (465 files)
+  cursor/          <-- this folder (config only)
+    .cursorrules
+    README.md
+```
+
 ## Installation
 1. Clone this repository into your Cursor workspace
-2. Skills in the `skills/` directory are automatically available to Cursor's AI
+2. Skills in the shared `skills/` directory at repo root are available to Cursor's AI
 3. Reference skills via `@skills` or by describing the audit task
 
 ## Features
@@ -19,36 +31,30 @@ Cursor IDE integration for the Web3 Audit Skills system. This provides comprehen
 - **Cyfrin Findings**: Historical vulnerability pattern database
 
 ## Skill Structure
+
+All skills live in the shared `../skills/` directory:
+
 ```
-skills/
-├── SKILL.md                    # Root skill
+../skills/
+├── SKILL.md                    # Root skill definition
 ├── MASTER_CHECKLIST.md         # Full audit checklist
-├── INDEX.md                    # Skill directory
+├── INDEX.md                    # Skill navigation
+├── patterns/                   # 155 vulnerability patterns
+├── consolidated/               # Mega-reference pattern files
+├── anti-patterns/              # Bad code pattern catalog
+├── attack-trees/               # 13 protocol attack trees
+├── exploit-forensics/          # 30 real hack analyses
+├── protocol-playbooks/         # 19 integration guides
+├── checklists/                 # Protocol-type checklists
+├── methodology/                # Audit methodology guides
+├── chain-guides/               # Chain-specific security
 ├── solidity-scanner/           # EVM analysis
 ├── solana-scanner/             # Solana analysis
 ├── cairo-scanner/              # StarkNet analysis
-├── move-scanner/               # Aptos/Sui analysis
+├── move-scanner/               # Aptos/Sui Move analysis
 ├── cosmos-scanner/             # CosmWasm analysis
 ├── ton-scanner/                # TON analysis
-├── audit-context-building/     # Pre-audit context
-├── cyfrin-findings/            # Historical findings
-├── report-writer/              # Report generation
-├── token-analyzer/             # Token compatibility
-├── static-analysis/            # Tool integration
-├── variant-analysis/           # Pattern hunting
-├── differential-review/        # Diff review
-├── fix-review/                 # Fix verification
-├── spec-compliance/            # ERC/EIP compliance
-├── advanced/                   # Advanced workflows
-├── attack-chains/              # Attack references
-├── chain-guides/               # Chain security guides
-├── checklists/                 # Protocol checklists
-├── consolidated/               # Pattern references
-├── severity/                   # Severity guides
-├── methodology/                # Methodology docs
-├── patterns/                   # Vulnerability patterns
-├── sources/                    # External references
-└── commands/                   # Command definitions
+└── ...                         # 40+ skill categories total
 ```
 
 ## Usage in Cursor

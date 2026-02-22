@@ -121,15 +121,17 @@ When auditing code, provide:
 
 ## Comprehensive Knowledge Base
 
-**Always load these skill files first:**
-- `skills/INDEX.md` - Master navigation for 250+ patterns
-- `skills/patterns/vulnerability-patterns.md` - Core detection patterns
-- `skills/checklists/comprehensive-checklist.md` - 50+ audit items
+**All skill files are in the shared `skills/` directory at the repo root.**
 
-**For DeFi protocols:** `skills/patterns/defi-vulnerabilities.md`
-**For L2 deployments:** `skills/patterns/l2-security.md`
-**For bridges:** `skills/patterns/bridge-security.md`
-**For LLM workflow:** `skills/methodology/llm-audit-workflow.md`
+**Always load these skill files first:**
+- `../skills/INDEX.md` - Master navigation for 250+ patterns
+- `../skills/patterns/vulnerability-patterns.md` - Core detection patterns
+- `../skills/checklists/comprehensive-checklist.md` - 50+ audit items
+
+**For DeFi protocols:** `../skills/patterns/defi-vulnerabilities.md`
+**For L2 deployments:** `../skills/patterns/l2-security.md`
+**For bridges:** `../skills/patterns/bridge-security.md`
+**For LLM workflow:** `../skills/methodology/llm-audit-workflow.md`
 
 ## Commands
 
@@ -148,4 +150,4 @@ Respond to these commands:
 
 ### DO:
 - Start with architecture understanding
-- Load relevant skill files from skills/ folder
+- Load relevant skill files from ../skills/ folder (shared repo root)

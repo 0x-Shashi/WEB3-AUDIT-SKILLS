@@ -7,6 +7,9 @@ description: >
   Comprehensive Web3 security audit skills including attack trees,
   anti-patterns, exploit forensics, and protocol playbooks.
 
+# Skills directory - shared across all platforms (single source of truth)
+skills_directory: "../skills"
+
 # Skills available
 skills:
   - attack-trees
@@ -71,10 +74,10 @@ commands:
   audit-start:
     description: "Initialize a new audit session"
     action: |
-      cp skills/templates/audit_plan.md ./audit/
-      cp skills/templates/threat_model.md ./audit/
-      cp skills/templates/findings_report.md ./audit/
-      cp skills/templates/progress.md ./audit/
+      cp ../skills/templates/audit_plan.md ./audit/
+      cp ../skills/templates/threat_model.md ./audit/
+      cp ../skills/templates/findings_report.md ./audit/
+      cp ../skills/templates/progress.md ./audit/
       echo "Audit files created in ./audit/"
   
   audit-status:
