@@ -1,3 +1,14 @@
+---
+id: METHOD-PROMPT-EVOLUTION
+title: Prompt Evolution System
+category: methodology
+difficulty: advanced
+triggers: [improve prompts, prompt optimization, beam search, prompt A/B testing, evolve prompt, prompt versioning]
+related_skills: [methodology/ai-assisted-auditing.md, methodology/llm-audit-workflow.md]
+tags: [prompts, evolution, beam-search, optimization, meta-methodology]
+last_updated: 2026-01-31
+---
+
 # Prompt Evolution System
 
 ## Overview

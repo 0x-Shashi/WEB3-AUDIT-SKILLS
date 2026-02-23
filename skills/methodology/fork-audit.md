@@ -1,3 +1,14 @@
+---
+id: METHOD-FORK-AUDIT
+title: Fork Audit Methodology
+category: methodology
+difficulty: intermediate
+triggers: [fork audit, forked protocol, compare to original, diff analysis, Uniswap fork, Compound fork, Aave fork]
+related_skills: [methodology/upgrade-migration-patterns.md, methodology/secure-pattern-reference.md, checklists/comprehensive-checklist.md]
+tags: [fork, diff, comparison, compound, uniswap, aave]
+last_updated: 2026-01-31
+---
+
 # Fork Audit Methodology
 
 ## Overview
