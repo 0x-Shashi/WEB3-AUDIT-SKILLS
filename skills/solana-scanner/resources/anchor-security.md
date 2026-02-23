@@ -1,4 +1,38 @@
+---
+id: SOLANA-ANCHOR-SECURITY
+title: Anchor Framework Security Guide
+category: solana-scanner
+difficulty: intermediate
+triggers:
+  - anchor security
+  - anchor vulnerabilities
+  - anchor constraints
+  - anchor audit
+related_skills:
+  - solana-scanner/resources/solana-patterns.md
+  - solana-scanner/resources/account-validation.md
+  - solana-scanner/workflows/anchor-audit.md
+tags:
+  - solana
+  - anchor
+  - framework
+  - security
+last_updated: 2026-01-31
+---
+
 # Anchor Framework Security Guide
+
+> Anchor automates many Solana safety checks, but introduces its own vulnerability surface. This guide covers Anchor-specific risks beyond what the framework protects against.
+
+## What Anchor Protects Automatically
+
+| Check | How Anchor Does It | When It Fails |
+|-------|-------------------|---------------|
+| Owner validation | `Account<'info, T>` checks `owner == program_id` | Using `AccountInfo` or `UncheckedAccount` bypasses this |
+| Discriminator | 8-byte SHA256 hash checked on deser | Not checked on `UncheckedAccount` |
+| Signer validation | `Signer<'info>` type requires signature | Only if you use the `Signer` type |
+| Rent exemption | `init` ensures rent-exempt balance | Manual lamport transfers can violate |
+| Account closing | `close = receiver` zeros data + drains | Only if you use the `close` constraint |
 
 ## Common Anchor Vulnerabilities
 
@@ -51,7 +85,7 @@ pub receiver: SystemAccount<'info>,
 ```
 
 ## Anchor Security Checklist
-- [ ] All accounts have appropriate constraints (mut, has_one, seeds)
+- [ ] All accounts have appropriate constraints (`mut`, `has_one`, `seeds`)
 - [ ] Signer required for privileged operations
 - [ ] PDA seeds include relevant data (user, mint, etc.)
 - [ ] Bump stored and reused (not recalculated)
@@ -59,3 +93,31 @@ pub receiver: SystemAccount<'info>,
 - [ ] Account closing uses `close` constraint
 - [ ] `init_if_needed` usage justified and safe
 - [ ] Custom error codes for all failure paths
+- [ ] No `UncheckedAccount` without manual validation comment
+- [ ] `remaining_accounts` validated when accessed
+- [ ] Token-2022 extensions handled (transfer hooks, transfer fees)
+- [ ] `realloc` constraint checks new space is sufficient
+- [ ] Events emitted for all state changes
+
+## Anchor-Specific Constraint Reference
+
+| Constraint | Purpose | Security Impact If Missing |
+|-----------|---------|---------------------------|
+| `mut` | Marks account as writable | State changes silently fail |
+| `has_one = field` | Verifies account relationship | Wrong account accepted |
+| `seeds = [...]` | PDA derivation | Fake PDA accepted |
+| `bump` | Canonical bump | Non-canonical PDA collision |
+| `close = receiver` | Safe account closing | Revival attack |
+| `init` | Creates + initializes | Re-initialization attack |
+| `constraint = expr` | Custom boolean check | Missing business logic validation |
+| `address = PUBKEY` | Exact key match | Wrong program/account accepted |
+| `owner = program` | Owner validation | Fake account injection |
+| `realloc` | Resize account data | Buffer overflow / truncation |
+
+---
+
+## Related Files
+
+- [Solana Vulnerability Patterns](solana-patterns.md) — Full pattern reference with code examples
+- [Account Validation](account-validation.md) — Detailed validation check reference
+- [Anchor Audit Workflow](../workflows/anchor-audit.md) — Step-by-step Anchor audit process

@@ -1,4 +1,29 @@
+---
+id: SOLANA-ACCOUNT-VALIDATION
+title: Solana Account Validation Patterns
+category: solana-scanner
+difficulty: intermediate
+triggers:
+  - solana account validation
+  - owner check
+  - signer check
+  - PDA validation
+  - account security
+related_skills:
+  - solana-scanner/resources/solana-patterns.md
+  - solana-scanner/resources/anchor-security.md
+  - solana-scanner/workflows/native-audit.md
+tags:
+  - solana
+  - accounts
+  - validation
+  - security
+last_updated: 2026-01-31
+---
+
 # Solana Account Validation Patterns
+
+> Every account passed to a Solana program instruction is untrusted by default. The Solana runtime does NOT validate account ownership, type, or relationships — the program must do this manually (native) or via framework constraints (Anchor).
 
 ## Required Checks for Every Account
 
@@ -61,9 +86,34 @@ pub mint: Account<'info, Mint>,
 ```
 
 ## Common Bypass Attacks
-| Attack | Missing Check | Impact |
-|--------|--------------|--------|
-| Fake account injection | Owner check | Read/write arbitrary data |
-| Unauthorized action | Signer check | Steal funds |
-| Wrong PDA | Seed validation | Access wrong vault |
-| Type confusion | Discriminator | Misinterpret data |
+| Attack | Missing Check | Impact | Real-World Example |
+|--------|--------------|--------|-------------------|
+| Fake account injection | Owner check | Read/write arbitrary data | Cashio ($48M) — fake bank account |
+| Unauthorized action | Signer check | Steal funds | Wormhole ($320M) — spoofed sysvar |
+| Wrong PDA | Seed validation | Access wrong vault | Crema Finance ($8.8M) — fake tick |
+| Type confusion | Discriminator | Misinterpret data | Common in native programs |
+| Duplicate accounts | Distinctness check | Double-count balances | bZx-style self-transfer |
+| Stale data | Freshness check | Use outdated state | Accounts not refreshed after CPI |
+
+## Validation Matrix Template
+
+Use this matrix for every instruction in a native Solana program:
+
+```
+| Account       | Owner ✓ | Signer ✓ | Writable ✓ | PDA ✓ | Type ✓ | Relationship ✓ |
+|---------------|---------|----------|------------|-------|--------|----------------|
+| vault         | program | -        | ✓          | ✓     | Vault  | has_one: owner |
+| owner         | -       | ✓        | -          | -     | -      | -              |
+| token_account | Token   | -        | ✓          | ATA   | Token  | has: mint      |
+| system_prog   | Native  | -        | -          | -     | -      | hardcoded key  |
+```
+
+**Rule**: Every cell must be explicitly checked in code. An empty cell in the matrix is a potential vulnerability.
+
+---
+
+## Related Files
+
+- [Solana Vulnerability Patterns](solana-patterns.md) — Full pattern reference with vulnerable + secure code
+- [Anchor Security Guide](anchor-security.md) — Anchor-specific validation and vulnerabilities
+- [Native Audit Workflow](../workflows/native-audit.md) — Step-by-step native program audit
