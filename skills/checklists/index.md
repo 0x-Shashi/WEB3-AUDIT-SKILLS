@@ -8,13 +8,20 @@ Protocol-type-specific checklists for systematic smart contract auditing. Each c
 
 | Checklist | Target Protocol Type | Items |
 |-----------|---------------------|-------|
-| [Comprehensive](comprehensive-checklist.md) | General / All protocols | 100+ items |
-| [DeFi Lending](defi-lending-checklist.md) | Lending/Borrowing (Aave, Compound) | 60+ items |
-| [DEX/AMM](dex-amm-checklist.md) | Decentralized Exchanges, AMMs | 50+ items |
-| [Bridge](bridge-checklist.md) | Cross-chain bridges | 50+ items |
-| [Governance](governance-checklist.md) | DAOs, Voting, Timelocks | 40+ items |
-| [Staking](staking-checklist.md) | Staking, Yield, Rewards | 45+ items |
-| [NFT/Gaming](nft-gaming-checklist.md) | NFTs, GameFi, Marketplaces | 40+ items |
+| [Comprehensive](comprehensive-checklist.md) | General / All protocols | 88 items |
+| [DeFi Lending](defi-lending-checklist.md) | Lending/Borrowing (Aave, Compound) | 64 items |
+| [DEX/AMM](dex-amm-checklist.md) | Decentralized Exchanges, AMMs | 59 items |
+| [Bridge](bridge-checklist.md) | Cross-chain bridges | 59 items |
+| [Governance](governance-checklist.md) | DAOs, Voting, Timelocks | 55 items |
+| [Staking](staking-checklist.md) | Staking, Yield, Rewards | 57 items |
+| [NFT/Gaming](nft-gaming-checklist.md) | NFTs, GameFi, Marketplaces | 58 items |
+| [Perpetuals/Derivatives](perpetuals-checklist.md) | Perp DEXes (GMX, dYdX, Synthetix) | 77 items |
+| [Options/Structured Products](options-structured-checklist.md) | On-chain options (Lyra, Dopex, Ribbon) | 71 items |
+| [Restaking/LRT](restaking-lrt-checklist.md) | Restaking (EigenLayer), Liquid Restaking | 72 items |
+| [Intent-Based/Solver](intent-based-checklist.md) | Intent protocols (UniswapX, CoW, Across) | 70 items |
+| [Stablecoin/CDP](stablecoin-cdp-checklist.md) | CDP stablecoins (MakerDAO, Liquity) | 70 items |
+| [Vault/Yield Aggregator](vault-yield-checklist.md) | ERC-4626 vaults (Yearn, Morpho) | 70 items |
+| [Liquid Staking](liquid-staking-checklist.md) | LST protocols (Lido, Rocket Pool) | 72 items |
 
 ## How to Use
 
