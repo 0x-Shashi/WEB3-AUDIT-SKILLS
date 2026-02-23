@@ -3,6 +3,23 @@ id: SEV-GAS-OPTIMIZATIONS
 title: Gas Optimization Findings
 category: severity
 severity_level: gas
+triggers:
+  - gas optimization examples
+  - gas finding reference
+  - gas vs low
+  - is this a gas issue
+related_skills:
+  - scoring/AUDIT_SCORING.md
+  - patterns/severity-scoring.md
+  - severity/low-severity.md
+  - methodology/gas-optimization-security.md
+  - methodology/audit-report-templates.md
+tags:
+  - severity
+  - gas
+  - optimization
+  - findings
+  - classification
 last_updated: 2026-01-31
 ---
 # GAS Severity Findings
@@ -801,4 +818,24 @@ Three places where this occurs is in `ComplianceServiceRegulated::completeTransf
 - Total GAS findings: 3,422
 - Examples shown: 30
 - Last updated: 2026-01-29
+
+---
+
+## Scoring Integration
+
+GAS findings carry **0 points** in the [Audit Scoring System](../scoring/AUDIT_SCORING.md) efficiency metric. They do not count toward Detection Score or Precision Score. However, they still contribute to audit quality:
+
+- Demonstrates thoroughness (Coverage Score)
+- Shows protocol understanding
+- Gas findings must not introduce security regressions — see [Gas Optimization Security Tradeoffs](../methodology/gas-optimization-security.md)
+
+> **Warning**: A gas optimization that introduces a vulnerability is a HIGH/CRITICAL finding, not a GAS finding. Always verify that suggested optimizations don't break security invariants.
+
+## Related Files
+
+- [Low Severity](low-severity.md) — Next severity level up
+- [Audit Scoring System](../scoring/AUDIT_SCORING.md) — Composite scoring (GAS = 0 weight)
+- [Gas Optimization Security Tradeoffs](../methodology/gas-optimization-security.md) — When gas savings create vulnerabilities
+- [Severity Scoring Decision Tree](../patterns/severity-scoring.md) — How to classify GAS vs LOW vs INFORMATIONAL
+- [Audit Report Templates](../methodology/audit-report-templates.md) — Standard format for GAS findings
 

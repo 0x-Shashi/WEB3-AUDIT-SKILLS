@@ -3,6 +3,23 @@ id: SEV-LOW-SEVERITY
 title: Low Severity Findings
 category: severity
 severity_level: low
+triggers:
+  - low severity examples
+  - what counts as low
+  - low finding reference
+  - low vs medium
+  - informational vs low
+related_skills:
+  - scoring/AUDIT_SCORING.md
+  - patterns/severity-scoring.md
+  - severity/medium-severity.md
+  - severity/gas-optimizations.md
+  - methodology/audit-report-templates.md
+tags:
+  - severity
+  - low
+  - findings
+  - classification
 last_updated: 2026-01-31
 ---
 # LOW Severity Findings
@@ -873,4 +890,25 @@ Freeze the root after a start time, or gate changes behind a timelock/mul...
 - Total LOW findings: 25,272
 - Examples shown: 30
 - Last updated: 2026-01-29
+
+---
+
+## Scoring Integration
+
+LOW findings are weighted at **1 point** in the [Audit Scoring System](../scoring/AUDIT_SCORING.md) efficiency metric:
+
+```
+Efficiency = (Weighted Findings) / (Hours Spent)
+Low = 1 point per confirmed finding
+```
+
+LOW findings have the highest volume (50% of all findings) but lowest individual scoring weight. Focus on precision — submitting false LOWs costs **-5 points** each, which quickly erodes total score. Quality over quantity.
+
+## Related Files
+
+- [Medium Severity](medium-severity.md) — Next severity level up
+- [Gas Optimizations](gas-optimizations.md) — Next level down (no scoring weight)
+- [Audit Scoring System](../scoring/AUDIT_SCORING.md) — Composite scoring with severity weights
+- [Severity Scoring Decision Tree](../patterns/severity-scoring.md) — How to classify LOW vs MEDIUM vs INFORMATIONAL
+- [Audit Report Templates](../methodology/audit-report-templates.md) — Standard format for LOW findings
 

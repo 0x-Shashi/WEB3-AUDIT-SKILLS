@@ -1,3 +1,34 @@
+---
+id: AUDIT-SCORING
+title: Audit Scoring System
+category: scoring
+difficulty: intermediate
+triggers:
+  - score my audit
+  - how did I perform
+  - calculate audit score
+  - detection rate
+  - precision score
+  - track audit performance
+  - audit quality metrics
+related_skills:
+  - severity/high-severity.md
+  - severity/medium-severity.md
+  - severity/low-severity.md
+  - severity/gas-optimizations.md
+  - patterns/severity-scoring.md
+  - audit-feedback/FEEDBACK_LOOP.md
+  - methodology/prompt-evolution.md
+  - templates/audit_trace.md
+tags:
+  - scoring
+  - metrics
+  - performance
+  - detection
+  - precision
+last_updated: 2026-01-31
+---
+
 # Audit Scoring System
 
 ## Overview
@@ -396,6 +427,15 @@ Industry benchmarks for self-assessment:
 
 ## Related Files
 
-- [Audit Trace](../templates/audit_trace.md)
-- [Feedback Loop](../audit-feedback/FEEDBACK_LOOP.md)
-- [Prompt Evolution](../methodology/prompt-evolution.md)
+### Severity Classification (scored findings come from here)
+- [High Severity Findings](../severity/high-severity.md) — 8,022 findings, weight: 5 points each
+- [Medium Severity Findings](../severity/medium-severity.md) — 13,814 findings, weight: 2 points each
+- [Low Severity Findings](../severity/low-severity.md) — 25,272 findings, weight: 1 point each
+- [Gas Optimizations](../severity/gas-optimizations.md) — 3,422 findings, weight: 0 points
+- [Severity Scoring Decision Tree](../patterns/severity-scoring.md) — How to classify severity correctly (impacts Severity Accuracy metric)
+
+### Workflow Integration
+- [Audit Trace](../templates/audit_trace.md) — Provides time/coverage data for Efficiency and Coverage scores
+- [Feedback Loop](../audit-feedback/FEEDBACK_LOOP.md) — Low scores trigger gradient analysis and pattern updates
+- [Prompt Evolution](../methodology/prompt-evolution.md) — Higher-scoring prompts get promoted in the evolution pipeline
+- [Audit Report Templates](../methodology/audit-report-templates.md) — Finding format that enables accurate scoring

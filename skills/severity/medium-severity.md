@@ -3,6 +3,23 @@ id: SEV-MEDIUM-SEVERITY
 title: Medium Severity Findings
 category: severity
 severity_level: medium
+triggers:
+  - medium severity examples
+  - what counts as medium
+  - medium finding reference
+  - medium vs high
+  - medium vs low
+related_skills:
+  - scoring/AUDIT_SCORING.md
+  - patterns/severity-scoring.md
+  - severity/high-severity.md
+  - severity/low-severity.md
+  - methodology/audit-report-templates.md
+tags:
+  - severity
+  - medium
+  - findings
+  - classification
 last_updated: 2026-01-31
 ---
 # MEDIUM Severity Findings
@@ -806,4 +823,25 @@ uint256 balanceBeforeTransfer = ERC20(auctionParams.baseToken).bala...
 - Total MEDIUM findings: 13,814
 - Examples shown: 30
 - Last updated: 2026-01-29
+
+---
+
+## Scoring Integration
+
+MEDIUM findings are weighted at **2 points** in the [Audit Scoring System](../scoring/AUDIT_SCORING.md) efficiency metric:
+
+```
+Efficiency = (Weighted Findings) / (Hours Spent)
+Medium = 2 points per confirmed finding
+```
+
+MEDIUM is the most contested severity level. Overrating a LOW as MEDIUM costs **-5 points**, while underrating a HIGH as MEDIUM costs **-10 points**. Precision matters most here — see the [Severity Scoring Decision Tree](../patterns/severity-scoring.md) for the classification boundary.
+
+## Related Files
+
+- [High Severity](high-severity.md) — Next severity level up
+- [Low Severity](low-severity.md) — Next severity level down
+- [Audit Scoring System](../scoring/AUDIT_SCORING.md) — Composite scoring with severity weights
+- [Severity Scoring Decision Tree](../patterns/severity-scoring.md) — How to classify MEDIUM vs HIGH vs LOW
+- [Audit Report Templates](../methodology/audit-report-templates.md) — Standard format for MEDIUM findings
 

@@ -3,6 +3,22 @@ id: SEV-HIGH-SEVERITY
 title: High Severity Findings
 category: severity
 severity_level: high
+triggers:
+  - high severity examples
+  - what counts as high
+  - high finding reference
+  - critical vs high
+related_skills:
+  - scoring/AUDIT_SCORING.md
+  - patterns/severity-scoring.md
+  - severity/medium-severity.md
+  - methodology/poc-writing-guide.md
+  - methodology/audit-report-templates.md
+tags:
+  - severity
+  - high
+  - findings
+  - classification
 last_updated: 2026-01-31
 ---
 # HIGH Severity Findings
@@ -889,4 +905,25 @@ It will bypass some security check with the msg.sender, or break the accoun...
 - Total HIGH findings: 8,022
 - Examples shown: 30
 - Last updated: 2026-01-29
+
+---
+
+## Scoring Integration
+
+HIGH findings are weighted at **5 points** in the [Audit Scoring System](../scoring/AUDIT_SCORING.md) efficiency metric:
+
+```
+Efficiency = (Weighted Findings) / (Hours Spent)
+High = 5 points per confirmed finding
+```
+
+Severity accuracy is scored separately — misclassifying a HIGH as MEDIUM costs **-5 points** (overrated penalty), while missing a HIGH entirely costs **-20 points** (miss penalty). See the full [reward schema](../scoring/AUDIT_SCORING.md#reward-schema).
+
+## Related Files
+
+- [Medium Severity](medium-severity.md) — Next severity level down
+- [Audit Scoring System](../scoring/AUDIT_SCORING.md) — Composite scoring with severity weights
+- [Severity Scoring Decision Tree](../patterns/severity-scoring.md) — How to classify HIGH vs MEDIUM vs CRITICAL
+- [PoC Writing Guide](../methodology/poc-writing-guide.md) — HIGH findings require demonstrable PoCs
+- [Audit Report Templates](../methodology/audit-report-templates.md) — Standard format for HIGH findings
 

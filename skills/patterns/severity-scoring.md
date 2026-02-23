@@ -270,3 +270,18 @@ How to fix it.
 6. **Be consistent** - same issue = same severity across audits
 7. **When in doubt** - err on higher severity, let team triage
 
+---
+
+## Related Files
+
+### Severity Databases (real-world examples at each level)
+- [High Severity Findings](../severity/high-severity.md) — 8,022 findings, score range 7.0–8.9
+- [Medium Severity Findings](../severity/medium-severity.md) — 13,814 findings, score range 4.0–6.9
+- [Low Severity Findings](../severity/low-severity.md) — 25,272 findings, score range 2.0–3.9
+- [Gas Optimizations](../severity/gas-optimizations.md) — 3,422 findings, score range 0.0–0.5
+
+### Scoring & Workflow
+- [Audit Scoring System](../scoring/AUDIT_SCORING.md) — Severity accuracy is 15% of composite score
+- [Audit Report Templates](../methodology/audit-report-templates.md) — Standard finding format per severity
+- [PoC Writing Guide](../methodology/poc-writing-guide.md) — PoCs strengthen severity justification
+
