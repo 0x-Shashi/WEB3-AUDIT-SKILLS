@@ -16,8 +16,9 @@ tags:
   - gas-limit
 related_patterns:
   - vulnerability
-finding_count: 66
-last_updated: 2026-01-31
+finding_count_source: 66
+finding_count_note: "Count reflects DOS tag only (66). Related tags: gas-limit (18), broken-loop (7). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # DoS & Gas Security Patterns (Consolidated)
 

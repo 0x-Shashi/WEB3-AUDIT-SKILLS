@@ -6,7 +6,7 @@ difficulty: intermediate
 triggers: [write report, finding template, severity matrix, executive summary, PoC template, audit report format]
 related_skills: [methodology/poc-writing-guide.md, methodology/fix-verification-patterns.md, severity/severity-classification.md]
 tags: [reporting, templates, severity, poc, findings]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Audit Report Templates

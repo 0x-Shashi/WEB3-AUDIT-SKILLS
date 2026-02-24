@@ -3,7 +3,7 @@ id: COSMOS-SCAN
 title: Cosmos / CosmWasm Security Scanner
 category: chain-scanner
 trigger: "Audit Cosmos|CosmWasm|IBC"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Cosmos / CosmWasm Security Scanner

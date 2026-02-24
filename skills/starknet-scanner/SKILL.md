@@ -3,7 +3,7 @@ id: STARKNET-SCAN
 title: Starknet Specialized Scanner
 category: chain-scanner
 trigger: "Audit Starknet|Starknet contract"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Starknet Specialized Scanner

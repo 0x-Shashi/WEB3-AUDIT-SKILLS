@@ -14,9 +14,9 @@ tags:
   - signature
   - verification
   - ecrecover
-
-finding_count: 5
-last_updated: 2026-01-31
+finding_count_source: 5
+finding_count_note: "Count reflects signature-malleability tag only (5). Related tags: replay-attack (14), EIP-712 (6). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Signature & Cryptography Security Patterns (Consolidated)
 

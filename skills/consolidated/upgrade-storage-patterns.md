@@ -14,9 +14,9 @@ tags:
   - storage
   - collision
   - layout
-
-finding_count: 10
-last_updated: 2026-01-31
+finding_count_source: 10
+finding_count_note: "Count reflects TWAP/upgrade tag only (10). Related tags: storage-collision (3), storage-gap (4), initialization (15). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Upgrade & Storage Security Patterns (Consolidated)
 

@@ -3,7 +3,7 @@ id: RPT-WRITER
 title: Report Writer Skill
 category: methodology
 trigger: "write report|generate finding|audit report"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Report Writer Skill

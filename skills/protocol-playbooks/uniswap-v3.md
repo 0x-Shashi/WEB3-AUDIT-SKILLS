@@ -11,7 +11,7 @@ secure_patterns: [exact-input-single, twap-oracle, deadline-validation]
 difficulty: advanced
 prerequisites: [defi-basics, amm-mechanics, oracle-patterns]
 audit_checklist_items: 12
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Uniswap V3 Secure Integration Guide

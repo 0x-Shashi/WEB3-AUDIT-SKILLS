@@ -14,9 +14,9 @@ tags:
   - pre-condition
   - balance
   - check
-
-finding_count: 14
-last_updated: 2026-01-31
+finding_count_source: 14
+finding_count_note: "Count reflects precision-loss tag only (14). Related tags: rounding (32), wrong-math (107), decimals (45), overflow-underflow (43). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Math & Precision Security Patterns (Consolidated)
 

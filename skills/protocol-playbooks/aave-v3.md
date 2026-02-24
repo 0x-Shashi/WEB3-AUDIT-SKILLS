@@ -11,7 +11,7 @@ secure_patterns: [oracle-validation, health-factor-checks, e-mode-guardrails, fl
 difficulty: advanced
 prerequisites: [lending-basics, oracle-patterns, flash-loan-patterns]
 audit_checklist_items: 12
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Aave V3 Secure Integration Guide

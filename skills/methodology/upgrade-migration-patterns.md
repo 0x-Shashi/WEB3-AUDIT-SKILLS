@@ -6,7 +6,7 @@ difficulty: advanced
 triggers: [proxy vulnerability, upgrade security, storage collision, UUPS, transparent proxy, migration attack, initialization]
 related_skills: [methodology/fork-audit.md, methodology/secure-pattern-reference.md, checklists/comprehensive-checklist.md]
 tags: [proxy, upgrade, uups, storage, migration, initialization]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Upgrade & Migration Security Patterns

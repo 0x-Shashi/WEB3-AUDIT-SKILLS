@@ -1,4 +1,4 @@
-﻿---
+---
 id: METHOD-LEARNING-PATH
 title: Security Auditor Learning Path & Attack Vectors
 category: methodology
@@ -6,7 +6,7 @@ difficulty: beginner
 triggers: [learn auditing, how to start, attack vectors, security learning path, top vulnerabilities, career path auditor]
 related_skills: [methodology/poc-writing-guide.md, methodology/llm-audit-workflow.md, checklists/comprehensive-checklist.md, patterns/reentrancy-patterns.md]
 tags: [learning, attack-vectors, career, beginner, education]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Security Auditor Learning Path & Attack Vectors

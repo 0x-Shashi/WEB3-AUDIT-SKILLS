@@ -6,7 +6,7 @@ difficulty: intermediate
 triggers: [fork audit, forked protocol, compare to original, diff analysis, Uniswap fork, Compound fork, Aave fork]
 related_skills: [methodology/upgrade-migration-patterns.md, methodology/secure-pattern-reference.md, checklists/comprehensive-checklist.md]
 tags: [fork, diff, comparison, compound, uniswap, aave]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Fork Audit Methodology

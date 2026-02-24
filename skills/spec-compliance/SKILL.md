@@ -3,7 +3,7 @@ id: SPEC-COMPLIANCE
 title: Spec Compliance Skill
 category: methodology
 trigger: "ERC compliance|EIP check|standard compliance"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Spec Compliance Skill

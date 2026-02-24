@@ -3,7 +3,7 @@ id: SKILL-CYFRIN-FINDINGS
 title: Cyfrin/Solodit Findings Database Integration
 category: data-source
 version: 1.0.0
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 api_base: https://api.solodit.xyz
 ---
 

@@ -15,8 +15,9 @@ tags:
   - vulnerability
 related_patterns:
   - vulnerability
-finding_count: 6
-last_updated: 2026-01-31
+finding_count_source: 6
+finding_count_note: "Count reflects a single constituent tag. Consolidated file covers multiple miscellaneous patterns. See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Miscellaneous Security Patterns (Consolidated)
 

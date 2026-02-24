@@ -3,7 +3,7 @@ id: FUEL-SCAN
 title: Fuel Network Security Scanner
 category: chain-scanner
 trigger: "Audit Fuel|Sway|FuelVM"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Fuel Network Security Scanner

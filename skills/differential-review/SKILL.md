@@ -3,7 +3,7 @@ id: DIFF-REVIEW
 title: Differential Review Skill
 category: methodology
 trigger: "diff|upgrade|compare versions|code changes"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Differential Review Skill

@@ -5,7 +5,7 @@ category: chain-scanner
 chains: [starknet]
 languages: [cairo]
 version: cairo-2.x
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Cairo Scanner Skill

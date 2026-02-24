@@ -5,7 +5,7 @@ category: chain-scanner
 chains: [solana]
 languages: [rust]
 frameworks: [anchor, native]
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Solana Scanner Skill

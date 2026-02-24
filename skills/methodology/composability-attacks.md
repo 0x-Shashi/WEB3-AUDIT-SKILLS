@@ -6,7 +6,7 @@ difficulty: expert
 triggers: [composability risk, cross-protocol attack, flash loan composability, token hook attack, donation attack, JIT liquidity]
 related_skills: [methodology/economic-attack-modeling.md, patterns/flash-loan-patterns.md, patterns/oracle-patterns.md]
 tags: [composability, flash-loan, oracle, cross-protocol, defi]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Protocol Composability Attack Patterns

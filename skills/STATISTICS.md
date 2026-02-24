@@ -26,6 +26,14 @@
 | LOW | 25272 | 50.01% |
 | GAS | 3422 | 6.77% |
 
+> **Data Integrity Notes:**
+>
+> 1. **CRITICAL: 0 is a labeling artifact.** The Solodit API supports `critical` as a severity filter (see [DATA/APIdocs.txt](../DATA/APIdocs.txt)), but the extracted dataset returned 0 findings under this label. This likely means: (a) Solodit maps Critical-severity findings into the HIGH bucket for most contest platforms (Code4rena, Sherlock), or (b) the extraction query did not include `severity=critical` as a separate pass. Real-world audit reports from Spearbit, Zokyo, and others in this repository do reference Critical-severity findings — they are aggregated under HIGH in this dataset.
+>
+> 2. **GAS vs INFO mapping.** The Solodit API lists `info` as a valid severity, not `gas`. The GAS category (3,422 findings, 6.77%) likely corresponds to Solodit's `info` severity bucket, which includes both informational findings and gas optimizations. The label was changed during data processing to better reflect the content, as the majority of info-severity findings on competitive audit platforms are gas optimization reports.
+>
+> 3. **Tag coverage is sparse.** The Top 50 vulnerability types sum to approximately 2,100 tagged findings — only ~4.2% of the 50,530 total. The remaining ~96% of findings either have no tag, have tags outside the top 50, or are tagged with the protocol name rather than a vulnerability category. The `finding_count` values in pattern files reflect only the tagged subset from this dataset.
+
 ---
 
 ## Top 50 Vulnerability Types
@@ -147,4 +155,12 @@
 - **Provider**: Cyfrin Solodit API
 - **Extraction Date**: 2026-01-29
 - **Total Records**: 50,530
+
+### Known Limitations
+
+1. **Tag-based counts are a small subset.** The `finding_count` values used in pattern files (e.g., reentrancy: 59, oracle: 59) represent the number of findings tagged with that specific vulnerability label in the Solodit dataset. Two different vulnerability types can have the same tag count — this is coincidence from the dataset, not a copy-paste error. For example, both Oracle and Reentrancy have exactly 59 tagged findings.
+
+2. **Consolidated pattern files inherit single-pattern counts.** Files in `consolidated/` (e.g., `dos-gas-patterns.md`) currently show the `finding_count` from one constituent sub-pattern rather than the sum of all merged patterns. These counts are labeled `finding_count_source` to indicate they reference the primary constituent pattern, not the full consolidated scope.
+
+3. **Extraction data files are empty.** The files in `EXTRACED SOLODIT DATA/` (JSON checkpoints) are 0-byte placeholders. The raw extracted data was processed into the statistics and pattern files but the raw JSON was not retained in the repository (likely due to file size constraints for Git).
 

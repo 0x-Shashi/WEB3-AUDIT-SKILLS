@@ -14,9 +14,9 @@ tags:
   - input-validation
   - require
   - assert
-
-finding_count: 127
-last_updated: 2026-01-31
+finding_count_source: 127
+finding_count_note: "Count reflects validation tag only (127). Related tags: missing-check (23), min-max-cap-validation (9). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Validation Security Patterns (Consolidated)
 

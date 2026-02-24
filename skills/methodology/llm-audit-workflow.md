@@ -1,4 +1,4 @@
-﻿---
+---
 id: METHOD-LLM-WORKFLOW
 title: AI Audit Workflow - LLM Playbook
 category: methodology
@@ -6,7 +6,7 @@ difficulty: intermediate
 triggers: [AI audit workflow, LLM playbook, audit phases, context transfer, scan mode, protocol mapper, attack hypothesis]
 related_skills: [methodology/ai-assisted-auditing.md, methodology/prompt-evolution.md, methodology/poc-writing-guide.md]
 tags: [ai, llm, workflow, phases, playbook]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # AI Audit Workflow - LLM Playbook

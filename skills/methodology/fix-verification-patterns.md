@@ -6,7 +6,7 @@ difficulty: advanced
 triggers: [verify fix, fix review, was the fix correct, fix introduces new bug, regression test, fix verification]
 related_skills: [methodology/invariant-testing.md, methodology/poc-writing-guide.md, methodology/secure-pattern-reference.md]
 tags: [fix-review, regression, verification, testing, ci-cd]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Fix Verification Patterns

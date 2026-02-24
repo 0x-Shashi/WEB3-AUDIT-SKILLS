@@ -11,7 +11,7 @@ secure_patterns: [share-accounting, rebasing-guards, withdrawal-validation, wste
 difficulty: advanced
 prerequisites: [staking-basics, token-accounting, rebasing-tokens]
 audit_checklist_items: 10
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Lido Secure Integration Guide

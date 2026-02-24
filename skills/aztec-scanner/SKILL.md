@@ -3,7 +3,7 @@ id: AZTEC-SCAN
 title: Aztec Network Security Scanner
 category: chain-scanner
 trigger: "Audit Aztec|Noir|private contract"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Aztec Network Security Scanner

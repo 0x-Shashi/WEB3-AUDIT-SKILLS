@@ -3,7 +3,7 @@ id: STATIC-ANALYSIS
 title: Static Analysis Skill
 category: methodology
 trigger: "static analysis|slither|mythril|aderyn|semgrep"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Static Analysis Skill

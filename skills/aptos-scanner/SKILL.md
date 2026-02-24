@@ -3,7 +3,7 @@ id: APTOS-SCAN
 title: Aptos Specialized Scanner
 category: chain-scanner
 trigger: "Audit Aptos|Aptos Move"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Aptos Specialized Scanner

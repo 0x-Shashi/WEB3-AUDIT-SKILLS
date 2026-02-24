@@ -4,7 +4,7 @@ title: Move Smart Contract Security Scanner
 category: chain-scanner
 chains: [aptos, sui]
 languages: [move]
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Move Scanner Skill

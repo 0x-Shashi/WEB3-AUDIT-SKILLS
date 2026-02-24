@@ -16,8 +16,9 @@ tags:
   - transfer
 related_patterns:
   - erc20
-finding_count: 27
-last_updated: 2026-01-31
+finding_count_source: 27
+finding_count_note: "Count reflects ERC20 tag only (27). Related tags: fee-on-transfer (66), weird-ERC20 (26), approve (18), safeTransfer (14). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Token Security Patterns (Consolidated)
 

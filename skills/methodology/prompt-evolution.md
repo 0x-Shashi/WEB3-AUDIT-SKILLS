@@ -6,7 +6,7 @@ difficulty: advanced
 triggers: [improve prompts, prompt optimization, beam search, prompt A/B testing, evolve prompt, prompt versioning]
 related_skills: [methodology/ai-assisted-auditing.md, methodology/llm-audit-workflow.md]
 tags: [prompts, evolution, beam-search, optimization, meta-methodology]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Prompt Evolution System

@@ -3,7 +3,7 @@ id: AUDIT-CONTEXT
 title: Audit Context Building Skill
 category: methodology
 trigger: "audit context|protocol overview|architecture mapping|pre-audit"
-last_updated: 2025-01-31
+last_updated: 2026-02-24
 ---
 
 # Audit Context Building Skill

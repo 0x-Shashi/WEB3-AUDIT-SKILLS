@@ -17,8 +17,9 @@ tags:
 related_patterns:
   - external-call
   - cei
-finding_count: 59
-last_updated: 2026-01-31
+finding_count_source: 59
+finding_count_note: "Count reflects reentrancy tag only (59). Related tags: CEI (3), read-only-reentrancy (6). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # Reentrancy Security Patterns (Consolidated)
 

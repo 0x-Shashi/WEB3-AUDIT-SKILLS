@@ -6,7 +6,7 @@ difficulty: advanced
 triggers: [gas optimization vulnerability, unchecked block bug, assembly security, storage packing risk, optimization exploit]
 related_skills: [methodology/secure-pattern-reference.md, patterns/reentrancy-patterns.md, checklists/comprehensive-checklist.md]
 tags: [gas, optimization, unchecked, assembly, storage-packing]
-last_updated: 2026-01-31
+last_updated: 2026-02-24
 ---
 
 # Gas Optimization Security Patterns

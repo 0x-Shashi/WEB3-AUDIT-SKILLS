@@ -14,9 +14,9 @@ tags:
   - governance
   - proposal
   - timelock
-
-finding_count: 19
-last_updated: 2026-01-31
+finding_count_source: 19
+finding_count_note: "Count reflects NFT tag only (19). Related tags: vote (22), ERC721 (21), ERC1155 (17). See STATISTICS.md."
+last_updated: 2026-02-24
 ---
 # NFT & Governance Security Patterns (Consolidated)
 
