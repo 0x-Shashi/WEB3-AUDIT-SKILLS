@@ -8,6 +8,9 @@ DATA/
 node_modules/
 *.log
 
+# Scan output
+.web3-audit/
+
 # OS
 .DS_Store
 Thumbs.db
@@ -15,3 +18,5 @@ Thumbs.db
 # Large data files
 EXTRACED SOLODIT DATA/
 *.json
+
+New-info/

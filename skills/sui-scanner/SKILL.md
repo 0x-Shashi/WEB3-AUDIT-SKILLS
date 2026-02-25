@@ -19,6 +19,11 @@ tags:
   - object-model
   - security
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Sui Move smart contracts, scan Sui-specific
+  patterns including object ownership, shared objects, or dynamic fields, review
+  Sui DeFi protocols for object model security issues, or analyze Sui-specific
+  transaction and consensus patterns.
 ---
 
 # Sui Scanner Skill
@@ -109,3 +114,54 @@ Specialized scanner for Sui Move smart contracts. Sui uses a unique **object-cen
 ## Related Scanners
 - [Move Scanner](../move-scanner/SKILL.md) — Generic Move language patterns (shared with Aptos)
 - [Aptos Scanner](../aptos-scanner/SKILL.md) — Aptos-specific global storage patterns
+
+## Error Code Reference
+
+Sui-specific error codes and framework abort codes. Sui Move uses custom abort codes per module.
+
+### Sui Framework Errors
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `ENotOwner` | `object` / various | Caller does not own the object |
+| `EInvalidOwner` | `transfer` | Invalid owner for transfer operation |
+| `ESharedObjectOperationNotAllowed` | `transfer` | Cannot perform this operation on shared objects |
+| `EEmptyInventory` | `kiosk` | Kiosk inventory is empty |
+| `EItemNotFound` | `kiosk` | Item not found in kiosk |
+| `ENotEnough` | `balance` | Insufficient balance for operation |
+| `ENonZero` | `balance` | Balance is not zero (expected to be destroyed) |
+| `EDivisionByZero` | `math` | Division by zero in math |
+| `EOverflow` | `math` | Arithmetic overflow |
+| `EWrongInnerType` | `dynamic_field` | Dynamic field type mismatch |
+| `EFieldDoesNotExist` | `dynamic_field` | Dynamic field not found on object |
+| `EFieldAlreadyExists` | `dynamic_field` | Dynamic field already exists |
+
+### Sui Coin / Token Errors
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `EBadWitness` | `coin` | Invalid one-time witness type |
+| `ENotTreasury` | `coin` | Caller does not hold TreasuryCap |
+| `EInsufficientBalance` | `coin` | Coin value too low for operation |
+| `ECoinTypeMismatch` | `pay` | Coins of different types in merge/split |
+
+### Common DeFi Protocol Errors (Sui)
+
+| Abort Code Pattern | Protocol Type | Meaning |
+|-------------------|--------------|----------|
+| `ESlippageExceeded` | AMM/DEX | Price moved beyond slippage tolerance |
+| `EInsufficientLiquidity` | AMM/DEX | Pool has insufficient liquidity for swap |
+| `EPoolNotFound` | AMM/DEX | Trading pool does not exist |
+| `ELockExpired` / `ELockNotExpired` | Staking | Time-lock constraint violation |
+| `EInvalidPrice` / `EStalePrice` | Oracle | Price feed invalid or outdated |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Object ownership vulnerabilities missed | Scanner doesn't model Sui object ownership types | Load `resources/object-security.md`; distinguish owned/shared/immutable/wrapped objects |
+| Shared object contention not flagged | Scanner treats shared objects like owned | Analyze all functions taking `&mut` shared objects for ordering/MEV attacks |
+| Dynamic field injection not detected | Scanner doesn't trace dynamic field access | Audit all `dynamic_field::add/remove/borrow` for unauthorized field manipulation |
+| Flash loan patterns missed | Scanner doesn't recognize Sui Hot Potato pattern | Check for structs without `drop/store` abilities returned from functions (must be consumed) |
+| One-time witness (OTW) bypass not caught | Scanner doesn't verify OTW pattern | Verify module's OTW struct has `drop` only, uppercase name matches module, used in `init()` |
+| Capability token leaks not detected | Scanner trusts Move type system for safety | Trace all `Cap` types — verify no public functions return or expose capabilities |

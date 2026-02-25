@@ -32,6 +32,10 @@ import { PatternMatcher, matchPatternToCode } from './intelligence/pattern-match
 import { SeverityScorer, calculateSeverity } from './intelligence/severity-scorer.js';
 import { VulnerabilityClassifier, classifyVulnerability } from './intelligence/vulnerability-classifier.js';
 import { SemanticSearch, searchPatterns } from './intelligence/semantic-search.js';
+import { ToolRunner } from './tools/tool-runner.js';
+import { SlitherRunner } from './tools/slither-runner.js';
+import { AderynRunner } from './tools/aderyn-runner.js';
+import { TriggerEngine } from './intelligence/trigger-engine.js';
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -44,6 +48,7 @@ const patternMatcher = new PatternMatcher(SKILLS_DIR);
 const severityScorer = new SeverityScorer();
 const classifier = new VulnerabilityClassifier();
 const semanticSearch = new SemanticSearch(SKILLS_DIR);
+const triggerEngine = new TriggerEngine(SKILLS_DIR);
 
 /**
  * Create MCP Server
@@ -196,6 +201,142 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           },
           required: ['protocol']
         }
+      },
+      {
+        name: 'run_slither',
+        description: 'Run Slither static analysis on a Solidity project. Returns structured findings with severity, locations, and AI-formatted summary.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            projectDir: {
+              type: 'string',
+              description: 'Path to the Solidity project directory (must contain foundry.toml or hardhat.config.js)'
+            },
+            priorityOnly: {
+              type: 'boolean',
+              description: 'Only run high-priority detectors (faster)',
+              default: false
+            }
+          },
+          required: ['projectDir']
+        }
+      },
+      {
+        name: 'run_aderyn',
+        description: 'Run Aderyn static analysis on a Solidity project. Returns structured findings.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            projectDir: {
+              type: 'string',
+              description: 'Path to the Solidity project directory'
+            }
+          },
+          required: ['projectDir']
+        }
+      },
+      {
+        name: 'detect_framework',
+        description: 'Detect the Solidity development framework (Foundry/Hardhat/Brownie) and get project metadata.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            projectDir: {
+              type: 'string',
+              description: 'Path to the project directory'
+            }
+          },
+          required: ['projectDir']
+        }
+      },
+      {
+        name: 'run_tests',
+        description: 'Run project tests using the detected framework (Foundry forge test / Hardhat npx hardhat test).',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            projectDir: {
+              type: 'string',
+              description: 'Path to the project directory'
+            },
+            testFile: {
+              type: 'string',
+              description: 'Optional: specific test file to run (e.g., test/Exploit.t.sol)'
+            },
+            testFunction: {
+              type: 'string',
+              description: 'Optional: specific test function to run'
+            },
+            verbose: {
+              type: 'boolean',
+              description: 'Verbose output (-vvvv for Foundry)',
+              default: true
+            }
+          },
+          required: ['projectDir']
+        }
+      },
+      {
+        name: 'compile_project',
+        description: 'Compile a Solidity project using the detected framework.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            projectDir: {
+              type: 'string',
+              description: 'Path to the project directory'
+            }
+          },
+          required: ['projectDir']
+        }
+      },
+      {
+        name: 'resolve_triggers',
+        description: 'Route a user query or audit request to the most relevant skill files. Automatically maps phrases like "audit lending protocol" or "reentrancy" to the correct pattern files, attack trees, and checklists. Returns file paths and optionally loads file contents into context.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            query: {
+              type: 'string',
+              description: 'User\'s natural language query or audit request (e.g., "audit lending protocol", "oracle manipulation", "first depositor attack")'
+            },
+            loadContent: {
+              type: 'boolean',
+              description: 'Whether to load and return file contents (default: true)',
+              default: true
+            },
+            maxFiles: {
+              type: 'number',
+              description: 'Maximum number of files to load (default: 8)',
+              default: 8
+            }
+          },
+          required: ['query']
+        }
+      },
+      {
+        name: 'detect_code_patterns',
+        description: 'Analyze Solidity source code to detect security-relevant patterns (e.g., Chainlink oracles, ERC4626, proxy patterns, flash loans) and automatically load the corresponding audit skill files. Use this BEFORE starting any code review.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            code: {
+              type: 'string',
+              description: 'Solidity source code to analyze for security patterns'
+            },
+            loadContent: {
+              type: 'boolean',
+              description: 'Whether to load and return file contents (default: true)',
+              default: true
+            },
+            maxFiles: {
+              type: 'number',
+              description: 'Maximum number of files to load (default: 8)',
+              default: 8
+            }
+          },
+          required: ['code']
+        }
       }
     ]
   };
@@ -337,6 +478,190 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             }]
           };
         }
+      }
+
+      case 'detect_framework': {
+        const projectDir = args.project_dir || process.cwd();
+        const runner = new ToolRunner(projectDir);
+        const info = await runner.getProjectInfo();
+        return {
+          content: [{
+            type: 'text',
+            text: JSON.stringify(info, null, 2)
+          }]
+        };
+      }
+
+      case 'compile_project': {
+        const projectDir = args.project_dir || process.cwd();
+        const runner = new ToolRunner(projectDir);
+        const result = await runner.compile();
+        return {
+          content: [{
+            type: 'text',
+            text: result.success
+              ? `Compilation successful.\n\n${result.output}`
+              : `Compilation failed.\n\nErrors:\n${result.errors.join('\n')}\n\nOutput:\n${result.output}`
+          }],
+          isError: !result.success
+        };
+      }
+
+      case 'run_tests': {
+        const projectDir = args.project_dir || process.cwd();
+        const runner = new ToolRunner(projectDir);
+        let result;
+        if (args.test_file) {
+          result = await runner.runTestFile(args.test_file);
+        } else if (args.contract) {
+          result = await runner.runTestContract(args.contract);
+        } else if (args.function_name) {
+          result = await runner.runTestFunction(args.function_name);
+        } else {
+          result = await runner.runTests();
+        }
+        return {
+          content: [{
+            type: 'text',
+            text: result.success
+              ? `Tests passed (${result.passed}/${result.total}).\n\n${result.output}`
+              : `Tests failed (${result.failed}/${result.total} failed).\n\n${result.output}`
+          }],
+          isError: !result.success
+        };
+      }
+
+      case 'run_slither': {
+        const projectDir = args.project_dir || process.cwd();
+        const slither = new SlitherRunner(projectDir);
+        const installed = await slither.checkInstallation();
+        if (!installed) {
+          return {
+            content: [{
+              type: 'text',
+              text: 'Slither is not installed. Install with: pip install slither-analyzer'
+            }],
+            isError: true
+          };
+        }
+        const result = args.priority_only
+          ? await slither.runPriority()
+          : await slither.run({ excludeDetectors: args.exclude_detectors });
+        return {
+          content: [{
+            type: 'text',
+            text: result.success
+              ? result.formatted
+              : `Slither analysis failed.\n\n${result.error || result.output}`
+          }],
+          isError: !result.success
+        };
+      }
+
+      case 'run_aderyn': {
+        const projectDir = args.project_dir || process.cwd();
+        const aderyn = new AderynRunner(projectDir);
+        const installed = await aderyn.checkInstallation();
+        if (!installed) {
+          return {
+            content: [{
+              type: 'text',
+              text: 'Aderyn is not installed. Install with: cargo install aderyn'
+            }],
+            isError: true
+          };
+        }
+        const result = await aderyn.run({ scope: args.scope });
+        return {
+          content: [{
+            type: 'text',
+            text: result.success
+              ? result.formatted
+              : `Aderyn analysis failed.\n\n${result.error || result.output}`
+          }],
+          isError: !result.success
+        };
+      }
+
+      case 'resolve_triggers': {
+        const result = await triggerEngine.process(args.query, {
+          loadContent: args.loadContent !== false,
+          maxFiles: args.maxFiles || 8,
+        });
+
+        if (!result.success) {
+          return {
+            content: [{
+              type: 'text',
+              text: `No matching triggers found for: "${args.query}"\n\nTry one of these:\n${result.suggestions.map(s => `  ${s.category}: ${s.examples.join(', ')}`).join('\n')}`
+            }]
+          };
+        }
+
+        let response = `## Trigger Resolution: "${args.query}"\n\n`;
+        response += `**Category**: ${result.category}\n`;
+        response += `**Matched Triggers**: ${result.matchedTriggers.join(', ')}\n`;
+        response += `**Files**: ${result.fileCount}\n\n`;
+
+        if (result.missingFiles?.length > 0) {
+          response += `⚠ Missing files (skipped): ${result.missingFiles.join(', ')}\n\n`;
+        }
+
+        if (result.loadedFiles) {
+          for (const file of result.loadedFiles) {
+            if (file.content) {
+              response += `---\n### 📄 ${file.path}\n\n${file.content}\n\n`;
+            }
+          }
+        } else {
+          response += `**Resolved paths**:\n${result.files.map(f => `- ${f}`).join('\n')}\n`;
+        }
+
+        return {
+          content: [{
+            type: 'text',
+            text: response
+          }]
+        };
+      }
+
+      case 'detect_code_patterns': {
+        const result = await triggerEngine.processCode(args.code, {
+          loadContent: args.loadContent !== false,
+          maxFiles: args.maxFiles || 8,
+        });
+
+        let response = `## Code Pattern Detection\n\n`;
+        response += `**Detections**: ${result.detections.length}\n\n`;
+
+        if (result.detections.length > 0) {
+          response += `| # | Pattern | What to Audit |\n|---|---------|---------------|\n`;
+          result.detections.forEach((d, i) => {
+            response += `| ${i + 1} | ${d.id} | ${d.label} |\n`;
+          });
+          response += `\n**Recommended skill files** (${result.fileCount}):\n`;
+          result.files.forEach(f => { response += `- ${f}\n`; });
+        }
+
+        if (result.missingFiles?.length > 0) {
+          response += `\n⚠ Missing files (skipped): ${result.missingFiles.join(', ')}\n`;
+        }
+
+        if (result.loadedFiles) {
+          response += `\n`;
+          for (const file of result.loadedFiles) {
+            if (file.content) {
+              response += `---\n### 📄 ${file.path}\n\n${file.content}\n\n`;
+            }
+          }
+        }
+
+        return {
+          content: [{
+            type: 'text',
+            text: response
+          }]
+        };
       }
 
       default:

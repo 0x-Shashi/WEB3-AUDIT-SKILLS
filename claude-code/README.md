@@ -40,7 +40,7 @@ All skills live in the shared `../skills/` directory:
 ├── MASTER_CHECKLIST.md         # Comprehensive audit checklist
 ├── INDEX.md                    # Skill navigation
 ├── patterns/                   # 155 vulnerability patterns
-├── consolidated/               # Mega-reference pattern files
+├── consolidated/               # Pattern summaries & quick reference
 ├── anti-patterns/              # Bad code pattern catalog
 ├── attack-trees/               # 13 protocol attack trees
 ├── exploit-forensics/          # 30 real hack analyses

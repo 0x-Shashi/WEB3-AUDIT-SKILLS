@@ -40,19 +40,19 @@ AI responds with comprehensive lending audit guidance
 | "audit aave fork", "audit borrowing" | attack-trees/lending-attack-tree.md, patterns/lending-pool-patterns.md |
 | "liquidation issues" | attack-trees/lending-attack-tree.md#[B], patterns/lending-pool-patterns.md#liquidation |
 | **DEX/AMM** |
-| "audit dex", "audit amm", "audit uniswap" | attack-trees/dex-attack-tree.md, patterns/dex-patterns.md |
-| "audit uniswap v3", "concentrated liquidity" | attack-trees/dex-attack-tree.md#[E], patterns/uniswap-v3-patterns.md |
-| "audit curve", "stableswap" | attack-trees/dex-attack-tree.md, patterns/curve-patterns.md |
-| "lp token issues" | attack-trees/dex-attack-tree.md#[B], patterns/defi-vault-patterns.md#lp-pricing |
+| "audit dex", "audit amm", "audit uniswap" | attack-trees/dex-attack-tree.md, patterns/amm-patterns.md, patterns/swap-patterns.md |
+| "audit uniswap v3", "concentrated liquidity" | attack-trees/dex-attack-tree.md#[E], patterns/uniswap-patterns.md |
+| "audit curve", "stableswap" | attack-trees/dex-attack-tree.md, protocol-playbooks/curve.md |
+| "lp token issues" | attack-trees/dex-attack-tree.md#[B], patterns/vault-patterns.md#lp-pricing |
 | **Bridges** |
-| "audit bridge", "cross-chain audit" | attack-trees/bridge-attack-tree.md, patterns/bridge-patterns.md, patterns/signature-patterns.md |
+| "audit bridge", "cross-chain audit" | attack-trees/bridge-attack-tree.md, patterns/bridge-patterns.md, patterns/signature-malleability-patterns.md |
 | "audit wormhole", "audit layerzero" | attack-trees/bridge-attack-tree.md, patterns/bridge-patterns.md |
-| "signature issues", "validator issues" | attack-trees/bridge-attack-tree.md#[A], patterns/signature-patterns.md |
+| "signature issues", "validator issues" | attack-trees/bridge-attack-tree.md#[A], patterns/signature-malleability-patterns.md |
 | **Vaults/Yield** |
-| "audit vault", "audit yield aggregator" | attack-trees/vault-attack-tree.md, patterns/defi-vault-patterns.md |
-| "audit yearn", "audit beefy" | attack-trees/vault-attack-tree.md, patterns/defi-vault-patterns.md, patterns/strategy-patterns.md |
+| "audit vault", "audit yield aggregator" | attack-trees/vault-attack-tree.md, patterns/vault-patterns.md |
+| "audit yearn", "audit beefy" | attack-trees/vault-attack-tree.md, patterns/vault-patterns.md, patterns/erc4626-patterns.md |
 | "erc4626 audit" | attack-trees/vault-attack-tree.md#[E], patterns/erc4626-patterns.md |
-| "strategy issues" | attack-trees/vault-attack-tree.md#[B], patterns/strategy-patterns.md |
+| "strategy issues" | attack-trees/vault-attack-tree.md#[B], patterns/vault-patterns.md |
 
 ---
 
@@ -68,7 +68,7 @@ AI responds with comprehensive lending audit guidance
 | **Reentrancy** |
 | "reentrancy", "reenter" | patterns/reentrancy-patterns.md, anti-patterns/reentrancy-anti-patterns.md, XREF.md#reentrancy |
 | "read-only reentrancy", "view function reentrancy" | anti-patterns/reentrancy-anti-patterns.md#3, attack-trees/lending-attack-tree.md#[D3] |
-| "erc777 issues", "erc777 attack" | anti-patterns/reentrancy-anti-patterns.md#4, patterns/token-patterns.md#erc777 |
+| "erc777 issues", "erc777 attack" | anti-patterns/reentrancy-anti-patterns.md#4, patterns/erc777-patterns.md |
 | "cross-function reentrancy" | anti-patterns/reentrancy-anti-patterns.md#2, patterns/reentrancy-patterns.md#cross-function |
 | **Access Control** |
 | "access control issues", "authorization" | patterns/access-control-patterns.md, anti-patterns/access-control-anti-patterns.md |
@@ -76,8 +76,8 @@ AI responds with comprehensive lending audit guidance
 | "missing onlyOwner", "missing modifier" | anti-patterns/access-control-anti-patterns.md#2 |
 | "tx.origin issues", "tx.origin auth" | anti-patterns/access-control-anti-patterns.md#3, patterns/access-control-patterns.md#tx-origin |
 | **First Depositor** |
-| "first depositor", "inflation attack" | anti-patterns/oracle-anti-patterns.md#5, patterns/defi-vault-patterns.md#first-depositor, attack-trees/vault-attack-tree.md#[A1] |
-| "share price manipulation", "donate to pool" | patterns/defi-vault-patterns.md#donation-attack, attack-trees/vault-attack-tree.md#[A] |
+| "first depositor", "inflation attack" | anti-patterns/oracle-anti-patterns.md#5, patterns/vault-patterns.md#first-depositor, attack-trees/vault-attack-tree.md#[A1] |
+| "share price manipulation", "donate to pool" | patterns/vault-patterns.md#donation-attack, attack-trees/vault-attack-tree.md#[A] |
 
 ---
 
@@ -100,7 +100,7 @@ AI responds with comprehensive lending audit guidance
 |-----------|----------|
 | "learn auditing", "how to become auditor" | methodology/learning-path-attack-vectors.md, ROUTE-MAP.md |
 | "attack vectors", "common vulnerabilities" | methodology/learning-path-attack-vectors.md, XREF.md |
-| "defi patterns" | patterns/INDEX.md, patterns/lending-pool-patterns.md, patterns/dex-patterns.md |
+| "defi patterns" | INDEX.md, patterns/lending-pool-patterns.md, patterns/amm-patterns.md |
 | "bad code examples", "what not to do" | anti-patterns/INDEX.md |
 | "attack trees", "attack paths" | attack-trees/INDEX.md |
 
@@ -110,10 +110,10 @@ AI responds with comprehensive lending audit guidance
 
 | User Says | AI Loads |
 |-----------|----------|
-| "slither scan", "static analysis" | static-analysis/, commands/slither-commands.md |
-| "foundry test", "write foundry test" | commands/foundry-commands.md |
-| "aderyn scan", "aderyn" | static-analysis/, commands/aderyn-commands.md |
-| "mythril scan" | static-analysis/, commands/mythril-commands.md |
+| "slither scan", "static analysis" | static-analysis/, commands/SKILL.md |
+| "foundry test", "write foundry test" | commands/SKILL.md, methodology/poc-writing-guide.md |
+| "aderyn scan", "aderyn" | static-analysis/, commands/SKILL.md |
+| "mythril scan" | static-analysis/, commands/SKILL.md |
 
 ---
 
@@ -134,12 +134,12 @@ AI responds with comprehensive lending audit guidance
 | User Says | AI Loads |
 |-----------|----------|
 | "0x patterns", "0x security" | patterns/0x-patterns.md |
-| "erc20 patterns", "token patterns" | patterns/token-patterns.md, patterns/erc20-patterns.md |
+| "erc20 patterns", "token patterns" | patterns/erc20-patterns.md, patterns/weird-erc20-patterns.md |
 | "erc4626 patterns", "vault standard" | patterns/erc4626-patterns.md |
-| "governance patterns", "governance issues" | patterns/governance-patterns.md |
-| "signature patterns", "ecdsa issues" | patterns/signature-patterns.md |
+| "governance patterns", "governance issues" | patterns/dao-patterns.md, patterns/vote-patterns.md |
+| "signature patterns", "ecdsa issues" | patterns/signature-malleability-patterns.md, patterns/eip-712-patterns.md |
 | "flash loan patterns", "flash loan issues" | patterns/flash-loan-patterns.md |
-| "mev patterns", "mev issues" | patterns/mev-patterns.md |
+| "mev patterns", "mev issues" | patterns/front-running-patterns.md, patterns/sandwich-attack-patterns.md |
 
 ---
 
@@ -147,7 +147,7 @@ AI responds with comprehensive lending audit guidance
 
 | User Says | AI Loads |
 |-----------|----------|
-| "solidity audit", "evm audit" | solidity-scanner/, patterns/INDEX.md |
+| "solidity audit", "evm audit" | solidity-scanner/, INDEX.md |
 | "cairo audit", "starknet audit" | cairo-scanner/ |
 | "solana audit", "rust audit" | solana-scanner/ |
 | "move audit", "aptos audit", "sui audit" | move-scanner/ |
@@ -197,9 +197,9 @@ The AI should also detect context from the codebase:
 | `nonReentrant` modifier | patterns/reentrancy-patterns.md |
 | `ERC4626` inheritance | patterns/erc4626-patterns.md, attack-trees/vault-attack-tree.md |
 | `flash loan`, `flashLoan` | patterns/flash-loan-patterns.md |
-| `signature`, `ecrecover` | patterns/signature-patterns.md, anti-patterns for signatures |
+| `signature`, `ecrecover` | patterns/signature-malleability-patterns.md, anti-patterns/signature-anti-patterns.md |
 | `liquidate`, `liquidation` | attack-trees/lending-attack-tree.md#[B] |
-| `IUniswapV2Pair` | patterns/dex-patterns.md, attack-trees/dex-attack-tree.md |
+| `IUniswapV2Pair` | patterns/amm-patterns.md, attack-trees/dex-attack-tree.md |
 
 ---
 
@@ -229,7 +229,7 @@ When multiple triggers match, load in this order:
 
 | User Says | AI Action |
 |-----------|-----------|
-| "show me all skills" | Display INDEX.md, attack-trees/INDEX.md, anti-patterns/INDEX.md, patterns/INDEX.md |
+| "show me all skills" | Display INDEX.md, attack-trees/INDEX.md, anti-patterns/INDEX.md |
 | "cross reference [term]" | Search XREF.md for the term |
 | "what files should I read?" | Ask about protocol type, then recommend loading sequence |
 | "update triggers" | This file (TRIGGERS.md) |
@@ -317,5 +317,5 @@ All trigger targets should reference actual files in this repository:
 
 ---
 
-**Last Updated:** 2024
-**Version:** 1.0
+**Last Updated:** 2026-02-24
+**Version:** 2.0

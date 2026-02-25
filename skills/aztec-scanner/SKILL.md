@@ -4,6 +4,12 @@ title: Aztec Network Security Scanner
 category: chain-scanner
 trigger: "Audit Aztec|Noir|private contract"
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Aztec Network smart contracts written in
+  Noir, scan for privacy-specific vulnerabilities including state leakage, note
+  handling, or nullifier collisions, review private DeFi protocols for
+  information disclosure, or analyze encrypted computation and zero-knowledge
+  proof circuits.
 ---
 
 # Aztec Network Security Scanner
@@ -109,3 +115,53 @@ Aztec is a privacy-focused L2 with:
 - Noir language for circuit programming
 - Encrypted function arguments
 - Client-side proof generation
+
+## Error Code Reference
+
+Common Aztec/Noir errors encountered during audits. Noir circuits fail at proof generation time, making errors harder to debug than runtime reverts.
+
+### Noir Language Errors
+
+| Error Type | Error Pattern | Meaning |
+|-----------|--------------|----------|
+| Assertion failure | `assert(condition)` failed | Constraint not satisfied — proof cannot be generated |
+| Array bounds | `index out of bounds` | Array access exceeds declared length |
+| Integer overflow | `Overflow on arithmetic` | Operation exceeds field/integer bounds |
+| Type mismatch | `Expected type X, found Y` | Incorrect type in circuit computation |
+| Unresolved variable | `Variable not found` | Reference to undefined variable in circuit |
+| Division by zero | `Division by zero` | Denominator is zero in integer division |
+
+### Aztec Protocol Errors
+
+| Error Pattern | Source | Meaning |
+|--------------|--------|----------|
+| `'NOTE_NOT_FOUND'` | Note management | Note does not exist or was nullified |
+| `'NULLIFIER_ALREADY_EXISTS'` | Nullifier tree | Double-spend attempt — note already consumed |
+| `'INVALID_CALLER'` | Access control | Unauthorized function caller |
+| `'INVALID_CONTEXT'` | Context check | Wrong execution context (private vs public) |
+| `'INVALID_NOTE_TYPE'` | Note deserialization | Note type does not match expected schema |
+| `'PUBLIC_CALL_FAILED'` | Public function | Public portion of transaction reverted |
+| `'PRIVATE_CALL_FAILED'` | Private function | Private proof verification failed |
+| `'ENCRYPTION_FAILED'` | Note encryption | Failed to encrypt note for recipient |
+| `'INVALID_SELECTOR'` | Function dispatch | Function selector not found on contract |
+
+### Privacy-Specific Audit Errors
+
+| Issue | Error Pattern | Audit Significance |
+|-------|--------------|--------------------|
+| Note viewing key leak | No error — silent | If viewing keys are shared incorrectly, privacy is broken without any on-chain error |
+| Nullifier predictability | No error — logical | Predictable nullifiers allow note existence tracking — check nullifier derivation |
+| Public/private boundary leak | Transaction appears normal | Data flowing from private to public context may leak information — audit cross-context calls |
+| Incomplete nullification | No error | Note consumed but nullifier not published — allows double-spend |
+| Proof witness leakage | No on-chain error | Witness data in proof reveals private inputs — verify proof contains only public signals |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Privacy leakage not detected | Scanner audits logic without modeling information flow | Trace all data paths between private and public contexts; flag any private state exposed via public functions |
+| Nullifier collision risks missed | Scanner doesn't model nullifier tree | Verify nullifier derivation includes unique components (note hash, secret, index) |
+| Note encryption issues not caught | Scanner doesn't analyze encryption correctness | Verify notes are encrypted to correct recipient keys; check key rotation handling |
+| Cross-context reentrancy missed | Scanner treats private/public as isolated | Trace private → public → private call chains for state manipulation opportunities |
+| Proof circuit constraint gaps | Scanner checks Noir syntax, not constraint completeness | Verify every private input is constrained; unconstrained inputs allow proof forgery |
+| Client-side proof manipulation ignored | Scanner only checks on-chain contracts | Audit client-side proof generation logic for witness injection or tampering vectors |

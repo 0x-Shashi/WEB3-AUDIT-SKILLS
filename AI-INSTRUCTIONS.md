@@ -16,6 +16,42 @@ Your job is to:
 
 ---
 
+## ⚡ Automatic Trigger System (MANDATORY)
+
+**Before** doing anything else, you MUST use the trigger system to load the right skill files.
+
+### On Every Audit Request
+
+Call the `resolve_triggers` MCP tool with the user's query:
+
+```
+resolve_triggers({ query: "<user's request>" })
+```
+
+This automatically maps their request to the correct skill files. Do NOT manually guess which files to read — the trigger engine handles routing.
+
+### When Reviewing Source Code
+
+Call the `detect_code_patterns` MCP tool with the Solidity source:
+
+```
+detect_code_patterns({ code: "<solidity source code>" })
+```
+
+This detects patterns like `latestRoundData()`, `ERC4626`, `ecrecover`, `slot0`, etc. and loads the relevant vulnerability patterns automatically.
+
+### Why This Is Required
+
+The trigger system:
+- Routes to the **correct** files with zero guesswork
+- Detects code-level patterns humans miss (21 Solidity detectors)
+- Loads files **automatically** so you start with full context
+- Prevents you from relying on stale mental-model routing
+
+**Never skip triggers.** Even for simple requests like "check reentrancy", call `resolve_triggers` first — it may load supporting files you wouldn't think to check.
+
+---
+
 ## Skills Location
 
 All security knowledge is in the `skills/` folder:
@@ -222,22 +258,22 @@ When the user says:
 
 | Command | What to Do |
 |---------|------------|
-| "Audit this contract" | Full security review using relevant patterns |
-| "Check for reentrancy" | Use reentrancy-patterns.md specifically |
+| "Audit this contract" | `resolve_triggers("audit")` → full review with auto-loaded patterns |
+| "Check for reentrancy" | `resolve_triggers("reentrancy")` → loads reentrancy + related patterns |
 | "Generate a report" | Format findings as professional audit report |
-| "What patterns apply here?" | List which pattern files are relevant |
-| "Is this safe?" | Analyze against common vulnerability patterns |
+| "What patterns apply here?" | `resolve_triggers` + `detect_code_patterns` → list matched patterns |
+| "Is this safe?" | `detect_code_patterns(code)` + `resolve_triggers(context)` → analyze |
 | "Fix this vulnerability" | Provide fixed code with explanation |
 
 ---
 
 ## Files to Read First
 
-When starting an audit, read these files first:
+When starting an audit:
 
-1. `skills/INDEX.md` - Understand what patterns are available
-2. `skills/MASTER_CHECKLIST.md` - Get the complete checklist
-3. Relevant pattern files based on the contract type
+1. **Call `resolve_triggers`** with the user's query — this loads the right files automatically
+2. **Call `detect_code_patterns`** if the user provides Solidity code — this detects vulnerability patterns in their code
+3. `skills/MASTER_CHECKLIST.md` — Get the complete checklist for anything the triggers didn't cover
 
-Then proceed with the audit.
+The trigger system replaces manual file selection. Trust it.
 

@@ -23,6 +23,12 @@ tags:
   - scanner
   - security
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Solidity smart contracts for security
+  vulnerabilities, scan EVM-compatible contracts for reentrancy, oracle
+  manipulation, access-control, or flash-loan issues, review DeFi protocols on
+  Ethereum, Arbitrum, Optimism, Base, Polygon, or BSC, or generate security
+  audit reports for smart contract deployments.
 ---
 
 # Solidity Scanner Skill
@@ -158,3 +164,66 @@ Blast:
 | `fix-review/` | Verify proposed fixes after initial audit |
 | `differential-review/` | Compare upgraded contract versions |
 | `chain-guides/` | Chain-specific considerations when target != Ethereum mainnet |
+
+## Error Code Reference
+
+Common Solidity/EVM error selectors and revert reasons encountered during audits. Use a selector decoder like [openchain.xyz](https://openchain.xyz/signatures) or [4byte.directory](https://www.4byte.directory/) to identify unknown selectors.
+
+### OpenZeppelin Standard Errors
+
+| Error Selector | Error Signature | Meaning |
+|----------------|----------------|----------|
+| `0xe450d38c` | `ERC20InsufficientBalance(address,uint256,uint256)` | Token balance too low for transfer |
+| `0xfb8f41b2` | `ERC20InsufficientAllowance(address,uint256,uint256)` | Allowance too low for transferFrom |
+| `0x118cdaa7` | `OwnableUnauthorizedAccount(address)` | Caller is not the owner |
+| `0x1e4fbdf7` | `OwnableInvalidOwner(address)` | Invalid owner address (e.g., zero address) |
+| `0xe602df05` | `ERC20InvalidApprover(address)` | Invalid address for approve |
+| `0x94280d62` | `ERC20InvalidReceiver(address)` | Invalid receiver (zero address) |
+| `0xd93c0665` | `EnforcedPause()` | Contract is paused |
+| `0x8dfc202b` | `ExpectedPause()` | Contract is NOT paused (expected to be) |
+| `0xa9fbf51f` | `AccessControlUnauthorizedAccount(address,bytes32)` | Missing role for access control |
+| `0xd92e233d` | `ZeroAddress()` | Zero address provided where not allowed |
+
+### ERC Standard Errors
+
+| Error Selector | Error Signature | Meaning |
+|----------------|----------------|----------|
+| `0x7e273289` | `ERC721NonexistentToken(uint256)` | Token ID does not exist |
+| `0x177e802f` | `ERC721InsufficientApproval(address,uint256)` | Not approved for token operation |
+| `0x64283d7b` | `ERC721IncorrectOwner(address,uint256,address)` | Token not owned by expected address |
+| `0xf0dd15fd` | `ERC4626ExceededMaxDeposit(address,uint256,uint256)` | Deposit exceeds vault max |
+| `0x936941fc` | `ERC4626ExceededMaxRedeem(address,uint256,uint256)` | Redeem exceeds vault max |
+
+### Common Revert Reasons (String)
+
+| Revert String | Typical Source | Audit Significance |
+|--------------|---------------|--------------------|
+| `"ReentrancyGuard: reentrant call"` | OpenZeppelin ReentrancyGuard | Guard is active — check if all entry points are protected |
+| `"Initializable: contract is already initialized"` | OZ proxy initializer | Re-initialization attempt — check `_disableInitializers()` |
+| `"Address: low-level call failed"` | OZ Address library | External call failure — check error handling |
+| `"SafeERC20: low-level call failed"` | OZ SafeERC20 | Token transfer failure — may indicate non-standard token |
+| `"Pausable: paused"` / `"Pausable: not paused"` | OZ Pausable | Pause state mismatch — check centralization risk |
+| `"ECDSA: invalid signature"` | OZ ECDSA | Signature verification failed — check for malleable sigs |
+| `"ERC20: transfer amount exceeds balance"` | OZ ERC20 (pre-custom-errors) | Insufficient balance — older OZ version indicator |
+
+### Proxy-Related Errors
+
+| Error Selector | Error Signature | Meaning |
+|----------------|----------------|----------|
+| `0xb398979f` | `ERC1967InvalidImplementation(address)` | Invalid implementation address for proxy |
+| `0x4c9c8ce3` | `ERC1967InvalidAdmin(address)` | Invalid admin address for transparent proxy |
+| `0x7e2732890` | `ERC1967NonPayable()` | Proxy received ETH when not expected |
+| `0xf92ee8a9` | `InvalidInitialization()` | OZ v5 Initializable — already initialized |
+| `0xd7e6bcf8` | `NotInitializing()` | OZ v5 Initializable — not in initializing state |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Scanner loads generic patterns instead of Solidity-specific | Trigger phrases not matching the Solidity scanner | Verify `triggers` field in frontmatter matches user query; check TRIGGERS.md mapping |
+| False positives on `unchecked` blocks | Scanner flags all unchecked math as unsafe | Check Solidity version — 0.8.x+ has built-in overflow; `unchecked` in bounded loops is safe |
+| Missed reentrancy in cross-contract calls | Scanner only checks single-function reentrancy | Enable cross-contract analysis mode; load `patterns/` for read-only reentrancy patterns |
+| Oracle manipulation not detected | Protocol uses custom oracle not matching known patterns | Manually check any `balanceOf()` or reserve-based pricing; add custom oracle pattern |
+| L2-specific issues not flagged | Chain-specific guide not loaded | Load the appropriate `chain-guides/` file for the target L2 before scanning |
+| Proxy storage collision missed | Scanner doesn't map storage layouts across proxy/impl | Use `differential-review/` skill to compare storage layouts; check for `_gap` variables |
+| Too many low-severity findings | Scanning in paranoid mode | Switch to "Standard" scan profile; filter informational findings for final report |

@@ -4,6 +4,11 @@ title: Aptos Specialized Scanner
 category: chain-scanner
 trigger: "Audit Aptos|Aptos Move"
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Aptos Move smart contracts, scan
+  Aptos-specific patterns including global storage model, resource accounts, or
+  coin modules, review Aptos DeFi protocols for framework module interaction
+  vulnerabilities, or analyze Aptos-specific upgrade and governance patterns.
 ---
 
 # Aptos Specialized Scanner
@@ -133,3 +138,55 @@ public fun distribute_rewards(recipients: &vector<address>) {
 ## See Also
 - [Move Scanner](../move-scanner/SKILL.md) for general Move patterns
 - [Chain Guide: Aptos](../chain-guides/aptos.md) for chain-specific context
+
+## Error Code Reference
+
+Aptos-specific error codes and framework abort codes. Aptos uses the Move abort system with standard error categories.
+
+### Aptos Error Categories (std::error)
+
+| Category | Constant | Hex Prefix | Meaning |
+|----------|---------|-----------|----------|
+| `INVALID_ARGUMENT` | `1` | `0x1____` | Bad input parameter |
+| `OUT_OF_RANGE` | `2` | `0x2____` | Value outside acceptable range |
+| `NOT_FOUND` | `6` | `0x6____` | Resource or item not found |
+| `ALREADY_EXISTS` | `8` | `0x8____` | Resource or item already exists |
+| `PERMISSION_DENIED` | `5` | `0x5____` | Insufficient permissions |
+| `RESOURCE_EXHAUSTED` | `9` | `0x9____` | Limit reached (e.g., max supply) |
+| `UNAVAILABLE` | `13` | `0xD____` | Temporarily unavailable |
+
+### Aptos Framework Errors
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `0x10006` | `coin` | Coin store not registered for address |
+| `0x10007` | `coin` | Insufficient coin balance |
+| `0x80001` | `account` | Account already exists |
+| `0x80002` | `account` | Account not found |
+| `0x50001` | `table` | Key already exists |
+| `0x50002` | `table` | Key not found |
+| `0x60001` | `coin` | Coin amount is zero |
+| `0x90001` | `resource_account` | Resource account already exists |
+| `ENOT_OWNER` | Common | Signer is not the owner — access control check |
+| `ENOT_AUTHORIZED` | Common | Lacking required authorization |
+
+### Aptos Token / NFT Errors
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `ETOKEN_NOT_FOUND` | `token` | Token or collection does not exist |
+| `ECOLLECTION_NOT_FOUND` | `token` | Collection does not exist |
+| `EINSUFFICIENT_BALANCE` | `token` | Token balance too low for operation |
+| `ENOT_CREATOR` | `token` | Caller is not the collection creator |
+| `EFIELD_NOT_MUTABLE` | `token` | Attempting to modify immutable field |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Global storage vulnerabilities missed | Scanner doesn't audit `borrow_global` / `move_to` patterns | Map all global storage operations; check `exists<T>` before `borrow_global` and `move_to` |
+| Resource account risks not flagged | Scanner doesn't track `SignerCapability` lifecycle | Trace `resource_account::create_resource_account` and verify `SignerCapability` storage/access |
+| Module upgrade attack surface ignored | Scanner only checks current code | Verify `UpgradePolicy` (immutable vs compatible); check who holds the `UpgradeCap` |
+| View functions not audited | Scanner focuses on entry functions | View functions can leak sensitive state; audit all `#[view]` functions for information disclosure |
+| Event emission gaps not detected | Scanner doesn't check event coverage | Verify all state-changing operations emit events for off-chain tracking |
+| Coin type confusion not caught | Scanner trusts Move type system | Verify all coin operations use correct type parameters; check for `CoinType` aliasing |

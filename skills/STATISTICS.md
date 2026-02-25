@@ -160,7 +160,7 @@
 
 1. **Tag-based counts are a small subset.** The `finding_count` values used in pattern files (e.g., reentrancy: 59, oracle: 59) represent the number of findings tagged with that specific vulnerability label in the Solodit dataset. Two different vulnerability types can have the same tag count — this is coincidence from the dataset, not a copy-paste error. For example, both Oracle and Reentrancy have exactly 59 tagged findings.
 
-2. **Consolidated pattern files inherit single-pattern counts.** Files in `consolidated/` (e.g., `dos-gas-patterns.md`) currently show the `finding_count` from one constituent sub-pattern rather than the sum of all merged patterns. These counts are labeled `finding_count_source` to indicate they reference the primary constituent pattern, not the full consolidated scope.
+2. **Consolidated directory streamlined.** The `consolidated/` directory previously contained 9 bloated files (78–390 KB each) that concatenated all granular patterns. These were too large for any AI context window. They have been replaced with `PATTERN-SUMMARIES.md` (~21 KB) which preserves all unique summary tables, detection code, audit checklists, and the Token Compatibility Matrix, Real-World Exploits table, and Proxy Patterns Reference. Three small standalone summaries (defi-patterns.md, cross-chain-l2-patterns.md, access-control-patterns.md) were kept unchanged.
 
 3. **Extraction data files are empty.** The files in `EXTRACED SOLODIT DATA/` (JSON checkpoints) are 0-byte placeholders. The raw extracted data was processed into the statistics and pattern files but the raw JSON was not retained in the repository (likely due to file size constraints for Git).
 

@@ -28,6 +28,8 @@ Master lookup table mapping vulnerabilities → patterns → exploits → fixes.
     - Signature/Cryptography Specific
     - Token Handling
     - Flash Loan Attacks
+    - Solana Program Specific
+    - Solana Confidential Transfer
 - [By Real Exploit](#by-real-exploit)
   - 2023-2024 Exploits
   - 2022 Exploits
@@ -47,6 +49,9 @@ Master lookup table mapping vulnerabilities → patterns → exploits → fixes.
   - [Options](#options-new)
   - [Intent-Based DEX](#intent-based-dex-new)
   - [Insurance Protocols](#insurance-protocols-new)
+  - [Solana Programs](#solana-programs-new)
+- [Methodology Templates](#methodology-templates-new)
+- [Cross-Chain Reference](#cross-chain-reference)
 - [Quick Search](#quick-search)
 - [Navigation Tips](#navigation-tips)
 
@@ -243,6 +248,27 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Flash Loan Collateral Inflation | Critical | [lending-pool-patterns.md#collateral](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#5](anti-patterns/flash-loan-anti-patterns.md) | [lending-tree [C2]](attack-trees/lending-attack-tree.md) | Cream Finance 2021 ($130M) | Immediate |
 | Flash Loan Arbitrage Drain | Critical | [flash-loan-patterns.md#arbitrage](patterns/flash-loan-patterns.md) | [flash-loan-anti-patterns.md#6](anti-patterns/flash-loan-anti-patterns.md) | - | Warp Finance 2020 ($7.7M), Alpha Homora 2021 ($37M) | Immediate |
 | Flash Loan Cascade Liquidation | Critical | [lending-pool-patterns.md#liquidation-cascade](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#7](anti-patterns/flash-loan-anti-patterns.md) | [stablecoin-tree [E1]](attack-trees/stablecoin-attack-tree.md) | Venus Protocol 2021 ($200M) | Immediate |
+| **SOLANA PROGRAM SPECIFIC** |
+| Missing Owner Check | Critical | [solana-patterns.md#owner-check](solana-scanner/resources/solana-patterns.md) | [account-validation.md#owner](solana-scanner/resources/account-validation.md) | - | Cashio 2022 ($48M) | Immediate |
+| Missing Signer Check | Critical | [solana-patterns.md#signer-check](solana-scanner/resources/solana-patterns.md) | [account-validation.md#signer](solana-scanner/resources/account-validation.md) | - | Wormhole 2022 ($326M) | Immediate |
+| PDA Seed Manipulation | Critical | [solana-patterns.md#pda-seeds](solana-scanner/resources/solana-patterns.md) | [account-validation.md#pda](solana-scanner/resources/account-validation.md) | - | Crema Finance 2022 ($8.8M) | Immediate |
+| Account Type Cosplay | Critical | [solana-patterns.md#type-cosplay](solana-scanner/resources/solana-patterns.md) | [anchor-security.md#constraints](solana-scanner/resources/anchor-security.md) | - | Common in native programs | Immediate |
+| Arbitrary CPI | Critical | [solana-patterns.md#arbitrary-cpi](solana-scanner/resources/solana-patterns.md) | [anchor-security.md#cpi](solana-scanner/resources/anchor-security.md) | - | Multiple protocols | Immediate |
+| Reinitialization Attack | Critical | [solana-patterns.md#reinit](solana-scanner/resources/solana-patterns.md) | [anchor-security.md#init](solana-scanner/resources/anchor-security.md) | - | - | Immediate |
+| Account Revival (Closing) | High | [solana-patterns.md#revival](solana-scanner/resources/solana-patterns.md) | [pinocchio-security.md#closing](solana-scanner/resources/pinocchio-security.md) | - | - | High |
+| Duplicate Mutable Accounts | High | [solana-patterns.md#duplicate-accounts](solana-scanner/resources/solana-patterns.md) | - | - | - | High |
+| Integer Overflow (Solana) | High | [solana-patterns.md#overflow](solana-scanner/resources/solana-patterns.md) | - | - | - | High |
+| TryFrom Validation Bypass | Critical | [pinocchio-security.md#tryfrom](solana-scanner/resources/pinocchio-security.md) | - | - | Pinocchio-specific | Immediate |
+| Token-2022 Discriminator Mismatch | High | [pinocchio-security.md#token2022](solana-scanner/resources/pinocchio-security.md) | - | - | SPL Token-2022 | High |
+| Zero-Copy Alignment Unsafety | High | [pinocchio-security.md#zerocopy](solana-scanner/resources/pinocchio-security.md) | - | - | - | High |
+| **SOLANA CONFIDENTIAL TRANSFER** |
+| ElGamal Key Derivation Bypass | Critical | [confidential-transfer-patterns.md#CT-01](patterns/confidential-transfer-patterns.md) | - | - | Token-2022 Confidential | Immediate |
+| Pending Balance DoS | High | [confidential-transfer-patterns.md#CT-02](patterns/confidential-transfer-patterns.md) | - | - | - | High |
+| Proof Verification Bypass | Critical | [confidential-transfer-patterns.md#CT-03](patterns/confidential-transfer-patterns.md) | - | - | - | Immediate |
+| Auditor Key Compromise | High | [confidential-transfer-patterns.md#CT-04](patterns/confidential-transfer-patterns.md) | - | - | - | High |
+| Balance Type Confusion | Critical | [confidential-transfer-patterns.md#CT-05](patterns/confidential-transfer-patterns.md) | - | - | - | Immediate |
+| Multi-Tx Atomicity Gap | High | [confidential-transfer-patterns.md#CT-06](patterns/confidential-transfer-patterns.md) | - | - | - | High |
+| Key Compromise / Rotation | Medium | [confidential-transfer-patterns.md#CT-07](patterns/confidential-transfer-patterns.md) | - | - | - | Medium |
 
 ---
 
@@ -267,7 +293,10 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 | Inverse Finance | 2022 | $15.6M | Interest rate manipulation | [lending-pool-patterns.md#interest-rate](patterns/lending-pool-patterns.md) | [flash-loan-anti-patterns.md#3](anti-patterns/flash-loan-anti-patterns.md) | - |
 | Nomad Bridge | 2022 | $190M | Unprotected init | [access-control-patterns.md#initialization](patterns/access-control-patterns.md) | [access-control-anti-patterns.md#1](anti-patterns/access-control-anti-patterns.md) | [bridge-tree [E2]](attack-trees/bridge-attack-tree.md) |
 | Ronin Bridge | 2022 | $625M | Validator key compromise | [bridge-patterns.md#key-management](patterns/bridge-patterns.md) | - | [bridge-tree [A5]](attack-trees/bridge-attack-tree.md) |
-| Wormhole | 2022 | $326M | Missing signature verification | [signature-patterns.md#verification](patterns/signature-patterns.md) | - | [bridge-tree [A6]](attack-trees/bridge-attack-tree.md) |
+| Wormhole (Solana) | 2022 | $326M | Missing signer verification | [solana-patterns.md#signer-check](solana-scanner/resources/solana-patterns.md) | [account-validation.md#signer](solana-scanner/resources/account-validation.md) | - |
+| Cashio (Solana) | 2022 | $48M | Missing owner check, fake account injection | [solana-patterns.md#owner-check](solana-scanner/resources/solana-patterns.md) | [account-validation.md#owner](solana-scanner/resources/account-validation.md) | - |
+| Mango Markets (Solana) | 2022 | $116M | Oracle/price manipulation | [solana-scanner/SKILL.md](solana-scanner/SKILL.md) | - | - |
+| Crema Finance (Solana) | 2022 | $8.8M | PDA seed manipulation, fake tick account | [solana-patterns.md#pda-seeds](solana-scanner/resources/solana-patterns.md) | [account-validation.md#pda](solana-scanner/resources/account-validation.md) | - |
 | Harmony Horizon | 2022 | $100M | Validator key compromise | [bridge-patterns.md#key-management](patterns/bridge-patterns.md) | - | [bridge-tree [A5]](attack-trees/bridge-attack-tree.md) |
 | Rari Capital | 2022 | $80M | Malicious strategy | [strategy-patterns.md#validation](patterns/strategy-patterns.md) | - | [vault-tree [B2]](attack-trees/vault-attack-tree.md) |
 | Inverse Finance | 2022 | $1.2M | Stale oracle | [oracle-patterns.md#staleness](patterns/oracle-patterns.md) | [oracle-anti-patterns.md#2](anti-patterns/oracle-anti-patterns.md) | [lending-tree [A1]](attack-trees/lending-attack-tree.md) |
@@ -507,6 +536,37 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 
 ---
 
+### Solana Programs (NEW)
+
+**Critical Vulnerabilities:**
+- Missing owner/signer validation
+- PDA seed manipulation
+- Account type cosplay (discriminator bypass)
+- Arbitrary cross-program invocation (CPI)
+- Reinitialization attacks
+- Account revival after closing
+- Duplicate mutable accounts
+- Integer overflow in token math
+- Confidential transfer proof bypass
+- ElGamal key derivation bypass
+
+**Primary References:**
+- Scanner: [solana-scanner/SKILL.md](solana-scanner/SKILL.md) — 9 vulnerability categories, Anchor + Pinocchio code
+- Patterns: [solana-patterns.md](solana-scanner/resources/solana-patterns.md) — Comprehensive vulnerability patterns with code
+- Account Validation: [account-validation.md](solana-scanner/resources/account-validation.md) — 5-check validation matrix
+- Anchor Security: [anchor-security.md](solana-scanner/resources/anchor-security.md) — Constraint reference + common vulnerabilities
+- Pinocchio Security: [pinocchio-security.md](solana-scanner/resources/pinocchio-security.md) — TryFrom, Token-2022, zero-copy safety
+- Confidential Transfers: [confidential-transfer-patterns.md](patterns/confidential-transfer-patterns.md) — 7 patterns, ElGamal, proof verification
+- Testing: [solana-testing-for-auditors.md](solana-scanner/resources/solana-testing-for-auditors.md) — LiteSVM, Mollusk, Surfpool, PoC examples
+
+**Key Solana Exploits:**
+- Wormhole 2022 ($326M) — Missing signer verification
+- Mango Markets 2022 ($116M) — Oracle/price manipulation
+- Cashio 2022 ($48M) — Missing owner check, fake account injection
+- Crema Finance 2022 ($8.8M) — PDA seed manipulation
+
+---
+
 ### DEX/AMM (EXPANDED)
 
 **Critical Vulnerabilities:**
@@ -548,6 +608,50 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 
 ---
 
+## Cross-Chain Reference
+
+**For auditors working across multiple chains:**
+
+- [Cross-Chain Vulnerability Mapping](patterns/cross-chain-vulnerability-mapping.md) — Solana ↔ EVM 1:1 vulnerability equivalences, chain-specific vulns, concept cheat sheet
+- [Solana Curated Links](solana-scanner/resources/curated-links.md) — 30+ official Solana security links, framework repos, testing tools
+- [Formal Verification for Auditors](solana-scanner/resources/formal-verification-for-auditors.md) — Kani proof evaluation, classification system, property categories, red flags
+
+---
+
+## Methodology Templates (NEW)
+
+**Reusable audit methodology templates — how to document, verify, and test security properties for any protocol.**
+
+These templates capture verification methodology, not protocol-specific content. They can be applied to any DeFi protocol on any chain.
+
+| Template | File | Purpose |
+|----------|------|---------|
+| Admin Key Threat Model | [templates/admin-threat-model.md](templates/admin-threat-model.md) | Document what privileged keys CAN/CANNOT do, with test names |
+| Formal Verification Audit | [templates/formal-verification-audit.md](templates/formal-verification-audit.md) | Evaluate proof suites: inventory, classify, map to claims |
+| Proof Strength Assessment | [templates/proof-strength-assessment.md](templates/proof-strength-assessment.md) | Grade individual proofs: 6-point analysis, STRONG/WEAK/VACUOUS |
+| Trust Boundary Documentation | [templates/trust-boundary-documentation.md](templates/trust-boundary-documentation.md) | Map layered architectures, CPI security, account models |
+| Security Properties Checklist | [templates/security-properties-checklist.md](templates/security-properties-checklist.md) | Enumerate, categorize, and verify security invariants |
+| Failure Modes & Recovery | [templates/failure-modes-recovery.md](templates/failure-modes-recovery.md) | Document failures, recovery procedures, monitoring |
+| State Machine Fuzzer | [templates/state-machine-fuzzer.md](templates/state-machine-fuzzer.md) | Build deterministic integration fuzzers: PRNG, action enum, invariant checker |
+
+**Solana-Specific Resources (methodology-extracted):**
+
+| Resource | File | Purpose |
+|----------|------|---------|
+| Adversarial Test Design | [solana-scanner/resources/adversarial-test-design.md](solana-scanner/resources/adversarial-test-design.md) | Attack-first test taxonomy, 10-category checklist, conservation invariant pattern |
+| CU Worst-Case Design | [solana-scanner/resources/solana-testing-for-auditors.md §7](solana-scanner/resources/solana-testing-for-auditors.md) | 9-level CU escalation framework, benchmark reporting template |
+| Verify Module Pattern | [solana-scanner/resources/formal-verification-for-auditors.md §11](solana-scanner/resources/formal-verification-for-auditors.md) | Extract-and-prove: separate decision logic for Kani verification |
+
+**When to use each template:**
+
+- **Starting a new audit?** → Admin Threat Model + Trust Boundary + Security Properties
+- **Protocol claims "formally verified"?** → Formal Verification Audit + Proof Strength
+- **Writing audit report?** → Failure Modes + Security Properties (gap analysis)
+- **DeFi perpetuals/derivatives?** → All six templates + State Machine Fuzzer
+- **Evaluating test quality?** → Adversarial Test Design + CU Worst-Case
+
+---
+
 ## Quick Search
 
 **For Auditors:**
@@ -577,4 +681,4 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 ---
 
 **Last Updated:** 2025
-**Version:** 4.0 (Batch 4 Complete - Intent-Based, Insurance, Vault, Math, Signature)
+**Version:** 7.0 (Batch 7 — Adversarial Test Design, CU Worst-Case Scenarios, State Machine Fuzzer Template, Verify Module Extract-and-Prove Pattern)

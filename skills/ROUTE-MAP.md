@@ -80,7 +80,7 @@ START
   ├─► patterns/lending-pool-patterns.md
   │     └─ Core lending mechanics, borrow/repay, utilization
   │
-  ├─► patterns/oracle-manipulation-patterns.md
+  ├─► patterns/oracle-patterns.md
   │     └─ Price feed attacks, stale prices, manipulation
   │
   ├─► patterns/liquidation-patterns.md
@@ -100,10 +100,10 @@ START
 
 | If Protocol Has... | Also Read |
 |-------------------|-----------|
-| Governance tokens | governance-token-patterns.md |
-| Isolated markets | composability-attacks.md |
-| Cross-chain lending | bridge-patterns.md |
-| NFT collateral | nft-patterns.md |
+| Governance tokens | patterns/dao-patterns.md, patterns/vote-patterns.md |
+| Isolated markets | methodology/composability-attacks.md |
+| Cross-chain lending | patterns/bridge-patterns.md |
+| NFT collateral | patterns/nft-patterns.md |
 
 ### Key Vulnerabilities by Severity
 
@@ -127,6 +127,9 @@ START
   ├─► patterns/amm-patterns.md
   │     └─ Constant product, liquidity math, LP tokens
   │
+  ├─► patterns/swap-patterns.md
+  │     └─ Token swap mechanics, routing, path validation
+  │
   ├─► patterns/sandwich-attack-patterns.md
   │     └─ Front-running, back-running, MEV extraction
   │
@@ -144,10 +147,10 @@ START
 
 | If DEX Has... | Also Read |
 |---------------|-----------|
-| Concentrated liquidity | tick-math-patterns.md |
-| Hooks (V4 style) | hook-attacks.md |
-| Stable swaps | curve-patterns.md |
-| Limit orders | intent-based-attacks.md |
+| Concentrated liquidity | patterns/precision-loss-patterns.md, protocol-playbooks/uniswap-v3.md |
+| Hooks (V4 style) | patterns/hook-attacks.md |
+| Stable swaps | protocol-playbooks/curve.md |
+| Limit orders | patterns/intent-based-attacks.md |
 
 ### Key Vulnerabilities by Severity
 
@@ -171,8 +174,11 @@ START
   ├─► patterns/bridge-patterns.md
   │     └─ Lock/mint, burn/unlock, message verification
   │
-  ├─► patterns/signature-patterns.md
+  ├─► patterns/signature-malleability-patterns.md
   │     └─ Multi-sig, threshold, signature malleability
+  │
+  ├─► patterns/eip-712-patterns.md
+  │     └─ Typed data signing, domain separator, replay prevention
   │
   ├─► patterns/replay-attack-patterns.md
   │     └─ Cross-chain replay, nonce management
@@ -188,10 +194,10 @@ START
 
 | If Bridge Has... | Also Read |
 |-----------------|-----------|
-| Optimistic verification | fraud-proof-patterns.md |
-| ZK proofs | zk-proof-attacks.md |
+| Optimistic verification | patterns/l2-security.md, chain-guides/optimism.md |
+| ZK proofs | patterns/zk-proof-attacks.md |
 | LayerZero/Axelar | protocol-playbooks/layerzero-v2.md |
-| Token wrapping | token-wrapper-patterns.md |
+| Token wrapping | patterns/erc20-patterns.md, patterns/weird-erc20-patterns.md |
 
 ### Key Vulnerabilities by Severity
 
@@ -218,8 +224,8 @@ START
   ├─► patterns/share-inflation-patterns.md
   │     └─ First depositor, donation attack, rounding
   │
-  ├─► patterns/donation-attack-patterns.md
-  │     └─ Direct transfer manipulation, share price inflation
+  ├─► patterns/first-depositor-issue-patterns.md
+  │     └─ Donation attack, direct transfer manipulation, share price inflation
   │
   ├─► methodology/composability-attacks.md
   │     └─ Cross-protocol interactions, flash loan chains
@@ -232,10 +238,10 @@ START
 
 | If Vault Has... | Also Read |
 |-----------------|-----------|
-| Strategies | strategy-patterns.md |
-| Multiple assets | multi-asset-patterns.md |
-| Timelocks | timelock-patterns.md |
-| Withdrawal queues | queue-patterns.md |
+| Strategies | patterns/vault-patterns.md |
+| Multiple assets | patterns/decimals-patterns.md, patterns/erc20-patterns.md |
+| Timelocks | patterns/timelock-patterns.md |
+| Withdrawal queues | patterns/withdraw-pattern-patterns.md |
 
 ### Key Vulnerabilities by Severity
 
@@ -265,10 +271,10 @@ START
   ├─► patterns/reward-distribution-patterns.md
   │     └─ Reward calculation, claim timing, dust attacks
   │
-  ├─► patterns/withdrawal-patterns.md
+  ├─► patterns/withdraw-pattern-patterns.md
   │     └─ Unbonding period, queue manipulation
   │
-  └─► patterns/delegation-patterns.md
+  └─► patterns/delegate-patterns.md
         └─ Operator selection, validator management
 ```
 
@@ -276,10 +282,10 @@ START
 
 | If System Has... | Also Read |
 |-----------------|-----------|
-| Liquid staking tokens | lst-patterns.md |
-| Multiple validators | validator-patterns.md |
-| MEV sharing | mev-patterns.md |
-| Governance | governance-token-patterns.md |
+| Liquid staking tokens | protocol-playbooks/lido.md |
+| Multiple validators | patterns/delegate-patterns.md |
+| MEV sharing | patterns/front-running-patterns.md, patterns/sandwich-attack-patterns.md |
+| Governance | patterns/dao-patterns.md, patterns/vote-patterns.md |
 
 ### Key Vulnerabilities by Severity
 
@@ -306,8 +312,11 @@ START
   ├─► patterns/auction-patterns.md
   │     └─ English, Dutch, sealed-bid, timing attacks
   │
-  ├─► patterns/signature-patterns.md
+  ├─► patterns/signature-malleability-patterns.md
   │     └─ Off-chain orders, signature replay, cancellation
+  │
+  ├─► patterns/eip-712-patterns.md
+  │     └─ Typed data signing for off-chain orders
   │
   ├─► patterns/royalty-patterns.md
   │     └─ ERC2981, fee distribution, bypass prevention
@@ -335,8 +344,11 @@ START
 ```
 START
   │
-  ├─► patterns/governance-patterns.md
-  │     └─ Proposal creation, voting, execution
+  ├─► patterns/dao-patterns.md
+  │     └─ DAO mechanics, proposal creation, execution
+  │
+  ├─► patterns/vote-patterns.md
+  │     └─ Voting systems, quorum, snapshot attacks
   │
   ├─► patterns/flash-loan-patterns.md
   │     └─ Flash loan voting, snapshot manipulation
@@ -344,7 +356,7 @@ START
   ├─► patterns/timelock-patterns.md
   │     └─ Delay bypass, emergency functions
   │
-  ├─► patterns/delegation-patterns.md
+  ├─► patterns/delegate-patterns.md
   │     └─ Vote delegation, snapshot attacks
   │
   └─► patterns/access-control-patterns.md
@@ -373,7 +385,7 @@ START
   ├─► protocol-playbooks/hyperliquid.md
   │     └─ Orderbook, margin, funding rates
   │
-  ├─► patterns/oracle-manipulation-patterns.md
+  ├─► patterns/oracle-patterns.md
   │     └─ Mark price, index price, funding attacks
   │
   ├─► patterns/liquidation-patterns.md
@@ -408,8 +420,11 @@ START
   ├─► patterns/intent-based-attacks.md
   │     └─ Solver collusion, intent front-running
   │
-  ├─► patterns/signature-patterns.md
-  │     └─ Intent signing, cancellation, replay
+  ├─► patterns/signature-malleability-patterns.md
+  │     └─ Intent signing, signature replay, cancellation
+  │
+  ├─► patterns/eip-712-patterns.md
+  │     └─ Typed data signing for intents
   │
   ├─► patterns/solver-patterns.md
   │     └─ Solver competition, MEV extraction
@@ -443,7 +458,7 @@ Regardless of protocol type, **always check** these patterns:
 │  □ patterns/reentrancy-patterns.md                      │
 │    └─ All external calls, callbacks                     │
 │                                                         │
-│  □ patterns/integer-overflow-patterns.md                │
+│  □ patterns/overflow-underflow-patterns.md              │
 │    └─ Unchecked blocks, type casting                    │
 │                                                         │
 │  □ patterns/dos-patterns.md                             │
@@ -469,7 +484,7 @@ Regardless of protocol type, **always check** these patterns:
 | **Solana** | chain-guides/solana.md | Account model, PDA, CPI |
 | **Move (Sui/Aptos)** | chain-guides/sui.md, aptos.md | Resources, abilities |
 | **StarkNet** | chain-guides/starknet.md | Cairo, felt252, native AA |
-| **TON** | chain-guides/ton.md | Actor model, async |
+| **TON** | ton-scanner/SKILL.md | Actor model, async |
 | **Cosmos** | chain-guides/cosmos.md | IBC, modules |
 
 ---
@@ -484,8 +499,8 @@ Regardless of protocol type, **always check** these patterns:
 | Chain-specific | `chain-guides/*.md` |
 | Severity classification | `severity/*.md` |
 | Comprehensive checklist | `checklists/comprehensive-checklist.md` |
-| PoC templates | `poc-library/*.sol` |
-| Secure implementations | `secure-patterns/*.sol` |
+| PoC templates | `methodology/poc-writing-guide.md` |
+| Secure implementations | `methodology/secure-pattern-reference.md` |
 
 ---
 

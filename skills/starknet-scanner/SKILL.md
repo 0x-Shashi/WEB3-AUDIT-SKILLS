@@ -4,6 +4,12 @@ title: Starknet Specialized Scanner
 category: chain-scanner
 trigger: "Audit Starknet|Starknet contract"
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Starknet contracts for security
+  vulnerabilities, scan Cairo contracts for Starknet-specific patterns including
+  account abstraction, class replacement, or L1-L2 messaging, review Starknet
+  DeFi protocols for component architecture flaws, or analyze cross-layer
+  bridge security.
 ---
 
 # Starknet Specialized Scanner
@@ -205,3 +211,65 @@ Starknet communicates with Ethereum L1 via asynchronous messaging:
 ## See Also
 - [Cairo Scanner](../cairo-scanner/SKILL.md) for Cairo language patterns
 - [Chain Guide: Starknet](../chain-guides/starknet.md) for chain context
+
+## Error Code Reference
+
+Starknet-specific error codes and system errors encountered during audits.
+
+### Starknet OS / Sequencer Errors
+
+| Error Code | Name | Meaning |
+|-----------|------|----------|
+| `TRANSACTION_FAILED` | Transaction failure | Generic execution failure — check inner error |
+| `ENTRYPOINT_NOT_FOUND` | Missing entrypoint | Selector not found on contract — wrong function name/args |
+| `UNINITIALIZED_CONTRACT` | No contract | Address has no deployed contract class |
+| `ENTRY_POINT_FAILED` | Execution revert | Contract function reverted — check custom error |
+| `FEE_TRANSFER_FAILURE` | Fee payment | Insufficient balance to pay transaction fee |
+| `VALIDATE_FAILURE` | Account validation | Account `__validate__` rejected transaction — signature/auth issue |
+| `OUT_OF_RESOURCES` | Resource limit | Transaction exceeded Cairo steps or builtins limit |
+| `CLASS_ALREADY_DECLARED` | Duplicate class | Contract class hash already declared on network |
+
+### Account Abstraction Errors
+
+| Error Pattern | Source | Meaning |
+|--------------|--------|----------|
+| `'INVALID_SIGNATURE'` | `__validate__` | Signature verification failed in account contract |
+| `'INVALID_CALLER'` | Account guard | Caller is not the expected account or protocol |
+| `'INVALID_TX_VERSION'` | Version check | Transaction version not supported (v1 vs v3) |
+| `'EXPIRED'` | Time check | Transaction or session expired |
+| `'UNDERSPENT_FEE'` | Fee estimation | Actual fee lower than estimate — potential gas griefing |
+| `'PAYMASTER_REJECTED'` | Paymaster | Paymaster refused to sponsor transaction |
+
+### Starknet Contract Errors (OpenZeppelin Cairo)
+
+| Error String | Component | Meaning |
+|-------------|----------|----------|
+| `'Caller is not the owner'` | OwnableComponent | Missing owner role — access control |
+| `'Caller is the zero address'` | OwnableComponent | Invalid zero caller |
+| `'New owner is the zero address'` | OwnableComponent | Invalid ownership transfer |
+| `'ERC20: insufficient balance'` | ERC20Component | Token balance too low |
+| `'ERC20: insufficient allowance'` | ERC20Component | Approval not set |
+| `'ERC721: invalid token ID'` | ERC721Component | Token does not exist |
+| `'ERC721: unauthorized caller'` | ERC721Component | Not owner or approved |
+| `'ReentrancyGuard: reentrant call'` | ReentrancyGuardComponent | Reentrancy detected |
+| `'Class hash cannot be zero'` | UpgradeableComponent | Invalid upgrade target |
+
+### L1↔L2 Messaging Errors
+
+| Error Pattern | Direction | Meaning |
+|--------------|----------|----------|
+| `'INVALID_MESSAGE_TO_CONSUME'` | L1→L2 | Message not found in L2 pending messages |
+| `'MESSAGE_NOT_SENT'` | L2→L1 | L2 message not recorded by sequencer |
+| `'INVALID_FROM_ADDRESS'` | L1→L2 | L1 sender address does not match expected |
+| `'INVALID_NONCE'` | Both | Message nonce mismatch — replay or ordering issue |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Account abstraction vulnerabilities missed | Scanner uses EOA mental model | Audit `__validate__` and `__execute__` in all account contracts; check signature schemes |
+| `replace_class` upgrade risks not flagged | Scanner doesn't track class replacement | Map all `replace_class_syscall` calls; verify upgrade authority and timelock protections |
+| Component storage collision missed | Scanner doesn't model Cairo component storage | Verify component storage isolation; check for `#[storage]` field name conflicts across components |
+| L1↔L2 message handling gaps | Scanner audits L2 in isolation | Audit `#[l1_handler]` functions; trace message flow from L1 contract through Starknet OS |
+| Fee estimation manipulation not caught | Scanner doesn't model Starknet fee mechanism | Check `__validate__` and `__execute__` for fee-related assumptions; test with v3 transactions |
+| Missing event emission in state changes | Scanner focuses on logic, not observability | Verify all state-changing functions emit events; critical for off-chain indexing and monitoring |

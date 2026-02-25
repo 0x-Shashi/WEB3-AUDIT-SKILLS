@@ -6,6 +6,12 @@ chains: [starknet]
 languages: [cairo]
 version: cairo-2.x
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Cairo smart contracts for security
+  vulnerabilities, scan Starknet contracts for felt overflow, storage collision,
+  or account abstraction issues, review Cairo 2.x contracts for component
+  architecture flaws, or analyze STARK-based protocols for cryptographic and
+  computational errors.
 ---
 
 # Cairo Scanner Skill
@@ -124,3 +130,55 @@ let result = a / b; // result is 3 (integer truncation, as expected)
 | `chain-guides/starknet.md` | Chain-level context for Starknet architecture |
 | `patterns/` | Cross-reference with general vulnerability categories (reentrancy, access control) |
 | `exploit-forensics/` | Limited Starknet exploits but growing as ecosystem matures |
+
+## Error Code Reference
+
+Common Cairo/Starknet errors encountered during audits. Cairo errors manifest as felt252 values in transaction reverts.
+
+### Cairo Language Errors
+
+| Error Pattern | Error Source | Meaning |
+|--------------|-------------|----------|
+| `felt252 overflow` | Arithmetic operation | Result exceeds field prime P (≈ 2^251 + 17·2^192 + 1) — wraps silently |
+| `index out of bounds` | Array access | Array index exceeds length — causes execution failure |
+| `Option::unwrap on None` | Option handling | Attempted to unwrap an empty Option — missing existence check |
+| `assertion failed` | `assert()` macro | Contract invariant violation — check assert conditions |
+| `'Entry not found'` | StorageMap access | Key does not exist in LegacyMap/Map — missing default handling |
+| `u256_sub Overflow` | Subtraction underflow | Unsigned subtraction result would be negative |
+| `u256_add Overflow` | Addition overflow | Addition exceeds u256 max value |
+| `Division by zero` | Division operation | Denominator is zero — missing zero-check |
+
+### Starknet Contract Errors
+
+| Error Pattern | Error Source | Meaning |
+|--------------|-------------|----------|
+| `'Caller is not the owner'` | OZ Ownable | Missing ownership — check access control |
+| `'Caller is the zero address'` | OZ Ownable | Zero address caller — validate caller identity |
+| `'ERC20: insufficient balance'` | OZ ERC20 | Token balance too low |
+| `'ERC20: insufficient allowance'` | OZ ERC20 | Approval not set or insufficient |
+| `'ERC20: approve to zero address'` | OZ ERC20 | Invalid spender address |
+| `'ERC721: invalid token ID'` | OZ ERC721 | Token does not exist |
+| `'Contract already initialized'` | Initializable pattern | Re-initialization attempt — check initializer guard |
+| `'ENTRYPOINT_NOT_FOUND'` | Starknet OS | Called selector doesn't exist on contract |
+| `'UNINITIALIZED_CONTRACT'` | Starknet OS | Class not declared or deployed |
+| `'TRANSACTION_FAILED'` | Starknet sequencer | Generic failure — check inner error for details |
+
+### Felt Arithmetic Audit Concerns
+
+| Issue | Risk | Detection |
+|-------|------|----------|
+| Felt overflow wrapping | Arithmetic wraps mod P instead of reverting | Flag all felt252 math ops — prefer u256/u128 for financial math |
+| Felt comparison edge cases | `<` and `>` comparisons are mod P, not natural ordering | Check comparisons on felt252 values — may produce unexpected results |
+| Integer to felt truncation | Converting large u256 to felt252 silently truncates | Flag all `into()` / `try_into()` conversions between types |
+| Storage key collision | LegacyMap keys hash via Pedersen — potential collision with crafted inputs | Verify map key uniqueness assumptions |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Scanner misses felt overflow issues | Analyzing code as if integers revert on overflow | Cairo felt252 wraps mod P — flag all felt arithmetic in financial logic |
+| False positives on storage access | Scanner flags all LegacyMap reads as risky | Verify if default value (0) is safe for the use case |
+| Account abstraction patterns not detected | Scanner uses EVM mental model | Load `starknet-scanner/` for account abstraction-specific checks |
+| Component architecture flaws missed | Scanner doesn't understand Cairo components | Manually review component trait implementations and storage conflicts |
+| Missed reentrancy via L1 handler | Scanner only checks external functions | Include `#[l1_handler]` functions in reentrancy analysis |
+| Cairo version mismatch warnings | Pattern written for Cairo 1.x, contract uses 2.x | Verify syntax patterns match target Cairo version; update detection rules |

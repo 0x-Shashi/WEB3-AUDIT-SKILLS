@@ -4,6 +4,11 @@ title: Cosmos / CosmWasm Security Scanner
 category: chain-scanner
 trigger: "Audit Cosmos|CosmWasm|IBC"
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Cosmos SDK modules or CosmWasm smart
+  contracts, scan IBC protocol interactions for relay, channel, or packet
+  vulnerabilities, review Cosmos Go modules for state machine exploits, or
+  analyze cross-chain message handling in the Cosmos ecosystem.
 ---
 
 # Cosmos / CosmWasm Security Scanner
@@ -185,3 +190,57 @@ pub fn reply(deps: DepsMut, _env: Env, msg: Reply) -> Result<Response, ContractE
 
 ## Workflows
 - [CosmWasm Audit](workflows/cosmwasm-audit.md)
+
+## Error Code Reference
+
+Common Cosmos SDK, CosmWasm, and IBC error codes encountered during audits.
+
+### CosmWasm Standard Errors
+
+| Error Type | Error Name | Meaning |
+|-----------|-----------|----------|
+| `StdError::NotFound` | `NotFound { kind }` | Queried item not found in storage |
+| `StdError::InvalidBase64` | `InvalidBase64 { msg }` | Invalid base64 encoding in message |
+| `StdError::InvalidUtf8` | `InvalidUtf8 { msg }` | Invalid UTF-8 in string conversion |
+| `StdError::Overflow` | `Overflow { source }` | Arithmetic overflow in `Uint128`/`Uint256` operations |
+| `StdError::DivideByZero` | `DivideByZero { source }` | Division by zero in math operation |
+| `StdError::ConversionOverflow` | `ConversionOverflow { source }` | Type conversion exceeds target range |
+| `StdError::GenericErr` | `GenericErr { msg }` | Catch-all error — check `msg` for specifics |
+
+### Cosmos SDK Module Errors
+
+| Module | Codespace | Error Code | Meaning |
+|--------|----------|-----------|----------|
+| `bank` | `bank` | `5` | Insufficient funds for send |
+| `bank` | `bank` | `8` | Send disabled for denom |
+| `staking` | `staking` | `5` | Validator not found |
+| `staking` | `staking` | `7` | Delegation not found |
+| `staking` | `staking` | `12` | Insufficient shares for undelegation |
+| `auth` | `auth` | `4` | Insufficient fee |
+| `auth` | `auth` | `9` | Signature verification failed |
+| `gov` | `gov` | `3` | Unknown proposal |
+| `gov` | `gov` | `5` | Inactive proposal — voting period ended |
+
+### IBC Protocol Errors
+
+| Module | Error Code | Meaning |
+|--------|-----------|----------|
+| `channel` | `5` | Channel not found |
+| `channel` | `11` | Packet already received — replay protection |
+| `channel` | `17` | Packet timeout — message expired |
+| `connection` | `5` | Connection not found |
+| `transfer` | `3` | Invalid denomination trace |
+| `transfer` | `6` | Receive disabled on this channel |
+| `client` | `6` | Client state not found |
+| `client` | `9` | Consensus state not found |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| IBC message handling vulnerabilities missed | Scanner only checks contract logic, not IBC layer | Load `resources/ibc-security.md` and audit `ibc_packet_receive` / `ibc_packet_ack` handlers |
+| CosmWasm reply handler issues not detected | Scanner doesn't follow submessage flow | Trace all `SubMsg` with `ReplyOn::Success`/`ReplyOn::Error` and match reply IDs |
+| State machine exploit not flagged | Scanner checks individual messages, not sequences | Analyze multi-message transaction flows for state inconsistencies |
+| Missing sudo handler audit | Scanner focuses on execute/query only | Check `sudo()` entry point — often used for privileged chain-level operations |
+| Gas griefing not detected | Scanner doesn't model gas costs | Flag unbounded loops/iterations in `execute` and `query` handlers |
+| Cross-contract call risks missed | Scanner doesn't trace inter-contract calls | Map all `WasmMsg::Execute` and `WasmQuery::Smart` calls to external contracts |

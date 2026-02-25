@@ -95,6 +95,46 @@ pub mint: Account<'info, Mint>,
 | Duplicate accounts | Distinctness check | Double-count balances | bZx-style self-transfer |
 | Stale data | Freshness check | Use outdated state | Accounts not refreshed after CPI |
 
+## Pinocchio-Specific Validation
+
+When auditing native programs using Pinocchio (lightweight alternative to `solana-program`):
+
+### TryFrom Validation
+```rust
+// [VULNERABLE] Unchecked cast
+let mint = unsafe { Mint::from_account_info_unchecked(&account_info) };
+
+// [SAFE] TryFrom validates discriminator + layout
+let mint = Mint::try_from(&account_info)?;
+// Checks: owner, data length, discriminator bytes
+```
+
+### Token-2022 Awareness
+```rust
+// AUDIT: Pinocchio Mint/Token may not handle Token-2022 extensions
+// Check for: transfer hooks, transfer fees, confidential transfer extensions
+// If Token-2022 is possible, validate the token program ID:
+if account.owner() == &spl_token::ID {
+    // SPL Token — standard validation
+} else if account.owner() == &spl_token_2022::ID {
+    // Token-2022 — check extensions
+}
+```
+
+### Account Closing (Native/Pinocchio)
+```rust
+// [VULNERABLE] Only drains lamports
+**source.lamports_mut() = 0;
+**destination.lamports_mut() += source_lamports;
+// Data still readable — revival attack possible
+
+// [SAFE] Zero data + drain lamports
+source.data.borrow_mut().fill(0);
+source.realloc(0, false)?;
+**source.lamports_mut() = 0;
+**destination.lamports_mut() += source_lamports;
+```
+
 ## Validation Matrix Template
 
 Use this matrix for every instruction in a native Solana program:
@@ -116,4 +156,6 @@ Use this matrix for every instruction in a native Solana program:
 
 - [Solana Vulnerability Patterns](solana-patterns.md) — Full pattern reference with vulnerable + secure code
 - [Anchor Security Guide](anchor-security.md) — Anchor-specific validation and vulnerabilities
+- [Pinocchio Security](pinocchio-security.md) — TryFrom, Token-2022 discriminators, zero-copy safety
+- [Solana Testing for Auditors](solana-testing-for-auditors.md) — PoC examples for validation bypass
 - [Native Audit Workflow](../workflows/native-audit.md) — Step-by-step native program audit

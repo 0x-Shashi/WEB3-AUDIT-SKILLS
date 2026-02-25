@@ -5,43 +5,103 @@
   "author": "0x-Shashi",
   "license": "MIT",
   "skills_directory": "../skills",
-  "capabilities": [
-    "solidity-scanning",
-    "solana-scanning",
-    "cairo-scanning",
-    "move-scanning",
-    "cosmos-scanning",
-    "ton-scanning",
-    "attack-chain-detection",
-    "protocol-template-matching",
-    "variant-analysis",
-    "static-analysis-integration",
-    "token-compatibility-analysis",
-    "audit-report-generation",
-    "severity-classification",
-    "cyfrin-findings-search",
-    "spec-compliance-checking",
-    "differential-review",
-    "fix-verification"
-  ],
-  "supported_chains": [
-    "ethereum",
-    "arbitrum",
-    "optimism",
-    "base",
-    "polygon",
-    "bsc",
-    "avalanche",
-    "solana",
-    "starknet",
-    "cosmos",
-    "sui",
-    "aptos",
-    "ton",
-    "zksync",
-    "scroll",
-    "linea",
-    "fuel",
-    "aztec"
-  ]
+  "entry_point": "../core/bin/cli.js",
+  "mcp_server": "../core/src/mcp-server.js",
+  "setup": {
+    "command": "npm install",
+    "verify": "npm run verify",
+    "info": "npm run info"
+  },
+  "capabilities": {
+    "solidity-scanning": {
+      "directories": ["solidity-scanner", "patterns"],
+      "entry_patterns": ["patterns/reentrancy-patterns.md", "patterns/access-control-patterns.md"],
+      "description": "Core Solidity vulnerability pattern matching"
+    },
+    "solana-scanning": {
+      "directories": ["solana-scanner"],
+      "description": "Solana/Anchor program security analysis"
+    },
+    "cairo-scanning": {
+      "directories": ["cairo-scanner"],
+      "description": "StarkNet Cairo contract analysis"
+    },
+    "move-scanning": {
+      "directories": ["move-scanner"],
+      "description": "Aptos/Sui Move module analysis"
+    },
+    "cosmos-scanning": {
+      "directories": ["cosmos-scanner"],
+      "description": "Cosmos SDK module analysis"
+    },
+    "ton-scanning": {
+      "directories": ["ton-scanner"],
+      "description": "TON FunC/Tact contract analysis"
+    },
+    "attack-chain-detection": {
+      "directories": ["attack-chains", "attack-trees"],
+      "description": "Multi-step attack path analysis"
+    },
+    "protocol-template-matching": {
+      "directories": ["protocol-playbooks", "templates"],
+      "description": "Protocol-specific audit playbooks"
+    },
+    "variant-analysis": {
+      "directories": ["variant-analysis"],
+      "description": "Find variants of known vulnerabilities"
+    },
+    "static-analysis-integration": {
+      "directories": ["static-analysis"],
+      "tools": ["slither", "aderyn", "mythril"],
+      "description": "Slither, Aderyn, Mythril integration"
+    },
+    "token-compatibility-analysis": {
+      "directories": ["token-analyzer"],
+      "description": "ERC20/721/1155 compatibility checks"
+    },
+    "audit-report-generation": {
+      "directories": ["report-writer", "templates"],
+      "description": "Structured audit report creation"
+    },
+    "severity-classification": {
+      "directories": ["severity", "scoring"],
+      "description": "CVSS-like severity scoring"
+    },
+    "cyfrin-findings-search": {
+      "directories": ["cyfrin-findings"],
+      "description": "Search real audit findings database"
+    },
+    "spec-compliance-checking": {
+      "directories": ["spec-compliance"],
+      "description": "EIP/ERC specification compliance"
+    },
+    "differential-review": {
+      "directories": ["differential-review"],
+      "description": "Diff-based upgrade security review"
+    },
+    "fix-verification": {
+      "directories": ["fix-review", "fix-patterns"],
+      "description": "Verify vulnerability fixes are correct"
+    }
+  },
+  "supported_chains": {
+    "ethereum": { "scanner": "solidity-scanner" },
+    "arbitrum": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "optimism": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "base": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "polygon": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "bsc": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "avalanche": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "solana": { "scanner": "solana-scanner" },
+    "starknet": { "scanner": "starknet-scanner" },
+    "cosmos": { "scanner": "cosmos-scanner" },
+    "sui": { "scanner": "sui-scanner" },
+    "aptos": { "scanner": "aptos-scanner" },
+    "ton": { "scanner": "ton-scanner" },
+    "zksync": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "scroll": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "linea": { "scanner": "solidity-scanner", "guide": "chain-guides" },
+    "fuel": { "scanner": "fuel-scanner" },
+    "aztec": { "scanner": "aztec-scanner" }
+  }
 }

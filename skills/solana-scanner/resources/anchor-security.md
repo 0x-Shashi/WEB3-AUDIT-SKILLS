@@ -84,6 +84,91 @@ pub receiver: SystemAccount<'info>,
 // Anchor zeroes data AND transfers lamports
 ```
 
+### 5. Custom Discriminator Collisions (Anchor 0.31+)
+```rust
+// Default: sha256("account:<StructName>")[0..8]
+// Custom discriminators introduce collision risk:
+
+#[account(discriminator = 1)]
+pub struct Escrow { ... }
+
+// AUDIT RISKS:
+// - [1] blocks any discriminator starting with [1, ...] (prefix collision)
+// - [0] conflicts with uninitialized (zeroed) accounts
+// - Discriminators MUST be unique across all accounts in the program
+```
+
+### 6. Token-2022 / InterfaceAccount Compatibility
+```rust
+// [VULNERABLE] Only handles SPL Token, ignores Token-2022
+pub mint: Account<'info, anchor_spl::token::Mint>,
+
+// [SAFE] Handles both SPL Token and Token-2022
+use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
+pub mint: InterfaceAccount<'info, Mint>,
+pub token_account: InterfaceAccount<'info, TokenAccount>,
+pub token_program: Interface<'info, TokenInterface>,
+// AUDIT: Also check transfer hooks, transfer fees, and confidential transfers
+```
+
+### 7. LazyAccount Pitfalls (Anchor 0.31+)
+```rust
+// LazyAccount is heap-allocated, read-only access
+pub account: LazyAccount<'info, CustomAccountType>,
+
+// AUDIT RISKS:
+// - LazyAccount is READ-ONLY — mutations are silently ignored
+// - After CPI, cached values are STALE — must call unload() to refresh
+// - Requires feature flag: anchor-lang = { features = ["lazy-account"] }
+```
+
+### 8. Remaining Accounts Exploitation
+```rust
+// [VULNERABLE] No validation on dynamic accounts
+pub fn batch_operation(ctx: Context<BatchOp>) -> Result<()> {
+    for account in ctx.remaining_accounts {
+        // Attacker can pass any account here
+        process(account)?;
+    }
+    Ok(())
+}
+
+// [SAFE] Validate remaining accounts
+pub fn batch_operation(ctx: Context<BatchOp>) -> Result<()> {
+    for account in ctx.remaining_accounts {
+        require!(account.owner == &crate::ID, ErrorCode::InvalidOwner);
+        require!(account.is_signer || is_known_pda(account), ErrorCode::Unauthorized);
+    }
+    Ok(())
+}
+```
+
+### 9. Reallocation Security
+```rust
+// [VULNERABLE] Doesn't zero freed memory on shrink
+#[account(mut, realloc = new_space, realloc::payer = payer, realloc::zero = false)]
+pub account: Account<'info, CustomAccount>,
+// Risk: Old data remains readable after shrink
+
+// [SAFE] Zero old data when shrinking
+#[account(mut, realloc = new_space, realloc::payer = payer, realloc::zero = true)]
+pub account: Account<'info, CustomAccount>,
+```
+
+### 10. PDA-Signed CPI Security
+```rust
+// PDA signing requires correct bump management
+let seeds = &[b"vault".as_ref(), &[ctx.bumps.vault]];
+let signer = &[&seeds[..]];
+let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, signer);
+
+// AUDIT CHECKS:
+// - Bump must come from ctx.bumps (canonical), not recalculated
+// - PDA seeds must match the account's derivation exactly
+// - CPI target must be validated (use Program<'info, T>)
+// - Never pass extra privileges to CPI callees
+```
+
 ## Anchor Security Checklist
 - [ ] All accounts have appropriate constraints (`mut`, `has_one`, `seeds`)
 - [ ] Signer required for privileged operations
@@ -120,4 +205,6 @@ pub receiver: SystemAccount<'info>,
 
 - [Solana Vulnerability Patterns](solana-patterns.md) — Full pattern reference with code examples
 - [Account Validation](account-validation.md) — Detailed validation check reference
+- [Pinocchio Security](pinocchio-security.md) — Native-level TryFrom, Token-2022, zero-copy safety
+- [Solana Testing for Auditors](solana-testing-for-auditors.md) — LiteSVM, Mollusk, PoC examples
 - [Anchor Audit Workflow](../workflows/anchor-audit.md) — Step-by-step Anchor audit process

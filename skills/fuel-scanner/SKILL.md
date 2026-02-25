@@ -4,6 +4,11 @@ title: Fuel Network Security Scanner
 category: chain-scanner
 trigger: "Audit Fuel|Sway|FuelVM"
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Fuel Network smart contracts written in Sway,
+  scan FuelVM contracts for UTXO-model, predicate, or script vulnerabilities,
+  review Fuel DeFi protocols for multi-asset handling issues, or analyze
+  Sway-specific patterns including storage access and message passing.
 ---
 
 # Fuel Network Security Scanner
@@ -186,3 +191,58 @@ Fuel is a modular execution layer with:
 - Native multi-asset support
 - Predicates (stateless UTXO conditions)
 - Parallel transaction processing via strict state access declarations
+
+## Error Code Reference
+
+Common Sway/FuelVM errors encountered during audits. Fuel uses `revert()` with numeric codes and `require()` with custom enums.
+
+### FuelVM Runtime Errors
+
+| Error Code | Name | Meaning |
+|-----------|------|----------|
+| `0x00` | `Success` | Normal execution |
+| `0x01` | `Revert` | Explicit `revert()` or failed `require()` |
+| `0x02` | `OutOfGas` | Transaction exceeded gas limit |
+| `0x03` | `TransactionValidity` | Transaction failed validation rules |
+| `0x04` | `MemoryOverflow` | Memory allocation exceeded limits |
+| `0x05` | `ArithmeticOverflow` | Arithmetic operation overflow |
+| `0x06` | `ContractNotFound` | Called contract ID does not exist |
+| `0x07` | `MemoryOwnership` | Attempted write to read-only memory |
+| `0x08` | `NotEnoughBalance` | Insufficient asset balance for transfer |
+| `0x09` | `ExpectedInternalContext` | External call in internal-only context |
+| `0x0A` | `AssetIdNotFound` | Asset ID does not exist in transaction |
+| `0x0B` | `InputNotFound` | Transaction input not found |
+| `0x0C` | `OutputNotFound` | Transaction output not found |
+| `0x0D` | `WitnessNotFound` | Witness data not found at index |
+
+### Sway Standard Library Errors
+
+| Error Type | Meaning | Audit Significance |
+|-----------|---------|--------------------|
+| `AuthError::SenderNotOwner` | Caller is not the contract owner | Access control — check ownership model |
+| `AuthError::SenderNotAdmin` | Caller lacks admin role | Role-based access — check admin assignment |
+| `AssetError::InsufficientBalance` | Insufficient asset balance | Financial operation — check for manipulation |
+| `AssetError::InvalidAssetId` | Asset ID not recognized | Multi-asset — check asset ID validation |
+| `PredicateError::InvalidSignature` | Predicate signature check failed | Auth bypass — check predicate logic |
+| `InputError::InvalidInput` | Generic input validation failure | Check input bounds and type validation |
+| `IdentityError::InvalidAddress` | Address validation failed | Check for zero/invalid address handling |
+
+### UTXO-Related Audit Errors
+
+| Issue | Error Pattern | Audit Significance |
+|-------|--------------|--------------------|
+| Coin UTXO double-spend | `TransactionValidity` | FuelVM prevents at protocol level — but check application logic for logical double-spend |
+| Predicate evaluation failure | `Revert` in predicate context | Predicates are stateless — verify all validation happens within single evaluation |
+| Message proof invalid | `MessageProofError` | L1→L2 bridge message not verified correctly |
+| Variable output missing | `OutputNotFound` | Transaction didn't include required output for asset transfer |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| UTXO model vulnerabilities missed | Scanner uses account-model mental model | Analyze UTXO inputs/outputs explicitly; check coin selection and change handling |
+| Predicate bypass not detected | Scanner doesn't analyze predicate scripts | Audit predicate logic separately — ensure all paths lead to `true/false` without side effects |
+| Multi-asset handling errors missed | Scanner assumes single native asset | Flag all `AssetId` parameters; verify correct asset checking in every transfer |
+| Storage slot collision not caught | Scanner doesn't map storage access in Sway | Map all `storage` block declarations; check for manual slot computation conflicts |
+| Cross-contract call issues missed | Scanner treats inter-contract calls as trusted | Trace all `abi(ContractId, ...)` calls; verify called contract ID validation |
+| Message-based bridge risks ignored | Scanner doesn't model Fuel L1→L2 bridge | Audit all `input_message` handlers and message proof verification logic |

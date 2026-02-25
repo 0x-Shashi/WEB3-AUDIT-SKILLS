@@ -574,6 +574,13 @@ let ixs = load_instruction_at_checked(index, &sysvar_info)?;
 - [ ] Instruction introspection validates program IDs
 - [ ] Token-2022 transfer hooks and extensions handled
 
+### Payment / Commerce Program Checks
+- [ ] Recipient + amount + token shown clearly before signing
+- [ ] Replay protection: unique references or memo for each payment
+- [ ] Settlement confirmed by **querying chain state**, not trusting client-side callbacks
+- [ ] Partial failures handled: transaction sent but not confirmed (retry / refund UX)
+- [ ] Fee payer validated: user isn't tricked into paying unexpected fees
+
 ---
 
 ## Related Files

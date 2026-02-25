@@ -5,6 +5,11 @@ category: chain-scanner
 chains: [aptos, sui]
 languages: [move]
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit Move smart contracts for security
+  vulnerabilities, scan Aptos or Sui contracts for resource safety, capability
+  leaks, or module upgrade issues, review Move-based DeFi protocols for object
+  model and linear type violations, or analyze cross-module trust boundaries.
 ---
 
 # Move Scanner Skill
@@ -125,3 +130,58 @@ struct AdminCap has key, store, copy, drop {
 | `chain-guides/aptos.md` | Chain context for Aptos (validators, gas, modules) |
 | `patterns/` | Cross-reference with general vulnerability categories |
 | `exploit-forensics/` | Move-based exploit analysis |
+
+## Error Code Reference
+
+Common Move abort codes encountered during audits. Move uses numeric abort codes (`abort <code>`) or assert conditions (`assert!(<cond>, <code>)`).
+
+### Move Standard Library Abort Codes
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `0x10001` (65537) | `vector` | Index out of bounds — `vector::borrow` or `vector::remove` |
+| `0x10002` (65538) | `vector` | Vector already contains element — `vector::push_back` on fixed |
+| `0x20001` (131073) | `option` | `Option::extract` on `None` — missing existence check |
+| `0x20002` (131074) | `option` | `Option::borrow` on `None` — attempt to read empty option |
+| `0x30001` (196609) | `string` | Invalid UTF-8 bytes |
+| `0x40001` (262145) | `signer` | Incorrect signer in multi-signer scenario |
+| `0x50001` (327681) | `table` | Key already exists in table |
+| `0x50002` (327682) | `table` | Key not found in table |
+| `0x60001` (393217) | `coin` | Insufficient coin balance |
+| `0x60002` (393218) | `coin` | Coin store not registered |
+| `0x60003` (393219) | `coin` | Coin store already registered |
+
+### Aptos Framework Abort Codes
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `0x80001` (524289) | `account` | Account already exists |
+| `0x80002` (524290) | `account` | Account does not exist |
+| `0x80005` (524293) | `account` | Signer capability not found |
+| `0x90001` (589825) | `resource_account` | Resource account already exists |
+| `0xA0001` (655361) | `staking_contract` | Unauthorized — not the owner |
+| `ENOT_OWNER` (varies) | Common pattern | Caller is not the resource owner — check access logic |
+| `EALREADY_INITIALIZED` (varies) | Common pattern | Module/resource already initialized — check init guards |
+| `ENOT_AUTHORIZED` (varies) | Common pattern | Missing authorization — check signer validation |
+
+### Sui Framework Abort Codes
+
+| Abort Code | Module | Meaning |
+|-----------|--------|----------|
+| `ENotOwner` | `object` | Caller does not own the object |
+| `EEmptyInventory` | `kiosk` | Kiosk has no items |
+| `EObjectNotShared` | `transfer` | Attempting shared-object operation on owned object |
+| `EInvalidCap` | Various | Capability token does not match expected type/ID |
+| `EDivisionByZero` | `math` | Division by zero in fixed-point math |
+| `EOverflow` | `math` | Arithmetic overflow in math operation |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Scanner doesn't distinguish Aptos vs Sui patterns | Generic Move analysis loaded | Load `aptos-scanner/` or `sui-scanner/` for chain-specific analysis |
+| Capability leaks not detected | Scanner doesn't track linear type flow | Manually trace all `Capability` and `AdminCap` types from creation to storage |
+| Module upgrade risks missed | Scanner only checks current code | Verify `UpgradeCap` ownership and upgrade policy (`immutable` vs `compatible`) |
+| Resource safety violations missed | Scanner trusts the Move verifier | Move verifier catches type safety but NOT logic bugs — audit business logic |
+| False positives on abort codes | Scanner flags all `abort` as errors | Custom abort codes are normal flow control — check if handled by callers |
+| Object ownership confusion (Sui) | Scanner doesn't model Sui object model | Load `sui-scanner/resources/object-security.md` for ownership analysis |

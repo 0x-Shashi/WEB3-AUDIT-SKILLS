@@ -26,7 +26,8 @@ A rapid lookup guide for AI auditors. Each pattern has a one-line summary to qui
 ## How to Use
 
 1. **Scan this file first** to identify potential vulnerability categories
-2. **Load the relevant consolidated file** for detailed analysis with real-world examples
+2. **Load [PATTERN-SUMMARIES.md](PATTERN-SUMMARIES.md)** for detection code, audit checklists, and source file lists
+3. **Load the individual pattern files** from `skills/patterns/` for full detailed analysis
 
 ---
 
@@ -34,18 +35,10 @@ A rapid lookup guide for AI auditors. Each pattern has a one-line summary to qui
 
 | File | Focus Area | Size |
 |------|------------|------|
-| token-patterns.md | ERC20/721/777/1155, fee-on-transfer, rebasing, approvals | 387 KB |
-| defi-patterns.md | Flash loans, oracles, vaults, liquidation, AMMs | 685 KB |
-| reentrancy-patterns.md | All reentrancy types, CEI, external calls | 140 KB |
-| access-control-patterns.md | Auth, admin, ownership, pause, blacklists | 197 KB |
-| math-precision-patterns.md | Rounding, overflow, decimals, truncation | 239 KB |
-| validation-patterns.md | Input checks, missing logic, limits | 202 KB |
-| dos-gas-patterns.md | DoS, gas griefing, loops, dust attacks | 275 KB |
-| upgrade-storage-patterns.md | Proxy, storage collision, initialization | 127 KB |
-| signature-crypto-patterns.md | Signatures, replay, EIP-712, Merkle | 76 KB |
-| cross-chain-l2-patterns.md | Bridges, L2, sequencer, LayerZero | 125 KB |
-| nft-governance-patterns.md | NFT, royalties, voting, DAO, auctions | 128 KB |
-| misc-patterns.md | Timing, events, code quality, other | 330 KB |
+| **PATTERN-SUMMARIES.md** | **All categories — summaries, checklists, detection code** | **~15 KB** |
+| defi-patterns.md | Flash loans, oracles, vaults, liquidation, AMMs | 6 KB |
+| cross-chain-l2-patterns.md | Bridges, L2, sequencer, LayerZero | 6 KB |
+| access-control-patterns.md | Auth, admin, ownership, pause, blacklists | 5 KB |
 
 ---
 

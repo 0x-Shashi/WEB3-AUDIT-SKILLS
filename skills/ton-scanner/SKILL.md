@@ -19,6 +19,11 @@ tags:
   - actor-model
   - security
 last_updated: 2026-02-24
+description: >-
+  Use when the user wants to audit TON smart contracts for security
+  vulnerabilities, scan FunC or Tact contracts for message chain replay, bounce
+  handling, or gas issues, review TON DeFi protocols for actor-model concurrency
+  flaws, or analyze asynchronous message passing security.
 ---
 
 # TON Scanner Skill
@@ -106,3 +111,58 @@ Analyze TON (The Open Network) smart contracts written in FunC or Tact for secur
 ## Related Scanners
 - [Solidity Scanner](../solidity-scanner/) — EVM comparison for cross-chain auditors
 - [Solana Scanner](../solana-scanner/) — Another non-EVM async model for comparison
+
+## Error Code Reference
+
+Common TON/FunC error codes encountered during audits. TON uses numeric exit codes in `throw()` / `throw_if()` / `throw_unless()` statements.
+
+### Standard TVM Exit Codes
+
+| Exit Code | Name | Meaning |
+|----------|------|----------|
+| `0` | Success | Normal successful execution |
+| `2` | `Stack underflow` | Too few arguments on the stack — FunC function signature mismatch |
+| `3` | `Stack overflow` | Stack exceeded limits |
+| `4` | `Integer overflow` | Integer does not fit into 257-bit signed range |
+| `5` | `Integer out of range` | Value outside expected range for operation |
+| `6` | `Invalid opcode` | Unknown TVM instruction — possible code corruption |
+| `7` | `Type check error` | Wrong type on stack — e.g., expected cell, got integer |
+| `8` | `Cell overflow` | Cell data exceeds 1023 bits or 4 references |
+| `9` | `Cell underflow` | Attempted to read more data than cell contains |
+| `10` | `Dictionary error` | Invalid dictionary (hashmap) operation |
+| `11` | `Unknown error` | General "most common" error |
+| `13` | `Out of gas` | Computation exceeded gas limit |
+| `-14` | `Out of gas (credit)` | Gas credit depleted before `accept_message()` |
+
+### Common Application Exit Codes (Convention)
+
+| Exit Code Range | Convention | Meaning |
+|----------------|-----------|----------|
+| `30-39` | Auth errors | Unauthorized sender (`throw_unless(33, ...)`) |
+| `40-49` | State errors | Invalid contract state for operation |
+| `50-59` | Balance errors | Insufficient balance for operation |
+| `60-69` | Validation errors | Invalid input parameters |
+| `100-199` | Jetton Standard | Jetton (token) specific errors |
+| `200-299` | NFT Standard | NFT specific errors |
+| `300-399` | DEX errors | Liquidity pool / AMM errors |
+| `400+` | Application-specific | Custom application logic errors |
+
+### Jetton Standard Error Codes
+
+| Exit Code | Meaning |
+|----------|----------|
+| `73` | Insufficient jetton balance for transfer |
+| `74` | Not enough TON for gas fees attached to transfer |
+| `75` | Invalid sender — not the jetton wallet owner |
+| `76` | Discovery: unknown jetton wallet |
+
+## Troubleshooting
+
+| Issue | Likely Cause | Solution |
+|-------|-------------|----------|
+| Bounce handler vulnerabilities missed | Scanner doesn't analyze `bounced<>` message handlers | Audit all `recv_internal` branches that handle bounced messages — check for state rollback correctness |
+| Message chain replay not detected | Scanner analyzes single messages, not chains | Trace full message chains: initial message → internal messages → bounces; check seqno/query_id uniqueness |
+| Gas estimation issues not flagged | Scanner doesn't model TON gas economics | Flag messages without `accept_message()` or with insufficient gas forwarding via `msg_value` |
+| Actor model concurrency bugs missed | Scanner uses synchronous mental model | Map all async message flows; check for time-of-check/time-of-use between separate messages |
+| FunC vs Tact pattern mismatch | Scanner patterns written for FunC, code is in Tact | Verify Tact's auto-generated FunC output; Tact handles some safety checks automatically |
+| Storage fee drain not caught | Scanner doesn't model TON storage costs | Check that contracts handle `storage_fee` deductions; verify minimum balance maintenance |
