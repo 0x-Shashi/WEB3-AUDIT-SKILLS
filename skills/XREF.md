@@ -647,6 +647,16 @@ These templates capture verification methodology, not protocol-specific content.
 | CU Worst-Case Design | [solana-scanner/resources/solana-testing-for-auditors.md §7](solana-scanner/resources/solana-testing-for-auditors.md) | 9-level CU escalation framework, benchmark reporting template |
 | Verify Module Pattern | [solana-scanner/resources/formal-verification-for-auditors.md §11](solana-scanner/resources/formal-verification-for-auditors.md) | Extract-and-prove: separate decision logic for Kani verification |
 
+**Foundry/Solidity Testing Resources (claude-plugins foundry-solidity merge):**
+
+| Resource | File | Purpose |
+|----------|------|---------|
+| Foundry Security | [solidity-scanner/resources/foundry-security.md](solidity-scanner/resources/foundry-security.md) | 10 vulnerability categories with concrete Foundry PoC tests, invariant + fork testing examples, pre-audit checklist |
+| Foundry Testing | [solidity-scanner/resources/foundry-testing.md](solidity-scanner/resources/foundry-testing.md) | Fuzz testing (bound/assume), invariant handler pattern with ghost variables, fork testing, differential testing, test configuration |
+| Foundry Cheatcodes | [solidity-scanner/resources/foundry-cheatcodes.md](solidity-scanner/resources/foundry-cheatcodes.md) | 150+ cheatcodes reference: state manipulation, caller context, expectations, snapshots, cryptography, gas metering, StdStorage, StdInvariant, Cast CLI, Chisel REPL |
+| Gas & Security | [solidity-scanner/resources/gas-security.md](solidity-scanner/resources/gas-security.md) | Storage packing, unchecked arithmetic safety, compiler settings, transient storage, EVM opcode costs, Foundry gas profiling |
+| Foundry CI/CD | [solidity-scanner/resources/foundry-ci-cd.md](solidity-scanner/resources/foundry-ci-cd.md) | GitHub Actions workflows: build/test/coverage/gas-report pipelines, fork testing with secrets, gas snapshot tracking, matrix testing, deployment workflows |
+
 **When to use each template:**
 
 - **Starting a new audit?** → Admin Threat Model + Trust Boundary + Security Properties
@@ -654,6 +664,8 @@ These templates capture verification methodology, not protocol-specific content.
 - **Writing audit report?** → Failure Modes + Security Properties (gap analysis)
 - **DeFi perpetuals/derivatives?** → All six templates + State Machine Fuzzer
 - **Evaluating test quality?** → Adversarial Test Design + CU Worst-Case
+- **Writing Foundry PoC for a finding?** → Foundry Security + Foundry Cheatcodes
+- **Setting up CI for a protocol audit?** → Foundry CI/CD + Foundry Testing
 
 ---
 
@@ -686,4 +698,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 8.0 (Batch 8 — Solana Security Sub-Skill merge: security-fundamentals, native-security, security-checklists, caveats, expanded curated-links)
+**Version:** 9.0 (Batch 9 — Foundry-Solidity Plugin merge: foundry-security, foundry-testing, foundry-cheatcodes, gas-security, foundry-ci-cd)

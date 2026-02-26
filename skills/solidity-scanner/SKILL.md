@@ -134,6 +134,11 @@ Blast:
 | Severity Guide | Classification criteria with decision tree | [severity-guide.md](resources/severity-guide.md) |
 | Tool Configs | Slither, Aderyn, Mythril, Semgrep setup | [tool-configs.md](resources/tool-configs.md) |
 | False Positives | Common FPs with reasoning for each | [false-positives.md](resources/false-positives.md) |
+| Foundry Security | 10 vulnerability categories with Foundry PoC tests | [foundry-security.md](resources/foundry-security.md) |
+| Foundry Testing | Fuzz, invariant, fork, differential testing guide | [foundry-testing.md](resources/foundry-testing.md) |
+| Foundry Cheatcodes | 150+ cheatcodes reference for security auditors | [foundry-cheatcodes.md](resources/foundry-cheatcodes.md) |
+| Gas & Security | Gas optimization patterns with security trade-offs | [gas-security.md](resources/gas-security.md) |
+| Foundry CI/CD | GitHub Actions for automated security testing | [foundry-ci-cd.md](resources/foundry-ci-cd.md) |
 
 ## Standard Audit Procedure
 
