@@ -33,6 +33,11 @@ Comprehensive audit methodology guides covering the full security auditor workfl
 ### Reporting
 - [Audit Report Templates](audit-report-templates.md) - Finding format, severity matrix, PoC templates, executive summary
 
+### Skill Quality & Authoring
+- [Quality Scoring](quality-scoring.md) - 10-point Anthropic best practices scoring framework for evaluating skill quality
+- [Skill TDD Methodology](skill-tdd.md) - Test-Driven Documentation: pressure test → baseline → write → verify → close loopholes
+- [Skill Authoring Guide](skill-authoring-guide.md) - Three creation paths, progressive disclosure, quality guarantee loop, version tracking
+
 ## Usage
 ```
 1. Start with LLM Audit Workflow for structured phase-by-phase approach

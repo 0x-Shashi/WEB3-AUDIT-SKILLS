@@ -667,6 +667,22 @@ These templates capture verification methodology, not protocol-specific content.
 - **Writing Foundry PoC for a finding?** → Foundry Security + Foundry Cheatcodes
 - **Setting up CI for a protocol audit?** → Foundry CI/CD + Foundry Testing
 
+**Skill Quality & Authoring Resources (skill-factory merge):**
+
+| Resource | File | Purpose |
+|----------|------|---------|
+| Quality Scoring | [methodology/quality-scoring.md](methodology/quality-scoring.md) | 10-point Anthropic best practices scoring framework, quality tiers, guarantee loop |
+| Skill TDD | [methodology/skill-tdd.md](methodology/skill-tdd.md) | Test-Driven Documentation: pressure test → baseline → write → verify → close loopholes |
+| Skill Authoring Guide | [methodology/skill-authoring-guide.md](methodology/skill-authoring-guide.md) | Three creation paths, progressive disclosure, file naming, version tracking, commit standards |
+| Quality Check Script | [scripts/quality-check.py](../scripts/quality-check.py) | Automated 10-point scorer for any SKILL.md file (CI-compatible, exit code 0/1) |
+
+**When to use:**
+
+- **Creating a new skill file?** → Skill Authoring Guide + Quality Scoring
+- **Evaluating existing skill quality?** → `python scripts/quality-check.py --all`
+- **Skill not working as expected?** → Skill TDD (pressure test, find rationalizations)
+- **Skill file too large (> 500 lines)?** → Skill Authoring Guide § Progressive Disclosure
+
 ---
 
 ## Quick Search
@@ -698,4 +714,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 9.0 (Batch 9 — Foundry-Solidity Plugin merge: foundry-security, foundry-testing, foundry-cheatcodes, gas-security, foundry-ci-cd)
+**Version:** 10.0 (Batch 10 — Skill-Factory merge: quality-scoring, skill-tdd, skill-authoring-guide, quality-check.py)
