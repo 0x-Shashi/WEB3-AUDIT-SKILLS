@@ -186,7 +186,6 @@ let (config_pda, _) = Pubkey::find_program_address(
 // FIX: Include all disambiguating data in seeds
 let (vault_pda, bump) = Pubkey::find_program_address(
     &[b"vault", user.key().as_ref(), mint.key().as_ref()],
-    program_id,
 );
 
 // Then VERIFY the account matches
@@ -211,7 +210,6 @@ pub vault: Account<'info, VaultData>,
 ## 4. Integer Overflow in Release Mode (CRITICAL)
 
 **Impact**: Rust release builds wrap on integer overflow (no panic). Arithmetic that overflows silently produces wrong values, enabling theft.
-
 ### Vulnerable Code
 ```rust
 pub fn process_deposit(amount: u64, fee_bps: u64) -> ProgramResult {
@@ -257,7 +255,6 @@ overflow-checks = true
 ### Vulnerable Code
 ```rust
 pub fn process_close(accounts: &[AccountInfo]) -> ProgramResult {
-    let vault = next_account_info(&mut accounts.iter())?;
     let receiver = next_account_info(&mut accounts.iter())?;
 
     // Transfer lamports to receiver
@@ -291,7 +288,6 @@ pub fn process_close(accounts: &[AccountInfo]) -> ProgramResult {
 }
 ```
 
-**Anchor**: Use `#[account(close = receiver)]` which automatically zeroes data and drains lamports.
 
 ---
 
@@ -325,7 +321,6 @@ pub fn process_execute(
 ```
 
 ### Secure Code
-```rust
 pub fn process_execute(
     accounts: &[AccountInfo],
     data: Vec<u8>,
@@ -350,7 +345,6 @@ pub fn process_execute(
 ```
 
 ---
-
 ## 7. Duplicate Account Injection (HIGH)
 
 **Impact**: Passing the same account for two different parameters causes double-counting, double-crediting, or self-referential state corruption.

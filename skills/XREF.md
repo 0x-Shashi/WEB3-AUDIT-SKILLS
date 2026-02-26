@@ -608,12 +608,17 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 
 ---
 
+
 ## Cross-Chain Reference
 
 **For auditors working across multiple chains:**
 
 - [Cross-Chain Vulnerability Mapping](patterns/cross-chain-vulnerability-mapping.md) — Solana ↔ EVM 1:1 vulnerability equivalences, chain-specific vulns, concept cheat sheet
-- [Solana Curated Links](solana-scanner/resources/curated-links.md) — 30+ official Solana security links, framework repos, testing tools
+- [Solana Curated Links](solana-scanner/resources/curated-links.md) — 50+ official Solana security links, audit reports, tools, frameworks, and firms
+- [Security Fundamentals](solana-scanner/resources/security-fundamentals.md) — Core Solana security principles, threat model, and best practices
+- [Native Security](solana-scanner/resources/native-security.md) — Native Solana (non-Anchor) security patterns and pitfalls
+- [Security Checklists](solana-scanner/resources/security-checklists.md) — Audit and client-side checklists for Solana programs
+- [Caveats](solana-scanner/resources/caveats.md) — Solana-specific caveats, gotchas, and edge cases for auditors
 - [Formal Verification for Auditors](solana-scanner/resources/formal-verification-for-auditors.md) — Kani proof evaluation, classification system, property categories, red flags
 
 ---
@@ -680,5 +685,5 @@ These templates capture verification methodology, not protocol-specific content.
 
 ---
 
-**Last Updated:** 2025
-**Version:** 7.0 (Batch 7 — Adversarial Test Design, CU Worst-Case Scenarios, State Machine Fuzzer Template, Verify Module Extract-and-Prove Pattern)
+**Last Updated:** 2026
+**Version:** 8.0 (Batch 8 — Solana Security Sub-Skill merge: security-fundamentals, native-security, security-checklists, caveats, expanded curated-links)

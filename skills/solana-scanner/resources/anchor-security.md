@@ -20,9 +20,10 @@ tags:
 last_updated: 2026-02-24
 ---
 
+
 # Anchor Framework Security Guide
 
-> Anchor automates many Solana safety checks, but introduces its own vulnerability surface. This guide covers Anchor-specific risks beyond what the framework protects against.
+> Anchor automates many Solana safety checks, but introduces its own vulnerability surface. This guide covers Anchor-specific risks beyond what the framework protects against. This expanded guide merges tenequm's claude-plugins solana-security reference for Anchor, including advanced patterns, CPI, events, error handling, and upgradability.
 
 ## What Anchor Protects Automatically
 
@@ -198,6 +199,163 @@ let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, signer);
 | `address = PUBKEY` | Exact key match | Wrong program/account accepted |
 | `owner = program` | Owner validation | Fake account injection |
 | `realloc` | Resize account data | Buffer overflow / truncation |
+
+---
+
+## Advanced Anchor Security Patterns (2026)
+
+### Account Constraint Security
+
+- Use `init` for new accounts, not `init_if_needed` unless you validate existing data
+- Always combine `has_one`, `seeds`, and `bump` for PDAs
+- Use `constraint` for custom logic, but keep it simple (no `?` operator)
+- `close` constraint must be last in the attribute list
+
+### Secure CPI Patterns
+
+- Use `Program<'info, T>` for program validation (not `AccountInfo`)
+- Always validate CPI targets (whitelist or type-safe)
+- Use `CpiContext::new_with_signer` for PDA signing
+- Reload accounts after CPI if state may change
+- Validate CPI return values and post-CPI state
+
+**Example: Secure Token Transfer with CPI**
+```rust
+pub fn transfer_tokens(ctx: Context<TransferTokens>, amount: u64) -> Result<()> {
+    let cpi_accounts = Transfer {
+        from: ctx.accounts.from.to_account_info(),
+        to: ctx.accounts.to.to_account_info(),
+        authority: ctx.accounts.authority.to_account_info(),
+    };
+    let cpi_program = ctx.accounts.token_program.to_account_info();
+    let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+    token::transfer(cpi_ctx, amount)?;
+    ctx.accounts.from.reload()?;
+    Ok(())
+}
+```
+
+### Event Emission and Monitoring
+
+- Emit events for all critical state changes (deposits, withdrawals, upgrades)
+- Use `emit!` for regular events, `emit_cpi!` for events visible to CPI callers
+- Validate event data before emitting
+
+**Example:**
+```rust
+#[event]
+pub struct WithdrawalEvent {
+    pub user: Pubkey,
+    pub amount: u64,
+    pub timestamp: i64,
+}
+
+pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
+    require!(ctx.accounts.vault.balance >= amount, ErrorCode::InsufficientFunds);
+    ctx.accounts.vault.balance -= amount;
+    emit!(WithdrawalEvent {
+        user: ctx.accounts.user.key(),
+        amount,
+        timestamp: Clock::get()?.unix_timestamp,
+    });
+    Ok(())
+}
+```
+
+### Error Handling Best Practices
+
+- Define custom error codes with `#[error_code]`
+- Use `require!` for all critical checks
+- Always propagate errors (`?`), never silence them
+- Never use `unwrap()` or `expect()` in production
+
+**Example:**
+```rust
+#[error_code]
+pub enum ErrorCode {
+    #[msg("Insufficient funds for withdrawal")]
+    InsufficientFunds,
+    #[msg("Unauthorized access attempt")]
+    Unauthorized,
+    #[msg("Invalid configuration parameters")]
+    InvalidConfig,
+    #[msg("Arithmetic overflow occurred")]
+    Overflow,
+}
+
+pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
+    require!(ctx.accounts.vault.balance >= amount, ErrorCode::InsufficientFunds);
+    require!(ctx.accounts.vault.authority == ctx.accounts.user.key(), ErrorCode::Unauthorized);
+    ctx.accounts.vault.balance -= amount;
+    Ok(())
+}
+```
+
+### Upgradability and Emergency Pause
+
+- Use a version field in config accounts for migrations
+- Implement an emergency pause flag for critical operations
+
+**Example:**
+```rust
+#[account]
+#[derive(InitSpace)]
+pub struct ProgramConfig {
+    pub version: u8,
+    pub upgrade_authority: Pubkey,
+    pub paused: bool,
+}
+
+pub fn migrate(ctx: Context<Migrate>) -> Result<()> {
+    let config = &mut ctx.accounts.config;
+    require!(config.version < CURRENT_VERSION, ErrorCode::AlreadyMigrated);
+    // ...migration logic...
+    config.version = CURRENT_VERSION;
+    Ok(())
+}
+
+#[derive(Accounts)]
+pub struct SensitiveOperation<'info> {
+    #[account(constraint = !config.paused @ ErrorCode::ProgramPaused)]
+    pub config: Account<'info, ProgramConfig>,
+}
+```
+
+### Token-2022 Extension Handling
+
+- Use `InterfaceAccount` and `Interface<'info, TokenInterface>` for Token-2022 compatibility
+- Always check for transfer hooks, transfer fees, and confidential transfers
+- Calculate rent based on all enabled extensions
+
+**Example:**
+```rust
+use anchor_spl::token_interface::{self, TokenInterface, TokenAccount};
+
+#[derive(Accounts)]
+pub struct TransferTokens<'info> {
+    #[account(mut)]
+    pub from: InterfaceAccount<'info, TokenAccount>,
+    #[account(mut)]
+    pub to: InterfaceAccount<'info, TokenAccount>,
+    pub authority: Signer<'info>,
+    pub token_program: Interface<'info, TokenInterface>,
+}
+```
+
+---
+
+## Modern Practices (2026)
+
+- Use Anchor 0.32+ for latest security features
+- Use `InitSpace` derive for all account space calculations
+- Emit events for all critical state changes
+- Write fuzz tests with Trident or similar frameworks
+- Document invariants in code comments
+- Follow progressive roadmap: Dev → Audit → Testnet → Audit → Mainnet
+
+---
+
+*Material sourced from tenequm's claude-plugins solana-security skill and adapted for the WEB3 Audit Skills project.*
 
 ---
 

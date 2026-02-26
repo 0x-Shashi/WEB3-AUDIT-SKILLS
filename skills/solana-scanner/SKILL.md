@@ -367,7 +367,11 @@ For each finding, provide:
 | [Account Validation](resources/account-validation.md) | Complete guide to account validation checks: signer, owner, PDA, type, uniqueness |
 | [Anchor Security](resources/anchor-security.md) | Anchor-specific security patterns: constraints, CPI, init_if_needed, close |
 | [Solana Patterns](resources/solana-patterns.md) | Common vulnerability patterns with code examples and fixes |
-| [Curated Links](resources/curated-links.md) | 30+ curated links to official docs, repos, security courses, testing tools |
+| [Curated Links](resources/curated-links.md) | 50+ curated links to official docs, audit reports, security courses, tools, and firms |
+| [Security Fundamentals](resources/security-fundamentals.md) | Core Solana security principles, threat model, and best practices |
+| [Native Security](resources/native-security.md) | Native Solana (non-Anchor) security patterns and pitfalls |
+| [Security Checklists](resources/security-checklists.md) | Audit and client-side checklists for Solana programs |
+| [Caveats](resources/caveats.md) | Solana-specific caveats, gotchas, and edge cases for auditors |
 | [Formal Verification](resources/formal-verification-for-auditors.md) | Kani proof evaluation: classification, property categories, verify module extract-and-prove pattern |
 | [Adversarial Test Design](resources/adversarial-test-design.md) | Attack-first test taxonomy, conservation invariant methodology, 10-category checklist |
 
