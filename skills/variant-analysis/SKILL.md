@@ -1,5 +1,5 @@
 ---
-id: VARIANT-ANALYSIS
+id: variant-analysis
 title: Variant Analysis Skill
 category: methodology
 difficulty: advanced
@@ -19,7 +19,12 @@ tags:
   - methodology
   - patterns
   - root-cause
-last_updated: 2026-02-24
+last_updated: 2026-02-26
+description: >-
+  Systematically hunt for every variant of a discovered vulnerability
+  across the entire codebase. Use when a bug is found and all instances
+  of the same root cause pattern must be identified, or when performing
+  variant analysis during competitive audits on Code4rena or Sherlock.
 ---
 
 # Variant Analysis Skill

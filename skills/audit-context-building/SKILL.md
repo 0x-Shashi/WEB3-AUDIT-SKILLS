@@ -1,9 +1,29 @@
 ---
-id: AUDIT-CONTEXT
+id: audit-context-building
 title: Audit Context Building Skill
 category: methodology
-trigger: "audit context|protocol overview|architecture mapping|pre-audit"
-last_updated: 2026-02-24
+difficulty: beginner
+triggers:
+  - audit context
+  - protocol overview
+  - architecture mapping
+  - pre-audit
+  - start audit
+  - understand protocol
+related_skills:
+  - methodology/SKILL.md
+  - solidity-scanner/SKILL.md
+tags:
+  - context
+  - architecture
+  - pre-audit
+  - methodology
+last_updated: 2026-02-26
+description: >-
+  Systematically build comprehensive understanding of a protocol before
+  code-level analysis. Use when starting a new audit engagement, mapping
+  trust boundaries and external dependencies, or when needing to identify
+  all privileged roles and protocol invariants before manual review.
 ---
 
 # Audit Context Building Skill

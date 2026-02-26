@@ -1,9 +1,29 @@
 ---
-id: DIFF-REVIEW
+id: differential-review
 title: Differential Review Skill
 category: methodology
-trigger: "diff|upgrade|compare versions|code changes"
-last_updated: 2026-02-24
+difficulty: intermediate
+triggers:
+  - diff review
+  - upgrade review
+  - compare versions
+  - code changes
+  - contract upgrade
+  - version diff
+related_skills:
+  - fix-review/SKILL.md
+  - methodology/SKILL.md
+tags:
+  - differential
+  - upgrade
+  - comparison
+  - versioning
+last_updated: 2026-02-26
+description: >-
+  Compare two versions of a codebase to identify security implications
+  of changes. Use when reviewing protocol upgrades, verifying bug fixes,
+  auditing dependency updates, or when only a subset of code has changed
+  since the last audit.
 ---
 
 # Differential Review Skill

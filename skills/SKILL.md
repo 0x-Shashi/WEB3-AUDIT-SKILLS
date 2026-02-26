@@ -1,3 +1,30 @@
+---
+id: web3-audit-plugin
+title: Web3 Audit Plugin - Core Skill
+category: root
+difficulty: beginner
+triggers:
+  - audit
+  - scan
+  - security review
+  - smart contract audit
+related_skills:
+  - solidity-scanner/SKILL.md
+  - methodology/SKILL.md
+  - commands/SKILL.md
+tags:
+  - root
+  - web3
+  - audit
+  - multi-chain
+last_updated: 2026-02-26
+description: >-
+  Root skill definition for the Web3 Audit Plugin providing AI-powered
+  smart contract security auditing across EVM, Solana, Move, Cairo,
+  CosmWasm, and TON platforms. Use as the top-level entry point for
+  understanding plugin capabilities, supported chains, and skill routing.
+---
+
 # Web3 Audit Plugin - Core Skill Definition
 
 ## Purpose
@@ -36,3 +63,39 @@ Context Building → Scanner → Checklist → Attack Chains → Report
 - Starknet Scanner (Cairo)
 - Aztec Scanner (Noir)
 - Fuel Scanner (Sway)
+
+## Prerequisites
+
+The plugin requires an AI model with tool-use capabilities. Each scanner skill may have chain-specific prerequisites (e.g., Solana scanner requires familiarity with Anchor framework).
+
+## Validation
+
+To verify installation and test skill loading:
+
+```bash
+# Validate all SKILL.md files pass quality threshold
+python scripts/quality-check.py --all --min-score 8
+```
+
+```yaml
+# Example trigger routing
+trigger: "audit solidity"
+route_to: solidity-scanner/SKILL.md
+load: [checklists, patterns, severity]
+```
+
+```bash
+# Verify scanner availability
+ls skills/*/SKILL.md | wc -l  # Should show 29+ skills
+```
+
+## Behavior Guidelines
+
+- Scanner selection is **required** based on detected chain type
+- Protocol template loading is **optional** but recommended
+- Severity classification MUST follow the decision tree in `patterns/severity-scoring.md`
+- Auditors may optionally skip gas optimization checks depending on engagement scope
+
+## References
+
+- [Core References](references/README.md) - Architecture diagrams and skill routing maps

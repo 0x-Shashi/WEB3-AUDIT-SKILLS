@@ -1,10 +1,32 @@
 ---
-id: SKILL-CYFRIN-FINDINGS
+id: cyfrin-findings
 title: Cyfrin/Solodit Findings Database Integration
 category: data-source
+difficulty: intermediate
+triggers:
+  - cyfrin findings
+  - solodit
+  - historical findings
+  - audit database
+  - past vulnerabilities
+  - similar findings
+related_skills:
+  - variant-analysis/SKILL.md
+  - patterns/SKILL.md
+tags:
+  - cyfrin
+  - solodit
+  - findings
+  - database
 version: 1.0.0
-last_updated: 2026-02-24
+last_updated: 2026-02-26
 api_base: https://api.solodit.xyz
+description: >-
+  Query the Cyfrin/Solodit findings database (50,530+ findings from 30+
+  audit firms) for vulnerability research, pattern extraction, and audit
+  enhancement. Use when searching for historical findings by vulnerability
+  type, protocol category, or severity, or when looking for similar bugs
+  found in comparable protocols.
 ---
 
 # Cyfrin/Solodit Findings Database Skill

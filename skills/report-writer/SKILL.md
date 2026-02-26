@@ -1,9 +1,28 @@
 ---
-id: RPT-WRITER
+id: report-writer
 title: Report Writer Skill
 category: methodology
-trigger: "write report|generate finding|audit report"
-last_updated: 2026-02-24
+difficulty: intermediate
+triggers:
+  - write report
+  - generate finding
+  - audit report
+  - finding template
+  - report format
+related_skills:
+  - severity/SKILL.md
+  - methodology/SKILL.md
+tags:
+  - report
+  - writing
+  - findings
+  - templates
+last_updated: 2026-02-26
+description: >-
+  Generate professional audit reports with structured findings, severity
+  classifications, proof-of-concept code, and actionable recommendations.
+  Use when writing individual findings, composing full audit reports, or
+  formatting results for Code4rena, Sherlock, or client engagements.
 ---
 
 # Report Writer Skill

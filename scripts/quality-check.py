@@ -97,9 +97,9 @@ def check_description(frontmatter):
     else:
         issues.append("Description missing 'when to use' guidance")
 
-    # Third-person check
-    first_person = ['you ', 'your ', 'i ', "i'm ", "i'll ", 'we ']
-    if not any(word in desc.lower() for word in first_person):
+    # Third-person check (use word boundaries to avoid false positives like 'CI' matching 'i')
+    first_person_patterns = [r'\byou\b', r'\byour\b', r'\bi\b', r"\bi'm\b", r"\bi'll\b", r'\bwe\b']
+    if not any(re.search(p, desc, re.IGNORECASE) for p in first_person_patterns):
         score += 0.5
     else:
         issues.append("Description should be third person (avoid 'you', 'I')")

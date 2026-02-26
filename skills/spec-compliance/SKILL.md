@@ -1,9 +1,29 @@
 ---
-id: SPEC-COMPLIANCE
+id: spec-compliance
 title: Spec Compliance Skill
 category: methodology
-trigger: "ERC compliance|EIP check|standard compliance"
-last_updated: 2026-02-24
+difficulty: intermediate
+triggers:
+  - ERC compliance
+  - EIP check
+  - standard compliance
+  - token standard
+  - ERC-20 compliance
+  - ERC-721 compliance
+related_skills:
+  - solidity-scanner/SKILL.md
+  - token-analyzer/SKILL.md
+tags:
+  - erc
+  - eip
+  - compliance
+  - standards
+last_updated: 2026-02-26
+description: >-
+  Verify smart contract implementations comply with EIP/ERC standards
+  and protocol specifications. Use when checking ERC-20, ERC-721,
+  ERC-1155, ERC-4626, or EIP-712 compliance, or when identifying
+  non-standard token behavior that causes integration failures.
 ---
 
 # Spec Compliance Skill

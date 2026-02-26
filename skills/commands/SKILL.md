@@ -27,7 +27,12 @@ tags:
   - commands
   - interface
   - workflow
-last_updated: 2026-02-24
+last_updated: 2026-02-26
+description: >-
+  Structured command patterns for invoking audit capabilities through
+  slash commands. Use when triggering /audit, /scan, /checklist, /report,
+  /severity, /patterns, or other slash commands that map to underlying
+  skills and load the correct context for each workflow.
 ---
 
 # Commands Skill

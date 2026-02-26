@@ -1,9 +1,29 @@
 ---
-id: STATIC-ANALYSIS
+id: static-analysis
 title: Static Analysis Skill
 category: methodology
-trigger: "static analysis|slither|mythril|aderyn|semgrep"
-last_updated: 2026-02-24
+difficulty: intermediate
+triggers:
+  - static analysis
+  - slither
+  - mythril
+  - aderyn
+  - semgrep
+  - automated scan
+related_skills:
+  - solidity-scanner/SKILL.md
+  - methodology/SKILL.md
+tags:
+  - static-analysis
+  - slither
+  - mythril
+  - tooling
+last_updated: 2026-02-26
+description: >-
+  Integrate automated static analysis tools (Slither, Mythril, Aderyn,
+  Semgrep) into the audit workflow to catch known vulnerability patterns
+  before manual review. Use when starting an audit to establish a coverage
+  baseline, or when configuring static analysis tooling for a project.
 ---
 
 # Static Analysis Skill

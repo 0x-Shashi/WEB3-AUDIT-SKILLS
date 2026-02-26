@@ -20,7 +20,12 @@ tags:
   - verification
   - regression
   - methodology
-last_updated: 2026-02-24
+last_updated: 2026-02-26
+description: >-
+  Verify that bug fixes correctly address reported vulnerabilities without
+  introducing new issues. Use when reviewing protocol team fix submissions,
+  during re-audit engagements, or in contest mitigation review phases on
+  Sherlock and Code4rena.
 ---
 
 # Fix Review Skill
