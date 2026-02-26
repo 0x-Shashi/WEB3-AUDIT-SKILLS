@@ -558,6 +558,7 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - Pinocchio Security: [pinocchio-security.md](solana-scanner/resources/pinocchio-security.md) — TryFrom, Token-2022, zero-copy safety
 - Confidential Transfers: [confidential-transfer-patterns.md](patterns/confidential-transfer-patterns.md) — 7 patterns, ElGamal, proof verification
 - Testing: [solana-testing-for-auditors.md](solana-scanner/resources/solana-testing-for-auditors.md) — LiteSVM, Mollusk, Surfpool, PoC examples
+- CPI Adversarial: [cpi-adversarial-security.md](solana-scanner/resources/cpi-adversarial-security.md) — 3-layer trust boundaries, identity binding, ABI return validation, 9-gate sequence, nonce discipline
 
 **Key Solana Exploits:**
 - Wormhole 2022 ($326M) — Missing signer verification
@@ -620,6 +621,14 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - [Security Checklists](solana-scanner/resources/security-checklists.md) — Audit and client-side checklists for Solana programs
 - [Caveats](solana-scanner/resources/caveats.md) — Solana-specific caveats, gotchas, and edge cases for auditors
 - [Formal Verification for Auditors](solana-scanner/resources/formal-verification-for-auditors.md) — Kani proof evaluation, classification system, property categories, red flags
+- [Proof Strength Evaluation](methodology/proof-strength-evaluation.md) — 6-point methodology for auditing formal verification proof strength (Kani, Certora, Halmos, Move Prover)
+- [Audit Session Management](methodology/audit-session-management.md) — 3-file pattern for persistent audit sessions, hook-based workflow gates, coverage tracking
+
+**AI Agent & Payment Security (NEW):**
+- [ERC-8004 Agent Security](patterns/erc-8004-agent-security.md) — AI agent registry attacks: identity, reputation gaming, UUPS upgrades, MCP/A2A endpoints
+- [x402 Payment Security](patterns/x402-payment-security.md) — HTTP 402 payment protocol: facilitator trust, EIP-3009 replay, cross-chain settlement, MCP integration
+- [AI Agent Payment Patterns](patterns/ai-agent-payment-patterns.md) — Agent identity + payment intersection: MCP tool injection, spending controls, prompt injection risks
+- [AA ERC-7715 Permission Security](patterns/aa-erc7715-permission-security.md) — Advanced permissions: caveat enforcer attacks, delegation chain validation, counterfactual deployment
 
 ---
 
@@ -714,4 +723,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 10.0 (Batch 10 — Skill-Factory merge: quality-scoring, skill-tdd, skill-authoring-guide, quality-check.py)
+**Version:** 11.0 (Batch 11 — Agent+Payment+Methodology: erc-8004-agent-security, x402-payment-security, ai-agent-payment-patterns, aa-erc7715-permission-security, cpi-adversarial-security, proof-strength-evaluation, audit-session-management)
