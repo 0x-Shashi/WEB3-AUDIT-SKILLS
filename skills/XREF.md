@@ -585,6 +585,7 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - Patterns: [dex-patterns.md](patterns/dex-patterns.md), [amm-patterns.md](patterns/amm-patterns.md)
 - Anti-Patterns: [dex-specific-anti-patterns.md](anti-patterns/dex-specific-anti-patterns.md) (47 patterns)
 - Related: [mev-patterns.md](patterns/mev-patterns.md)
+- **Jupiter Integration**: [jupiter-integration-audit.md](solana-scanner/resources/jupiter-integration-audit.md) — Per-API gotchas, price confidence, rate limits, Token-2022 matrix
 
 ---
 
@@ -677,6 +678,7 @@ These templates capture verification methodology, not protocol-specific content.
 | Adversarial Test Design | [solana-scanner/resources/adversarial-test-design.md](solana-scanner/resources/adversarial-test-design.md) | Attack-first test taxonomy, 10-category checklist, conservation invariant pattern |
 | CU Worst-Case Design | [solana-scanner/resources/solana-testing-for-auditors.md §7](solana-scanner/resources/solana-testing-for-auditors.md) | 9-level CU escalation framework, benchmark reporting template |
 | Verify Module Pattern | [solana-scanner/resources/formal-verification-for-auditors.md §11](solana-scanner/resources/formal-verification-for-auditors.md) | Extract-and-prove: separate decision logic for Kani verification |
+| Jupiter Integration Audit | [solana-scanner/resources/jupiter-integration-audit.md](solana-scanner/resources/jupiter-integration-audit.md) | Per-API security gotchas, price confidence, rate limits, error classification, Token-2022 matrix, idempotency, aggregator routing |
 
 **Foundry/Solidity Testing Resources (claude-plugins foundry-solidity merge):**
 
@@ -745,4 +747,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 14.0 (Batch 14 — GameFi+Confidential Gaming: gamefi-security-patterns, confidential-gaming-audit)
+**Version:** 15.0 (Batch 15 — Jupiter Integration Audit: jupiter-integration-audit)
