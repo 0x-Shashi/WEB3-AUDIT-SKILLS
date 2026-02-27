@@ -639,6 +639,15 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - [Audit Plan Execution](methodology/audit-plan-execution.md) — Structured execution: task decomposition (1-function-1-task), batch checkpoints, coverage tracking matrix
 - [Finding Quality Standards](methodology/finding-quality-standards.md) — Quality scoring: 5-dimension rubric (clarity, PoC, severity, fix, coverage), good vs bad examples, composite scoring
 
+**Advanced Methodology & Solana Audit Patterns (NEW — Batch 13):**
+- [Sharp Edges Detection](methodology/sharp-edges-detection.md) — Systematic footgun/dangerous-API detection: Source-Transform-Sink framework, per-language catalogs (Solidity, Rust, Move), semgrep rule templates, variant analysis workflow
+- [Codebase Recon Methodology](methodology/codebase-recon-methodology.md) — 5-phase Recon Pyramid (Overview→Architecture→Modules→Functions→Details), entry point mapping, trust boundary identification, 40+ security question bank, recon checklist
+- [Formal Verification Assessment](methodology/formal-verification-assessment.md) — Proof classification taxonomy (STRONG/WEAK/UNIT TEST/CODE-EQUALS-SPEC/VACUOUS) with real production examples, 6-point analysis per proof, tool-specific assessment (Kani/Certora/Halmos), coverage gap analysis
+- [Deprecated Infrastructure Detection](methodology/deprecated-infrastructure-detection.md) — Dead ecosystem registry (Solana: Serum, Clockwork, Switchboard Functions; EVM: Rinkeby, Truffle), verify-before-use methodology, placeholder test detection, dependency risk matrix
+- [Solana Oracle Audit](solana-scanner/resources/solana-oracle-audit.md) — Pyth pull oracle patterns (confidence intervals, staleness, EMA vs spot, exponent normalization), Switchboard patterns (Oracle Quotes, Surge, VRF, TEE), cross-oracle comparison, Solana-specific manipulation vectors
+- [DeFi Perpetuals Audit](patterns/defi-perpetuals-audit.md) — Precision constant vulnerabilities, funding rate manipulation, order type attacks, liquidation engine risks, anti-DoS gating, CPI-matcher identity binding, nonce monotonicity, cross-margining contagion
+- [Multisig & Smart Account Audit](solana-scanner/resources/multisig-smart-account-audit.md) — Squads V4 patterns: threshold validation, proposal lifecycle attacks, vault PDA security, spending limit circumvention, time lock bypass, Smart Account session keys/passkeys/policies
+
 ---
 
 ## Methodology Templates (NEW)
@@ -732,4 +741,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 12.0 (Batch 12 — Audit Methodology+EIP-7702: verification-discipline, systematic-root-cause, tdd-security-testing, parallel-audit-agents, audit-plan-execution, eip-7702-delegation-security, finding-quality-standards)
+**Version:** 13.0 (Batch 13 — Advanced Methodology+Solana Patterns: sharp-edges-detection, codebase-recon-methodology, formal-verification-assessment, deprecated-infrastructure-detection, solana-oracle-audit, defi-perpetuals-audit, multisig-smart-account-audit)
