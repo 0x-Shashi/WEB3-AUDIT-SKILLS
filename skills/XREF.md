@@ -629,6 +629,15 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - [x402 Payment Security](patterns/x402-payment-security.md) — HTTP 402 payment protocol: facilitator trust, EIP-3009 replay, cross-chain settlement, MCP integration
 - [AI Agent Payment Patterns](patterns/ai-agent-payment-patterns.md) — Agent identity + payment intersection: MCP tool injection, spending controls, prompt injection risks
 - [AA ERC-7715 Permission Security](patterns/aa-erc7715-permission-security.md) — Advanced permissions: caveat enforcer attacks, delegation chain validation, counterfactual deployment
+- [EIP-7702 Delegation Security](patterns/eip-7702-delegation-security.md) — EOA→smart account delegation: grant scope attacks, private key bypass, chain ID confusion, revocation gaps
+
+**Audit Methodology (NEW — Batch 12):**
+- [Verification Discipline](methodology/verification-discipline.md) — Evidence-before-claims: 4-level verification hierarchy, rationalization prevention, severity-to-evidence gate
+- [Systematic Root Cause](methodology/systematic-root-cause.md) — 4-phase investigation: root cause → pattern analysis → hypothesis testing → classification, data flow tracing
+- [TDD Security Testing](methodology/tdd-security-testing.md) — Red-Green-Refactor for security PoCs: exploit test first, verify fix, permanent regression guard
+- [Parallel Audit Agents](methodology/parallel-audit-agents.md) — Multi-agent dispatch: 5 security domains, scope partitioning, finding integration, cross-agent escalation
+- [Audit Plan Execution](methodology/audit-plan-execution.md) — Structured execution: task decomposition (1-function-1-task), batch checkpoints, coverage tracking matrix
+- [Finding Quality Standards](methodology/finding-quality-standards.md) — Quality scoring: 5-dimension rubric (clarity, PoC, severity, fix, coverage), good vs bad examples, composite scoring
 
 ---
 
@@ -723,4 +732,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 11.0 (Batch 11 — Agent+Payment+Methodology: erc-8004-agent-security, x402-payment-security, ai-agent-payment-patterns, aa-erc7715-permission-security, cpi-adversarial-security, proof-strength-evaluation, audit-session-management)
+**Version:** 12.0 (Batch 12 — Audit Methodology+EIP-7702: verification-discipline, systematic-root-cause, tdd-security-testing, parallel-audit-agents, audit-plan-execution, eip-7702-delegation-security, finding-quality-standards)
