@@ -648,6 +648,10 @@ This file is your **quick navigation tool**. When you encounter a vulnerability,
 - [DeFi Perpetuals Audit](patterns/defi-perpetuals-audit.md) — Precision constant vulnerabilities, funding rate manipulation, order type attacks, liquidation engine risks, anti-DoS gating, CPI-matcher identity binding, nonce monotonicity, cross-margining contagion
 - [Multisig & Smart Account Audit](solana-scanner/resources/multisig-smart-account-audit.md) — Squads V4 patterns: threshold validation, proposal lifecycle attacks, vault PDA security, spending limit circumvention, time lock bypass, Smart Account session keys/passkeys/policies
 
+**GameFi & Confidential Gaming Security (NEW — Batch 14):**
+- [GameFi Security Patterns](patterns/gamefi-security-patterns.md) — Payment UX security checklist, anti-inflation tokenomics (daily caps, diminishing returns, sinks, burn), reward mint authority, client-state trust boundaries, hardware wallet (TEE/SE/StrongBox), gasless relay Sybil risks, cross-game identity
+- [Confidential Gaming Audit](patterns/confidential-gaming-audit.md) — Arcium MXE architecture, MPC node collusion, state revelation timing attacks, commitment-reveal manipulation, proof verification bypass, fog-of-war traffic analysis, MEV in sealed bids, settlement layer checklist, privacy vs auditability trade-off
+
 ---
 
 ## Methodology Templates (NEW)
@@ -741,4 +745,4 @@ These templates capture verification methodology, not protocol-specific content.
 ---
 
 **Last Updated:** 2026
-**Version:** 13.0 (Batch 13 — Advanced Methodology+Solana Patterns: sharp-edges-detection, codebase-recon-methodology, formal-verification-assessment, deprecated-infrastructure-detection, solana-oracle-audit, defi-perpetuals-audit, multisig-smart-account-audit)
+**Version:** 14.0 (Batch 14 — GameFi+Confidential Gaming: gamefi-security-patterns, confidential-gaming-audit)
